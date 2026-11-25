@@ -11,10 +11,19 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 25
+    timing:
+      kind: late
+      text: Late in the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/hort20027
 source_year: 2027

@@ -30,16 +30,31 @@ topics:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: presentation
     weight: 15
+    timing:
+      kind: other
+      text: During the final placement period
   - kind: assignment
     weight: 5
     group: true
+    timing:
+      kind: other
+      text: During the rural placement
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
 weekly_contact_hours: 37
 breadth_for: []
 prescribed_texts: false

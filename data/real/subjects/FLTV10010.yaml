@@ -22,9 +22,17 @@ assessment:
   - kind: presentation
     weight: 50
     hurdle: true
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

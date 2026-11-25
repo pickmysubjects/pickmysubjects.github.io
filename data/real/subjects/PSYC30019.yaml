@@ -13,12 +13,24 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: In the first few weeks of the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: In the last few weeks of the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 3
 min_attendance: 80
 attendance_applies_to:

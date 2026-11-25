@@ -23,10 +23,23 @@ topics:
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: report
     weight: 45
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for: []
 min_attendance: 80

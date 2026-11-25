@@ -19,12 +19,35 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: quiz
     weight: 20
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 9
+        - 10
+        - 11
+        - 12
+      text: Week 3,4,5,6,7,9,10,11,12
   - kind: test
     weight: 30
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

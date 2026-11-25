@@ -18,10 +18,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 45
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 45
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

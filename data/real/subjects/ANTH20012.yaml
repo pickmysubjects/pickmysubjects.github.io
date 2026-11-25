@@ -17,10 +17,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 35
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 50
+    timing:
+      kind: other
+      text: Assignment due week 12, IOA occurs in the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

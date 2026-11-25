@@ -17,12 +17,23 @@ non_allowed:
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 5
+      to: 12
+      text: From Week 5 to Week 12
   - kind: exam
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5.5
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biol10002

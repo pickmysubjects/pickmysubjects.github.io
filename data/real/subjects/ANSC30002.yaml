@@ -23,13 +23,29 @@ recommended:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: participation
     weight: 10
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 8
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/ansc30002

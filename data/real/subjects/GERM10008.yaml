@@ -21,12 +21,27 @@ topics:
 assessment:
   - kind: project
     weight: 30
+    timing:
+      kind: other
+      text: During the teaching period. Due date will depend on topic chosen
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 12
+      text: From Week 5 to Week 12
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

@@ -13,10 +13,21 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 min_attendance: 90
 campus: Dookie

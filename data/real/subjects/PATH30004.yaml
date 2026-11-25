@@ -17,16 +17,34 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 3
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 7
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: report
     weight: 5
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: report
     weight: 5
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: Start of examination period
   - kind: presentation
     weight: 20
+    timing:
+      kind: end
+      text: End of teaching period
 weekly_contact_hours: 6
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/path30004

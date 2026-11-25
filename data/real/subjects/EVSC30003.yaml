@@ -22,11 +22,23 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 9
+      text: From Week 6 to Week 9
   - kind: assignment
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/evsc30003

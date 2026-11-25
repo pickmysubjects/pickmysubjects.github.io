@@ -27,17 +27,38 @@ recommended:
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: teaching
+      text: Weekly throughout the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 25
+    timing:
+      kind: other
+      text: Report 1 Due Week 5Report 2 Due first day of exam period
   - kind: exam
     weight: 35
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
 attendance_applies_to:
   - tutorials
   - practicals

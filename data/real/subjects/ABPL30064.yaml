@@ -18,12 +18,24 @@ topics:
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Friday 12thJanuary 2024
   - kind: presentation
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
   - kind: assignment
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: During in-country internship
 breadth_for: []
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30064

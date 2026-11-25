@@ -52,8 +52,17 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5

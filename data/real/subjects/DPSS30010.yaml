@@ -26,12 +26,24 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Mid Semester One
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Mid Semester Two
   - kind: assignment
     weight: 45
+    timing:
+      kind: other
+      text: Two weeks after internship completion
 weekly_contact_hours: 11.5
 min_attendance: 75
 breadth_for: []

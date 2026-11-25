@@ -24,12 +24,25 @@ topics:
 assessment:
   - kind: quiz
     weight: 25
+    timing:
+      kind: other
+      text: In the first, second, third, fourth, fifth weeks of teaching
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: In the fourth and fifth weeks of teaching
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: In the fifth week of teaching
   - kind: exam
     weight: 25
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
 weekly_contact_hours: 8.5
 breadth_for:
   - Bachelor of Arts

@@ -19,10 +19,22 @@ topics:
 assessment:
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 3
+      to: 11
+      text: From Week 3 to Week 11
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

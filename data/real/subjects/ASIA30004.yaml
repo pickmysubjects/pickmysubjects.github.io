@@ -19,10 +19,22 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: quiz
     weight: 30
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: report
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

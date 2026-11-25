@@ -24,16 +24,33 @@ assessment:
   - kind: participation
     weight: 0
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 25
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
   - kind: project
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: participation
     weight: 50
+    timing:
+      kind: other
+      text: "Weekly reflections: Weeks 1–11; meta-reflection: Week 12"
 weekly_contact_hours: 5.5
 breadth_for:
   - Bachelor of Arts

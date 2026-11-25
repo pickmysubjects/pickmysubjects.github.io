@@ -24,12 +24,24 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 25
+    timing:
+      kind: late
+      text: Late in the teaching period
   - kind: exam
     weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: presentation
     weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 6
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/vets30018

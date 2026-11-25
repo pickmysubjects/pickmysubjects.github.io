@@ -19,10 +19,21 @@ topics:
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 35
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3.5
 min_attendance: 80
 breadth_for: []

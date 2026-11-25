@@ -20,12 +20,29 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: Week 4 (workshop) and Week 5 (summary)
   - kind: assignment
     weight: 20
+    timing:
+      kind: weeks
+      weeks:
+        - 6
+        - 8
+      text: Week 6 and Week 8
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
   - kind: project
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for: []
 min_attendance: 80

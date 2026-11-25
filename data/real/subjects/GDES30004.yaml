@@ -26,10 +26,19 @@ assessment:
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 categories:
   B-DES: design

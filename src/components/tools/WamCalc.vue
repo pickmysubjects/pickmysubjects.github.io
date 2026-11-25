@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, shallowRef } from 'vue'
+import { offerInstall } from '@/utils/install'
+import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useWamCalc } from '@/composables/useWamCalc'
@@ -60,6 +61,8 @@ const verdict = computed(() => {
   if (n <= 50) return t.value('wamGoal.justPass')
   return ''
 })
+// An answer on screen is a good moment to offer the app.
+watch(() => typed.value && wam.value !== null, (on) => on && offerInstall())
 </script>
 
 <template>

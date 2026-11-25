@@ -23,16 +23,34 @@ topics:
 assessment:
   - kind: test
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: test
     weight: 5
+    timing:
+      kind: end
+      text: End of semester
   - kind: presentation
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

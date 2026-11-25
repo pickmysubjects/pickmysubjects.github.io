@@ -19,10 +19,21 @@ topics:
 assessment:
   - kind: quiz
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

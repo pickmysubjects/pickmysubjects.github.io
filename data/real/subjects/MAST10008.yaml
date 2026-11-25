@@ -49,10 +49,24 @@ topics:
 assessment:
   - kind: assignment
     weight: 12
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: test
     weight: 8
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: test
     weight: 10
+    timing:
+      kind: end
+      text: End of semester
   - kind: exam
     weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 6

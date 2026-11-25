@@ -21,12 +21,27 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
 min_attendance: 80
 weekly_contact_hours: 4
 breadth_for: []

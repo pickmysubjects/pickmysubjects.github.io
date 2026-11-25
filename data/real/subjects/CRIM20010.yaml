@@ -19,10 +19,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Week 5 or 6
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Week 9 or 10
   - kind: assignment
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Biomedicine

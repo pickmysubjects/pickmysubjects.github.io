@@ -11,11 +11,23 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: presentation
     weight: 50
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: report
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/indg30006

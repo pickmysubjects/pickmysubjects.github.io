@@ -21,14 +21,30 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: other
+      text: Approx. weeks 7‐8
   - kind: report
     weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: participation
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
 weekly_contact_hours: 3
 min_attendance: 73
 breadth_for:

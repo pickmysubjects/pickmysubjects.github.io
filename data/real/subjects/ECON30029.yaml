@@ -20,13 +20,28 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/econ30029
 source_year: 2027

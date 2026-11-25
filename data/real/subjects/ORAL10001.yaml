@@ -22,16 +22,31 @@ topics:
 assessment:
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: Throughout the teaching period, including one in the first five weeks of teaching and one in the examination period
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: other
+      text: Throughout first half of the year teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: exam
+      text: Mid-year examination period
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Mid-second half of the year teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: End of second half of year teaching period
 breadth_for: []
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/oral10001

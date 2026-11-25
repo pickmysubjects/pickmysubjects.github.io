@@ -29,11 +29,22 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biol30001
 source_year: 2027

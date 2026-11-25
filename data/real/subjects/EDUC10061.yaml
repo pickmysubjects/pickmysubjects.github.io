@@ -22,12 +22,24 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 30
+    timing:
+      kind: early
+      text: Early semester
   - kind: participation
     weight: 30
+    timing:
+      kind: other
+      text: Second half of semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

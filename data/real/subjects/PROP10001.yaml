@@ -20,11 +20,22 @@ assessment:
   - kind: test
     weight: 25
     hurdle: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 40
     hurdle: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: report
     weight: 35
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

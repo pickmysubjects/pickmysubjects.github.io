@@ -17,13 +17,25 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Week 4 or Week 5
   - kind: project
     weight: 50
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: early
+      text: Early in the teaching period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -20,12 +20,29 @@ topics:
 assessment:
   - kind: participation
     weight: 20
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 11
+      text: From Week 3 to Week 11
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: project
     weight: 50
+    timing:
+      kind: other
+      text: Week 11 to 12 (interactive oral) and during the examination period (project)
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -19,10 +19,19 @@ topics:
 assessment:
   - kind: presentation
     weight: 40
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: report
     weight: 25
+    timing:
+      kind: other
+      text: 2 Weeks after the end of teaching period
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: 4 Weeks after the end of teaching period
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:

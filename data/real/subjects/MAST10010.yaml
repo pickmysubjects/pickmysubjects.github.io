@@ -28,12 +28,30 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10010

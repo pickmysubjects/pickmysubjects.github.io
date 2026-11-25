@@ -21,14 +21,30 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: Day 2 to Day 9 of the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Day 2 to Day 9 of the teaching period
   - kind: quiz
     weight: 20
+    timing:
+      kind: other
+      text: Day 3, 4, 8 and 9 of the teaching period
   - kind: presentation
     weight: 30
+    timing:
+      kind: other
+      text: Day 10 of the teaching period
   - kind: report
     weight: 30
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

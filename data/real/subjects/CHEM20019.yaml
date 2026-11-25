@@ -27,8 +27,15 @@ recommended:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 90
+    timing:
+      kind: teaching
+      text: Throughout the semester
 weekly_contact_hours: 6
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem20019
 source_year: 2027

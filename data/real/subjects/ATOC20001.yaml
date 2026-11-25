@@ -41,13 +41,29 @@ recommended:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: other
+      text: Equally spaced throughout the semester
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/atoc20001

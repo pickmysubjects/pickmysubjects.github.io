@@ -18,10 +18,21 @@ topics:
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: other
+      text: Between Week 4 and Week 6
   - kind: report
     weight: 60
+    timing:
+      kind: week
+      from: 10
+      to: 11
+      text: From Week 10 to Week 11
   - kind: report
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 1.5
 breadth_for:
   - Bachelor of Biomedicine

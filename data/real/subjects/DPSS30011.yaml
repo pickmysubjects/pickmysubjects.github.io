@@ -28,10 +28,19 @@ topics:
 assessment:
   - kind: participation
     weight: 40
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 min_attendance: 75
 breadth_for: []
 prescribed_texts: false

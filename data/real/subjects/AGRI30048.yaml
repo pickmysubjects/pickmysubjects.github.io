@@ -22,16 +22,39 @@ recommended:
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: quiz
     weight: 5
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri30048

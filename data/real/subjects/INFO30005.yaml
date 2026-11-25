@@ -23,15 +23,27 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Week 3 or 4
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: other
+      text: Throughout the semester, with deliverables due every 3-4 weeks
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
 weekly_contact_hours: 3
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/info30005

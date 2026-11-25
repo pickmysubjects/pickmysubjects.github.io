@@ -20,12 +20,23 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 categories:
   B-DES: design

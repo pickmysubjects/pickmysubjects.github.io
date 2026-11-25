@@ -17,6 +17,9 @@ topics:
 assessment:
   - kind: participation
     weight: 100
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 pass_fail: true
 min_attendance: 80
 breadth_for: []

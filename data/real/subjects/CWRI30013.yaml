@@ -18,10 +18,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: participation
     weight: 60
+    timing:
+      kind: other
+      text: Workshopping in Weeks 7-12; Writing piece due during examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

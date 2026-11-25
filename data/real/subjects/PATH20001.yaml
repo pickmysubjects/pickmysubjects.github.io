@@ -15,12 +15,28 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/path20001

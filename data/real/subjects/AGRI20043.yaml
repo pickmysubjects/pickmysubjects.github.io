@@ -20,12 +20,24 @@ recommended:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: late
+      text: Late in the teaching period
   - kind: test
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 40
+    timing:
+      kind: end
+      text: End of semester
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
 weekly_contact_hours: 5
 attendance_applies_to:
   - practicals

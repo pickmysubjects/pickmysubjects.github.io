@@ -22,13 +22,26 @@ topics:
 assessment:
   - kind: exam
     weight: 50
+    timing:
+      kind: other
+      text: Final day of the teaching block
   - kind: exam
     weight: 40
+    timing:
+      kind: other
+      text: Final day of the teaching block
   - kind: quiz
     weight: 10
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 4
 min_attendance: 80
 campus: Dookie

@@ -20,12 +20,24 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 35
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 10
+    timing:
+      kind: other
+      text: Around week 5
   - kind: test
     weight: 10
+    timing:
+      kind: other
+      text: Around week 10
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 attendance_applies_to:
   - workshops
 prescribed_texts: true

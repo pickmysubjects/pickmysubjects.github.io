@@ -21,9 +21,15 @@ assessment:
     weight: 15
   - kind: test
     weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 70
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

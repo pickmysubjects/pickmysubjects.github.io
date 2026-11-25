@@ -21,11 +21,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: end
+      text: Due on the last day of teaching period
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: end
+      text: Due on the last day of teaching period
   - kind: report
     weight: 60
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

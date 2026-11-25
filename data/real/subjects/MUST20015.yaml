@@ -27,14 +27,29 @@ assessment:
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: presentation
     weight: 40
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 15
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 16.5
 min_attendance: 75
 breadth_for: []

@@ -17,8 +17,19 @@ topics:
 assessment:
   - kind: project
     weight: 50
+    timing:
+      kind: weeks
+      weeks:
+        - 4
+        - 5
+        - 7
+        - 8
+      text: Weeks 4, 5, 7, 8
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

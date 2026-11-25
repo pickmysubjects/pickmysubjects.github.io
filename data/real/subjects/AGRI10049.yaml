@@ -18,16 +18,39 @@ topics:
 assessment:
   - kind: test
     weight: 30
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 7
+        - 11
+      text: Weeks 3, 7 and 11
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
 weekly_contact_hours: 5.5
 min_attendance: 80
 breadth_for: []

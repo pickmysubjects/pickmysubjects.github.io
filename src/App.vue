@@ -11,6 +11,8 @@ import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
 import RolloverNotice from './components/RolloverNotice.vue'
 import MissedAnchor from './components/layout/MissedAnchor.vue'
+import InstallPrompt from './components/layout/InstallPrompt.vue'
+import { semesterVisit } from './utils/install'
 import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
@@ -39,10 +41,15 @@ const CareersView = lazy('careers')
 const ClubsView = lazy('clubs')
 const ChangesView = lazy('changes')
 const ToolsView = lazy('tools')
+const SemesterView = lazy('this-semester')
 // The compare page lives under /plan/ but has its own code.
 const PlanCompareView = defineAsyncComponent(() => import('./views/PlanCompareView.vue'))
 
 const { view, param } = useView()
+// A second visit that opens this semester's page is a good moment to offer the app.
+watchEffect(() => {
+  if (view.value === 'this-semester' && typeof window !== 'undefined') semesterVisit()
+})
 const { t, locale } = useI18n()
 const { data, course } = useDataset()
 
@@ -59,6 +66,7 @@ const TITLES: Partial<Record<string, string>> = {
   shortlist: 'shortlist.title',
   careers: 'careerPath.title',
   changes: 'menu.changes',
+  'this-semester': 'sem.seoTitle',
   // A compare link that isn't a valid pair shows the saved subjects.
   compare: 'shortlist.title',
 }
@@ -143,6 +151,7 @@ watchEffect(() => {
     <ClubsView v-else-if="view === 'clubs'" :id="param" />
     <ChangesView v-else-if="view === 'changes'" :key="param" :year="param" />
     <ToolsView v-else-if="view === 'tools'" :tool="param" />
+    <SemesterView v-else-if="view === 'this-semester'" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">
@@ -156,6 +165,7 @@ watchEffect(() => {
         <a :href="link('tools/')">{{ t('tools.nav') }}</a>
         <a :href="link('news')">{{ t('news.title') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
+        <a :href="link('about#get-app')">{{ t('home.install.nav') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a :href="link('feedback')">{{ t('nav.feedback') }}</a>
         <a :href="link('privacy')">{{ t('app.privacy') }}</a>
@@ -172,6 +182,7 @@ watchEffect(() => {
     </div>
   </footer>
   <BottomNav :view="view" />
+  <InstallPrompt variant="float" />
 </template>
 
 <style scoped>

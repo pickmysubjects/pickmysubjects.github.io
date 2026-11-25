@@ -14,11 +14,23 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 3
+      to: 10
+      text: From Week 3 to Week 10
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10246

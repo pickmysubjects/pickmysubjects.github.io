@@ -18,12 +18,26 @@ non_allowed:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: Approximately week 5
   - kind: exam
     weight: 40
+    timing:
+      kind: end
+      text: End of semester
 attendance_applies_to:
   - workshops
   - practicals

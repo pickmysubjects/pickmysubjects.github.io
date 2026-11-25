@@ -20,12 +20,28 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 11
+      text: From Week 1 to Week 11
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

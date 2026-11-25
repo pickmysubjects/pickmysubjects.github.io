@@ -14,23 +14,50 @@ assessment:
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: assignment
     weight: 10
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Week 14
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 3
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/larc10001

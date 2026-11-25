@@ -19,12 +19,25 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Day 5
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: 3 Days after the end of teaching
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
 weekly_contact_hours: 3.5
 breadth_for:
   - Bachelor of Biomedicine

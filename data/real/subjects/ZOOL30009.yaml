@@ -19,12 +19,23 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: presentation
     weight: 10
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: project
     weight: 75
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/zool30009

@@ -21,12 +21,28 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for: []
 prescribed_texts: false

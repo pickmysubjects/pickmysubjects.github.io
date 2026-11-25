@@ -13,12 +13,25 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: Week 16
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/educ20071
 source_year: 2027

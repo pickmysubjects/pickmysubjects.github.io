@@ -19,13 +19,27 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: presentation
     weight: 35
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 breadth_for: []
 recommended:

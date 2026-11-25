@@ -13,8 +13,16 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: week
+      from: 5
+      to: 11
+      text: From Week 5 to Week 11
   - kind: assignment
     weight: 60
+    timing:
+      kind: other
+      text: Final assessment period
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/scie10004

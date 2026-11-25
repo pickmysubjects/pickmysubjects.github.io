@@ -24,12 +24,24 @@ topics:
 assessment:
   - kind: project
     weight: 15
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: assignment
     weight: 25
+    timing:
+      kind: late
+      text: Late in the teaching period
   - kind: assignment
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 3.5
 min_attendance: 75
 breadth_for: []

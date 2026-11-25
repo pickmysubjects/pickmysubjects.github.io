@@ -15,12 +15,28 @@ assessment:
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 10
+      to: 11
+      text: From Week 10 to Week 11
   - kind: quiz
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/erth20003

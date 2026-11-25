@@ -31,12 +31,28 @@ topics:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 8
+      text: From Week 2 to Week 8
   - kind: project
     weight: 30
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
   - kind: presentation
     weight: 10
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: report
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

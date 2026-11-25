@@ -17,11 +17,22 @@ topics:
 assessment:
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: project
     weight: 50
     group: true
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: report
     weight: 30
+    timing:
+      kind: afterTeaching
+      weeks: 3
+      text: 3 Weeks after the end of teaching
 breadth_for: []
 recommended:
   - ANTH10001

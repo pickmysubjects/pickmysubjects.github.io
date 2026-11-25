@@ -58,11 +58,29 @@ assessment:
   - kind: test
     weight: 15
     hurdle: true
+    timing:
+      kind: other
+      text: Week 4 or Week 5
   - kind: assignment
     weight: 12.5
+    timing:
+      kind: weeks
+      weeks:
+        - 7
+        - 10
+      text: Weeks 7 and Week 10
   - kind: test
     weight: 12.5
+    timing:
+      kind: weeks
+      weeks:
+        - 8
+        - 11
+      text: Weeks 8 and 11
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5

@@ -18,10 +18,19 @@ topics:
 assessment:
   - kind: presentation
     weight: 40
+    timing:
+      kind: other
+      text: Day 8
   - kind: report
     weight: 45
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
   - kind: participation
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

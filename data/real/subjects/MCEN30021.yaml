@@ -19,21 +19,46 @@ non_allowed:
 assessment:
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 3
+      text: From Week 2 to Week 3
   - kind: report
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: presentation
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: other
+      text: During the examination period (Week 14)
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen30021
 source_year: 2027

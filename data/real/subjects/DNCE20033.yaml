@@ -10,10 +10,22 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 1
+      to: 5
+      text: From Week 1 to Week 5
   - kind: project
     weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

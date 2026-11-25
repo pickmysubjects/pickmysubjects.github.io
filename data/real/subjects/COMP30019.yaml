@@ -52,7 +52,15 @@ assessment:
   - kind: assignment
     weight: 40
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: Week 6-8
   - kind: assignment
     weight: 60
     group: true
+    timing:
+      kind: other
+      text: Week 11-12, and Exam Week 1
 weekly_contact_hours: 4

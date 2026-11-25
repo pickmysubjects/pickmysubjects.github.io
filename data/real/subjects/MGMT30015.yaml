@@ -16,14 +16,32 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: Career inventories across the semester and final portfolio due Week 12
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

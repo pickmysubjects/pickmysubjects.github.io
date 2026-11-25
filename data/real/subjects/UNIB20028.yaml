@@ -22,17 +22,38 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 11
+      text: From Week 3 to Week 11
   - kind: project
     weight: 45
     group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

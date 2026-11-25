@@ -23,15 +23,34 @@ assessment:
   - kind: report
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 1
+      to: 5
+      text: From Week 1 to Week 5
   - kind: report
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 10
+      text: From Week 6 to Week 10
   - kind: assignment
     weight: 35
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 11
+      text: From Week 6 to Week 11
 weekly_contact_hours: 4
 breadth_for: []
 prescribed_texts: false

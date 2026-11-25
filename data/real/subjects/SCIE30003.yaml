@@ -16,8 +16,14 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 15
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: report
     weight: 70
+    timing:
+      kind: end
+      text: End of semester
   - kind: project
     weight: 15
 breadth_for: []

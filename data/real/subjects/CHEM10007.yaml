@@ -14,15 +14,37 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 5
+        - 7
+        - 9
+        - 12
+      text: Weeks 3, 5, 7, 9 and 12
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: quiz
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem10007

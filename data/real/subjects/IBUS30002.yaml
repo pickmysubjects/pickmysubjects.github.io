@@ -10,11 +10,20 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

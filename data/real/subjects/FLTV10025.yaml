@@ -25,8 +25,16 @@ topics:
 assessment:
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 3
+      to: 5
+      text: From Week 3 to Week 5
   - kind: project
     weight: 75
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3.5
 min_attendance: 75
 breadth_for: []

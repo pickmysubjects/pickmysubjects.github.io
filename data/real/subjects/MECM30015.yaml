@@ -19,10 +19,20 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: presentation
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for: []
 recommended:

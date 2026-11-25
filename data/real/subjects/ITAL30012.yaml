@@ -20,8 +20,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 35
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: report
     weight: 65
+    timing:
+      kind: other
+      text: Due at the start of February of the following year
 breadth_for:
   - Bachelor of Design
   - Bachelor of Environments

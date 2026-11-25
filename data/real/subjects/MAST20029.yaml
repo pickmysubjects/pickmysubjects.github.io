@@ -49,12 +49,24 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: test
     weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 65
+    timing:
+      kind: exam
+      text: During the examination period
 languages:
   - MATLAB
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mast20029

@@ -29,13 +29,29 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 10
+      text: From Week 1 to Week 10
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 8
+      to: 11
+      text: From Week 8 to Week 11
   - kind: test
     weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 70
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2027/subjects/actl10001
 source_year: 2027

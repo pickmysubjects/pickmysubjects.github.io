@@ -20,15 +20,31 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Midway through the teaching period
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 2
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geog20001
 source_year: 2027

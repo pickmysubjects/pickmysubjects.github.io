@@ -11,15 +11,35 @@ non_allowed: []
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: report
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: early
+      text: Early in the teaching period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Commerce

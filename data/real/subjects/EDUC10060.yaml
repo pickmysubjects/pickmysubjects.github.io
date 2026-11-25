@@ -10,10 +10,19 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 30
+    timing:
+      kind: early
+      text: Early semester
   - kind: report
     weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 40
+    timing:
+      kind: end
+      text: End of semester
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

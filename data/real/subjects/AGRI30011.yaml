@@ -20,13 +20,25 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: Throughout the intensive
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: other
+      text: End of the intensive
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: Essay due at the end of the intensive
   - kind: exam
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

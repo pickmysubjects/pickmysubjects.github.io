@@ -17,11 +17,20 @@ topics:
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 35
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: report
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Essay - 1 wk after the teaching period, IOA - 3 wks after the teaching period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Biomedicine

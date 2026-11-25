@@ -12,10 +12,20 @@ assessment:
     weight: 30
     group: true
     hurdle: true
+    timing:
+      kind: other
+      text: From Day 3 to Day 5
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Day 5
   - kind: report
     weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 3
+      text: 3 Weeks after the end of teaching
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

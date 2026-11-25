@@ -23,12 +23,24 @@ topics:
 assessment:
   - kind: presentation
     weight: 10
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: project
     weight: 20
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: project
     weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: project
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for: []

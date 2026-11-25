@@ -26,10 +26,19 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: assignment
     weight: 50
+    timing:
+      kind: end
+      text: End of the teaching period
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for: []

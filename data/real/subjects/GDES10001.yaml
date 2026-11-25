@@ -21,10 +21,22 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 45
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 categories:
   B-DES: design

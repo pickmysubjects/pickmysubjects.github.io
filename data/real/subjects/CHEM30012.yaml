@@ -17,11 +17,22 @@ assessment:
   - kind: report
     weight: 40
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 11
+      text: From Week 4 to Week 11
   - kind: test
     weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 1.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem30012

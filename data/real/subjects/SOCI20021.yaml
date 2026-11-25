@@ -19,10 +19,20 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: report
     weight: 35
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 55
+    timing:
+      kind: other
+      text: "Project: week 10; Oral reflection: examination period"
 weekly_contact_hours: 1
 breadth_for:
   - Bachelor of Biomedicine

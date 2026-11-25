@@ -22,14 +22,29 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 15
+    timing:
+      kind: other
+      text: Due after the Easter non-teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: presentation
     weight: 15
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: exam
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

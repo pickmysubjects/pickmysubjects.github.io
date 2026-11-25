@@ -20,13 +20,29 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: Weeks 3-4; 6-8; 9-11
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: project
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 1
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/phrm30003

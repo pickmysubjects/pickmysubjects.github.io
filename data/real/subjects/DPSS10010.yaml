@@ -22,18 +22,51 @@ topics:
 assessment:
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: presentation
     weight: 10
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 12
 breadth_for: []
 min_attendance: 75

@@ -61,17 +61,39 @@ topics:
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
   - kind: assignment
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: quiz
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3

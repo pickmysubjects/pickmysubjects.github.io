@@ -18,8 +18,14 @@ topics:
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: presentation
     weight: 60
+    timing:
+      kind: other
+      text: IOA - Weeks 6 to 12; essay due in examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

@@ -20,11 +20,20 @@ topics:
 assessment:
   - kind: report
     weight: 40
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: end
+      text: End of semester
   - kind: report
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 min_attendance: 70
 breadth_for:

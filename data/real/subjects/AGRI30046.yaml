@@ -16,10 +16,22 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: report
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri30046
 source_year: 2027

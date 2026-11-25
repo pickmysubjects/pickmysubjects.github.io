@@ -114,8 +114,8 @@ export function openReenrolment(items: KeyDate[], today: string): KeyDate | null
   return items.find((d) => d.kind === 'reenrol' && d.start <= today && today <= d.end) ?? null
 }
 
-/** An iCalendar file of all-day events. `label` names each item (in the reader's language). */
-export function buildIcs(items: KeyDate[], label: (d: KeyDate) => string): string {
+/** An iCalendar file of all-day events (key dates, or anything shaped like one). `label` names each item (in the reader's language). */
+export function buildIcs<T extends Pick<KeyDate, 'id' | 'start' | 'end' | 'url'>>(items: T[], label: (d: T) => string): string {
   const stamp = `${compact(KEY_DATES_CHECKED)}T000000Z`
   const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PickMySubjects//Key dates//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH']
   for (const d of items) {

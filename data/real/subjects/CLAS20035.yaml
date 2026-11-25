@@ -19,12 +19,24 @@ topics:
 assessment:
   - kind: test
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: From Day 2 to Day 12
   - kind: test
     weight: 30
+    timing:
+      kind: other
+      text: Day 7
   - kind: exam
     weight: 30
+    timing:
+      kind: end
+      text: End of the teaching period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce

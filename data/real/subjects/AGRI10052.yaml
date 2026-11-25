@@ -17,16 +17,38 @@ topics:
 assessment:
   - kind: test
     weight: 5
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: test
     weight: 5
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: test
     weight: 5
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: assignment
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 1
 breadth_for: []
 prescribed_texts: false

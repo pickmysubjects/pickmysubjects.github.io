@@ -23,8 +23,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for: []

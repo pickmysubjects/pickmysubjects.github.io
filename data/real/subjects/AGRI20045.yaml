@@ -20,10 +20,20 @@ topics:
 assessment:
   - kind: exam
     weight: 50
+    timing:
+      kind: other
+      text: Final day of the teaching block
   - kind: exam
     weight: 30
+    timing:
+      kind: other
+      text: Final day of the teaching block
   - kind: quiz
     weight: 20
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
 weekly_contact_hours: 3.5
 campus: Dookie
 breadth_for:

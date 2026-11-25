@@ -17,13 +17,26 @@ assessment:
   - kind: assignment
     weight: 15
     hurdle: true
+    timing:
+      kind: other
+      text: Weekly submissions (weeks 2-11)
   - kind: report
     weight: 40
+    timing:
+      kind: other
+      text: Week 4-6 and 9-10
   - kind: test
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 5
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/gene20001

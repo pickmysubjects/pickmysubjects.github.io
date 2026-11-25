@@ -19,10 +19,22 @@ recommended:
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/nutr30003

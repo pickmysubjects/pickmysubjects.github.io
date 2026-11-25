@@ -23,14 +23,36 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 9
+      to: 10
+      text: From Week 9 to Week 10
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2027/subjects/cedb30004
 source_year: 2027

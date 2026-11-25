@@ -18,11 +18,22 @@ topics:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 50
     group: true
+    timing:
+      kind: other
+      text: In-class group exercise at the end of semester and individual reflection due in Examination Period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

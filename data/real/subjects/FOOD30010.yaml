@@ -15,10 +15,20 @@ recommended:
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/food30010

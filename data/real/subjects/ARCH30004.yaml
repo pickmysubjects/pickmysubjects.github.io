@@ -22,16 +22,31 @@ topics:
 assessment:
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: presentation
     weight: 15
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: presentation
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: report
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
 weekly_contact_hours: 18
 breadth_for:
   - Bachelor of Arts

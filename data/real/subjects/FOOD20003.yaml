@@ -22,16 +22,36 @@ recommended:
 assessment:
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: Weeks 5-6
   - kind: assignment
     weight: 15
     hurdle: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/food20003

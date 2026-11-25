@@ -34,13 +34,25 @@ recommended:
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 10
+    timing:
+      kind: other
+      text: In either Week 6 or 7
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen30018
 source_year: 2027

@@ -12,15 +12,29 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: assignment
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 4
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl10008

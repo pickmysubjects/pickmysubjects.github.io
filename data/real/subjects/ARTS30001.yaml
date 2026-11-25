@@ -19,8 +19,17 @@ skills:
 assessment:
   - kind: presentation
     weight: 60
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: project
     weight: 40
+    timing:
+      kind: week
+      from: 3
+      to: 11
+      text: From Week 3 to Week 11
 weekly_contact_hours: 3
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/arts30001

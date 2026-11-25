@@ -44,13 +44,30 @@ topics:
 assessment:
   - kind: participation
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: participation
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: quiz
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3

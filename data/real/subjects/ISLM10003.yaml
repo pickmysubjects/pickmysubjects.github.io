@@ -20,12 +20,29 @@ topics:
 assessment:
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 50
+    timing:
+      kind: other
+      text: Week 11 (written component) and during the examination period (interactive oral)
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

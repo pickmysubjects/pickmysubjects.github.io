@@ -62,10 +62,22 @@ assessment:
   - kind: participation
     weight: 10
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 65
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5

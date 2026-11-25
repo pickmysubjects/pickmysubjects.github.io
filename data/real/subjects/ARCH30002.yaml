@@ -40,11 +40,22 @@ non_allowed:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: project
     weight: 30
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: project
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 7
 breadth_for:
   - Bachelor of Design

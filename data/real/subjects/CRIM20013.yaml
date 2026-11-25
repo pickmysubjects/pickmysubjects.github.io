@@ -21,17 +21,33 @@ assessment:
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 15
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
   - kind: assignment
     weight: 15
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: report
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for: []
 min_attendance: 80

@@ -19,16 +19,40 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: Throughout semester, approximately one every 3 weeks
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: project
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 8
+      to: 9
+      text: From Week 8 to Week 9
   - kind: assignment
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for: []
 min_attendance: 75

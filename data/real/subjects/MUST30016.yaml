@@ -24,12 +24,28 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: project
     weight: 25
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: assignment
     weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 1
 min_attendance: 75
 breadth_for: []

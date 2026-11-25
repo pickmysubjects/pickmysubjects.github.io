@@ -20,15 +20,30 @@ topics:
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: other
+      text: Week 3 or 4
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Week 4 or 5
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Week 6 or 7
   - kind: project
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Week 11 or 12
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 breadth_for: []
 prescribed_texts: false

@@ -59,7 +59,13 @@ assessment:
   - kind: project
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Due in approximately week 5 and week 11
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4

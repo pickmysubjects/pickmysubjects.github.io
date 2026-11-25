@@ -24,16 +24,31 @@ topics:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: other
+      text: Due prior to departure
   - kind: participation
     weight: 5
     group: true
+    timing:
+      kind: other
+      text: Due prior to departure and presented during the program
   - kind: assignment
     weight: 5
+    timing:
+      kind: other
+      text: Due end of Week 1 of subsequent semester
   - kind: report
     weight: 35
     group: true
+    timing:
+      kind: other
+      text: Due end of Week 1 of subsequent semester
   - kind: test
     weight: 30
+    timing:
+      kind: other
+      text: Due end of Week 2 of subsequent semester
 handbook: https://handbook.unimelb.edu.au/2027/subjects/acct30011
 source_year: 2027
 verified_on: 2026-11-12

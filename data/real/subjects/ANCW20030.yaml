@@ -11,12 +11,27 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: presentation
     weight: 35
+    timing:
+      kind: other
+      text: "Portfolio: Week 12 Oral: Examination period"
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Commerce

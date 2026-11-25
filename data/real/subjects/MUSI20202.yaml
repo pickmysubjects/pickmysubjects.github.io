@@ -31,8 +31,14 @@ topics:
 assessment:
   - kind: project
     weight: 25
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: exam
     weight: 75
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 7
 breadth_for: []
 prescribed_texts: false

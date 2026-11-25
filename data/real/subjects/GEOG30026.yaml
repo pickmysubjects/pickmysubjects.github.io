@@ -17,11 +17,20 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Prior to departure to Timor-Leste for field trip
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: End of field intensive
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30026
 source_year: 2027
 verified_on: 2026-11-13

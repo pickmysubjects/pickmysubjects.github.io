@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { offerInstall } from '@/utils/install'
+import { computed, shallowRef, watch } from 'vue'
 import { ChevronDown, X } from 'lucide-vue-next'
 import SegmentedControl from '@/components/SegmentedControl.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
@@ -128,6 +129,8 @@ async function copy(which: 'goal' | 'all'): Promise<void> {
     copied.value = ''
   }
 }
+// An answer on screen is a good moment to offer the app.
+watch(() => codes.value.length > 0, (on) => on && offerInstall())
 </script>
 
 <template>

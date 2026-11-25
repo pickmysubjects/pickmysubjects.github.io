@@ -19,11 +19,23 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: project
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 5
+      to: 10
+      text: From Week 5 to Week 10
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for: []
 recommended:
   - POLS20008

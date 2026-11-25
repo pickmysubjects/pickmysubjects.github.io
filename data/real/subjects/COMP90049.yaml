@@ -33,12 +33,25 @@ non_allowed:
 assessment:
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 7
+      text: From Week 4 to Week 7
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90049
 source_year: 2027

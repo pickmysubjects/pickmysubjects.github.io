@@ -14,9 +14,16 @@ assessment:
   - kind: presentation
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 70
     hurdle: true
+    timing:
+      kind: other
+      text: Week 12 (Essay) and Exam Period (Oral)
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

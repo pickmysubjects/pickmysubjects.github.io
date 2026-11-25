@@ -36,10 +36,19 @@ topics:
 assessment:
   - kind: participation
     weight: 40
+    timing:
+      kind: other
+      text: Week 2 of the intensive teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Week 3 of the intensive teaching period
   - kind: presentation
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for: []
 min_attendance: 75
 prescribed_texts: false

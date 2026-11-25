@@ -18,13 +18,30 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 3
+    timing:
+      kind: week
+      from: 2
+      to: 6
+      text: From Week 2 to Week 6
   - kind: report
     weight: 17
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: exam
     weight: 65
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chen30001

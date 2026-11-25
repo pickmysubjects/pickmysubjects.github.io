@@ -20,12 +20,27 @@ topics:
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 1
+      to: 4
+      text: From Week 1 to Week 4
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
   - kind: project
     weight: 60
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
 weekly_contact_hours: 1.5
 breadth_for:
   - Bachelor of Design

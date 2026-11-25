@@ -24,14 +24,36 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 8
+      to: 9
+      text: From Week 8 to Week 9
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 10
+      to: 11
+      text: From Week 10 to Week 11
   - kind: exam
     weight: 75
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc30023
 source_year: 2027

@@ -18,12 +18,26 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: report
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 10
+    timing:
+      kind: end
+      text: End of the teaching period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/scie30002
 source_year: 2027

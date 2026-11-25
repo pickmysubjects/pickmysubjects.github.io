@@ -21,11 +21,22 @@ topics:
 assessment:
   - kind: presentation
     weight: 34
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 33
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: presentation
     weight: 33
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

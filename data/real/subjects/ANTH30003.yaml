@@ -17,10 +17,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 35
+    timing:
+      kind: other
+      text: Article preparation due in week 7, Interactive Oral Assessment in week 9
   - kind: assignment
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

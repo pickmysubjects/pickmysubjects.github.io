@@ -24,11 +24,21 @@ assessment:
   - kind: project
     weight: 40
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 10
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: project
     weight: 50
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 28.5
 min_attendance: 75
 breadth_for: []

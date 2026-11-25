@@ -21,10 +21,19 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 65
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/acct20001
 source_year: 2027
 verified_on: 2026-11-12

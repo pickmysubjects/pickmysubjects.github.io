@@ -18,15 +18,34 @@ assessment:
   - kind: project
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: project
     weight: 16
     group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 22
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: presentation
     weight: 22
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: quiz
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
 min_attendance: 80
 weekly_contact_hours: 3
 attendance_applies_to:

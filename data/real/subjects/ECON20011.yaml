@@ -18,14 +18,24 @@ assessment:
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: assignment
     weight: 15
   - kind: participation
     weight: 15
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 min_attendance: 80
 breadth_for:
   - Bachelor of Arts

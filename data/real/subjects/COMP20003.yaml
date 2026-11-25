@@ -55,14 +55,39 @@ assessment:
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: participation
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4

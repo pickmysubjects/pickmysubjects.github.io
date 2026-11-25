@@ -21,10 +21,25 @@ topics:
 assessment:
   - kind: report
     weight: 35
+    timing:
+      kind: weeks
+      weeks:
+        - 4
+        - 7
+        - 9
+        - 10
+        - 12
+      text: Week 4, 7, 9, 10, 12
   - kind: presentation
     weight: 15
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

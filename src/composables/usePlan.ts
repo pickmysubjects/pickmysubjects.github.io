@@ -1,3 +1,4 @@
+import { offerInstall } from '@/utils/install'
 import { trackEvent } from '@/utils/analytics'
 import { computed } from 'vue'
 import {
@@ -263,6 +264,7 @@ export function usePlan() {
     const terms = result.plan.terms.map((x) => (same(x) ? cloneJson(same(x)!) : x))
     put({ ...cloneJson(planBody(state.value)), terms, notes: result.notes, unplaced: result.unplaced })
     trackEvent('plan-generate')
+    offerInstall()
   }
 
   /** How a subject counts in this plan: a category, or undefined to go back to the Handbook's. */

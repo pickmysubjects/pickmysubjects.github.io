@@ -19,8 +19,16 @@ assessment:
   - kind: presentation
     weight: 60
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 10
+      text: From Week 6 to Week 10
   - kind: assignment
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

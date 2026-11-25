@@ -13,10 +13,22 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 3
+      to: 11
+      text: From Week 3 to Week 11
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 handbook: https://handbook.unimelb.edu.au/2027/subjects/erth20002
 source_year: 2027

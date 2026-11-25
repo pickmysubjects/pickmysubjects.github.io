@@ -23,12 +23,26 @@ assessment:
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: assignment
     weight: 50
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Week 14
   - kind: quiz
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

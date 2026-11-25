@@ -18,14 +18,30 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Due prior to commencement of trip
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: During the field excursion
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: During the field excursion
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: During the field excursion
   - kind: assignment
     weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
 weekly_contact_hours: 8
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geol30009
 source_year: 2027

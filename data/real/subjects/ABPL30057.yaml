@@ -25,13 +25,31 @@ assessment:
   - kind: presentation
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 10
+      text: From Week 2 to Week 10
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 10
+      text: From Week 2 to Week 10
   - kind: report
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: report
     weight: 40
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Design

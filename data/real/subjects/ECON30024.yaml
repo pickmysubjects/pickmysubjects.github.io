@@ -33,15 +33,33 @@ topics:
 assessment:
   - kind: assignment
     weight: 6
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 9
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

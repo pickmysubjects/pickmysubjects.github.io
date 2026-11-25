@@ -25,22 +25,51 @@ assessment:
   - kind: test
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
   - kind: project
     weight: 25
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: project
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: assignment
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 10
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: exam
     weight: 30
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 6
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/engr10006

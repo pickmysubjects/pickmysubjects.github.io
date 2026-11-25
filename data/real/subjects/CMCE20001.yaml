@@ -27,10 +27,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: assignment
     weight: 60
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: presentation
     weight: 25
+    timing:
+      kind: other
+      text: Week 14
 breadth_for: []
 pass_fail: true
 prescribed_texts: false

@@ -21,12 +21,30 @@ topics:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: report
     weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: presentation
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

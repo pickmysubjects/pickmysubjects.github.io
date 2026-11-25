@@ -35,18 +35,40 @@ non_allowed:
 assessment:
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: report
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 10
+      text: From Week 6 to Week 10
   - kind: report
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 1.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen30009

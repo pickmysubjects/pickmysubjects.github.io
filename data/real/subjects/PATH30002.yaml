@@ -16,16 +16,36 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 48
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: report
     weight: 12
+    timing:
+      kind: week
+      from: 8
+      to: 11
+      text: From Week 8 to Week 11
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      to: 11
+      text: From Week 1 to Week 11
 weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2027/subjects/path30002
 source_year: 2027

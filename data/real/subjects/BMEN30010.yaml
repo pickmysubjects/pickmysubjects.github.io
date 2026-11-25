@@ -40,17 +40,35 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: project
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: exam
     weight: 55
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen30010

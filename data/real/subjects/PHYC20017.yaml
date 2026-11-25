@@ -19,12 +19,27 @@ topics:
 assessment:
   - kind: report
     weight: 12.5
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 37.5
+    timing:
+      kind: exam
+      text: During the examination period
 min_attendance: 80
 breadth_for:
   - Bachelor of Arts

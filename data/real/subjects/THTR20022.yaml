@@ -18,8 +18,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

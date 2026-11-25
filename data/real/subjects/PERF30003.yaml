@@ -10,10 +10,23 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 1
+      to: 4
+      text: From Week 1 to Week 4
   - kind: presentation
     weight: 35
+    timing:
+      kind: week
+      from: 5
+      to: 8
+      text: From Week 5 to Week 8
   - kind: presentation
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for: []
 recommended:
   - ARCH10001

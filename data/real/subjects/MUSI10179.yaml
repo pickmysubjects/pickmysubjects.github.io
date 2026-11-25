@@ -20,10 +20,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: assignment
     weight: 15
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: assignment
     weight: 60
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2
 min_attendance: 80
 breadth_for:

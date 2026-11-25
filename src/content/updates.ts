@@ -21,6 +21,46 @@ export interface SiteRelease {
 
 export const SITE_RELEASES: SiteRelease[] = [
   {
+    version: '1.1.0',
+    date: "2026-11-25",
+    links: [['this-semester/']],
+    points: [
+      {
+        en: "New This semester page: which week of semester it is, the next key dates, and your subjects' assessment in plain words, with local ticks for what's done.",
+        'zh-CN': '新增“本学期”页面：现在第几周、接下来的关键日期，还有你每门课的考核，做完的可以打勾。',
+        'zh-TW': '新增「本學期」頁面：現在第幾週、接下來的關鍵日期，還有你每門課的考核，做完的可以打勾。',
+        ja: '新しく「今学期」ページ：今が第何週か、次の重要日程、各科目の評価。終わった課題にチェックできます。',
+        ko: "새 '이번 학기' 페이지: 지금 몇 주차인지, 다음 주요 일정, 과목별 평가. 끝낸 건 체크할 수 있어요.",
+        vi: "Trang mới 'Học kỳ này': đang là tuần mấy, các mốc sắp tới và cách các môn của bạn được đánh giá, đánh dấu được phần đã xong.",
+        ms: "Halaman baharu 'Semester ini': minggu ke berapa, tarikh penting seterusnya dan penilaian subjek anda, tandakan yang sudah siap.",
+        id: "Halaman baru 'Semester ini': minggu ke berapa, tanggal penting berikutnya dan penilaian mata kuliahmu, tandai yang sudah selesai.",
+        hi: "नया 'यह सेमेस्टर' पेज: कौन-सा हफ़्ता है, अगली ज़रूरी तारीख़ें और आपके विषयों का मूल्यांकन, पूरे काम पर निशान लगाएँ।",
+      },
+      {
+        en: "This semester now shows the marks from your final mark calculator, and can add the semester to your calendar, with assessments that have a set week.",
+        'zh-CN': "“本学期”页会显示期末计算器里的成绩，还能把学期加到日历，写明了周数的考核也会加进去。",
+        'zh-TW': "「本學期」頁會顯示期末計算器裡的成績，還能把學期加到行事曆，寫明了週數的考核也會加進去。",
+        ja: "「今学期」に期末計算機の点数が出ます。学期をカレンダーに追加でき、週が決まった課題も入ります。",
+        ko: "'이번 학기'에 기말 계산기 점수가 나오고, 학기를 캘린더에 추가하면 주차가 정해진 과제도 들어가요.",
+        vi: "Trang 'Học kỳ này' hiện điểm từ máy tính điểm cuối kỳ, và thêm được học kỳ vào lịch, kèm các bài có tuần cố định.",
+        ms: "'Semester ini' kini menunjukkan markah dari kalkulator markah akhir, dan boleh menambah semester ke kalendar, termasuk tugasan yang minggunya tetap.",
+        id: "'Semester ini' kini menampilkan nilai dari kalkulator nilai akhir, dan bisa menambahkan semester ke kalender, termasuk tugas yang minggunya pasti.",
+        hi: "'यह सेमेस्टर' अब फ़ाइनल मार्क कैलकुलेटर के अंक दिखाता है, और सेमेस्टर कैलेंडर में जोड़ता है, तय हफ़्ते वाले असेसमेंट के साथ।",
+      },
+      {
+        en: "Taking a Summer or Winter Term subject? This semester lists it with that term's class and exam dates.",
+        'zh-CN': "选了暑期或冬季课程？“本学期”页会列出来，并附上那个学期的上课和考试日期。",
+        'zh-TW': "選了暑期或冬季課程？「本學期」頁會列出來，並附上那個學期的上課和考試日期。",
+        ja: "夏学期・冬学期の科目も「今学期」に出ます。その学期の授業と試験の日程付き。",
+        ko: "여름·겨울 학기 과목도 '이번 학기'에 나와요. 그 학기의 수업과 시험 일정과 함께.",
+        vi: "Học môn kỳ hè hoặc kỳ đông? Trang 'Học kỳ này' liệt kê kèm ngày học và ngày thi của kỳ đó.",
+        ms: "Ambil subjek Penggal Musim Panas atau Sejuk? 'Semester ini' menyenaraikannya dengan tarikh kelas dan peperiksaan penggal itu.",
+        id: "Ambil mata kuliah Summer atau Winter Term? 'Semester ini' menampilkannya beserta tanggal kuliah dan ujian term itu.",
+        hi: "समर या विंटर टर्म का विषय लिया है? 'यह सेमेस्टर' उसे उस टर्म की क्लास और परीक्षा की तारीख़ों के साथ दिखाता है।",
+      },
+    ],
+  },
+  {
     version: '1.0.3',
     date: "2026-11-19",
     links: [['plan/']],

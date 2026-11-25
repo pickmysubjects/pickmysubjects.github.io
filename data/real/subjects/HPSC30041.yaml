@@ -11,12 +11,29 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: presentation
     weight: 50
+    timing:
+      kind: other
+      text: Written piece - Week 12; Oral - examination period
 weekly_contact_hours: 3
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/hpsc30041

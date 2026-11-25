@@ -16,10 +16,16 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 60
+    timing:
+      kind: end
+      text: End of semester
   - kind: assignment
     weight: 30
   - kind: presentation
     weight: 10
+    timing:
+      kind: end
+      text: End of semester
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem30013
 source_year: 2027

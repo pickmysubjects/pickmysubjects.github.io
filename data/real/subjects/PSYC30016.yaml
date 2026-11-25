@@ -13,10 +13,21 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 min_attendance: 80
 attendance_applies_to:

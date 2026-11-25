@@ -29,12 +29,25 @@ non_allowed:
 assessment:
   - kind: project
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: project
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biom30003
 source_year: 2027

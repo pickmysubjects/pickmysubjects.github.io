@@ -13,10 +13,21 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 45
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: exam
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2027/subjects/enst20001
 source_year: 2027

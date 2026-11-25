@@ -13,10 +13,21 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 35
+    timing:
+      kind: week
+      from: 6
+      to: 10
+      text: From Week 6 to Week 10
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 min_attendance: 80
 attendance_applies_to:

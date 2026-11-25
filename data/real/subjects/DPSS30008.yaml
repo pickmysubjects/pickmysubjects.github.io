@@ -25,18 +25,36 @@ topics:
 assessment:
   - kind: project
     weight: 5
+    timing:
+      kind: other
+      text: Early in the Part A teaching period
   - kind: project
     weight: 40
     hurdle: true
+    timing:
+      kind: other
+      text: Throughout the Part A teaching period
   - kind: report
     weight: 5
+    timing:
+      kind: other
+      text: End of the Part A teaching period
   - kind: project
     weight: 5
+    timing:
+      kind: other
+      text: Early in the Part B teaching period
   - kind: project
     weight: 40
     hurdle: true
+    timing:
+      kind: other
+      text: Throughout the Part B teaching period
   - kind: report
     weight: 5
+    timing:
+      kind: other
+      text: End of the Part B teaching period
 weekly_contact_hours: 1.5
 min_attendance: 75
 breadth_for: []

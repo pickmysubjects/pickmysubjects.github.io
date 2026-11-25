@@ -19,14 +19,30 @@ topics:
 assessment:
   - kind: participation
     weight: 30
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: quiz
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: presentation
     weight: 40
     group: true
+    timing:
+      kind: other
+      text: IOA takes place in weeks 10 to 12; group project due during the exam period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

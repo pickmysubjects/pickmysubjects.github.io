@@ -17,14 +17,27 @@ assessment:
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: test
     weight: 25
+    timing:
+      kind: other
+      text: Between Week 7 to Week 8
   - kind: report
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Between Week 11 to Week 12
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/cmce30002
 source_year: 2027

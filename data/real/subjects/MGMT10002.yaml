@@ -15,13 +15,27 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: quiz
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt10002
 source_year: 2027
 verified_on: 2026-11-13

@@ -10,8 +10,15 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 35
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: exam
     weight: 65
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

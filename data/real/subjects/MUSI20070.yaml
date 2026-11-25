@@ -20,10 +20,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
 weekly_contact_hours: 2
 min_attendance: 75
 breadth_for: []

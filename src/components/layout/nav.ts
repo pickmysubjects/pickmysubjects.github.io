@@ -4,6 +4,7 @@ import {
   Calculator,
   CalendarDays,
   CalendarPlus,
+  CalendarRange,
   ClipboardList,
   Columns2,
   Compass,
@@ -156,6 +157,7 @@ export const MENUS: MenuArea[] = [
     to: 'record/',
     items: [
       { key: 'record.title', desc: 'menu.d.record', to: 'record/', icon: User },
+      { key: 'sem.title', desc: 'sem.menuDesc', to: 'this-semester/', icon: CalendarRange },
       { key: 'shortlist.title', desc: 'menu.d.shortlist', to: 'shortlist/', icon: Heart },
     ],
     // Sections of My record, not pages of their own: found by the site search, landing on their place.
@@ -186,7 +188,7 @@ export function areaOf(view: View): Area | null {
   if (view === 'plan') return 'plan'
   if (view === 'tools') return 'tools'
   if (view === 'guide' || view === 'clubs') return 'guide'
-  if (view === 'record' || view === 'shortlist') return 'me'
+  if (view === 'record' || view === 'shortlist' || view === 'this-semester') return 'me'
   if (view === 'about' || view === 'feedback' || view === 'contribute' || view === 'changes' || view === 'privacy' || view === 'news') return 'about'
   return null
 }

@@ -11,11 +11,26 @@ assessment:
   - kind: assignment
     weight: 25
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 35
+    timing:
+      kind: weeks
+      weeks:
+        - 6
+        - 8
+        - 10
+      text: Weeks 6, 8, 10
   - kind: assignment
     weight: 40
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

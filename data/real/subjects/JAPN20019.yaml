@@ -27,14 +27,30 @@ topics:
 assessment:
   - kind: participation
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: report
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

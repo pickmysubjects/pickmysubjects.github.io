@@ -21,12 +21,24 @@ assessment:
   - kind: project
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
   - kind: project
     weight: 60
     group: true
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for: []
 recommended:

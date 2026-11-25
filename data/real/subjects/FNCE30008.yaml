@@ -21,12 +21,30 @@ topics:
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 3
+      to: 7
+      text: From Week 3 to Week 7
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Week 14
   - kind: assignment
     weight: 35
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
 weekly_contact_hours: 3
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce30008

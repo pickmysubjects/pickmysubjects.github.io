@@ -24,10 +24,19 @@ assessment:
   - kind: assignment
     weight: 60
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 2.5
 min_attendance: 100
 breadth_for: []

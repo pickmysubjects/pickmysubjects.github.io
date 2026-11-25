@@ -16,14 +16,26 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: report
     weight: 30
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3.5
 breadth_for:
   - Bachelor of Arts

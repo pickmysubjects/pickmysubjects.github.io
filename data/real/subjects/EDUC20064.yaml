@@ -19,9 +19,16 @@ topics:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:

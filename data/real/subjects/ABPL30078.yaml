@@ -11,10 +11,25 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 1
+      to: 4
+      text: From Week 1 to Week 4
   - kind: assignment
     weight: 35
+    timing:
+      kind: week
+      from: 5
+      to: 8
+      text: From Week 5 to Week 8
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
 weekly_contact_hours: 3
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30078

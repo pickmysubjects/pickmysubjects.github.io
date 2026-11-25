@@ -13,15 +13,30 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: test
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 45
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 min_attendance: 80
 attendance_applies_to:

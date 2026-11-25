@@ -16,17 +16,37 @@ topics:
 assessment:
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: presentation
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

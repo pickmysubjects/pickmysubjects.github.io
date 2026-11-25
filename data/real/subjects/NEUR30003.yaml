@@ -21,8 +21,14 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/neur30003

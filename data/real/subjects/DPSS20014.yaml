@@ -11,12 +11,28 @@ assessment:
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
   - kind: presentation
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: assignment
     weight: 20
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/dpss20014
 source_year: 2027

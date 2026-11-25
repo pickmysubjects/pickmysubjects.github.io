@@ -42,12 +42,22 @@ assessment:
   - kind: quiz
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Week 7 or 8 (Assignment 1) and Week 11 or 12 (Assignment 2)
   - kind: exam
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for: []
 prescribed_texts: false

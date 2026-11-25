@@ -19,12 +19,26 @@ topics:
 assessment:
   - kind: quiz
     weight: 50
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: presentation
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

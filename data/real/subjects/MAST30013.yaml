@@ -39,14 +39,32 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 4
+      to: 10
+      text: From Week 4 to Week 10
   - kind: test
     weight: 13
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: project
     weight: 12
     group: true
+    timing:
+      kind: end
+      text: End of semester
   - kind: presentation
     weight: 5
     group: true
+    timing:
+      kind: end
+      text: End of semester
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4

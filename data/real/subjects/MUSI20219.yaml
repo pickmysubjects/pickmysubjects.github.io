@@ -18,12 +18,27 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

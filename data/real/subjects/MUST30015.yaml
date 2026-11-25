@@ -24,14 +24,26 @@ assessment:
   - kind: project
     weight: 20
     group: true
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: project
     weight: 40
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: report
     weight: 10
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 28.5
 min_attendance: 75
 breadth_for: []

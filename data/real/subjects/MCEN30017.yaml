@@ -25,12 +25,27 @@ recommended:
 assessment:
   - kind: participation
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
   - kind: test
     weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: participation
     weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen30017
 source_year: 2027
 verified_on: 2026-11-13

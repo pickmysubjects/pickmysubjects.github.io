@@ -13,15 +13,36 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
 min_attendance: 80
 weekly_contact_hours: 4
 attendance_applies_to:

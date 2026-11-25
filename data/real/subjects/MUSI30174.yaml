@@ -23,6 +23,9 @@ topics:
 assessment:
   - kind: participation
     weight: 100
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 2.5
 min_attendance: 100
 pass_fail: true

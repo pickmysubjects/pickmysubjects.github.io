@@ -22,6 +22,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 100
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 min_attendance: 100
 weekly_contact_hours: 2
 pass_fail: true

@@ -21,14 +21,32 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for:

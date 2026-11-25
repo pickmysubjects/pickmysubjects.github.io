@@ -28,16 +28,38 @@ topics:
 assessment:
   - kind: presentation
     weight: 10
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: presentation
     weight: 10
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

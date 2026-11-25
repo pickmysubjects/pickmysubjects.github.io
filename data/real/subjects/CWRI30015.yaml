@@ -23,10 +23,20 @@ topics:
 assessment:
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: participation
     weight: 60
+    timing:
+      kind: other
+      text: "Workshopping in Weeks 7-12; written output: examination period"
   - kind: assignment
     weight: 10
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

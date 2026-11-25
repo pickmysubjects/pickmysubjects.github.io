@@ -25,12 +25,26 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: assignment
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 3
 breadth_for: []
 prescribed_texts: true

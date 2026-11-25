@@ -31,13 +31,25 @@ topics:
 assessment:
   - kind: report
     weight: 10
+    timing:
+      kind: other
+      text: Week 4 (approx.)
   - kind: test
     weight: 20
+    timing:
+      kind: other
+      text: Week 7 (approx.)
   - kind: report
     weight: 50
     group: true
+    timing:
+      kind: other
+      text: From Week 8 to Week 14
   - kind: presentation
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for: []
 prescribed_texts: false

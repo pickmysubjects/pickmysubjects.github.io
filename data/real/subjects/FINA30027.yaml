@@ -24,12 +24,26 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: 4 Days after the end of teaching
   - kind: assignment
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 breadth_for: []
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/fina30027

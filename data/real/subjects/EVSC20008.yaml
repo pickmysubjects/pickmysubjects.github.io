@@ -27,10 +27,19 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Due 1 week after the field excursion
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: Due 5 weeks after field excursion
   - kind: report
     weight: 45
+    timing:
+      kind: other
+      text: Due 5 weeks after field excursion
 weekly_contact_hours: 1
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/evsc20008

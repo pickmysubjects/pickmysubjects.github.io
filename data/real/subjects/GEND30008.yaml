@@ -34,10 +34,19 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: During placement hours
   - kind: report
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/gend30008

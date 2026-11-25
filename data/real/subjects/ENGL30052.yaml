@@ -23,10 +23,19 @@ topics:
 assessment:
   - kind: project
     weight: 15
+    timing:
+      kind: other
+      text: Early-to-mid semester
   - kind: assignment
     weight: 70
+    timing:
+      kind: other
+      text: Mid-to-late semester
   - kind: presentation
     weight: 15
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 2.5
 breadth_for: []
 min_attendance: 80

@@ -21,11 +21,22 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Week 7 and end of Week 1 of Examination Period
   - kind: presentation
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/erth30002

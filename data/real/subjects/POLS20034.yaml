@@ -11,14 +11,14 @@ prerequisites:
   any:
     - points:
         min: 25
-        from: [POLS10001, POLS10003, INTS10001]
+        from: [ POLS10001, POLS10003, INTS10001 ]
     - all:
         - points:
             min: 12.5
-            from: [AHIS10001, ARTS10005, ARTS10006, CRIM10001, ENGL10002, HPSC10002, INDG10001, LANG10001, LING10002, PHIL10002, POLS10003, SOCI10001, ASIA10003, HIST10015]
+            from: [ AHIS10001, ARTS10005, ARTS10006, CRIM10001, ENGL10002, HPSC10002, INDG10001, LANG10001, LING10002, PHIL10002, POLS10003, SOCI10001, ASIA10003, HIST10015 ]
         - points:
             min: 12.5
-            from: [POLS10001, POLS10003, INTS10001]
+            from: [ POLS10001, POLS10003, INTS10001 ]
     - admission: GD-ARTS
       note: Admission into the GD-ARTS Graduate Diploma in Arts, GC-ARTS Graduate Certificate in Arts
 corequisites: none
@@ -32,11 +32,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Each week during the teaching period
   - kind: report
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for: []
 min_attendance: 80

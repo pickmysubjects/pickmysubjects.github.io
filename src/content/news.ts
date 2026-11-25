@@ -20,6 +20,67 @@ export interface NewsItem {
 
 export const NEWS: NewsItem[] = [
   {
+    date: '2026-11-25',
+    title: {
+      en: "Version 1.1.0: the This semester page",
+      'zh-CN': "1.1.0 上线：「本学期」页",
+      'zh-TW': "1.1.0 上線：「本學期」頁",
+      ja: "バージョン 1.1.0：「今学期」ページ",
+      ko: "1.1.0 버전: ‘이번 학기’ 페이지",
+      vi: "Bản 1.1.0: trang Học kỳ này",
+      ms: "Versi 1.1.0: halaman Semester ini",
+      id: "Versi 1.1.0: halaman Semester ini",
+      hi: "वर्ज़न 1.1.0: ‘यह सेमेस्टर’ पेज",
+    },
+    body: {
+      en: [
+        "The new This semester page tells you which week it is, what's due this week and the key dates coming up, with each subject's assessment timing as the Handbook lists it.",
+        "For subjects you've put marks into the final mark calculator, it shows what you have so far and what you need on the final for an H1. You can also add the semester's key dates to your phone's calendar.",
+        "And you can now add the site to your phone's home screen and open it with one tap.",
+      ],
+      'zh-CN': [
+        "新的「本学期」页会告诉你现在是第几周、这周要交什么、接下来有哪些重要日期，每门课的考核时间都按 Handbook 列出来。",
+        "在期末计算器填过成绩的课，这里会直接显示目前拿了多少分、想拿 H1 期末要考多少。你也可以把整个学期的重要日期加到手机日历。",
+        "还有，现在可以把网站装到手机桌面，一点就打开。",
+      ],
+      'zh-TW': [
+        "新的「本學期」頁會告訴你現在是第幾週、這週要交什麼、接下來有哪些重要日期，每門課的考核時間都按 Handbook 列出來。",
+        "在期末計算器填過成績的課，這裡會直接顯示目前拿了多少分、想拿 H1 期末要考多少。你也可以把整個學期的重要日期加到手機行事曆。",
+        "還有，現在可以把網站裝到手機桌面，一點就打開。",
+      ],
+      ja: [
+        "新しい「今学期」ページでは、今が第何週か、今週の課題、これからの重要日程がわかります。各科目の評価の時期も Handbook のとおりに並べています。",
+        "期末計算機に点数を入れた科目は、ここまでの点数と、H1 を取るのに期末で何点必要かがそのまま出ます。学期の重要日程をスマホのカレンダーに追加することもできます。",
+        "さらに、サイトをスマホのホーム画面に追加して、ワンタップで開けるようになりました。",
+      ],
+      ko: [
+        "새 ‘이번 학기’ 페이지에서 지금 몇 주차인지, 이번 주에 낼 과제, 다가오는 주요 일정을 볼 수 있어요. 과목별 평가 시기도 Handbook대로 정리했어요.",
+        "기말 계산기에 점수를 넣은 과목은 지금까지의 점수와 H1을 받으려면 기말에 몇 점이 필요한지 바로 보여 줘요. 학기 주요 일정을 휴대폰 캘린더에 추가할 수도 있어요.",
+        "그리고 이제 사이트를 휴대폰 홈 화면에 추가해 한 번에 열 수 있어요.",
+      ],
+      vi: [
+        "Trang Học kỳ này mới cho bạn biết đang là tuần mấy, tuần này cần nộp gì và các mốc quan trọng sắp tới, kèm thời gian đánh giá của từng môn theo Handbook.",
+        "Với những môn bạn đã nhập điểm vào máy tính điểm cuối kỳ, trang hiện luôn điểm hiện có và điểm thi cuối kỳ cần để đạt H1. Bạn cũng có thể thêm các mốc quan trọng của học kỳ vào lịch điện thoại.",
+        "Ngoài ra, giờ bạn có thể thêm trang vào màn hình chính điện thoại và mở bằng một chạm.",
+      ],
+      ms: [
+        "Halaman Semester ini yang baharu memberitahu minggu ke berapa sekarang, apa yang perlu dihantar minggu ini dan tarikh penting yang akan tiba, dengan masa penilaian setiap subjek seperti dalam Handbook.",
+        "Untuk subjek yang markahnya sudah anda isi dalam kalkulator markah akhir, ia terus menunjukkan markah setakat ini dan markah peperiksaan akhir yang perlu untuk H1. Anda juga boleh menambah tarikh penting semester ke kalendar telefon.",
+        "Dan kini anda boleh menambah laman ini ke skrin utama telefon dan membukanya dengan satu ketikan.",
+      ],
+      id: [
+        "Halaman Semester ini yang baru memberi tahu sekarang minggu ke berapa, apa yang harus dikumpulkan minggu ini, dan tanggal penting berikutnya, dengan waktu penilaian tiap mata kuliah sesuai Handbook.",
+        "Untuk mata kuliah yang nilainya sudah kamu isi di kalkulator nilai akhir, halaman ini langsung menampilkan nilaimu sejauh ini dan nilai ujian akhir yang dibutuhkan untuk H1. Kamu juga bisa menambahkan tanggal penting semester ke kalender ponsel.",
+        "Selain itu, sekarang situs ini bisa ditambahkan ke layar utama ponsel dan dibuka dengan sekali ketuk.",
+      ],
+      hi: [
+        "नया ‘यह सेमेस्टर’ पेज बताता है कि कौन-सा हफ़्ता चल रहा है, इस हफ़्ते क्या जमा करना है और आगे कौन-सी ज़रूरी तारीख़ें हैं, साथ में हर विषय के असेसमेंट का समय Handbook के अनुसार।",
+        "जिन विषयों के अंक आपने फ़ाइनल मार्क कैलकुलेटर में भरे हैं, उनके लिए यहीं दिखता है कि अब तक कितने अंक हैं और H1 के लिए फ़ाइनल में कितने चाहिए। सेमेस्टर की ज़रूरी तारीख़ें फ़ोन के कैलेंडर में भी जोड़ सकते हैं।",
+        "और अब आप साइट को फ़ोन की होम स्क्रीन पर जोड़कर एक टैप में खोल सकते हैं।",
+      ],
+    },
+  },
+  {
     date: '2026-11-14',
     title: {
       en: "Version 1.0.0 Released",

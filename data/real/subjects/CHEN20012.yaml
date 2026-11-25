@@ -24,21 +24,54 @@ non_allowed: []
 assessment:
   - kind: participation
     weight: 5
+    timing:
+      kind: week
+      from: 1
+      to: 4
+      text: From Week 1 to Week 4
   - kind: participation
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 2
+      to: 6
+      text: From Week 2 to Week 6
   - kind: presentation
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 prescribed_texts: false
 exam_book: closed

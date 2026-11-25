@@ -23,6 +23,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 100
+    timing:
+      kind: other
+      text: Due dates in each availability are determined by the coordinator.
 breadth_for: []
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri30022

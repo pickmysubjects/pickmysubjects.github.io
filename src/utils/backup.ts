@@ -1,12 +1,12 @@
 import { cleanCalc } from '../engine/finalCalc'
 import { cleanRevisionStore } from '../engine/revisionPlan'
-import { cleanPlans, cleanProfiles, cleanRated, cleanShortlist } from './sanitize'
+import { cleanPlans, cleanProfiles, cleanRated, cleanShortlist, cleanStringLists } from './sanitize'
 /**
- * A student's record, plans, rated and shortlisted subjects, final-calculator marks and revision plan live only in this browser. A
+ * A student's record, plans, rated and shortlisted subjects, final-calculator marks, revision plan and this-semester ticks live only in this browser. A
  * backup file lets them move to another browser or computer without anything
  * being uploaded.
  */
-const KEYS = ['sc:profiles', 'sc:plans', 'sc:rated', 'sc:shortlist', 'sc:finalCalc', 'sc:revision'] as const
+const KEYS = ['sc:profiles', 'sc:plans', 'sc:rated', 'sc:shortlist', 'sc:finalCalc', 'sc:revision', 'sc:semDone', 'sc:semHidden'] as const
 const APP = 'pickmysubjects'
 // Backups saved before the site was renamed from Subject Compass still restore.
 const OLD_APPS: readonly string[] = ['subject-compass']
@@ -46,7 +46,7 @@ export function restoreBackup(text: string): boolean {
   const saved = new Map<string, string | null>()
   try {
     // Put each part in shape before saving it, as reading it back would.
-    const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated, 'sc:shortlist': cleanShortlist, 'sc:finalCalc': cleanCalc, 'sc:revision': cleanRevisionStore }
+    const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated, 'sc:shortlist': cleanShortlist, 'sc:finalCalc': cleanCalc, 'sc:revision': cleanRevisionStore, 'sc:semDone': cleanStringLists, 'sc:semHidden': cleanStringLists }
     const parts = KEYS.flatMap((key) => (parsed.data[key] === undefined ? [] : [[key, JSON.stringify(CLEAN[key](parsed.data[key]))] as const]))
     for (const [key] of parts) saved.set(key, localStorage.getItem(key))
     for (const [key, value] of parts) localStorage.setItem(key, value)

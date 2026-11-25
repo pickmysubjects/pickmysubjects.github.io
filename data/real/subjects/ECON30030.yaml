@@ -22,13 +22,25 @@ topics:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: other
+      text: Week 6 or Week 7
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/econ30030
 source_year: 2027

@@ -16,11 +16,20 @@ non_allowed:
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 65
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem10004
 source_year: 2027

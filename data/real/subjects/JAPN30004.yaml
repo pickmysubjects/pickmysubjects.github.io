@@ -25,10 +25,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: assignment
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: project
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Biomedicine

@@ -35,16 +35,35 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: project
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
 categories:
   B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)
 breadth_for: []

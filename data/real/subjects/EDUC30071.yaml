@@ -18,11 +18,20 @@ topics:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: presentation
     weight: 35
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: report
     weight: 45
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:

@@ -18,12 +18,30 @@ non_allowed:
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 categories:
   B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)

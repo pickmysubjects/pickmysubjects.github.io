@@ -13,14 +13,33 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 5
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 5
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 40
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 6
 campus: Dookie
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biol10006

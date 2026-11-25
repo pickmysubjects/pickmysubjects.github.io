@@ -31,12 +31,25 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
   - kind: test
     weight: 15
     hurdle: true
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
   - kind: exam
     weight: 45
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 languages:
   - MATLAB
 handbook: https://handbook.unimelb.edu.au/2027/subjects/elen30012

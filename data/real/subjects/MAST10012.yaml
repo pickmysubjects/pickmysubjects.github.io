@@ -20,10 +20,19 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10012
 source_year: 2027

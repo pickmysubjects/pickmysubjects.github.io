@@ -13,15 +13,30 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: other
+      text: Week 3 or 4
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Week 4 or 5
   - kind: test
     weight: 25
+    timing:
+      kind: other
+      text: Week 7 or 8
   - kind: report
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Week 10 or 11
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri10046

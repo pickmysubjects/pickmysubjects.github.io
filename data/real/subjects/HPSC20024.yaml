@@ -18,10 +18,25 @@ topics:
 assessment:
   - kind: presentation
     weight: 40
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -13,10 +13,20 @@ non_allowed: []
 assessment:
   - kind: participation
     weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 33
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: exam
     weight: 37
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/erth20001

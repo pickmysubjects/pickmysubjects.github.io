@@ -32,18 +32,41 @@ assessment:
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: project
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biol30002

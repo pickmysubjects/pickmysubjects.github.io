@@ -50,17 +50,39 @@ assessment:
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4

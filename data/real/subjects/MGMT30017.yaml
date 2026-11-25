@@ -23,11 +23,20 @@ assessment:
   - kind: presentation
     weight: 40
     group: true
+    timing:
+      kind: other
+      text: End of the in-country period
   - kind: report
     weight: 40
     group: true
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: presentation
     weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
 breadth_for: []
 min_attendance: 100
 attendance_applies_to:

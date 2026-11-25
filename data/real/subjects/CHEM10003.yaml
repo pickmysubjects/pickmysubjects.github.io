@@ -43,11 +43,20 @@ non_allowed:
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: other
+      text: Weekly starting in week 1
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 65
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem10003
 source_year: 2027

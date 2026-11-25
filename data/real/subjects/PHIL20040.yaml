@@ -16,8 +16,15 @@ topics:
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

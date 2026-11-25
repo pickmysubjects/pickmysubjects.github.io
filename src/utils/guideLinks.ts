@@ -34,5 +34,6 @@ export const URLS = {
   WAIVER: 'https://students.unimelb.edu.au/course-admin/subject-requisite-waivers',
   WAIVER_LIMITS: 'https://students.unimelb.edu.au/course-admin/subject-requisite-waivers/faculty-or-school-restrictions-on-requisite-waivers',
   QUOTA: 'https://students.unimelb.edu.au/course-admin/quota-subjects',
+  ORIENTATION: 'https://students.unimelb.edu.au/new-students/melbourne-orientation',
   EMPLOYABILITY: 'https://students.unimelb.edu.au/careers/employability-week',
 } as const

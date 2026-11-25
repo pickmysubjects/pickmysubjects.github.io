@@ -24,10 +24,22 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: weeks
+      weeks:
+        - 5
+        - 10
+      text: Week 5 & Week 10
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
 min_attendance: 80
 attendance_applies_to:
   - practicals

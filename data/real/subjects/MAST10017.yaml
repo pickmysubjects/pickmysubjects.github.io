@@ -13,10 +13,20 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 5.5
 campus: Dookie
 prescribed_texts: true

@@ -6,6 +6,7 @@ import TermText from './TermText.vue'
 import NextDate from './NextDate.vue'
 import GuideCallout from './GuideCallout.vue'
 import GuideLinks from './GuideLinks.vue'
+import GuideSee from './GuideSee.vue'
 import { URLS } from '@/utils/guideLinks'
 
 // The "semester" category of the basics guide (see utils/guideSections).
@@ -13,6 +14,30 @@ const { t } = useI18n()
 </script>
 
 <template>
+  <!-- O-Week: https://students.unimelb.edu.au/new-students/melbourne-orientation (checked 2026-11-19).
+       Due dates on Canvas: the systems page (svc-canvas). Census, hurdles and special consideration are
+       explained further down this page; this topic only points to them. -->
+  <GuideItem id="first-week" :title="t('guide.weekTitle')" :short="t('guide.weekShort')">
+    <ul class="plain">
+      <li><TermText :text="t('guide.weekOrient')" /></li>
+      <li><TermText :text="t('guide.weekCanvas')" /></li>
+      <li><TermText :text="t('guide.weekClasses')" /></li>
+      <li><TermText :text="t('guide.weekCensus')" /></li>
+    </ul>
+    <NextDate :kinds="['orientation', 'census']" />
+    <div class="week-see">
+      <GuideSee to="timetable" />
+      <GuideSee to="drop" />
+      <GuideSee to="hurdles" />
+      <GuideSee to="special-consideration" />
+    </div>
+    <GuideCallout>
+      <p>{{ t('guide.weekSem') }}</p>
+      <p class="week-actions"><a class="button button-accent" :href="link('this-semester/')">{{ t('sem.title') }}</a></p>
+      <p class="note">{{ t('guide.weekApp') }} <a class="app-link" :href="link('about/#get-app')">{{ t('guide.weekAppLink') }}</a></p>
+    </GuideCallout>
+    <GuideLinks :links="[{ href: URLS.ORIENTATION, label: t('guide.weekOrientLink') }]" />
+  </GuideItem>
   <GuideItem id="special-consideration" :title="t('guide.specTitle')" :short="t('guide.specShort')">
     <GuideCallout kind="pull"><TermText :text="t('guide.specWhen')" /></GuideCallout>
     <ul class="plain">
@@ -108,3 +133,25 @@ const { t } = useI18n()
     <GuideLinks :links="[{ href: URLS.FAILING, label: t('guide.failLink') }]" />
   </GuideItem>
 </template>
+
+<style scoped>
+.week-see {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+
+.app-link {
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.app-link:hover {
+  text-decoration: underline;
+}
+
+.week-actions {
+  margin: 12px 0 0;
+}
+</style>

@@ -18,10 +18,21 @@ topics:
 assessment:
   - kind: report
     weight: 30
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: presentation
     weight: 50
+    timing:
+      kind: other
+      text: Timeline due in week 11, IOA during the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

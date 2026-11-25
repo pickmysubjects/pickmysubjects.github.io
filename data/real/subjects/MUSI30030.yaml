@@ -20,14 +20,31 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 1
+      to: 2
+      text: From Week 1 to Week 2
   - kind: presentation
     weight: 10
+    timing:
+      kind: other
+      text: Week 2 of the intensive teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: other
+      text: Week 2 of the intensive teaching period
   - kind: report
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 12
 breadth_for:
   - Bachelor of Arts

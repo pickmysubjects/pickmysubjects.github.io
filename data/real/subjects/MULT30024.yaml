@@ -10,25 +10,54 @@ non_allowed: []
 assessment:
   - kind: project
     weight: 5
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: project
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

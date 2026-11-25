@@ -19,12 +19,26 @@ topics:
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: report
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: presentation
     weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 breadth_for: []
 prescribed_texts: false

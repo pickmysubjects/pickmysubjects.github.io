@@ -19,14 +19,29 @@ assessment:
   - kind: project
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: project
     weight: 40
     hurdle: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: project
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: project
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 min_attendance: 80
 attendance_applies_to:

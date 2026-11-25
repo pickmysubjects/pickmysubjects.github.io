@@ -29,12 +29,28 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: Weeks 2-12
   - kind: assignment
     weight: 40
     group: true
+    timing:
+      kind: weeks
+      weeks:
+        - 4
+        - 6
+        - 8
+        - 10
+      text: Weeks 4,6,8,10
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 prescribed_texts: false
 exam_book: open

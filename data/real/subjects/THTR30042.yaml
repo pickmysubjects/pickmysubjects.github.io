@@ -17,10 +17,19 @@ assessment:
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 categories:
   B-DES: design

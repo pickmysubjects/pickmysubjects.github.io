@@ -26,9 +26,16 @@ assessment:
   - kind: project
     weight: 80
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2.5
 min_attendance: 75
 breadth_for: []

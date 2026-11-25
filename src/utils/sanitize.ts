@@ -224,3 +224,11 @@ export function cleanMyRatings(x: unknown): Record<string, MyRating> {
   }
   return out
 }
+
+/** Lists of strings by key (the semester page's ticked tasks and hidden subjects, by term). */
+export function cleanStringLists(raw: unknown): Record<string, string[]> {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}
+  const out: Record<string, string[]> = {}
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) if (Array.isArray(v)) out[k] = v.filter((x): x is string => typeof x === 'string')
+  return out
+}

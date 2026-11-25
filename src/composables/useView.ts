@@ -7,7 +7,7 @@ import { VIEW_LOADERS } from '@/views/loaders'
 import { movedGuideAnchor } from '@/utils/guideSections'
 import { majorsAnchorKind } from '@/utils/majorsAddress'
 
-export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'clubs', 'changes', 'tools', 'compare', 'news'] as const
+export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'clubs', 'changes', 'tools', 'compare', 'news', 'this-semester'] as const
 export type View = (typeof VIEWS)[number]
 
 export interface Route {

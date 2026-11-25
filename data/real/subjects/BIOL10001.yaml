@@ -41,10 +41,24 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: Fortnightly during the teaching period
   - kind: test
     weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
