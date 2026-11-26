@@ -2752,6 +2752,7 @@ export const zhCN: Messages = {
     step: '第 {n} 步，共 3 步',
     qCourse: "你读的是哪个本科学位？",
     qCourseMaster: '你读的是哪个硕士课程？',
+    qSpecMaster: '你选哪个专业方向？',
     scopeMaster: '只包括授课型硕士。学分减免由学校决定。',
     scopeShort: "目前只规划本科学位。",
     doubleShort: "不支持双学位。",

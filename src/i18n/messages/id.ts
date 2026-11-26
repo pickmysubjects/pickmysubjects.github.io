@@ -2752,6 +2752,7 @@ export const id: Messages = {
     step: 'Langkah {n} dari 3',
     qCourse: "Kamu di program S1 apa?",
     qCourseMaster: 'Kamu kuliah di program master yang mana?',
+    qSpecMaster: 'Peminatan yang mana?',
     scopeMaster: 'Hanya master berbasis perkuliahan. Universitas yang memutuskan kredit apa pun.',
     scopeShort: "Hanya untuk gelar sarjana (S1).",
     doubleShort: "Gelar ganda tidak direncanakan.",

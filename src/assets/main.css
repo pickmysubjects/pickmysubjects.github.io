@@ -1373,6 +1373,67 @@ html {
   }
 }
 
+/* ---------- Master's side: the same field, purple-led (violet, indigo, lilac, periwinkle) ---------- */
+:root[data-level='master'] {
+  background-color: #e6e0f8;
+  background-image:
+    radial-gradient(55% 24% at 0% 20%, rgb(178 150 245 / 75%), transparent 65%),
+    radial-gradient(50% 24% at 100% 32%, rgb(157 170 255 / 70%), transparent 65%),
+    radial-gradient(40% 20% at 40% 48%, rgb(139 108 240 / 42%), transparent 65%),
+    radial-gradient(45% 22% at 74% 64%, rgb(150 100 220 / 38%), transparent 65%),
+    radial-gradient(55% 24% at 6% 80%, rgb(190 180 250 / 75%), transparent 65%),
+    radial-gradient(45% 22% at 96% 82%, rgb(196 168 245 / 62%), transparent 65%),
+    linear-gradient(180deg, #e9e0fa 0%, #e0e3fa 35%, #ece2fa 70%, #e9e0fa 100%);
+}
+
+:root[data-level='master'] .backdrop {
+  background:
+    radial-gradient(circle 110px at 7% 24%, #9a7cf5, rgb(122 80 214 / 85%) 30%, rgb(122 80 214 / 45%) 62%, rgb(122 80 214 / 0%) 100%),
+    radial-gradient(circle 86px at 95% 46%, #8f9cff, rgb(88 96 224 / 85%) 30%, rgb(88 96 224 / 45%) 62%, rgb(88 96 224 / 0%) 100%),
+    radial-gradient(circle 64px at 72% 9%, #d2bcff, rgb(170 130 250 / 85%) 30%, rgb(170 130 250 / 45%) 62%, rgb(170 130 250 / 0%) 100%),
+    radial-gradient(circle 210px at 7% 24%, rgb(150 120 245 / 55%), rgb(150 120 245 / 18%) 55%, transparent 100%),
+    radial-gradient(circle 170px at 95% 46%, rgb(125 140 250 / 55%), rgb(125 140 250 / 18%) 55%, transparent 100%),
+    radial-gradient(circle 130px at 72% 9%, rgb(200 170 255 / 55%), rgb(200 170 255 / 18%) 55%, transparent 100%),
+    radial-gradient(55% 45% at 0% 0%, rgb(178 150 245 / 75%), transparent 70%),
+    radial-gradient(50% 50% at 100% 22%, rgb(157 170 255 / 70%), transparent 70%),
+    radial-gradient(40% 36% at 38% 42%, rgb(139 108 240 / 45%), transparent 70%),
+    radial-gradient(45% 40% at 72% 66%, rgb(150 100 220 / 40%), transparent 70%),
+    radial-gradient(55% 45% at 10% 95%, rgb(190 180 250 / 75%), transparent 70%),
+    radial-gradient(45% 40% at 95% 100%, rgb(196 168 245 / 65%), transparent 70%),
+    linear-gradient(160deg, #e9e0fa 0%, #e0e3fa 50%, #ece2fa 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-level='master'] {
+    background-color: #0f0c22;
+    background-image:
+      radial-gradient(55% 24% at 0% 20%, rgb(110 70 200 / 55%), transparent 65%),
+      radial-gradient(50% 24% at 100% 32%, rgb(70 80 200 / 55%), transparent 65%),
+      radial-gradient(40% 20% at 40% 48%, rgb(120 70 200 / 35%), transparent 65%),
+      radial-gradient(45% 22% at 74% 64%, rgb(130 70 190 / 35%), transparent 65%),
+      radial-gradient(55% 24% at 6% 80%, rgb(70 60 160 / 45%), transparent 65%),
+      radial-gradient(45% 22% at 96% 82%, rgb(80 90 200 / 45%), transparent 65%),
+      linear-gradient(180deg, #110c24 0%, #0d0f26 35%, #130d24 70%, #110c24 100%);
+  }
+
+  :root[data-level='master'] .backdrop {
+    background:
+      radial-gradient(circle 110px at 7% 24%, #6a48c4, rgb(66 40 130 / 85%) 30%, rgb(66 40 130 / 45%) 62%, rgb(66 40 130 / 0%) 100%),
+      radial-gradient(circle 86px at 95% 46%, #4f58c0, rgb(40 46 122 / 85%) 30%, rgb(40 46 122 / 45%) 62%, rgb(40 46 122 / 0%) 100%),
+      radial-gradient(circle 64px at 72% 9%, #7a5cb0, rgb(70 50 120 / 85%) 30%, rgb(70 50 120 / 45%) 62%, rgb(70 50 120 / 0%) 100%),
+      radial-gradient(circle 210px at 7% 24%, rgb(120 80 220 / 45%), rgb(120 80 220 / 12%) 55%, transparent 100%),
+      radial-gradient(circle 170px at 95% 46%, rgb(90 100 230 / 45%), rgb(90 100 230 / 12%) 55%, transparent 100%),
+      radial-gradient(circle 130px at 72% 9%, rgb(140 100 210 / 40%), rgb(140 100 210 / 10%) 55%, transparent 100%),
+      radial-gradient(55% 45% at 0% 0%, rgb(110 70 200 / 55%), transparent 70%),
+      radial-gradient(50% 50% at 100% 22%, rgb(70 80 200 / 55%), transparent 70%),
+      radial-gradient(40% 36% at 38% 42%, rgb(120 70 200 / 35%), transparent 70%),
+      radial-gradient(45% 40% at 72% 66%, rgb(130 70 190 / 35%), transparent 70%),
+      radial-gradient(55% 45% at 10% 95%, rgb(70 60 160 / 45%), transparent 70%),
+      radial-gradient(45% 40% at 95% 100%, rgb(80 90 200 / 45%), transparent 70%),
+      linear-gradient(160deg, #110c24 0%, #0d0f26 50%, #130d24 100%);
+  }
+}
+
 /* Plain-text version of a page written at build time; the app replaces it on start. */
 .prerender {
   max-width: 760px;

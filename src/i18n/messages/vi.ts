@@ -2752,6 +2752,7 @@ export const vi: Messages = {
     step: 'Bước {n}/3',
     qCourse: "Bạn học chương trình cử nhân nào?",
     qCourseMaster: 'Bạn đang học chương trình thạc sĩ nào?',
+    qSpecMaster: 'Bạn chọn chuyên ngành hẹp nào?',
     scopeMaster: 'Chỉ thạc sĩ theo môn học. Việc miễn điểm do trường quyết định.',
     scopeShort: "Hiện chỉ lập kế hoạch cho bằng cử nhân.",
     doubleShort: "Chưa hỗ trợ bằng kép.",

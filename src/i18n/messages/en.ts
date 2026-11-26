@@ -2758,6 +2758,7 @@ export const en = {
     step: 'Step {n} of 3',
     qCourse: "Which bachelor's degree are you in?",
     qCourseMaster: "Which master's course are you in?",
+    qSpecMaster: 'Which specialisation?',
     scopeMaster: "Coursework master's only. The University decides any credit.",
     scopeShort: "Bachelor degrees only.",
     doubleShort: "Double degrees aren't planned.",

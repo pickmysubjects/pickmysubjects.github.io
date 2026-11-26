@@ -2752,6 +2752,7 @@ export const ms: Messages = {
     step: 'Langkah {n} daripada 3',
     qCourse: "Anda dalam ijazah sarjana muda apa?",
     qCourseMaster: 'Anda dalam kursus sarjana yang mana?',
+    qSpecMaster: 'Pengkhususan yang mana?',
     scopeMaster: 'Sarjana kerja kursus sahaja. Universiti yang menentukan sebarang kredit.',
     scopeShort: "Ijazah sarjana muda sahaja.",
     doubleShort: "Ijazah berganda tidak dirancang.",

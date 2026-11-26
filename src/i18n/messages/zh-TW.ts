@@ -2752,6 +2752,7 @@ export const zhTW: Messages = {
     step: '第 {n} 步，共 3 步',
     qCourse: "你讀的是哪個學士學位？",
     qCourseMaster: '你讀的是哪個碩士課程？',
+    qSpecMaster: '你選哪個專業方向？',
     scopeMaster: '只包括授課型碩士。學分抵免由學校決定。',
     scopeShort: "目前只規劃學士學位。",
     doubleShort: "不支援雙學位。",

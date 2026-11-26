@@ -2752,6 +2752,7 @@ export const ja: Messages = {
     step: 'ステップ {n} / 3',
     qCourse: "どの学士課程に在籍していますか？",
     qCourseMaster: 'どの修士課程に在籍していますか？',
+    qSpecMaster: 'どの専攻分野にしますか？',
     scopeMaster: 'コースワーク修士のみ。単位認定は大学が決めます。',
     scopeShort: "学士課程のみ対応しています。",
     doubleShort: "ダブルディグリーには対応していません。",

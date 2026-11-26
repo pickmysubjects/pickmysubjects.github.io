@@ -2752,6 +2752,7 @@ export const ko: Messages = {
     step: '{n}/3단계',
     qCourse: "어떤 학사 과정인가요?",
     qCourseMaster: '어느 석사 과정에 다니나요?',
+    qSpecMaster: '어느 세부 전공을 하나요?',
     scopeMaster: '수업형 석사만 해당합니다. 학점 인정은 대학이 결정합니다.',
     scopeShort: "학사 학위만 지원합니다.",
     doubleShort: "복수 학위는 지원하지 않습니다.",

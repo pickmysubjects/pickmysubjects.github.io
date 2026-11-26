@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStudyLevel } from '@/composables/useStudyLevel'
+import { isMasterCourse, useStudyLevel } from '@/composables/useStudyLevel'
 import { thisYear as calendarYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, onMounted, shallowRef, watch } from 'vue'
@@ -170,6 +170,8 @@ function chooseCourse(c: Course): void {
   set({ course: c.code, courseYear: start.year, startYear: start.year, startPeriod: start.period, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
 }
 const { isMaster } = useStudyLevel()
+// A coursework master's: no majors, minors or diplomas; one specialisation is required.
+const masterCourse = computed(() => isMasterCourse(draft.value.course))
 </script>
 
 <template>
@@ -247,6 +249,22 @@ const { isMaster } = useStudyLevel()
       <p v-if="draft.international && draft.load !== undefined && draft.load < FULL_LOAD" class="visa-note" role="note" data-testid="load-visa">
         {{ t('wizard.loadVisaShort') }}<InfoTip>{{ t('guide.rsl8202') }} {{ t('guide.rslUnder') }} <a :href="link('guide/international/#rsl')">{{ t('guide.rslTitle') }}</a></InfoTip>
       </p>
+    </div>
+
+    <div v-else-if="masterCourse" class="q">
+      <h2 class="q-title">{{ t('wizard.qSpecMaster') }}</h2>
+      <div class="spec-chips" role="group" :aria-label="t('wizard.qSpecMaster')">
+        <button
+          v-for="sp in specs"
+          :key="sp.id"
+          type="button"
+          class="chip spec-chip"
+          :aria-pressed="draft.specialisation === sp.id"
+          @click="set({ specialisation: sp.id })"
+        >
+          {{ sp.title }}
+        </button>
+      </div>
     </div>
 
     <div v-else class="q">
@@ -339,7 +357,7 @@ const { isMaster } = useStudyLevel()
       <button v-if="step < 2" class="button button-accent" type="button" :disabled="step === 0 && !draft.course" @click="step++">
         {{ t('wizard.next') }} <ArrowRight :size="16" aria-hidden="true" />
       </button>
-      <button v-else class="button button-accent" type="button" @click="finish">
+      <button v-else class="button button-accent" type="button" :disabled="masterCourse && !draft.specialisation" @click="finish">
         {{ t('wizard.build') }}
       </button>
     </footer>
