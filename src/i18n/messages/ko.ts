@@ -1448,6 +1448,7 @@ export const ko: Messages = {
     graduatePrereq: "선수 학습",
     graduateNoCodes: "Handbook에는 과목이 아니라 학습 분야만 나와 있어 '필수' 과목을 표시하지 않았습니다. 과정의 입학 요건과 비교해 확인하세요.",
     graduateSource: "과정 입학 요건 (Handbook)",
+    graduateOnSite: "석사 쪽에서 세부 전공 보기",
     back: "모든 직업",
     heading: "되고 싶은 직업: {job}",
     seoTitle: "{job}이(가) 되려면? 멜버른대 전공과 과목",

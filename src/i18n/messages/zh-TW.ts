@@ -1448,6 +1448,7 @@ export const zhTW: Messages = {
     graduatePrereq: "先修課程",
     graduateNoCodes: "手冊只寫了學習領域，沒有寫具體科目，所以這裡沒有標「必修」的科目。請對照課程的入學要求檢查你的選課。",
     graduateSource: "課程入學要求（手冊）",
+    graduateOnSite: "在碩士那邊看它的專業方向",
     back: "所有職業",
     heading: "我想當：{job}",
     seoTitle: "想當{job}要選什麼主修、修什麼課？墨大主修與課程",

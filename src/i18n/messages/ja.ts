@@ -1448,6 +1448,7 @@ export const ja: Messages = {
     graduatePrereq: "前提となる学修",
     graduateNoCodes: "Handbook は科目ではなく学修分野を示しているため、「必須」の科目は付けていません。課程の入学要件と照らし合わせて確認してください。",
     graduateSource: "課程の入学要件（Handbook）",
+    graduateOnSite: "修士側で専攻分野を見る",
     back: "すべての仕事",
     heading: "なりたい仕事：{job}",
     seoTitle: "{job}になるには？メルボルン大学の専攻と科目",

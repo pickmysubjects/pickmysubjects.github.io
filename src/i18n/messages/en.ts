@@ -1454,6 +1454,7 @@ export const en = {
     graduatePrereq: "Prerequisite studies",
     graduateNoCodes: "The Handbook names study areas, not subjects, so no subject is marked Required. Check your choices against the course's entry requirements.",
     graduateSource: "Course entry requirements (Handbook)",
+    graduateOnSite: "See its specialisations on the Master's side",
     back: "All careers",
     heading: "I want to be: {job}",
     seoTitle: "Becoming {job}: UniMelb majors and subjects",

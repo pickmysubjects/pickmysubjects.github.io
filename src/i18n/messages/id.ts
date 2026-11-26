@@ -1448,6 +1448,7 @@ export const id: Messages = {
     graduatePrereq: "Studi prasyarat",
     graduateNoCodes: "Handbook menyebut bidang studi, bukan mata kuliah, jadi tidak ada mata kuliah yang ditandai Wajib. Cocokkan pilihanmu dengan syarat masuk program.",
     graduateSource: "Syarat masuk program (Handbook)",
+    graduateOnSite: "Lihat peminatannya di sisi Master",
     back: "Semua karier",
     heading: "Saya ingin jadi: {job}",
     seoTitle: "Jadi {job}: jurusan dan matkul di UniMelb",

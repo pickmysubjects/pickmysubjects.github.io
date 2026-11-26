@@ -1448,6 +1448,7 @@ export const ms: Messages = {
     graduatePrereq: "Pengajian prasyarat",
     graduateNoCodes: "Handbook menamakan bidang pengajian, bukan subjek, jadi tiada subjek ditanda Wajib. Semak pilihan anda dengan syarat kemasukan kursus.",
     graduateSource: "Syarat kemasukan kursus (Handbook)",
+    graduateOnSite: "Lihat pengkhususannya di bahagian Sarjana",
     back: "Semua kerjaya",
     heading: "Saya mahu jadi: {job}",
     seoTitle: "Cara jadi {job}: major dan subjek di UniMelb",

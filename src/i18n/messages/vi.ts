@@ -1448,6 +1448,7 @@ export const vi: Messages = {
     graduatePrereq: "Phần học tiên quyết",
     graduateNoCodes: "Handbook chỉ nêu lĩnh vực học, không nêu môn cụ thể, nên không môn nào được đánh dấu Bắt buộc. Hãy đối chiếu lựa chọn của bạn với điều kiện nhập học của khóa.",
     graduateSource: "Điều kiện nhập học của khóa (Handbook)",
+    graduateOnSite: "Xem các chuyên ngành hẹp bên thạc sĩ",
     back: "Tất cả nghề",
     heading: "Tôi muốn làm: {job}",
     seoTitle: "Muốn làm {job}: học ngành gì ở UniMelb",

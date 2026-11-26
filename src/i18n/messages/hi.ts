@@ -1448,6 +1448,7 @@ export const hi: Messages = {
     graduatePrereq: "पूर्व-आवश्यक पढ़ाई",
     graduateNoCodes: "Handbook विषय नहीं, पढ़ाई के क्षेत्र बताती है, इसलिए किसी विषय को ज़रूरी नहीं दिखाया गया है। अपने विषय कोर्स की प्रवेश शर्तों से मिलाकर देखें।",
     graduateSource: "कोर्स की प्रवेश शर्तें (Handbook)",
+    graduateOnSite: "मास्टर वाले हिस्से में इसकी विशेषज्ञताएँ देखें",
     back: "सभी करियर",
     heading: "{job} बनना है",
     seoTitle: "{job} कैसे बनें: UniMelb में मेजर और सब्जेक्ट",

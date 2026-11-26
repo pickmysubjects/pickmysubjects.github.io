@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { pickText } from '@/utils/majorPick'
 import EmployerSkills from '@/components/careers/EmployerSkills.vue'
 import { viewYear } from '@/engine/dataYear'
@@ -97,6 +98,18 @@ const sections = computed(() =>
     .filter((x) => x.show)
     .map(({ id, title }) => ({ id, title, sub: false })),
 )
+// The graduate course as the site plans it (MC-IT runs as entry programs: the 200-point one).
+const { level: studyLevel } = useStudyLevel()
+const masterCode = computed(() => {
+  const code = target.value?.graduate?.course
+  if (!code) return ''
+  const own = data.value.courses.map((c) => c.code).filter((c) => c === code || new RegExp(`^${code}-\\d+$`).test(c))
+  return own.sort().reverse()[0] ?? ''
+})
+function openMaster(): void {
+  studyLevel.value = 'master'
+  location.assign(link(`majors/?degree=${masterCode.value}`))
+}
 </script>
 
 <template>
@@ -131,6 +144,8 @@ const sections = computed(() =>
           <a class="official" :href="target.graduate.source" target="_blank" rel="noopener">
             <GraduationCap :size="15" aria-hidden="true" />{{ t('careerPath.graduateSource') }} · {{ target.graduate.checked }} <ExternalLink :size="13" aria-hidden="true" />
           </a>
+          <!-- A master's the site plans: its specialisations on the master's side. -->
+          <p v-if="masterCode"><button type="button" class="button button-quiet" @click="openMaster">{{ t('careerPath.graduateOnSite') }}</button></p>
         </SubjectSection>
 
         <SubjectSection v-if="majors.length" id="c-majors" :title="t('careerPath.majorsTitle')" :short="majors.length > 1 ? t('careerPath.pickMajor') : t('careerPath.onlyMajor')">

@@ -1448,6 +1448,7 @@ export const zhCN: Messages = {
     graduatePrereq: "先修课程",
     graduateNoCodes: "手册只写了学习领域，没有写具体科目，所以这里没有标“必修”的科目。请对照课程的入学要求检查你的选课。",
     graduateSource: "课程入学要求（手册）",
+    graduateOnSite: "在硕士那边看它的专业方向",
     back: "全部职业",
     heading: "我想当：{job}",
     seoTitle: "想当{job}选什么专业、选什么课？墨大专业与课程",
