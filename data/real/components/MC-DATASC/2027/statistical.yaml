@@ -9,6 +9,8 @@ requirements:
   - all: [MAST90104, COMP90041, COMP90038, COMP20008, INFO90002]
   - choose: { points: 12.5, from: [MAST90122, MAST90125] }
   - choose: { points: 12.5, from: [MAST90014, MAST90019, MAST90027, MAST90051, MAST90059, MAST90081, MAST90082, MAST90103, MAST90111, MAST90112, MAST90122, MAST90125, MAST90144] }
+# Placed here with 25+ points of Statistics Foundation done: MAST90105 is covered.
+assumed_done: [MAST90105]
 limits:
   - max: 12.5
     from: [ISYS90035, GEOM90006, GEOM90007, GEOM90008, SCIE90034]

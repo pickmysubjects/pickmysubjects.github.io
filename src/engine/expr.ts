@@ -76,7 +76,7 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
   if ('points' in expr) return evaluatePoints(expr.points, expr.points.concurrent ? { ...ctx, completed: ctx.sameTerm ?? ctx.completed } : ctx)
   if ('admission' in expr) {
     if (!ctx.admittedCourse) return { status: 'unknown', unmet: [describe(expr)] }
-    return ctx.admittedCourse === expr.admission ? ok() : { status: 'fail', unmet: [describe(expr)] }
+    return admits(ctx.admittedCourse, expr.admission) ? ok() : { status: 'fail', unmet: [describe(expr)] }
   }
   if ('average' in expr) return evaluateAverage(expr.average, ctx)
   if ('wam' in expr) return evaluateWam(expr.wam.min, ctx)
@@ -89,9 +89,22 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
   // as text: decide it like an admission rule when we know the student's course.
   const courses = admissionCourses(expr.manual)
   if (courses.length && ctx.admittedCourse) {
-    return courses.includes(ctx.admittedCourse) ? ok() : { status: 'fail', unmet: [`admission to ${courses.join(' / ')}`] }
+    return courses.some((c) => admits(ctx.admittedCourse!, c)) ? ok() : { status: 'fail', unmet: [`admission to ${courses.join(' / ')}`] }
   }
   return { status: 'unknown', unmet: [`check manually: ${expr.manual}`] }
+}
+
+/**
+ * Whether a student admitted to `admitted` meets "admission into `code`": the same course, or one
+ * of its entry programs (MC-IT-200 is the 200-point entry into MC-IT; we keep each as its own course).
+ */
+export function admits(admitted: string, code: string): boolean {
+  return admitted === code || (admitted.startsWith(code + '-') && /^\d+$/.test(admitted.slice(code.length + 1)))
+}
+
+/** A coursework master's (Handbook codes MC-…), as opposed to a bachelor's or diploma. */
+export function isGraduateCourse(code: string): boolean {
+  return code.startsWith('MC-')
 }
 
 /** Course codes in a free-text admission condition ("Admission into … B-SCIEXT …"), else none. */
@@ -356,7 +369,7 @@ export function simplifyFor(field: ReqField, course: string): ReqField {
   if (field === 'none' || field === 'unknown' || !course) return field
   const MET = 'met' as const
   const walk = (e: ReqExpr): ReqExpr | typeof MET | null => {
-    if ('admission' in e) return e.admission === course ? MET : null
+    if ('admission' in e) return admits(course, e.admission) ? MET : null
     // A graduate subject (COMP90038) is no way in for a bachelor's student.
     if ('subject' in e && course.startsWith('B-') && /^[A-Z]{4}9/.test(e.subject)) return null
     // A course code as a whole word: "B-SCI" isn't in "B-SCIEXT".

@@ -133,7 +133,7 @@ export const ja: Messages = {
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   termFull: '{year}年 {period}',
   countsAs: { title: "どの枠で数えるか", handbook: "Handbook どおり", help: "学部の承認がある時だけ使い、書面の承認を保管してください。", changed: "{n} 科目の数え方を変更しました。", undo: "すべて元に戻す", changedShort: "自分で変更", cardLabel: "{category}として数える（自分で変更）" },
-  category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
+  category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修', course: '課程の科目' },
   plan: {
     saveImage: "画像で保存",
     pastTag: "履修済み",

@@ -1,16 +1,16 @@
 import { forCourse } from './forCourse'
-import { creditCodes, creditPoints, isCreditCode, withCredit } from './credit'
+import { creditCodes, creditPoints, isCreditCode, withAssumedDone, withCredit } from './credit'
 import { offeredIn, periodsFor, termKey } from './availability'
 import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaSplit, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth, withCountsAs } from './courseRules'
 import { careerGoal } from './careerGoal'
-import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
+import { admits, evaluateField, isGraduateCourse, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { nextEntry, standardTerms } from './plan'
 import { DIPLOMA_ONLY, HEAVY_PICK_COST, exactWam, isFail, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
-import type { ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
+import type { ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, ReqField, Subject } from './schema'
 import { PERIODS } from './schema'
 import { doneBefore, isYearLong, recordedLoads, secondHalfOf, termLoad, termShare } from './yearLong'
 
@@ -36,6 +36,8 @@ export interface GenerateInput {
   /** With useShortTerms: electives may also go in summer and winter when points are short. */
   fillShortTerms?: boolean
   maxTerms?: number
+  /** Options of a "choose" group to pass over while others can fill it (a retry for a shorter plan). */
+  avoid?: string[]
   /**
    * No major yet, but a field in mind: the majors still in the running. The first-year subjects
    * at least half of them need are planned, so none is closed off.
@@ -106,7 +108,8 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   // Periods as this course's students see them (breadth-only periods for breadth subjects).
   // A subject the student's major won't let count as breadth is never picked to fill breadth.
   // Credit from elsewhere stands in as completed subjects, so every sum and cap counts it.
-  const input = { ...raw, data: withDiplomaCredit(withCredit(withCountsAs(withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)), raw.course, raw.countsAs), raw.profile.credit, raw.course), raw) }
+  const assumed = [...(findCourse(raw.data, raw.course, raw.courseYear)?.assumedDone ?? []), ...planComponentIds(raw).flatMap((id) => findComponent(raw.data, id)?.assumedDone ?? [])]
+  const input = { ...raw, data: withDiplomaCredit(withCredit(withCountsAs(withBarredBreadth(withAssumedDone(forCourse(raw.data, raw.course), assumed), raw.course, planComponentIds(raw)), raw.course, raw.countsAs), raw.profile.credit, raw.course), raw) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
   const shortfall = (r: GenerateResult) =>
@@ -129,6 +132,22 @@ function generateFrom(raw: GenerateInput): GenerateResult {
     const extra = terms - base
     longer.notes.push(note('extraTerms', { n: extra }, `Planned ${extra} extra semester(s) so every required subject fits.`))
     result = longer
+  }
+  // A coursework master's runs two to four semesters, so a chosen option that can only go late
+  // (Semester 1 only, after a prerequisite) costs a whole semester: try once more passing over the
+  // chosen options that landed in the extra semesters, at the usual length.
+  if (findCourse(input.data, input.course, input.courseYear)?.listedOnly && semesters(result) > base) {
+    const late = result.plan.terms.slice(base).flatMap((t) => t.subjects)
+    const chosen = new Set(result.notes.filter((n) => n.key === 'chose').map((n) => String(n.params.code)))
+    const avoid = late.filter((c) => chosen.has(c))
+    // A few rounds: the next option may not fit either (INFO30005 needing more first).
+    for (let round = 0; round < 4 && avoid.length; round++) {
+      const shorter = buildPlan({ ...input, avoid: [...(input.avoid ?? []), ...avoid] })
+      if (shortfall(shorter) === 0) return finishEarlier(input, shorter, shortfall)
+      const stuck = shorter.unplaced.map((u) => u.code).filter((c) => !avoid.includes(c))
+      if (!stuck.length) break
+      avoid.push(...stuck)
+    }
   }
   // A longer plan whose last semester holds only a subject or two: summer/winter may still save it.
   return shortfall(result) === 0 ? finishEarlier(input, result, shortfall) : result
@@ -261,7 +280,7 @@ function buildPlan(given: GenerateInput): GenerateResult {
   let course = plannedCourse(given)
   const notes: Note[] = []
   const completed = [...passedCodes(given.profile.results, given.data.subjects), ...creditCodes(given.profile.credit)]
-  const done = new Set(completed)
+  const done = new Set([...completed, ...(findCourse(given.data, given.course, given.courseYear)?.assumedDone ?? [])])
   const load = loadOf(given, course)
 
   // needs: subjects the generator added as prerequisites for each required subject.
@@ -759,7 +778,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const byHand = (c: string) => {
       const sub = data.subjects[c]
       if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
-      return evaluateField(sub.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: input.course, ...majorsOf(input) }).status === 'unknown' ? 1 : 0
+      // The final-stretch timing condition isn't by hand: the plan meets it by placing the subject late.
+      const field = stripTiming(sub.prerequisites)
+      return evaluateField(field, { completed: everything, subjects: data.subjects, admittedCourse: input.course, ...majorsOf(input) }).status === 'unknown' ? 1 : 0
     }
     // An option whose prerequisites would bring in three or more subjects not otherwise planned (a
     // finance elective resting on three more maths subjects) after the ones that don't.
@@ -786,7 +807,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       }
       return n
     }
-    const extra = (c: string) => (adds(c) >= 3 ? adds(c) : adds(c) > 0 && chain(c) >= 4 ? chain(c) : 0)
+    // A coursework master's runs two to four semesters: even one subject brought in first can add
+    // a semester, so any option needing something more comes after the ones that don't.
+    const extra = (c: string) => (course?.listedOnly ? adds(c) : adds(c) >= 3 ? adds(c) : adds(c) > 0 && chain(c) >= 4 ? chain(c) : 0)
     // Each subject an option brings in first takes an elective's place (and, in a full plan, can
     // push a cap over): it has to fit clearly better than an option that needs nothing more.
     const fit = (c: string) => (score.get(c) ?? -1) - EXTRA_SUBJECT_COST * adds(c)
@@ -805,6 +828,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       if (have >= req.choose.points) break
       if (done.has(c) || required.has(c)) continue
       if (strict && overCap(c)) continue
+      if (strict && input.avoid?.includes(c)) continue
       if (!runsDuringPlan(data.subjects[c], input.startYear)) continue
       // Nor one whose prerequisites nothing that runs can meet (ACCT30001 needs ACCT20008,
       // which isn't running): it would only end up unplaced.
@@ -967,7 +991,10 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
       // For a first-year subject, waiting on another subject (even one already in the plan)
       // costs a semester, so the school result most students have wins over it.
       const c = cost(o) + assumed(e) + (firstYear ? o.length : 0)
-      if (c < bestCost || (c === bestCost && !bestShared && o.length > 0 && shared(o))) [best, bestCost, bestShared] = [o, c, o.length > 0 && shared(o)]
+      // Of equal cost, needing nothing first (admission to the course already meets it: COMP90042 for
+      // MC-IT) beats any subject, shared or not; it never has to wait a semester.
+      const free = (x: string[] | null) => x !== null && x.length === 0
+      if (c < bestCost || (c === bestCost && !free(best) && (free(o) || (!bestShared && o.length > 0 && shared(o))))) [best, bestCost, bestShared] = [o, c, o.length > 0 && shared(o)]
     }
     return best ?? []
   }
@@ -986,11 +1013,11 @@ function needsFirst(code: string, target: string, data: Dataset, depth = 4): boo
 
 /** Would adding this subject break a non-allowed pair with one already completed or required? */
 function needsOtherAdmission(e: ReqExpr, course: string): boolean {
-  if ('admission' in e) return e.admission !== course
+  if ('admission' in e) return !admits(course, e.admission)
   // "Admission into … Master of IT" written out: a graduate route, not one for this student.
-  if ('manual' in e) return /\badmission into|\bselection of\b/i.test(e.manual) && !new RegExp(`\\b${course}\\b`).test(e.manual)
-  // A graduate subject (COMP90038) is never an undergraduate's way in.
-  if ('subject' in e) return /^[A-Z]{4}9/.test(e.subject)
+  if ('manual' in e) return /\badmission into|\bselection of\b/i.test(e.manual) && !new RegExp(`\\b${course.replace(/-\d+$/, '')}\\b`).test(e.manual)
+  // A graduate subject (COMP90038) is never an undergraduate's way in; a master's student's it is.
+  if ('subject' in e) return !isGraduateCourse(course) && /^[A-Z]{4}9/.test(e.subject)
   if ('all' in e) return e.all.some((x) => needsOtherAdmission(x, course))
   if ('any' in e) return e.any.every((x) => needsOtherAdmission(x, course))
   return false
@@ -1404,9 +1431,42 @@ function placeShortTerms(terms: PlanTerm[], pending: string[], completed: string
   }
 }
 
+/**
+ * "No more than 75 points short of degree completion" (a final project, COMP90082): the most
+ * points that may still be left, this subject included, when it is taken; else undefined.
+ */
+export function finalStretch(s: Subject | undefined): number | undefined {
+  if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return undefined
+  const m = /no more than (\d+(?:\.\d+)?) points short of (?:degree|course) completion/i.exec(JSON.stringify(s.prerequisites))
+  return m ? Number(m[1]) : undefined
+}
+
+/** The requirement without its final-stretch timing conditions (met by where the plan puts it). */
+function stripTiming(field: ReqField): ReqField {
+  if (field === 'none' || field === 'unknown') return field
+  const walk = (e: ReqExpr): ReqExpr | null => {
+    if (onlyTiming(e)) return null
+    if ('all' in e) { const kept = e.all.map(walk).filter((x): x is ReqExpr => x !== null); return kept.length ? { all: kept } : null }
+    if ('any' in e) { const kept = e.any.map(walk); return kept.some((x) => x === null) ? null : { any: kept as ReqExpr[] } }
+    return e
+  }
+  return walk(field) ?? 'none'
+}
+
+/** Whether a manual condition is only that timing one, which the plan meets by placing it late. */
+function onlyTiming(e: ReqExpr): boolean {
+  if ('manual' in e) return /^\s*no more than \d+(?:\.\d+)? points short of (?:degree|course) completion\.?\s*$/i.test(e.manual)
+  return false
+}
+
 function progressionAllows(code: string, course: Course, taken: string[], data: Dataset): boolean {
   const s = data.subjects[code]
   if (!s) return true
+  const stretch = finalStretch(s)
+  if (stretch !== undefined) {
+    const done = taken.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+    if (course.totalPoints - done > stretch) return false
+  }
   for (const rule of course.rules) {
     if (rule.kind !== 'progression' || s.level !== rule.beforeLevel) continue
     const pts = taken.reduce((sum, c) => {
@@ -1467,9 +1527,10 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
   // Year level follows the points already completed, so mid-degree students are placed correctly.
   const yearLevel = Math.min(3, Math.floor(sumPoints([...ctx.before], data, course.code, {}) / 100) + 1)
   for (const { rule, gap } of deficits) {
-    const levels = rule.level !== undefined ? [rule.level] : [yearLevel, ...[1, 2, 3].filter((l) => l !== yearLevel)]
+    // A listed-only course (a coursework master's) has no year levels to climb: any subject it lists.
+    const levels: (number | undefined)[] = rule.level !== undefined ? [rule.level] : course.listedOnly ? [undefined] : [yearLevel, ...[1, 2, 3].filter((l) => l !== yearLevel)]
     for (const level of levels) {
-      if (level > yearLevel) continue
+      if (level !== undefined && level > yearLevel) continue
       // When level 1 can't cover the rest of this requirement (e.g. breadth: at most
       // 25 of its 50 points at level 1), a level-1 pick must lead on to a higher level.
       const cap = pointRules(course).find((r) => r.max !== undefined && r.level === 1 && r.category === rule.category)

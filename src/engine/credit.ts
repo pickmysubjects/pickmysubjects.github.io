@@ -1,4 +1,4 @@
-import type { Dataset, Subject } from './schema'
+import type { Dataset, ReqExpr, ReqField, Subject } from './schema'
 
 /**
  * Credit (advanced standing) the University granted for study elsewhere — TAFE, another
@@ -100,6 +100,30 @@ export function withCredit(data: Dataset, credit: readonly Credit[] | undefined,
   credit.forEach((c, i) => {
     subjects[codes[i]!] = standIn(codes[i]!, c, course)
   })
+  const view = { ...data, subjects }
+  byKey.set(key, view)
+  return view
+}
+
+const assumedCache = new WeakMap<Dataset, Map<string, Dataset>>()
+
+/**
+ * The dataset with these subjects' names in every prerequisite and corequisite read as met (an
+ * entry program's credit standing in for them: MC-IT 150/100-point and the Foundation subjects).
+ * They add no points; only what they unlock changes.
+ */
+export function withAssumedDone(data: Dataset, codes: readonly string[]): Dataset {
+  if (!codes.length) return data
+  const key = [...codes].sort().join(',')
+  let byKey = assumedCache.get(data)
+  if (!byKey) assumedCache.set(data, (byKey = new Map()))
+  const hit = byKey.get(key)
+  if (hit) return hit
+  const set = new Set(codes)
+  const walk = (e: ReqExpr): ReqExpr => ('subject' in e && set.has(e.subject) ? { all: [] } : 'all' in e ? { all: e.all.map(walk) } : 'any' in e ? { any: e.any.map(walk) } : e)
+  const field = (f: ReqField): ReqField => (f === 'none' || f === 'unknown' ? f : walk(f))
+  const subjects: Record<string, Subject> = {}
+  for (const [code, s] of Object.entries(data.subjects)) subjects[code] = { ...s, prerequisites: field(s.prerequisites), corequisites: field(s.corequisites) }
   const view = { ...data, subjects }
   byKey.set(key, view)
   return view

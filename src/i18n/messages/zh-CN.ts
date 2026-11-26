@@ -133,7 +133,7 @@ export const zhCN: Messages = {
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   termFull: '{year} {period}',
   countsAs: { title: "算作", handbook: "按 Handbook", help: "只在学院批准后使用，并保留书面批准。", changed: "你改了 {n} 门课的算法。", undo: "全部撤销", changedShort: "你改的", cardLabel: "算作{category}（你改的）" },
-  category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', music: '音乐', 'fine-arts': '艺术', agriculture: '农业', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
+  category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', music: '音乐', 'fine-arts': '艺术', agriculture: '农业', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修', course: '课程内' },
   plan: {
     saveImage: "存为图片",
     pastTag: "已修",

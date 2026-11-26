@@ -37,3 +37,36 @@ describe("master's course rules", () => {
     expect(noCapstone.capstone).not.toBe('ok')
   })
 })
+
+describe("master's plans", () => {
+  const plan = async (course: string, specialisation: string) => {
+    const { generatePlan } = await import('../src/engine/generate')
+    const { checkCourse } = await import('../src/engine/courseRules')
+    const data = realData()
+    const profile = { results: [], skills: { programming: 4 }, interests: ['ai'], goal: 'balanced' } as never
+    const r = generatePlan({ data, profile, course, courseYear: 2027, specialisation, startYear: 2027, startPeriod: 'semester-1' })
+    const codes = r.plan.terms.flatMap((t) => t.subjects)
+    const check = checkCourse({ ...r.plan, course, courseYear: 2027, specialisation } as never, data)
+    return { r, codes, data, check }
+  }
+
+  for (const [course, spec, terms] of [
+    ['MC-IT-200', 'mc-it-200-artificial-intelligence', 4],
+    ['MC-IT-150', 'mc-it-150-cyber-security', 3],
+    ['MC-IT-100', 'mc-it-100-artificial-intelligence', 2],
+    // HCI in the 100-point program from Semester 1 can't fit two semesters: ISYS90039 runs only in
+    // Semester 1 after SWEN90016, COMP30019 and COMP90018 only in Semester 2 (2027 Handbook).
+    ['MC-IT-100', 'mc-it-100-human-computer-interaction', 3],
+    ['MC-IT-200', 'mc-it-200-no-specialisation', 4],
+    ['MC-DATASC', 'mc-datasc-statistical', 4],
+    ['MC-DATASC', 'mc-datasc-computational', 4],
+    ['MC-DATASC', 'mc-datasc-foundational', 4],
+  ] as const) {
+    it(`${course} ${spec}: only course subjects, full-time length, every rule met`, async () => {
+      const { r, codes, data, check } = await plan(course, spec)
+      expect(codes.filter((c) => data.subjects[c]?.categories[course] !== 'course')).toEqual([])
+      expect(r.plan.terms.filter((t) => t.subjects.length).length).toBe(terms)
+      expect(check.statuses.filter((s) => s.status !== 'ok').map((s) => `${s.ruleId}: ${s.detail}`)).toEqual([])
+    })
+  }
+})

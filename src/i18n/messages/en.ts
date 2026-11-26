@@ -138,7 +138,7 @@ export const en = {
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
   countsAs: { title: "Counts as", handbook: "As in the Handbook", help: "Use this only if your faculty approved it; keep their written approval.", changed: "You changed how subjects count in this plan ({n}).", undo: "Undo all", changedShort: "changed by you", cardLabel: "Counts as {category} (changed by you)" },
-  category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core' },
+  category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core', course: 'course' },
   plan: {
     saveImage: "Save as image",
     pastTag: "Done",

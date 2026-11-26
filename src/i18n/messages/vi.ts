@@ -133,7 +133,7 @@ export const vi: Messages = {
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
   termFull: '{period} năm {year}',
   countsAs: { title: "Tính là", handbook: "Theo Handbook", help: "Chỉ dùng khi khoa đã duyệt; hãy giữ văn bản duyệt.", changed: "Bạn đã đổi cách tính {n} môn trong kế hoạch này.", undo: "Hoàn tác tất cả", changedShort: "bạn đã đổi", cardLabel: "Tính là {category} (bạn đã đổi)" },
-  category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', music: 'âm nhạc', 'fine-arts': 'nghệ thuật', agriculture: 'nông nghiệp', 'oral-health': 'sức khỏe răng miệng', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
+  category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', music: 'âm nhạc', 'fine-arts': 'nghệ thuật', agriculture: 'nông nghiệp', 'oral-health': 'sức khỏe răng miệng', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc', course: 'trong chương trình' },
   plan: {
     saveImage: "Lưu thành ảnh",
     pastTag: "Đã học",

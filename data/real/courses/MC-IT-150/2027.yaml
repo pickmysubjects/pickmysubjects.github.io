@@ -9,12 +9,17 @@ total_points: 150
 standard_load: 50
 # Not shown to students until the master's planner is ready (1.2.0).
 listed: false
+listed_only: true
+categories: [course]
+# The credit this program gives stands in for the 200-point program's Foundation subjects.
+assumed_done: [COMP90041, COMP90038, COMP90007, INFO90002]
 entry_note: mcit150
 handbook: https://handbook.unimelb.edu.au/2027/courses/mc-it/course-structure
 verified_on: 2026-11-26 # structure read from the 2027 Handbook course and component pages
 rules:
   - id: total
     kind: points
+    category: course
     min: 150
     description: 150 points in total
   - id: specialisation

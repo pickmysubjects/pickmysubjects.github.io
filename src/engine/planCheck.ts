@@ -1,6 +1,6 @@
 import { offeredIn } from './availability'
 import { creditCodes, withCredit } from './credit'
-import { findCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds } from './courseRules'
+import { findComponent, findCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds } from './courseRules'
 import { planRoles } from './roles'
 import { evaluateField, referencedSubjects } from './expr'
 import type { Issue, Plan } from './plan'
@@ -23,7 +23,7 @@ export function checkTerms(plan: Plan, given: Dataset, standardLoad = 50): Issue
   const data = withCredit(given, plan.credit, plan.course)
   // A lighter load the student chose (part-time); the course's standard one says nothing new.
   const chosen = plan.load !== undefined && plan.load < standardLoad ? plan.load : undefined
-  const seen = new Set([...plan.completed, ...creditCodes(plan.credit)])
+  const seen = new Set([...plan.completed, ...creditCodes(plan.credit), ...(findCourse(data, plan.course, plan.courseYear)?.assumedDone ?? []), ...planComponentIds(plan).flatMap((id) => findComponent(data, id)?.assumedDone ?? [])])
   const everywhere = new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])
   // Subjects the student's course has closed to them (B-COM's ACCT10002).
   const closed = new Set(findCourse(data, plan.course, plan.courseYear)?.closed ?? [])

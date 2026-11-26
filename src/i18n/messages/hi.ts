@@ -133,7 +133,7 @@ export const hi: Messages = {
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
   termFull: '{period} {year}',
   countsAs: { title: "किसमें गिना जाए", handbook: "Handbook के अनुसार", help: "इसे तभी इस्तेमाल करें जब फ़ैकल्टी ने मंज़ूरी दी हो; लिखित मंज़ूरी संभालकर रखें।", changed: "आपने इस प्लान में {n} सब्जेक्ट की गिनती बदली है।", undo: "सब पहले जैसा करें", changedShort: "आपने बदला", cardLabel: "{category} में गिना गया (आपने बदला)" },
-  category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', music: 'संगीत', 'fine-arts': 'ललित कला', agriculture: 'कृषि', 'oral-health': 'ओरल हेल्थ', breadth: 'Breadth', core: 'अनिवार्य' },
+  category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', music: 'संगीत', 'fine-arts': 'ललित कला', agriculture: 'कृषि', 'oral-health': 'ओरल हेल्थ', breadth: 'Breadth', core: 'अनिवार्य', course: 'कोर्स का' },
   plan: {
     saveImage: "इमेज के रूप में सेव करें",
     pastTag: "पूरा",

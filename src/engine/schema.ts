@@ -282,7 +282,7 @@ export const subjectFileSchema = z
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
     // 'diploma-only' is never in the data: the plan generator sets it on a diploma's subjects (DIPLOMA_ONLY).
-    categories: z.record(z.string(), z.enum(['science', 'commerce', 'arts', 'design', 'music', 'fine-arts', 'agriculture', 'oral-health', 'breadth', 'core', 'diploma-only'])).default({}),
+    categories: z.record(z.string(), z.enum(['science', 'commerce', 'arts', 'design', 'music', 'fine-arts', 'agriculture', 'oral-health', 'breadth', 'core', 'diploma-only', 'course'])).default({}),
     skills: z.array(z.enum(SKILLS)).default([]),
     topics: z.array(z.enum(TOPICS)).default([]),
     // Semester version from the Handbook; weights add up to 100.
@@ -618,6 +618,12 @@ export const courseFileSchema = z
     // Subjects this course's students can't count (closed to new students): they get no category
     // for it, so suggestions and the planner leave them out.
     closed: z.array(subjectCode).default([]),
+    // Only the subjects its rules and components name count (a coursework master's): they get the
+    // category `course`, every other subject none, so plans never fill up with unrelated ones.
+    listed_only: z.boolean().default(false),
+    // Subjects an entry program's credit stands in for (MC-IT 150/100-point: the Foundation
+    // subjects): they meet prerequisites as if passed, but add no points.
+    assumed_done: z.array(subjectCode).default([]),
     // False while a course is still being entered: its data is checked, but students can't pick it yet.
     listed: z.boolean().default(true),
     // A course that runs on another's majors, minors and subject categories (B-SCIEXTD: B-SCI's),
@@ -640,6 +646,8 @@ export const courseFileSchema = z
     standardLoad: c.standard_load,
     categories: c.categories,
     areaCategories: c.area_categories,
+    listedOnly: c.listed_only,
+    assumedDone: c.assumed_done,
     closed: c.closed,
     listed: c.listed,
     basedOn: c.based_on,
@@ -739,6 +747,9 @@ export const componentFileSchema = z
       .min(2)
       .optional(),
     limits: z.array(componentLimit).default([]),
+    // Subjects students admitted to this component have already covered (MC-DATASC's Statistical
+    // Data Science: the Statistics Foundation MAST90105): met for prerequisites, no points.
+    assumed_done: z.array(subjectCode).default([]),
     handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
     // First commencement year whose students can no longer choose it (still shown to earlier ones).
@@ -766,6 +777,7 @@ export const componentFileSchema = z
     points: c.points,
     requiresMajor: c.requires_major,
     notWith: c.not_with,
+    assumedDone: c.assumed_done,
     noShareLevels: c.no_share_levels,
     requirements: (c.routes ? c.routes[0]!.requirements : c.requirements) as 'unknown' | ComponentReq[],
     routes: c.routes as { title: string; note?: string; requirements: ComponentReq[]; limits?: ComponentLimit[] }[] | undefined,
