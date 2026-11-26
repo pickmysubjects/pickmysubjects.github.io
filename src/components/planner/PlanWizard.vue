@@ -209,7 +209,7 @@ const adviceFor = (code: string) => advice.value.find((a) => a.course === code)
         >
           <span>
             <!-- An entry program the background points to gets the tag; a Data Science stream is a line only. -->
-            <span v-if="adviceFor(c.code) && !adviceFor(c.code)!.stream" class="likely">{{ t('entryAdvice.likely') }}</span>
+            <span v-if="adviceFor(c.code) && !adviceFor(c.code)!.stream && !adviceFor(c.code)!.info" class="likely">{{ t('entryAdvice.likely') }}</span>
             {{ c.title }}
             <span v-if="adviceFor(c.code)" class="intl-hint likely-why">{{ t(`entryAdvice.${adviceFor(c.code)!.reason}`) }}</span>
             <!-- The entry conditions, unless the line above already says why this one. -->

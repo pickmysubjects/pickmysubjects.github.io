@@ -51,6 +51,7 @@ export const zhTW: Messages = {
     "ds-datascience": "資料科學背景：任何專業方向，可能抵免 50 學分",
     "ds-mixed": "混合背景：Foundational、Statistical 或 Computational",
     "ds-foundation": "基礎背景：只能選 Foundational Data Science",
+    seCredit: "你的學士可能抵免最多 100 學分",
   },
   level: { bachelor: "大學部", master: "碩士", label: "學歷層級" },
   search: {

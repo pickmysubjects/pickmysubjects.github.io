@@ -51,6 +51,7 @@ export const hi: Messages = {
     "ds-datascience": "डेटा साइंस स्ट्रीम: कोई भी विशेषज्ञता, शायद 50 पॉइंट क्रेडिट",
     "ds-mixed": "मिश्रित स्ट्रीम: Foundational, Statistical या Computational",
     "ds-foundation": "फ़ाउंडेशन स्ट्रीम: केवल Foundational Data Science",
+    seCredit: "आपकी स्नातक डिग्री से 100 पॉइंट तक क्रेडिट मिल सकता है",
   },
   level: { bachelor: "स्नातक", master: "मास्टर्स", label: "पढ़ाई का स्तर" },
   search: {

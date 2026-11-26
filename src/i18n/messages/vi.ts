@@ -51,6 +51,7 @@ export const vi: Messages = {
     "ds-datascience": "Nhóm khoa học dữ liệu: chuyên ngành hẹp nào cũng được, có thể miễn 50 điểm",
     "ds-mixed": "Nhóm hỗn hợp: Foundational, Statistical hoặc Computational",
     "ds-foundation": "Nhóm nền tảng: chỉ Foundational Data Science",
+    seCredit: "Bằng cử nhân của bạn có thể được miễn tối đa 100 điểm",
   },
   level: { bachelor: "Cử nhân", master: "Thạc sĩ", label: "Bậc học" },
   search: {

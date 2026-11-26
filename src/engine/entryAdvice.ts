@@ -35,6 +35,8 @@ export interface EntryAdvice {
   reason: string
   /** MC-DATASC: the background stream (i18n key under `entryAdvice.stream.`). */
   stream?: 'statistics' | 'computing' | 'datascience' | 'mixed' | 'foundation'
+  /** Only a line of information (a credit the course may give), not a pick among programs. */
+  info?: boolean
 }
 
 // The Foundation subjects each course names (2027 Handbook).
@@ -94,6 +96,16 @@ function dataStream(data: Dataset, b: Background, rec?: UniMelbRecord): EntryAdv
 }
 
 /**
+ * MC-SOFTENG: up to 100 points of credit for a UniMelb Computing and Software Systems major, or a
+ * cognate Bachelor of Engineering, with a WAM of 65 (Handbook "Advanced standing"). Else nothing.
+ */
+function softengCredit(b: Background, rec?: UniMelbRecord): EntryAdvice | null {
+  const unimelb = b.where === 'unimelb' && !!rec && rec.wam !== undefined && rec.wam >= 65 && rec.majors.some((m) => /computing and software systems/i.test(m))
+  const elsewhere = b.where === 'other' && (b.area === 'computing' || b.area === 'both' || b.area === 'engineering') && !!b.wam65 && !!b.fourYear
+  return unimelb || elsewhere ? { course: 'MC-SOFTENG', reason: 'seCredit', info: true } : null
+}
+
+/**
  * For each master's course family the site plans, what the background points to. A family not
  * known here (rules not written yet) gets nothing.
  */
@@ -102,6 +114,8 @@ export function entryAdvice(data: Dataset, b: Background, rec?: UniMelbRecord): 
   const out: EntryAdvice[] = []
   if (has('MC-IT-200')) out.push(itProgram(b, rec))
   if (has('MC-DATASC')) out.push(dataStream(data, b, rec))
+  const se = has('MC-SOFTENG') ? softengCredit(b, rec) : null
+  if (se) out.push(se)
   return out
 }
 

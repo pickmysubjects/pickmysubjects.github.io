@@ -51,6 +51,7 @@ export const ko: Messages = {
     "ds-datascience": "데이터 사이언스 배경: 모든 세부 전공 가능, 50학점 인정 가능성",
     "ds-mixed": "혼합 배경: Foundational, Statistical 또는 Computational",
     "ds-foundation": "기초 배경: Foundational Data Science만 가능",
+    seCredit: "학사 과정으로 최대 100학점 인정 가능",
   },
   level: { bachelor: "학부", master: "석사", label: "과정" },
   search: {

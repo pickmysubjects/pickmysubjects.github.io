@@ -51,6 +51,7 @@ export const zhCN: Messages = {
     "ds-datascience": "数据科学背景：任何专业方向，可能减免 50 学分",
     "ds-mixed": "混合背景：Foundational、Statistical 或 Computational",
     "ds-foundation": "基础背景：只能选 Foundational Data Science",
+    seCredit: "你的本科可能减免最多 100 学分",
   },
   level: { bachelor: "本科", master: "硕士", label: "学历层次" },
   search: {

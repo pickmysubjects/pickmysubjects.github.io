@@ -51,6 +51,7 @@ export const ms: Messages = {
     "ds-datascience": "Aliran Sains Data: mana-mana pengkhususan, mungkin kredit 50 mata",
     "ds-mixed": "Aliran Campuran: Foundational, Statistical atau Computational",
     "ds-foundation": "Aliran Asas: Foundational Data Science sahaja",
+    seCredit: "Ijazah sarjana muda anda mungkin memberi kredit hingga 100 mata",
   },
   level: { bachelor: "Sarjana muda", master: "Sarjana", label: "Peringkat pengajian" },
   search: {

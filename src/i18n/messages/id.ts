@@ -51,6 +51,7 @@ export const id: Messages = {
     "ds-datascience": "Aliran Sains Data: peminatan apa pun, mungkin kredit 50 poin",
     "ds-mixed": "Aliran Campuran: Foundational, Statistical, atau Computational",
     "ds-foundation": "Aliran Dasar: hanya Foundational Data Science",
+    seCredit: "Gelar sarjanamu mungkin memberi kredit hingga 100 poin",
   },
   level: { bachelor: "Sarjana", master: "Magister", label: "Jenjang studi" },
   search: {

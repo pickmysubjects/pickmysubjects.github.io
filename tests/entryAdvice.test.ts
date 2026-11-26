@@ -35,4 +35,12 @@ describe('entry advice for coursework masters', () => {
     expect(ds(entryAdvice(data, { where: 'unimelb' }, { passed: ['SWEN20003'], majors: [] }))?.stream).toBe('foundation')
     expect(streamSpecialisations('foundation')).toEqual(['mc-datasc-foundational'])
   })
+
+  it('MC-SOFTENG: a credit line for a UniMelb CSS major or a four-year computing degree, WAM 65+', () => {
+    const se = (a: ReturnType<typeof entryAdvice>) => a.find((x) => x.course === 'MC-SOFTENG')
+    expect(se(entryAdvice(data, { where: 'unimelb' }, { passed: [], wam: 70, majors: ['Computing and Software Systems'] }))).toMatchObject({ reason: 'seCredit', info: true })
+    expect(se(entryAdvice(data, { where: 'unimelb' }, { passed: [], wam: 70, majors: ['Data Science'] }))).toBeUndefined()
+    expect(se(entryAdvice(data, { where: 'other', area: 'computing', wam65: true, fourYear: true }))?.reason).toBe('seCredit')
+    expect(se(entryAdvice(data, { where: 'other', area: 'computing', wam65: true }))).toBeUndefined()
+  })
 })

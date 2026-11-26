@@ -56,6 +56,7 @@ export const en = {
     "ds-datascience": "Data Science stream: any specialisation, maybe 50 points of credit",
     "ds-mixed": "Mixed stream: Foundational, Statistical or Computational",
     "ds-foundation": "Foundation stream: Foundational Data Science only",
+    seCredit: "Your bachelor's may give up to 100 points of credit",
   },
   level: { bachelor: "Bachelor's", master: "Master's", label: "Study level" },
   search: {

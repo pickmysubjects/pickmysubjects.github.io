@@ -51,6 +51,7 @@ export const ja: Messages = {
     "ds-datascience": "データサイエンス・ストリーム：どの専攻分野も可、50単位認定の可能性",
     "ds-mixed": "ミックス・ストリーム：Foundational・Statistical・Computational",
     "ds-foundation": "ファウンデーション・ストリーム：Foundational Data Science のみ",
+    seCredit: "学士課程により最大100単位の単位認定の可能性",
   },
   level: { bachelor: "学部", master: "修士", label: "課程" },
   search: {
