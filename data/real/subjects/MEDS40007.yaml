@@ -1,0 +1,53 @@
+code: MEDS40007
+title: Introduction to Medical Research
+level: 4
+points: 50
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: Admission into the null Bachelor of Medical Science (Degree with Honours) This subject is not available for students admitted in any other courses.
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: presentation
+    weight: 9
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 18
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: assignment
+    weight: 3
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: project
+    weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 12.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/meds40007
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,37 @@
+code: ELEN90066
+title: Embedded System Design
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - ELEN20006
+    - ELEN30014
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: project
+    weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90066
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
