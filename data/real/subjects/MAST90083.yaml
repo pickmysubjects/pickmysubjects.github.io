@@ -19,6 +19,7 @@ corequisites: none
 non_allowed: []
 skills:
   - statistics
+  - maths
   - programming
   - data
 topics:
