@@ -399,6 +399,7 @@ export const ko: Messages = {
     componentUnknown: '{title}: 구성 미정리',
     componentDone: '{title} 이수 완료',
     componentMissing: '{title}: {missing}',
+    componentTooEarly: "{title}: {codes}은(는) 과정 {year}년차에 들어야 해요",
     requirementMissing: '{missing}',
     missingSubjects: '남은 과목: {codes}',
     choosePoints: '{have} / {need}학점 ({codes} 중 선택)',

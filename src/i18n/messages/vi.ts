@@ -399,6 +399,7 @@ export const vi: Messages = {
     componentUnknown: '{title}: chưa nhập cấu trúc',
     componentDone: '{title} đã hoàn thành',
     componentMissing: '{title}: {missing}',
+    componentTooEarly: "{title}: {codes} phải học vào năm {year} của chương trình",
     requirementMissing: '{missing}',
     missingSubjects: 'còn thiếu {codes}',
     choosePoints: '{have} / {need} tín chỉ (chọn từ {codes})',

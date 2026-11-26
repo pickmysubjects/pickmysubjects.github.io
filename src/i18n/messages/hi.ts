@@ -399,6 +399,7 @@ export const hi: Messages = {
     componentUnknown: '{title}: संरचना अभी जोड़ी नहीं गई',
     componentDone: '{title} पूरा',
     componentMissing: '{title}: {missing}',
+    componentTooEarly: "{title}: {codes} कोर्स के वर्ष {year} में होने चाहिए",
     requirementMissing: '{missing}',
     missingSubjects: 'बाकी: {codes}',
     choosePoints: '{have} / {need} पॉइंट ({codes} में से चुनें)',

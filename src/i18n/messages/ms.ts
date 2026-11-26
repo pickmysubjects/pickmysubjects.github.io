@@ -399,6 +399,7 @@ export const ms: Messages = {
     componentUnknown: '{title}: struktur belum dimasukkan',
     componentDone: '{title} lengkap',
     componentMissing: '{title}: {missing}',
+    componentTooEarly: "{title}: {codes} mesti diambil pada tahun {year} kursus",
     requirementMissing: '{missing}',
     missingSubjects: 'belum diambil: {codes}',
     choosePoints: '{have} / {need} mata (pilih daripada {codes})',

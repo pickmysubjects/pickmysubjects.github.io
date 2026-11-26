@@ -336,6 +336,16 @@ function buildPlan(given: GenerateInput): GenerateResult {
   // recommended order, with "some flexibility": earlier years' subjects are placed first, but a
   // later one may come early when its chain needs it (SWEN90016 before a Semester 1-only SWEN90009).
   const yearOf = new Map((course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' && r.year ? r.subjects.map((c) => [c, r.year as number] as const) : [])))
+  // A specialisation's subjects that must be done in a given course year: never earlier.
+  const mustYear = new Map(
+    planComponentIds(input)
+      .flatMap((id) => {
+        const comp = findComponent(data, id)
+        return comp && comp.requirements !== 'unknown' ? comp.requirements : []
+      })
+      .flatMap((r) => (r.year ? ('all' in r ? r.all : r.choose.from).map((c) => [c, r.year as number] as const) : [])),
+  )
+  for (const [c, y] of mustYear) if (!yearOf.has(c)) yearOf.set(c, y)
 
   const remainingPoints = Math.max(
     0,
@@ -425,7 +435,8 @@ function buildPlan(given: GenerateInput): GenerateResult {
       (needs.get(c) ?? []).every((n) => before.has(n) || group.includes(n) || (term.subjects.includes(n) && alongsideOf(c).includes(n))) &&
       canTake(c, term, before, data, input.course, group, majorsOf(input)) !== 'fail' &&
       (!firstSemester.has(c) || termIndex === 0) &&
-      (!firstYearBound(c) || inFirstYear(termIndex))
+      (!firstYearBound(c) || inFirstYear(termIndex)) &&
+      (mustYear.get(c) ?? 1) <= yearAt(termIndex)
     // Again after each pass: a subject placed this term can let its one-way corequisite partner in.
     for (let placedAny = true; placedAny; ) {
       placedAny = false

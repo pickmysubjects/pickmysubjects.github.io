@@ -399,6 +399,7 @@ export const ja: Messages = {
     componentUnknown: '{title}：構成は未整理',
     componentDone: '{title} 修了',
     componentMissing: '{title}：{missing}',
+    componentTooEarly: "{title}：{codes} は課程の{year}年目に履修が必要",
     requirementMissing: '{missing}',
     missingSubjects: '未履修：{codes}',
     choosePoints: '{have} / {need} ポイント（{codes} から選択）',

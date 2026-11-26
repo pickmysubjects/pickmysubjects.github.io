@@ -62,10 +62,8 @@ describe("master's plans", () => {
     ['MC-DATASC', 'mc-datasc-computational', 4],
     ['MC-SOFTENG', 'mc-softeng-no-specialisation', 6],
     ['MC-SOFTENG', 'mc-softeng-artificial-intelligence', 6],
-    // A hand plan fits six semesters (the four ENGM core subjects in Year 3, as the Handbook says
-    // they must be); the generator's packing still needs seven. Open: component subjects tied to a
-    // course year.
-    ['MC-SOFTENG', 'mc-softeng-business', 7],
+    // The four ENGM core subjects must be in Year 3 (Handbook): planned there, six semesters.
+    ['MC-SOFTENG', 'mc-softeng-business', 6],
     ['MC-SOFTENG', 'mc-softeng-cyber-security', 6],
     ['MC-SOFTENG', 'mc-softeng-distributed-computing', 6],
     ['MC-SOFTENG', 'mc-softeng-human-computer-interaction', 6],
@@ -76,6 +74,16 @@ describe("master's plans", () => {
       expect(codes.filter((c) => data.subjects[c]?.categories[course] !== 'course')).toEqual([])
       expect(r.plan.terms.filter((t) => t.subjects.length).length).toBe(terms)
       expect(check.statuses.filter((s) => s.status !== 'ok').map((s) => `${s.ruleId}: ${s.detail}`)).toEqual([])
+      // Subjects a specialisation says must be done in a course year are never earlier.
+      const comp = data.components.find((c) => c.id === spec)
+      const termsWith = r.plan.terms.filter((t) => t.subjects.length && t.period.startsWith('semester'))
+      for (const req of comp && comp.requirements !== 'unknown' ? comp.requirements : []) {
+        if (!req.year) continue
+        for (const c of 'all' in req ? req.all : req.choose.from) {
+          const at = termsWith.findIndex((t) => t.subjects.includes(c))
+          if (at >= 0) expect(Math.floor(at / 2) + 1, `${c} in year`).toBeGreaterThanOrEqual(req.year)
+        }
+      }
     })
   }
 })

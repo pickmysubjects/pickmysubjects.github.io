@@ -399,6 +399,7 @@ export const id: Messages = {
     componentUnknown: '{title}: struktur belum dimasukkan',
     componentDone: '{title} selesai',
     componentMissing: '{title}: {missing}',
+    componentTooEarly: "{title}: {codes} harus diambil di tahun {year} program",
     requirementMissing: '{missing}',
     missingSubjects: 'belum diambil: {codes}',
     choosePoints: '{have} / {need} poin (pilih dari {codes})',

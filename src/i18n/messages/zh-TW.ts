@@ -399,6 +399,7 @@ export const zhTW: Messages = {
     componentUnknown: '{title}：結構尚未整理',
     componentDone: '{title} 已完成',
     componentMissing: '{title}：{missing}',
+    componentTooEarly: "{title}：{codes} 必須在課程第 {year} 年修讀",
     requirementMissing: '{missing}',
     missingSubjects: '還缺 {codes}',
     choosePoints: '已修 {have} / {need} 學分（從 {codes} 中選）',

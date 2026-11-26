@@ -664,6 +664,21 @@ function componentStatus(
   const limits = (component.limits ?? []).map((l) => ({ ...l, taken: 0 }))
   const ordered = [...component.requirements.filter((r) => 'all' in r), ...component.requirements.filter((r) => !('all' in r))]
   const unmet = ordered.map((r) => unmetRequirement(r, ctx, used, limits, ctx.contested.get(component.id))).filter((x): x is Unmet => x !== null)
+  // Subjects the Handbook says must be done in a course year (MC-SOFTENG Business: Year 3), planned
+  // earlier. Course years count the plan's semesters from its start; done subjects aren't judged.
+  const semesters = ctx.plan.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2')
+  const yearOfCode = (c: string) => {
+    const i = semesters.findIndex((t) => t.subjects.includes(c))
+    return i < 0 ? undefined : Math.floor(i / 2) + 1
+  }
+  for (const r of component.requirements) {
+    if (!r.year) continue
+    const early = ('all' in r ? r.all : r.choose.from).filter((c) => (yearOfCode(c) ?? r.year!) < r.year!)
+    if (early.length) {
+      const codes = early.join(', ')
+      return { ...base, status: 'fail', detail: `${component.title}: ${codes} must be in year ${r.year}`, detailKey: 'componentTooEarly', params: { title: component.title, codes, year: r.year } }
+    }
+  }
   if (unmet.length === 0) {
     return { ...base, status: 'ok', detail: `${component.title} complete`, detailKey: 'componentDone', params: { title: component.title } }
   }

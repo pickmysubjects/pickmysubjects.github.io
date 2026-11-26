@@ -399,6 +399,7 @@ export const zhCN: Messages = {
     componentUnknown: '{title}：结构尚未整理',
     componentDone: '{title} 已完成',
     componentMissing: '{title}：{missing}',
+    componentTooEarly: "{title}：{codes} 必须在课程第 {year} 年修读",
     requirementMissing: '{missing}',
     missingSubjects: '还缺 {codes}',
     choosePoints: '已修 {have} / {need} 学分（从 {codes} 中选）',

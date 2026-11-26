@@ -405,6 +405,7 @@ export const en = {
     componentUnknown: '{title}: structure not curated yet',
     componentDone: '{title} complete',
     componentMissing: '{title}: {missing}',
+    componentTooEarly: "{title}: {codes} must be in year {year} of the course",
     requirementMissing: '{missing}',
     missingSubjects: 'missing {codes}',
     choosePoints: '{have} / {need} points from {codes}',

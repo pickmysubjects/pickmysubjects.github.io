@@ -515,9 +515,12 @@ export type SubjectAbout = z.output<typeof aboutFileSchema>
 // 'core': counts towards the course total only, in none of its category rules (B-SCI's SCIE10005).
 export type SubjectCategory = 'science' | 'commerce' | 'arts' | 'design' | 'music' | 'fine-arts' | 'agriculture' | 'oral-health' | 'breadth' | 'core' | 'diploma-only'
 
+// `year`: the Handbook says these must be completed in that course year (MC-SOFTENG Business:
+// "Must be completed in Year 3 of the course"); plans don't place them earlier.
+const courseYear = z.number().int().min(1).max(6).optional()
 const componentReq = z.union([
-  z.object({ all: z.array(subjectCode).min(1) }).strict(),
-  z.object({ choose: z.object({ points: z.number().positive(), from: z.array(subjectCode).min(1) }).strict() }).strict(),
+  z.object({ all: z.array(subjectCode).min(1), year: courseYear }).strict(),
+  z.object({ choose: z.object({ points: z.number().positive(), from: z.array(subjectCode).min(1) }).strict(), year: courseYear }).strict(),
 ])
 
 const ruleBase = { id: z.string().min(1), description: z.string().min(1) }
@@ -719,7 +722,7 @@ export type CourseRule =
 export type Course = z.output<typeof courseFileSchema>
 
 
-export type ComponentReq = { all: string[] } | { choose: { points: number; from: string[] } }
+export type ComponentReq = { all: string[]; year?: number } | { choose: { points: number; from: string[] }; year?: number }
 
 // At most `max` points from these subjects across the whole major (French: one "other" elective in all).
 const componentLimit = z.object({ max: z.number().positive(), from: z.array(subjectCode).min(1) }).strict()
