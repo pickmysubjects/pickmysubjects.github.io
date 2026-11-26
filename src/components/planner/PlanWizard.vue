@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { thisYear as calendarYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, onMounted, shallowRef, watch } from 'vue'
@@ -49,7 +50,9 @@ const courseQuery = shallowRef('')
 const shownCourses = computed(() => {
   const q = courseQuery.value.trim().toLowerCase()
   // In alphabetical order, so a degree is where a student looks for it.
-  const sorted = [...props.courses].sort((a, b) => a.title.localeCompare(b.title, 'en'))
+  // By name; a master's entry programs (200/150/100 points) from the longest down.
+  const name = (c: Course) => c.title.replace(/\s*\(.*\)$/, '')
+  const sorted = [...props.courses].sort((a, b) => name(a).localeCompare(name(b), 'en') || b.totalPoints - a.totalPoints)
   return q ? sorted.filter((c) => c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.code === draft.value.course) : sorted
 })
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
@@ -166,6 +169,7 @@ function chooseCourse(c: Course): void {
   const start = fromRecord.value ? { year: draft.value.startYear, period: draft.value.startPeriod } : nextEntry(c, { year: draft.value.startYear, period: draft.value.startPeriod })
   set({ course: c.code, courseYear: start.year, startYear: start.year, startPeriod: start.period, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
 }
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
@@ -179,7 +183,7 @@ function chooseCourse(c: Course): void {
     <p v-if="lead" class="lead">{{ lead }}</p>
 
     <div v-if="step === 0" class="q">
-      <h2 class="q-title">{{ t('wizard.qCourse') }}</h2>
+      <h2 class="q-title">{{ t(isMaster ? 'wizard.qCourseMaster' : 'wizard.qCourse') }}</h2>
       <label v-if="courses.length > 8" class="course-search">
         <Search :size="18" aria-hidden="true" class="course-search-icon" />
         <input v-model="courseQuery" type="search" class="course-search-input" :placeholder="t('wizard.searchCourse')" :aria-label="t('wizard.searchCourse')" />
@@ -200,8 +204,11 @@ function chooseCourse(c: Course): void {
           <Check v-if="isChosen(c)" :size="18" aria-hidden="true" />
         </button>
       </div>
-      <p class="scope-note">{{ t('wizard.scopeShort') }}<InfoTip :text="t('wizard.scope')" /></p>
-      <p class="scope-note">{{ t('wizard.doubleShort') }}<InfoTip :text="t('wizard.double')" /></p>
+      <p v-if="isMaster" class="scope-note">{{ t('wizard.scopeMaster') }}</p>
+      <template v-else>
+        <p class="scope-note">{{ t('wizard.scopeShort') }}<InfoTip :text="t('wizard.scope')" /></p>
+        <p class="scope-note">{{ t('wizard.doubleShort') }}<InfoTip :text="t('wizard.double')" /></p>
+      </template>
     </div>
 
     <div v-else-if="step === 1" class="q">

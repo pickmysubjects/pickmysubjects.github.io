@@ -635,13 +635,13 @@ watch(
 )
 // Arriving with ?add= when the plan is already set up: it goes in straight away.
 watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShared.value && !editing.value) placePending() }, { immediate: true })
-const { level } = useStudyLevel()
+const { level, isMaster } = useStudyLevel()
 </script>
 
 <template>
   <div class="planner">
     <PlanHero
-      :title="onBoard ? t('menu.myPlan') : t('plan.title')"
+      :title="onBoard ? t('menu.myPlan') : t(isMaster ? 'plan.titleMaster' : 'plan.title')"
       :setup="!showWizard && !viewingShared ? summary : undefined"
       :facts="!showWizard && !viewingShared ? heroFacts : undefined"
       :next="!showWizard && !viewingShared && onBoard ? nextStep : undefined"
