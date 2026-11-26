@@ -2,7 +2,7 @@ import { computed, shallowReactive, watch, type Ref } from 'vue'
 import { defaultCourse, forCourse, type Dataset } from '@/engine'
 import { detailArea, withDetail, type SubjectDetail } from '@/engine/split'
 import { activePlan, books } from './planStore'
-import { onSide, useStudyLevel } from './useStudyLevel'
+import { masterSubjects, onSide, useStudyLevel } from './useStudyLevel'
 
 /*
  * The UniMelb data (the demo set is for tests and the data scripts only) is fetched, not bundled:
@@ -45,9 +45,10 @@ export function useDataset() {
   const data = computed(() => forCourse(real, course.value))
   // Only this side's subjects (bachelor's or master's): lists, search and adding to a plan never mix them.
   const { level } = useStudyLevel()
+  const masterUses = computed(() => masterSubjects(data.value))
   const subjectList = computed(() =>
     Object.values(data.value.subjects)
-      .filter((s) => onSide(s, level.value, course.value))
+      .filter((s) => onSide(s, level.value, course.value, masterUses.value))
       .sort((a, b) => a.code.localeCompare(b.code)),
   )
   const topics = computed(() => [...new Set(subjectList.value.flatMap((s) => s.topics))].sort())
