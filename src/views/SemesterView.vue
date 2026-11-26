@@ -468,6 +468,9 @@ const caption = computed(() => {
 <style scoped>
 .sem {
   display: grid;
+  /* One column that never grows past the page: a wide child (the week strip) can't push the
+     hero wider than the screen on a 320px phone. */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   padding-top: var(--space-4);
   min-width: 0;

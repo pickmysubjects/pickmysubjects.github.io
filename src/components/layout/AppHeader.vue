@@ -632,4 +632,11 @@ watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
     display: inline;
   }
 }
+
+/* Narrow phones: the bachelor's/master's switch needs the room, so the logo stands alone. */
+@media (max-width: 430px) {
+  .header:not(:has(.phone-title)) .brand-name {
+    display: none;
+  }
+}
 </style>
