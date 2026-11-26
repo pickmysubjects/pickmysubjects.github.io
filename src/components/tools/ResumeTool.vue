@@ -290,15 +290,6 @@ watch(() => codes.value.length > 0, (on) => on && offerInstall())
     gap: var(--space-5);
   }
 
-  .rt-side {
-    position: sticky;
-    top: 88px;
-    max-height: calc(100vh - 112px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-  }
-
   /* Nothing to show yet: the panel's search is the whole page. */
   .rt.is-empty {
     grid-template-columns: minmax(0, 520px);

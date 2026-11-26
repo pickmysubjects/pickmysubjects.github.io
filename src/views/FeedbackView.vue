@@ -133,6 +133,8 @@ function choose(id: string): void {
     max-height: calc(100vh - 104px);
     max-height: calc(100dvh - 104px);
     overflow-y: auto;
+    /* Only ever up and down: a pixel too wide must not add a sideways scrollbar. */
+    overflow-x: hidden;
   }
 
   /* The form is already beside the list. */

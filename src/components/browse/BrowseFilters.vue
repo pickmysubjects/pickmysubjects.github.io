@@ -364,6 +364,7 @@ onBeforeUnmount(() => {
   margin: 0 -4px;
   padding: 4px 4px 0;
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--ink) 22%, transparent) transparent;

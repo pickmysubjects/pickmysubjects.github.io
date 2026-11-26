@@ -113,6 +113,7 @@ defineExpose({ scroller, fit })
   margin: 0 -4px;
   padding: 0 4px;
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--ink) 22%, transparent) transparent;
