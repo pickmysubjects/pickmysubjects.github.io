@@ -19,6 +19,7 @@ non_allowed: []
 skills:
   - algorithms
   - data
+  - programming
 topics:
   - algorithms
   - data-science

@@ -9,6 +9,7 @@ corequisites: none
 non_allowed: []
 skills:
   - systems
+  - programming
 topics:
   - systems
   - engineering

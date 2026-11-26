@@ -29,6 +29,7 @@ non_allowed: []
 skills:
   - algorithms
   - maths
+  - programming
 topics:
   - algorithms
   - theory
