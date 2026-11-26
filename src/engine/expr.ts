@@ -76,7 +76,7 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
   if ('points' in expr) return evaluatePoints(expr.points, expr.points.concurrent ? { ...ctx, completed: ctx.sameTerm ?? ctx.completed } : ctx)
   if ('admission' in expr) {
     if (!ctx.admittedCourse) return { status: 'unknown', unmet: [describe(expr)] }
-    return admits(ctx.admittedCourse, expr.admission) ? ok() : { status: 'fail', unmet: [describe(expr)] }
+    return admits(ctx.admittedCourse, expr.admission, expr.note) ? ok() : { status: 'fail', unmet: [describe(expr)] }
   }
   if ('average' in expr) return evaluateAverage(expr.average, ctx)
   if ('wam' in expr) return evaluateWam(expr.wam.min, ctx)
@@ -96,10 +96,16 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
 
 /**
  * Whether a student admitted to `admitted` meets "admission into `code`": the same course, or one
- * of its entry programs (MC-IT-200 is the 200-point entry into MC-IT; we keep each as its own course).
+ * of its entry programs (MC-IT-200 is the 200-point entry into MC-IT; we keep each as its own
+ * course). When the Handbook's note names particular entry programs ("100pt Program course entry
+ * point in the MC-IT"), only those do: a 200-point student isn't admitted that way.
  */
-export function admits(admitted: string, code: string): boolean {
-  return admitted === code || (admitted.startsWith(code + '-') && /^\d+$/.test(admitted.slice(code.length + 1)))
+export function admits(admitted: string, code: string, note?: string): boolean {
+  if (admitted === code) return true
+  const program = admitted.startsWith(code + '-') ? admitted.slice(code.length + 1) : ''
+  if (!/^\d+$/.test(program)) return false
+  const named = [...(note ?? '').matchAll(new RegExp(`(\\d+)pt Program course entry point in the ${code}\\b`, 'g'))].map((m) => m[1])
+  return named.length === 0 || named.includes(program)
 }
 
 /** A coursework master's (Handbook codes MC-…), as opposed to a bachelor's or diploma. */
@@ -369,7 +375,7 @@ export function simplifyFor(field: ReqField, course: string): ReqField {
   if (field === 'none' || field === 'unknown' || !course) return field
   const MET = 'met' as const
   const walk = (e: ReqExpr): ReqExpr | typeof MET | null => {
-    if ('admission' in e) return admits(course, e.admission) ? MET : null
+    if ('admission' in e) return admits(course, e.admission, e.note) ? MET : null
     // A graduate subject (COMP90038) is no way in for a bachelor's student.
     if ('subject' in e && course.startsWith('B-') && /^[A-Z]{4}9/.test(e.subject)) return null
     // A course code as a whole word: "B-SCI" isn't in "B-SCIEXT".

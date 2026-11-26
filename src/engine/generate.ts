@@ -1077,7 +1077,7 @@ function needsFirst(code: string, target: string, data: Dataset, depth = 4): boo
 
 /** Would adding this subject break a non-allowed pair with one already completed or required? */
 function needsOtherAdmission(e: ReqExpr, course: string): boolean {
-  if ('admission' in e) return !admits(course, e.admission)
+  if ('admission' in e) return !admits(course, e.admission, e.note)
   // "Admission into … Master of IT" written out: a graduate route, not one for this student.
   if ('manual' in e) return /\badmission into|\bselection of\b/i.test(e.manual) && !new RegExp(`\\b${course.replace(/-\d+$/, '')}\\b`).test(e.manual)
   // A graduate subject (COMP90038) is never an undergraduate's way in; a master's student's it is.

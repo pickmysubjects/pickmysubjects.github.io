@@ -104,3 +104,19 @@ describe('MC-SOFTENG Year 1 Group A and B', () => {
     expect((await check(['MAST20005', 'COMP30019', 'COMP30024']))['group-ab']).not.toBe('ok')
   })
 })
+
+describe('admission to a course entry program', () => {
+  const status = async (code: string, course: string) => {
+    const { evaluateField } = await import('../src/engine/expr')
+    const data = realData()
+    return evaluateField(data.subjects[code]!.prerequisites, { completed: new Set(), subjects: data.subjects, admittedCourse: course }).status
+  }
+  it('a note naming the 100- and 150-point entry points leaves the 200-point program out (COMP90042)', async () => {
+    expect(await status('COMP90042', 'MC-IT-150')).toBe('ok')
+    expect(await status('COMP90042', 'MC-IT-100')).toBe('ok')
+    expect(await status('COMP90042', 'MC-IT-200')).not.toBe('ok')
+  })
+  it('a note naming the whole course takes every entry program (COMP90041)', async () => {
+    for (const c of ['MC-IT-200', 'MC-IT-150', 'MC-IT-100']) expect(await status('COMP90041', c)).toBe('ok')
+  })
+})
