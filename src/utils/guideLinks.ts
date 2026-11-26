@@ -18,6 +18,8 @@ export const URLS = {
   GRADCONNECTION: 'https://au.gradconnection.com/',
   FAILING: 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/failing-a-subject',
   ENROLLING: 'https://students.unimelb.edu.au/course-admin/enrolling-in-subjects',
+  CHOOSING_MAJOR: 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/choosing-your-major',
+  COURSE_TRANSFER: 'https://study.unimelb.edu.au/how-to-apply/transferring-courses-domestic',
   PLANNER: 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner',
   FEES: 'https://students.unimelb.edu.au/course-admin/understanding-your-fees',
   CENSUS: 'https://students.unimelb.edu.au/course-admin/census-dates',

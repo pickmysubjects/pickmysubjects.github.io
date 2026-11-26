@@ -80,6 +80,17 @@ export const SITE_RELEASES: SiteRelease[] = [
         id: "Bingung di antara mata kuliah serupa? Bandingkan hingga 5 dan lihat mana yang paling cocok serta alasannya (dari Mata kuliah serupa atau Alat).",
         hi: "मिलते-जुलते विषयों में उलझन? 5 तक साथ-साथ तुलना करें और देखें कौन-सा सबसे सही है, और क्यों (मिलते-जुलते विषय या टूल्स से)।",
       },
+      {
+        en: "Thinking of switching major or degree? The guide sets out the University's two routes, and you can try the new major on a copy of your plan (Plan › Switch major).",
+        'zh-CN': "读了一年想换专业或学位？入门指南写清了学校的两种做法，还能复制一份计划试排新专业（排课 › 换专业）。",
+        'zh-TW': "讀了一年想換主修或學位？入門指南寫清了學校的兩種做法，還能複製一份計畫試排新主修（排課 › 換主修）。",
+        ja: "1年たって専攻や学位を変えたい人へ。ガイドに大学の2つの方法をまとめ、プランのコピーで新しい専攻を試せます（プラン › 専攻を変える）。",
+        ko: "1년 다니고 전공이나 학위를 바꾸고 싶다면, 가이드에 학교의 두 가지 방법을 정리했고 계획 복사본으로 새 전공을 시험해 볼 수 있어요 (계획 › 전공 바꾸기).",
+        vi: "Muốn đổi chuyên ngành hay bằng? Hướng dẫn nêu hai cách của trường, và bạn thử chuyên ngành mới trên bản sao kế hoạch (Kế hoạch › Đổi chuyên ngành).",
+        ms: "Mahu tukar major atau ijazah? Panduan menerangkan dua cara universiti, dan anda boleh cuba major baharu pada salinan rancangan (Rancangan › Tukar major).",
+        id: "Ingin ganti jurusan atau gelar? Panduan menjelaskan dua cara universitas, dan kamu bisa coba major baru di salinan rencana (Rencana › Ganti jurusan).",
+        hi: "एक साल बाद मेजर या डिग्री बदलना चाहते हैं? गाइड में यूनिवर्सिटी के दो तरीके हैं, और योजना की कॉपी पर नया मेजर आज़मा सकते हैं (प्लान › मेजर बदलें)।",
+      },
     ],
   },
   {

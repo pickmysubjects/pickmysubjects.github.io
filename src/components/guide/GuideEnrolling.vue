@@ -11,9 +11,12 @@ import InfoTip from '@/components/InfoTip.vue'
 import Interp from '@/components/Interp.vue'
 import { URLS } from '@/utils/guideLinks'
 import { link } from '@/composables/useView'
+import { useTryMajor } from '@/composables/useTryMajor'
 
 // The "enrolling" category of the basics guide (see utils/guideSections).
 const { t } = useI18n()
+// "Try it here": a copy of the plan with another major, side by side (needs a plan first).
+const { canTry, tryMajor } = useTryMajor()
 </script>
 
 <template>
@@ -67,6 +70,34 @@ const { t } = useI18n()
     <p class="actions">
       <a class="button button-quiet" :href="link('plan/compare/')">{{ t('guide.majorsPlansLink') }}</a>
     </p>
+  </GuideItem>
+
+  <!-- A year in and thinking of switching: the University's two routes, then trying it here. -->
+  <GuideItem id="change-major" :title="t('guide.changeTitle')" :short="t('guide.changeShort')">
+    <h3>{{ t('guide.changeSameTitle') }}</h3>
+    <p><TermText :text="t('guide.changeSame')" /></p>
+    <h3>{{ t('guide.changeOtherTitle') }}</h3>
+    <ul class="plain">
+      <li><TermText :text="t('guide.changeOther1')" /></li>
+      <li><TermText :text="t('guide.changeOther2')" /></li>
+      <li><TermText :text="t('guide.changeOther3')" /></li>
+      <li><TermText :text="t('guide.changeOther4')" /></li>
+      <li><TermText :text="t('guide.changeOther5')" /></li>
+    </ul>
+    <GuideCallout kind="warn"><p><TermText :text="t('guide.changeIntl')" /></p></GuideCallout>
+    <GuideCallout>
+      <p><TermText :text="t('guide.changeTry')" /></p>
+    </GuideCallout>
+    <p class="actions">
+      <button v-if="canTry" class="button button-accent" type="button" @click="tryMajor">{{ t('plans.switchMajor') }}</button>
+      <a v-else class="button button-accent" :href="link('plan/')">{{ t('guide.changeTryFirst') }}</a>
+    </p>
+    <GuideLinks
+      :links="[
+        { href: URLS.CHOOSING_MAJOR, label: t('guide.changeLinkMajor') },
+        { href: URLS.COURSE_TRANSFER, label: t('guide.changeLinkTransfer') },
+      ]"
+    />
   </GuideItem>
 
   <GuideItem id="load" :title="t('guide.loadTitle')" :short="t('guide.loadShort')">

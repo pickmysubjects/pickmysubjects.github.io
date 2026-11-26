@@ -7,6 +7,7 @@ import {
   CalendarRange,
   ClipboardList,
   Columns2,
+  Shuffle,
   Compass,
   DatabaseZap,
   FileX,
@@ -104,6 +105,7 @@ export const MENUS: MenuArea[] = [
     items: [
       { key: 'menu.myPlan', desc: 'menu.d.myPlan', to: 'plan/', icon: Route },
       { key: 'menu.compareAB', desc: 'menu.d.compareAB', to: 'plan/compare/', icon: Columns2 },
+      { key: 'menu.changeMajor', desc: 'menu.d.changeMajor', to: 'guide/enrolling/#change-major', icon: Shuffle },
     ],
     // Parts of the plan page: found by the site search, landing on their place on the page.
     searchOnly: [

@@ -737,6 +737,10 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
     'plans': [
       `<h2 id="plans">${esc(t('guide.plansTitle'))}</h2>`, p('plansShort'), p('majorsPlans'), p('planProfile'), p('majorsPlansImage'),
     ].join('\n'),
+    'change-major': [
+      `<h2 id="change-major">${esc(t('guide.changeTitle'))}</h2>`, p('changeShort'), `<h3>${esc(t('guide.changeSameTitle'))}</h3>`, p('changeSame'),
+      `<h3>${esc(t('guide.changeOtherTitle'))}</h3>`, li(['changeOther1', 'changeOther2', 'changeOther3', 'changeOther4', 'changeOther5']), p('changeIntl'), p('changeTry'),
+    ].join('\n'),
     'caps': [
       `<h2 id="caps">${esc(t('guide.capsTitle'))}</h2>`, li(['capsDiscipline', 'capsDesignBreadth', 'capsDesignInformal']),
     ].join('\n'),
