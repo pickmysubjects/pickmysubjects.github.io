@@ -1,0 +1,68 @@
+code: COMP90087
+title: The Ethics of Artificial Intelligence
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - COMP10001
+        - COMP10002
+        - COMP20003
+        - COMP20007
+        - COMP90041
+        - COMP90059
+        - ENGR30004
+    - manual: Equivalent introductory programming and algorithms experience
+    - any:
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-DATASC Master of Data Science MC-SOFTENG Master of Software Engineering MC-DINFENG Master of Digital Infrastructure Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-SCICMP
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-DATASC Master of Data Science MC-SOFTENG Master of Software Engineering MC-DINFENG Master of Digital Infrastructure Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-DATASC
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-DATASC Master of Data Science MC-SOFTENG Master of Software Engineering MC-DINFENG Master of Digital Infrastructure Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-SOFTENG
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-DATASC Master of Data Science MC-SOFTENG Master of Software Engineering MC-DINFENG Master of Digital Infrastructure Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-DINFENG
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-DATASC Master of Data Science MC-SOFTENG Master of Software Engineering MC-DINFENG Master of Digital Infrastructure Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-DATASC Master of Data Science MC-SOFTENG Master of Software Engineering MC-DINFENG Master of Digital Infrastructure Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-DATASC Master of Data Science MC-SOFTENG Master of Software Engineering MC-DINFENG Master of Digital Infrastructure Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+corequisites: none
+non_allowed:
+  - ISYS90051
+  - ISYS90095
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 30
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90087
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

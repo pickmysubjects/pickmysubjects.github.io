@@ -1,0 +1,71 @@
+code: ENGR90034
+title: Design Innovation and Leadership
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  permission: application
+  note: "ENROLLING IN CIE Please note it is not possible to self-enrol in DIAL. All enrolments are by application and are subject to a variable quota. University staff will enrol successful applicants on conclusion of the approval process. Selection will be subject to the submission of an online application form, including a recorded video response to two interview questions and will be based upon the quality of the interview responses demonstrating the student's verbal communication skills and potential to: • add value to the program through your commitment and professionalism; and • benefit from the DIAL experience. Applications will be assessed and approved students will be enrolled by University staff until the quota has been filled. Students should note that this is likely to occur well in advance of the start of semester. Approved applications submitted after the quota has been filled will be placed on a waitlist. Additional places will be allocated to waitlisted applicants as they become available up to Week One. Please note that approved students who unenroll themselves will lose their place. Students who wish to be reinstated will be placed on a waitlist. Students whose applications are not approved will be notified by email. If you are applying from the Faculty of Business and Economics, you may only apply to take DIAL as a general elective or capstone, and not as a replacement for a discipline specific elective. Please refer to the subject options listed in the Handbook for your program. If you are unsure about whether you have space for DIAL, please arrange an online appointment with a course advisor at: Link HOW TO APPLY To complete an application form, you will need to have prepared one short video recording your responses to two interview style questions. The video should be no more than 2 minutes in length. You will need to include your name and student Id in the video file name and save it in one of these formats: .mp4, .mpeg or .mov. For this reason, it will be easier to produce on a laptop rather than a mobile phone. To access the application form, please click the following link: Link Please note that any students who unenroll themselves will lose their place if the quota is filled in the interim. Students who wish to be reinstated will be placed on a waitlist."
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 5
+    hurdle: true
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
+  - kind: assignment
+    weight: 17.5
+    hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 10
+      text: From Week 2 to Week 10
+  - kind: assignment
+    weight: 7
+    hurdle: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: assignment
+    weight: 15.5
+    hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: project
+    weight: 35
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: participation
+    weight: 0
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr90034
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

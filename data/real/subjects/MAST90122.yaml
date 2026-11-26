@@ -1,0 +1,32 @@
+code: MAST90122
+title: Inference for Spatio-Temporal Processes
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - MAST90082
+    - MAST90138
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
+  - kind: exam
+    weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90122
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

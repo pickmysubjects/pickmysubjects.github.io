@@ -1,0 +1,50 @@
+code: SWEN90010
+title: High Integrity Systems Engineering
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - SWEN90006
+    - admission: MC-CS
+      note: Admission into the MC-CS Master of Computer Science
+    - all:
+        - admission: MC-IT
+          note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+        - admission: MC-IT
+          note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 35
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
+  - kind: quiz
+    weight: 15
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 6
+        - 9
+        - 12
+      text: Weeks 3, 6, 9 and 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/swen90010
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

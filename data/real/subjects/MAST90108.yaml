@@ -1,0 +1,29 @@
+code: MAST90108
+title: Data Science Research Project Pt1
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: Students must have agreement from a supervisor.
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 10
+  - kind: presentation
+    weight: 10
+  - kind: assignment
+    weight: 70
+  - kind: presentation
+    weight: 10
+    hurdle: true
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90108
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

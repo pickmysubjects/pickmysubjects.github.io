@@ -1,0 +1,88 @@
+code: ENGR90039
+title: Creating Innovative Professionals
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-BIOMENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-CHEMENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-CIVENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-ELECENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-ENVENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-MECHENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-MTRNENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-SOFTENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-SPATENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-IB
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-IS
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-BMEDSC
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-DINFENG
+          note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-IB Master of International Business MC-IT Master of Information Technology MC-IS Master of Information Systems MC-BMEDSC Master of Biomedical Science MC-DINFENG Master of Digital Infrastructure Engineering"
+    - admission: MC-ENG
+      note: Admission into or selection of MC-ENG - Master of Engineering (All specialisations except “with Business”)
+    - admission: MC-IB
+      note: Admission into or selection of approved programs within the Faculty of Business and Economics, including MC-IB Master of International Business and programs within the Master of Management suite of programs
+    - permission: application
+      note: "Admission into or selection of approved programs within the School of Design, including Master of Architecture, Master of Architectural Engineering, Master of Property, Master of Construction Management and Master of Landscape Architecture ENROLLING IN CIP Please note it is not possible to self-enrol in CIP. All enrolments are by application and are subject to a variable quota. University staff will enrol successful applicants on conclusion of the approval process. Selection will be subject to the submission of an online application form, including a recorded video response to two interview questions and will be based upon the quality of the interview responses demonstrating the student's verbal communication skills and potential to: • add value to the program through your commitment and professionalism; and • benefit from the CIP experience. Applications will be assessed and approved students will be enrolled by University staff until the quota has been filled. Students should note that this is likely to occur well in advance of the start of semester. Approved applications submitted after the quota has been filled will be placed on a waitlist. Additional places will be allocated to waitlisted applicants as they become available up to Week One. Please note that approved students who unenroll themselves will lose their place. Students who wish to be reinstated will be placed on a waitlist. Students whose applications are not approved will be notified by email. If you are applying from the Faculty of Business and Economics, you may only apply to take CIP as a general elective and not as a replacement for a discipline specific elective. Please refer to the subject options listed in the Handbook for your program. If you are unsure about whether you have space for CIP, please arrange an online appointment with a course advisor at: Link Tools to help you prepare for the interview are accessible via the application form. The course is run in two separate sessions per week: an afternoon class and an evening class. Students will be placed in a session and will not be able to self-allocate. However, if you have a good reason why you can only participate in one particular session please email the IPP team before the start of semester and we will do our best to accommodate you. HOW TO APPLY To complete an application form, you will need to have prepared one short video recording your responses to two interview style questions. The video should be no more than 2 minutes in length. You will need to include your name and student Id in the video file name and save it in one of these formats: .mp4, .mpeg or .mov. For this reason, it will be easier to produce on a laptop rather than a mobile phone. To access the application form, please click the following link: Link"
+corequisites: none
+non_allowed:
+  - ENGR90034
+  - INFO90009
+  - INFO90010
+  - ENGR90051
+assessment:
+  - kind: assignment
+    weight: 22.5
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 13.5
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: report
+    weight: 9
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: project
+    weight: 35
+    group: true
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr90039
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

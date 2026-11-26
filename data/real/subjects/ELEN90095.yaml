@@ -1,0 +1,56 @@
+code: ELEN90095
+title: AI for Robotics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-ELECENG
+      note: "Admission into one of the following: Admission into one of the following: MC-ELECENG Master of Electrical Engineering, MC-MTRNENG Master of Mechatronics Engineering, MC-MECHENG Master of Mechanical Engineering, MC-IT Master of Information Technology, MC-SOFTENG Master of Software Engineering, MC-CS Master of Computer Science"
+    - admission: MC-MTRNENG
+      note: "Admission into one of the following: Admission into one of the following: MC-ELECENG Master of Electrical Engineering, MC-MTRNENG Master of Mechatronics Engineering, MC-MECHENG Master of Mechanical Engineering, MC-IT Master of Information Technology, MC-SOFTENG Master of Software Engineering, MC-CS Master of Computer Science"
+    - admission: MC-MECHENG
+      note: "Admission into one of the following: Admission into one of the following: MC-ELECENG Master of Electrical Engineering, MC-MTRNENG Master of Mechatronics Engineering, MC-MECHENG Master of Mechanical Engineering, MC-IT Master of Information Technology, MC-SOFTENG Master of Software Engineering, MC-CS Master of Computer Science"
+    - admission: MC-IT
+      note: "Admission into one of the following: Admission into one of the following: MC-ELECENG Master of Electrical Engineering, MC-MTRNENG Master of Mechatronics Engineering, MC-MECHENG Master of Mechanical Engineering, MC-IT Master of Information Technology, MC-SOFTENG Master of Software Engineering, MC-CS Master of Computer Science"
+    - admission: MC-SOFTENG
+      note: "Admission into one of the following: Admission into one of the following: MC-ELECENG Master of Electrical Engineering, MC-MTRNENG Master of Mechatronics Engineering, MC-MECHENG Master of Mechanical Engineering, MC-IT Master of Information Technology, MC-SOFTENG Master of Software Engineering, MC-CS Master of Computer Science"
+    - admission: MC-CS
+      note: "Admission into one of the following: Admission into one of the following: MC-ELECENG Master of Electrical Engineering, MC-MTRNENG Master of Mechatronics Engineering, MC-MECHENG Master of Mechanical Engineering, MC-IT Master of Information Technology, MC-SOFTENG Master of Software Engineering, MC-CS Master of Computer Science"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: project
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
+  - kind: presentation
+    weight: 35
+    group: true
+  - kind: project
+    weight: 15
+  - kind: test
+    weight: 15
+    timing:
+      kind: week
+      from: 9
+      to: 10
+      text: From Week 9 to Week 10
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90095
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,50 @@
+code: COMP90024
+title: Cluster and Cloud Computing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - COMP90007
+        - COMP90038
+        - COMP90041
+    - any:
+        - admission: MC-SOFTENG
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
+        - admission: MC-ENG
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
+        - admission: MC-IS
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
+        - admission: MC-IT
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
+        - admission: MC-SCICMP
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
+        - admission: MC-CS
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
+        - admission: MC-DATASC
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+    hurdle: true
+  - kind: assignment
+    weight: 40
+    group: true
+    hurdle: true
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90024
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

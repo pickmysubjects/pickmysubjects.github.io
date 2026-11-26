@@ -1,0 +1,35 @@
+code: MAST90106
+title: Data Science Project Pt1
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - points:
+        min: 25
+        from:
+          - COMP20008
+          - COMP90049
+          - MAST90104
+          - INFO90002
+    - admission: MC-DATASC
+      note: "Admission into: • Master of Data Science (MC-DATASC) - Data Science Background Stream (pre-2025)"
+    - admission: MC-DATASC
+      note: Admission into the Computational and Statistical Data Science specialisation (formal) in the MC-DATASC Master of Data Science
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 70
+    group: true
+  - kind: presentation
+    weight: 30
+    group: true
+weekly_contact_hours: 1.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90106
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

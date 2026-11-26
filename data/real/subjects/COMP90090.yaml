@@ -1,0 +1,48 @@
+code: COMP90090
+title: Text Analytics for Health
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - permission: coordinator
+      note: Permission of the coordinator is required prior to enrolling in this subject (some programming experience in Python is required)
+    - all:
+        - COMP90059
+        - COMP90038
+    - any:
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-IT Master of Information Technology Admission into or selection of one of the following: MC-CS Master of Computer Science Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-IS Master of Information Systems"
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-IT Master of Information Technology Admission into or selection of one of the following: MC-CS Master of Computer Science Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-IS Master of Information Systems"
+        - admission: GD-CS
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-IT Master of Information Technology Admission into or selection of one of the following: MC-CS Master of Computer Science Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-IS Master of Information Systems"
+        - admission: MC-IS
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-IT Master of Information Technology Admission into or selection of one of the following: MC-CS Master of Computer Science Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-IS Master of Information Systems"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+    hurdle: true
+  - kind: assignment
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 15
+    hurdle: true
+  - kind: assignment
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90090
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

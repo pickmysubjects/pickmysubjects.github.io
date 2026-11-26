@@ -1,0 +1,66 @@
+code: ELEN90096
+title: Hardware Accelerated Computing
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - all:
+        - admission: MC-ELECENG
+          note: Admission into the MC-ELECENG Master of Electrical Engineering
+        - all:
+            - COMP20005
+            - ELEN90066
+    - admission: MC-IT
+      note: "Admission into or selection of one of the following: Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (200pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (200pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (200pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (100pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (150pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (200pt) specialisation (formal) in the MC-IT Master of Information Technology"
+    - all:
+        - admission: MC-SOFTENG
+          note: Admission into the MC-SOFTENG Master of Software Engineering
+        - all:
+            - SWEN30006
+            - COMP30026
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 2
+      to: 7
+      text: From Week 2 to Week 7
+  - kind: project
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 8
+      to: 11
+      text: From Week 8 to Week 11
+  - kind: project
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90096
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

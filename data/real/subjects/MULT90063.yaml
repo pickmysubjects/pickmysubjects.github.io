@@ -1,0 +1,48 @@
+code: MULT90063
+title: Introduction to Quantum Computing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - MAST10006
+        - MAST10007
+        - MAST10008
+        - MAST10009
+        - MAST10021
+        - MAST10022
+    - any:
+        - admission: MC-SCIPHY
+          note: "Admission into or selection of one of the following: MC-SCIPHY Master of Science (Physics) MC-SCIMAT Master of Science (Mathematics and Statistics) MC-SCICHE Master of Science (Chemistry) MC-IT Master of Information Technology MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-SCIMAT
+          note: "Admission into or selection of one of the following: MC-SCIPHY Master of Science (Physics) MC-SCIMAT Master of Science (Mathematics and Statistics) MC-SCICHE Master of Science (Chemistry) MC-IT Master of Information Technology MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-SCICHE
+          note: "Admission into or selection of one of the following: MC-SCIPHY Master of Science (Physics) MC-SCIMAT Master of Science (Mathematics and Statistics) MC-SCICHE Master of Science (Chemistry) MC-IT Master of Information Technology MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: MC-SCIPHY Master of Science (Physics) MC-SCIMAT Master of Science (Mathematics and Statistics) MC-SCICHE Master of Science (Chemistry) MC-IT Master of Information Technology MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-ELECENG
+          note: "Admission into or selection of one of the following: MC-SCIPHY Master of Science (Physics) MC-SCIMAT Master of Science (Mathematics and Statistics) MC-SCICHE Master of Science (Chemistry) MC-IT Master of Information Technology MC-ELECENG Master of Electrical Engineering"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: participation
+    weight: 5
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: exam
+    weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mult90063
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

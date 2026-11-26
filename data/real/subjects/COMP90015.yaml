@@ -1,0 +1,60 @@
+code: COMP90015
+title: Distributed Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - COMP90007
+        - COMP90038
+        - COMP90041
+    - any:
+        - admission: MC-MTRNENG
+          note: "Admission into or selection of one of the following: MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-SOFTENG
+          note: "Admission into or selection of one of the following: MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-SCICMP
+          note: "Admission into or selection of one of the following: MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-DINFENG
+          note: "Admission into or selection of one of the following: MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering"
+        - admission: MC-ELECENG
+          note: "Admission into or selection of one of the following: MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering"
+    - all:
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Selection of one of the following: Admission into or selection of one of the following: Digital Innovation (150pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (150pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
+    - all:
+        - admission: MC-IT
+          note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+        - admission: MC-IT
+          note: Selection of the Human-Computer Interaction specialisation (formal) in the MC-IT Master of Information Technology
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 40
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90015
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

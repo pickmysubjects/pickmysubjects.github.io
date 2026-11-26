@@ -1,0 +1,39 @@
+code: MAST90111
+title: Advanced Statistical Modelling
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - MAST90082
+    - any:
+        - MAST30025
+        - MAST90104
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: project
+    weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
+breadth_for: []
+recommended:
+  - MAST90085
+  - MAST90083
+  - MAST90084
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90111
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,64 @@
+code: SWEN90006
+title: Security & Software Testing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - COMP90041
+        - SWEN20003
+    - all:
+        - admission: MC-IT
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
+    - admission: MC-CS
+      note: Admission into the MC-CS Master of Computer Science
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 5
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      to: 10
+      text: From Week 7 to Week 10
+  - kind: assignment
+    weight: 25
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 35
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: quiz
+    weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/swen90006
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

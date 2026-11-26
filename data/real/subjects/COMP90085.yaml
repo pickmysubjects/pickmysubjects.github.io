@@ -1,0 +1,34 @@
+code: COMP90085
+title: Volunteer Experience in I.T.
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  permission: coordinator
+  note: Two semesters of study in current course. Subject coordinator approval is required to enrol.
+corequisites: none
+non_allowed:
+  - ENGR90033
+assessment:
+  - kind: assignment
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 80
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90085
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

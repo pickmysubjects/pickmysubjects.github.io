@@ -1,0 +1,51 @@
+code: SWEN90016
+title: Software Processes and Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - SWEN20003
+        - COMP90041
+        - COMP20003
+        - COMP20007
+        - COMP90038
+    - admission: MC-IT
+      note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+corequisites: none
+non_allowed:
+  - ISYS90050
+assessment:
+  - kind: assignment
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: project
+    weight: 35
+    group: true
+    hurdle: true
+    timing:
+      kind: weeks
+      weeks:
+        - 5
+        - 12
+      text: Week 5 and 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/swen90016
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

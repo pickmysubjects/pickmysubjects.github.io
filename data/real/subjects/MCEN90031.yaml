@@ -1,0 +1,64 @@
+code: MCEN90031
+title: Applied High Performance Computing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  any:
+    - all:
+        - COMP20005
+        - MAST20029
+    - admission: MC-MECHENG
+      note: Admission into the MC-MECHENG Master of Mechanical Engineering
+    - all:
+        - admission: MC-IT
+          note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+        - admission: MC-IT
+          note: Selection of the Distributed Computing specialisation (formal) in the MC-IT Master of Information Technology
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 25
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90031
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

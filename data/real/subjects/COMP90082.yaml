@@ -1,0 +1,45 @@
+code: COMP90082
+title: Software Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - SWEN90016
+    - manual: No more than 75 points short of degree completion.
+corequisites: none
+non_allowed:
+  - COMP90055
+  - GEOM90043
+  - INFO90008
+  - INFO90010
+  - COMP90019
+assessment:
+  - kind: project
+    weight: 30
+    group: true
+  - kind: presentation
+    weight: 60
+    group: true
+    hurdle: true
+    timing:
+      kind: weeks
+      weeks:
+        - 9
+        - 12
+      text: Weeks 9 and 12
+  - kind: participation
+    weight: 10
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90082
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

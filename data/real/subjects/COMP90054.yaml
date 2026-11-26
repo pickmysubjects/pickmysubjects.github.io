@@ -1,0 +1,65 @@
+code: COMP90054
+title: AI Planning for Autonomy
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-SCICMP
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science 100pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science 100pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-DATASC
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science 100pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science 100pt Program course entry point in the MC-IT Master of Information Technology"
+    - admission: MC-IT
+      note: "Admission into or selection of one of the following: Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (150pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
+    - any:
+        - COMP20003
+        - COMP20007
+        - COMP90038
+        - ENGR30004
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: participation
+    weight: 4
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 24
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
+  - kind: quiz
+    weight: 10
+  - kind: assignment
+    weight: 12
+    timing:
+      kind: week
+      from: 10
+      to: 11
+      text: From Week 10 to Week 11
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+recommended:
+  - SWEN20003
+  - COMP90041
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90054
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

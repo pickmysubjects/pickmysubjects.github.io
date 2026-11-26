@@ -1,0 +1,40 @@
+code: COMP90045
+title: Programming Language Implementation
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - all:
+        - any:
+            - COMP30020
+            - COMP90048
+        - any:
+            - COMP20003
+            - COMP20007
+            - COMP90038
+    - all:
+        - admission: MC-IT
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Selection of one of the following: Computing specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing specialisation (formal) in the MC-IT Master of Information Technology Cyber Security specialisation (formal) in the MC-IT Master of Information Technology"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90045
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

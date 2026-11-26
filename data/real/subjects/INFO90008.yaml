@@ -1,0 +1,43 @@
+code: INFO90008
+title: HCI Research Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - INFO90003
+        - INFO90004
+        - INFO90006
+    - permission: coordinator
+      note: A weighted average mark of 75 or above, and no more than 75 points short of degree completion. Students who meet this criteria will need to complete an Enrolment Assistance form. Coordinator approval is required before enrolment. Enrolment Assistance form
+corequisites: none
+non_allowed:
+  - INFO90009
+assessment:
+  - kind: assignment
+    weight: 0
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: assignment
+    weight: 80
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info90008
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

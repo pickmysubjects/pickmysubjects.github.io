@@ -1,0 +1,36 @@
+code: ISYS90120
+title: Cybersecurity Practice in Organisations
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  any:
+    - ISYS90090
+    - all:
+        - admission: MC-IT
+          note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
+        - permission: coordinator
+          note: Special permission from the subject coordinator to enrol in the subject.
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 20
+  - kind: report
+    weight: 10
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90120
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

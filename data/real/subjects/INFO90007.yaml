@@ -1,0 +1,43 @@
+code: INFO90007
+title: Social Computing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - COMP90041
+        - COMP90059
+        - COMP10001
+        - COMP10002
+        - COMP10003
+    - admission: MC-CS
+      note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-IT100 Master of Information Technology MC-IT150 Master of Information Technology"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: project
+    weight: 55
+    group: true
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info90007
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

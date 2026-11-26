@@ -1,0 +1,28 @@
+code: GEOM90038
+title: Advanced Imaging
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: GEOM30009
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: presentation
+    weight: 20
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geom90038
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

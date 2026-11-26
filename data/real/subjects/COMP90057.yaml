@@ -1,0 +1,62 @@
+code: COMP90057
+title: Advanced Theoretical Computer Science
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - COMP30026
+    - COMP20004
+    - any:
+        - admission: MC-IT
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
+        - admission: MC-CS
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
+        - admission: MC-SCICMP
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
+corequisites: none
+non_allowed:
+  - COMP30025
+  - COMP30021
+assessment:
+  - kind: quiz
+    weight: 5
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: assignment
+    weight: 5
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: participation
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90057
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,47 @@
+code: MAST90125
+title: Bayesian Statistical Learning
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - MAST20005
+    - any:
+        - MAST30001
+        - MAST30025
+        - MAST30027
+        - MAST30020
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: assignment
+    weight: 5
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90125
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

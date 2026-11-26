@@ -1,0 +1,58 @@
+code: COMP90042
+title: Natural Language Processing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - COMP30027
+        - COMP90049
+        - COMP90051
+    - all:
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 7
+    hurdle: true
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
+  - kind: project
+    weight: 35
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
+  - kind: assignment
+    weight: 8
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90042
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

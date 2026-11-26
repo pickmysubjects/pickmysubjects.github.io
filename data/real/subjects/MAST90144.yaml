@@ -1,0 +1,47 @@
+code: MAST90144
+title: Stochastic Optimisation
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - points:
+        min: 25
+        from:
+          - MAST30025
+          - MAST30001
+          - MAST30020
+          - MAST30027
+          - MAST30013
+          - MAST30022
+          - MAST30034
+    - any:
+        - MAST90105
+        - MAST90104
+    - admission: MC-SCIMAT
+      note: "Admission into one of: Statistics and Stochastic Processes informal specialisation in the MC-SCIMAT Master of Science (Mathematics and Statistics) Operations Research and Industrial Optimisation informal specialisation in the MC-SCIMAT Master of Science (Mathematics and Statistics)"
+    - admission: MC-DATASC
+      note: "Admission into one of: Master of Data Science (MC-DATASC) - Statistics Background Stream Master of Data Science (MC-DATASC) - Data Science Background Stream"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+recommended:
+  - MAST20004
+  - MAST20006
+  - MAST20035
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90144
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

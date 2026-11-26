@@ -1,0 +1,45 @@
+code: MAST90138
+title: Multivariate Statistics for Data Science
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - MAST30025
+    - MAST90104
+    - admission: MC-DATASC
+      note: "Admission into one of: Master of Data Science (MC-DATASC) - Statistics Background Stream Master of Data Science (MC-DATASC) - Data Science Background Stream"
+    - admission: MC-SCIMAT
+      note: Admission into the Statistics and Stochastic Processes informal specialisation in the MC-SCIMAT Master of Science (Mathematics and Statistics)
+corequisites: none
+non_allowed:
+  - MAST90085
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90138
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

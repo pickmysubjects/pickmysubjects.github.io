@@ -1,0 +1,41 @@
+code: INFO90003
+title: Designing Novel Interactions
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - COMP90041
+    - any:
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-SOFTENG
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 3
+      to: 6
+      text: From Week 3 to Week 6
+  - kind: assignment
+    weight: 60
+    group: true
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info90003
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

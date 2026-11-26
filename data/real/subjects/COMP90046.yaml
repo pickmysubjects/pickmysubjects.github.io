@@ -1,0 +1,46 @@
+code: COMP90046
+title: Constraint Programming
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - COMP20003
+        - COMP20007
+        - COMP90038
+        - COMP90048
+        - COMP20006
+    - all:
+        - admission: MC-IT
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: Selection of the Distributed Computing specialisation (formal) in the MC-IT Master of Information Technology
+    - all:
+        - admission: MC-IT
+          note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+        - admission: MC-IT
+          note: Selection of the Computing specialisation (formal) in the MC-IT Master of Information Technology
+    - admission: MC-CS
+      note: Admission into the MC-CS Master of Computer Science
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 30
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90046
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,41 @@
+code: MAST90104
+title: A First Course In Statistical Learning
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - MAST90105
+    - admission: GD-DATASC
+      note: "Admission into: • Graduate Diploma in Data Science - Statistics Stream (GD-DATASC)"
+corequisites: none
+non_allowed:
+  - MAST30025
+  - MAST30027
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: test
+    weight: 35
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: test
+    weight: 10
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: exam
+    weight: 35
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90104
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,58 @@
+code: INFO90009
+title: User Experience Design Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - INFO90003
+        - INFO90004
+        - INFO90006
+    - admission: MC-IT
+      note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+corequisites: none
+non_allowed:
+  - INFO90008
+assessment:
+  - kind: report
+    weight: 0
+    group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: project
+    weight: 0
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 0
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 70
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info90009
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

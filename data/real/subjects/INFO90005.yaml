@@ -1,0 +1,36 @@
+code: INFO90005
+title: Human-AI Interaction
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - COMP90041
+    - INFO90002
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: project
+    weight: 40
+    group: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info90005
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

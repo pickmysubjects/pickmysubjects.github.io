@@ -1,0 +1,56 @@
+code: COMP90077
+title: Advanced Algorithms and Data Structures
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-CS
+      note: "Admission into or selection of one of the following: MC-CS Master of Computer Science"
+    - all:
+        - any:
+            - admission: MC-SOFTENG
+              note: "Admission into or selection of one of the following: MC-SOFTENG Master of Software Engineering Software specialisation (formal) in the MC-ENG Master of Engineering"
+            - admission: MC-ENG
+              note: "Admission into or selection of one of the following: MC-SOFTENG Master of Software Engineering Software specialisation (formal) in the MC-ENG Master of Engineering"
+        - any:
+            - COMP20003
+            - COMP20007
+            - COMP90038
+    - all:
+        - admission: GD-CS
+          note: "Admission into one of the following: Admission into the GD-CS Graduate Diploma in Computer Science Another Masters degree"
+        - permission: coordinator
+          note: Subject Coordinator Approval
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 30
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 11
+      text: From Week 4 to Week 11
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: test
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90077
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

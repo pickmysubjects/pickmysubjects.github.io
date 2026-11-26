@@ -1,0 +1,39 @@
+code: BUSA90473
+title: Business Practicum
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: "Entry is via a competitive selection process and places are limited. In order to apply: Students enrolled in a MBS program or eligible non-MBS program must have completed a minimum of 50 points of their program at the time of application. Students must have achieved a minimum weighted average mark for their postgraduate subjects of 70%. Students must submit an online application and participate in required selection procedures. Please note: Students are not able to self-enrol. Successful applicants will be enrolled in this subject upon conclusion of the selection process. Students who have already completed the Global Business Practicum may submit an Expression of Interest to be placed on a waiting list. Students on the list will only be considered if there is adequate availability. Students enrolled in the Master of Engineering (Electrical, Mechanical, and Software streams), Master of Information Systems and Master of Information Technology are eligible to apply. You must be available for the entire project period You must be available to work on the final report with your team mates once the teaching period is over, until it is due. If you partake in any extra-curricular activity outside the scope of the program which as a result interferes with your participation in the program you may be expelled from the program in accordance with University statutes, regulations and policies. For more information on how to apply: Link"
+corequisites: none
+non_allowed:
+  - ENGR90033
+assessment:
+  - kind: presentation
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: report
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 26
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/busa90473
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

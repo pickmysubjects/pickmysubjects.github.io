@@ -1,0 +1,32 @@
+code: BUSA90485
+title: Global Business Practicum
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites:
+  manual: "Entry is via a competitive selection process as places are limited. In order to apply: Students enrolled in a MBS program or eligible non-MBS program must have completed a minimum of 50 points of their program at the time of application. Students must have achieved a minimum weighted average mark for their graduate subjects of 70%. Permission from the Subject Coordinator via a selection process. Please note: Students are not able to self-enrol. Successful applicants will be enrolled in the subject upon conclusion of the selection process Students who have already completed the Business Practicum may submit an Expression of Interest to be placed on a waiting list. Students on the list will only be considered if there is adequate availability. Students enrolled in the Master of Engineering (Electrical, Mechanical, and Software streams), Master of Information Systems and Master of Information Technology are eligible to apply. Students must be available for the entire project period and be available to work on the final report with their team once the teaching period is over, until it is due. For information on how to apply: Link"
+corequisites: none
+non_allowed:
+  - ENGR90033
+assessment:
+  - kind: presentation
+    weight: 40
+    group: true
+  - kind: report
+    weight: 40
+    group: true
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/busa90485
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

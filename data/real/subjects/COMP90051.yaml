@@ -1,0 +1,65 @@
+code: COMP90051
+title: Statistical Machine Learning
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - COMP90049
+        - COMP30027
+    - all:
+        - admission: MC-DATASC
+          note: Admission into the MC-DATASC Master of Data Science
+        - any:
+            - COMP20008
+            - MAST90105
+    - admission: MC-IT
+      note: "Admission into or selection of one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology Distributed Computing specialisation (formal) in the MC-IT Master of Information Technology Computing specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence specialisation (formal) in the MC-IT Master of Information Technology"
+    - all:
+        - admission: MC-IT
+          note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+        - admission: MC-IT
+          note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
+    - all:
+        - admission: MC-DATASC
+          note: Admission into the MC-DATASC Master of Data Science
+        - admission: MC-DATASC
+          note: Admission into the MC-DATASC Master of Data Science - Data Science Background Stream
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 17.5
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 7
+      text: From Week 4 to Week 7
+  - kind: project
+    weight: 27.5
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 8
+      to: 11
+      text: From Week 8 to Week 11
+  - kind: quiz
+    weight: 5
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90051
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,49 @@
+code: COMP90088
+title: Cryptocurrencies & decentralised ledgers
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - COMP90041
+    - COMP10001
+    - COMP10002
+    - COMP20005
+    - COMP20003
+    - COMP20007
+    - COMP90059
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 6
+        - 9
+        - 12
+      text: Weeks 3, 6, 9, 12
+  - kind: project
+    weight: 20
+    timing:
+      kind: weeks
+      weeks:
+        - 6
+        - 11
+      text: Week 6, Week 11
+  - kind: project
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90088
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

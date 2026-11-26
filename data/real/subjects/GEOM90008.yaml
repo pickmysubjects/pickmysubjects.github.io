@@ -1,0 +1,68 @@
+code: GEOM90008
+title: Spatial Data Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 0
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: weeks
+      weeks:
+        - 7
+        - 8
+      text: Weeks 7 & 8
+  - kind: test
+    weight: 20
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+recommended:
+  - INFO20003
+  - GEOM20013
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geom90008
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

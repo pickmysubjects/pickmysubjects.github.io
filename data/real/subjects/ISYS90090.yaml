@@ -1,0 +1,44 @@
+code: ISYS90090
+title: Cyber Security Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - ISYS90026
+    - admission: MC-IT
+      note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
+    - admission: MC-DINFENG
+      note: Admission into the Information Systems specialisation (formal) in the MC-DINFENG Master of Digital Infrastructure Engineering
+corequisites: none
+non_allowed:
+  - ISYS90070
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: presentation
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90090
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,33 @@
+code: MAST90103
+title: Random Matrix Theory
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - MAST30021
+    - any:
+        - MAST20009
+        - MAST20032
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+recommended:
+  - MAST20004
+  - MAST30031
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90103
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,67 @@
+code: COMP90091
+title: Cyber Security Clinic
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - all:
+        - COMP90015
+        - COMP90043
+    - permission: application
+      note: "Students must apply for permission directly to the subject coordinator to enrol in this subject. Upon receiving approval, students must attach approval to enrolment assistance form: Enrolment Assistance"
+corequisites: none
+non_allowed:
+  - ISYS90090
+assessment:
+  - kind: test
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: report
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: report
+    weight: 5
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 35
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: report
+    weight: 10
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 20
+    group: true
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90091
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

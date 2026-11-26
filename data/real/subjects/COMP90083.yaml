@@ -1,0 +1,56 @@
+code: COMP90083
+title: Computational Modelling and Simulation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - COMP90038
+            - COMP20003
+            - COMP20007
+        - any:
+            - COMP90041
+            - SWEN20003
+    - any:
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-SCICMP
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+corequisites: none
+non_allowed:
+  - SWEN90004
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: project
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90083
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

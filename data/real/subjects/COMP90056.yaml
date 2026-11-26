@@ -1,0 +1,45 @@
+code: COMP90056
+title: Stream Computing and Applications
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - all:
+        - COMP90038
+        - COMP90041
+    - any:
+        - COMP20003
+        - COMP20007
+    - admission: MC-IT
+      note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 5
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 25
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      to: 11
+      text: From Week 7 to Week 11
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90056
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

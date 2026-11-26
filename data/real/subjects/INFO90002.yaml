@@ -1,0 +1,48 @@
+code: INFO90002
+title: Database Systems & Data Modelling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - INFO20003
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: quiz
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info90002
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

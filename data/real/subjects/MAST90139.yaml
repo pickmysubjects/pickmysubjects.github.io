@@ -1,0 +1,45 @@
+code: MAST90139
+title: Statistical Modelling for Data Science
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - all:
+        - MAST90104
+        - MAST90105
+    - MAST30027
+    - admission: MC-DATASC
+      note: "Admission into one of: • Master of Data Science (MC-DATASC) - Data Science Background stream • Master of Data Science (MC-DATASC)- Statistics Background Stream"
+corequisites: none
+non_allowed:
+  - MAST90084
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: early
+      text: Early in the teaching period
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: late
+      text: Late in the teaching period
+  - kind: exam
+    weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90139
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

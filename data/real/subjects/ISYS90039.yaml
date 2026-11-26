@@ -1,0 +1,48 @@
+code: ISYS90039
+title: Digital Innovation & Technopreneurship
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - ISYS90026
+    - SWEN90016
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 35
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: weeks
+      weeks:
+        - 7
+        - 9
+      text: Week 7 & Week 9
+  - kind: assignment
+    weight: 15
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90039
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

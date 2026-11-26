@@ -1,0 +1,55 @@
+code: MAST90105
+title: Methods of Mathematical Statistics
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - all:
+        - any:
+            - MAST10006
+            - MAST10021
+        - any:
+            - MAST10007
+            - MAST10022
+            - MAST10010
+    - any:
+        - admission: MC-DATASC
+          note: "Admission into one of the following: MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science"
+        - admission: GD-DATASC
+          note: "Admission into one of the following: MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science"
+corequisites: none
+non_allowed:
+  - MAST20004
+  - MAST20005
+  - MAST20006
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: test
+    weight: 35
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: test
+    weight: 10
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: exam
+    weight: 35
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90105
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

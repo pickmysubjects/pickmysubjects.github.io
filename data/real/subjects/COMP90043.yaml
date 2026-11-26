@@ -1,0 +1,67 @@
+code: COMP90043
+title: Cryptography and Security
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - COMP90041
+            - SWEN20003
+        - any:
+            - COMP20003
+            - COMP20007
+            - COMP90038
+        - any:
+            - COMP30023
+            - COMP90007
+    - all:
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (100pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (150pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
+    - any:
+        - admission: MC-SCICMP
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science"
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 6
+      text: From Week 2 to Week 6
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: project
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      to: 11
+      text: From Week 7 to Week 11
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90043
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

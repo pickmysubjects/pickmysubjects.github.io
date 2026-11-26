@@ -1,0 +1,73 @@
+code: MAST90145
+title: Data Science Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - COMP20008
+        - MAST90104
+        - INFO90002
+        - COMP90038
+        - COMP90041
+    - admission: MC-DATASC
+      note: Admission into the Computational and Statistical Data Science specialisation (formal) in the MC-DATASC Master of Data Science
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 0
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: report
+    weight: 45
+    group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: presentation
+    weight: 10
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: report
+    weight: 10
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90145
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

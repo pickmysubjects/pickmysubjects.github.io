@@ -1,0 +1,38 @@
+code: MAST90051
+title: Mathematics of Risk
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - MAST30020
+    - any:
+        - MAST10009
+        - MAST20026
+        - MAST20033
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: exam
+    weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90051
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

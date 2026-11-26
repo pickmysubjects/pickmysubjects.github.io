@@ -1,0 +1,49 @@
+code: ELEN90094
+title: Large Data Methods & Applications
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - ELEN90054
+    - COMP90051
+    - MAST90105
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 9
+      to: 10
+      text: From Week 9 to Week 10
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: report
+    weight: 35
+    group: true
+    hurdle: true
+  - kind: presentation
+    weight: 15
+    group: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90094
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,47 @@
+code: COMP90074
+title: Web Security
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - COMP90015
+    - admission: MC-CS
+      note: Admission into the MC-CS Master of Computer Science
+    - all:
+        - admission: MC-IT
+          note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
+        - admission: MC-IT
+          note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 25
+    hurdle: true
+    timing:
+      kind: week
+      from: 5
+      to: 8
+      text: From Week 5 to Week 8
+  - kind: assignment
+    weight: 25
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90074
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,41 @@
+code: COMP90055
+title: Research Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  permission: coordinator
+  note: "A weighted average mark of 75 or above, and no more than 75 points short of degree completion. Students who meet the above criteria will need to complete an Enrolment Assistance form; Coordinator approval is not required: https://students.unimelb.edu.au/your-course/manage-your-course/course-enrolment/enrolment-assistance Completing enrolment into the subject will give students access, via the LMS, to information about possible topics, supervision, and timelines. Students should negotiate a project topic with a project supervisor well before the start of semester. By the end of Week 1 of semester, students must formally register their project, using an online form available via the LMS. Students applying for summer intake will require approval from the subject coordinator, where students will only be considered if a supervisor from the School of CIS has agreed to supervise in collaboration with an identified overseas partner."
+corequisites: none
+non_allowed:
+  - COMP90082
+  - GEOM90017
+assessment:
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 80
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90055
+source_year: 2027
+verified_on: 2026-11-26
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
