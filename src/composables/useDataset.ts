@@ -2,7 +2,7 @@ import { computed, shallowReactive, watch, type Ref } from 'vue'
 import { defaultCourse, forCourse, type Dataset } from '@/engine'
 import { detailArea, withDetail, type SubjectDetail } from '@/engine/split'
 import { activePlan, books } from './planStore'
-import { masterSubjects, onSide, useStudyLevel } from './useStudyLevel'
+import { masterSubjects, onSide, pickableCourses, useStudyLevel, type StudyLevel } from './useStudyLevel'
 
 /*
  * The UniMelb data (the demo set is for tests and the data scripts only) is fetched, not bundled:
@@ -32,19 +32,31 @@ function loaded(): Dataset {
   return real
 }
 
+/**
+ * The name a side's plans and record are saved under: the master's side keeps its own, so setting
+ * up a master's plan never replaces a bachelor's one.
+ */
+function bookName(real: Dataset, side: StudyLevel): string {
+  return side === 'master' ? `${real.name}:master` : real.name
+}
+
 /** The open plan's own changes to how subjects count (a category by subject code), for the cards. */
 export function useCountsAs() {
   const real = loaded()
-  return computed<Record<string, string>>(() => activePlan(books.value[real.name])?.countsAs ?? {})
+  const { level } = useStudyLevel()
+  return computed<Record<string, string>>(() => activePlan(books.value[bookName(real, level.value)])?.countsAs ?? {})
 }
 
 export function useDataset() {
   const real = loaded()
+  const { level } = useStudyLevel()
+  const name = computed(() => bookName(real, level.value))
   // Seen as a student of the planned course (or the default one) sees it.
-  const course = computed(() => activePlan(books.value[real.name])?.setup.course ?? defaultCourse(real))
+  const course = computed(
+    () => activePlan(books.value[name.value])?.setup.course ?? (level.value === 'master' ? (pickableCourses(real, 'master')[0]?.code ?? defaultCourse(real)) : defaultCourse(real)),
+  )
   const data = computed(() => forCourse(real, course.value))
   // Only this side's subjects (bachelor's or master's): lists, search and adding to a plan never mix them.
-  const { level } = useStudyLevel()
   const masterUses = computed(() => masterSubjects(data.value))
   const subjectList = computed(() =>
     Object.values(data.value.subjects)
@@ -53,7 +65,6 @@ export function useDataset() {
   )
   const topics = computed(() => [...new Set(subjectList.value.flatMap((s) => s.topics))].sort())
   // Saved plans and profiles are kept per data set; this is the one name they live under.
-  const name = computed(() => real.name)
   // The whole data set, for looking at another plan's course (comparing plans).
   const all = real
   return { name, course, data, all, subjectList, topics }
