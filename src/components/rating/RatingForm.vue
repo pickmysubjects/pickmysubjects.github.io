@@ -8,6 +8,7 @@ import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
 import { RATING_TAGS, SKILLS, type Period, type RatingTag, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
+import { tipText } from '@/engine/comments'
 import { FACT_KEYS, FACT_QUESTIONS, LANGUAGES, NO_LANGUAGE, type FactKey } from '@/engine/studentFacts'
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { useGradeShare } from '@/composables/useGradeShare'
@@ -83,6 +84,9 @@ function toggleLanguage(x: string): void {
   else languages.value = x === NO_LANGUAGE ? [x] : [...languages.value.filter((y) => y !== NO_LANGUAGE), x]
 }
 const wish = shallowRef(text('wish') || (props.start?.wish ?? ''))
+// The tip with any lead-in tapped but left empty taken out ("To do well:" alone is no tip).
+const tipLeads = computed(() => (['exam', 'work', 'study', 'watch'] as const).map((k) => t.value(`rating.tipLead.${k}`)))
+const tip = computed(() => tipText(wish.value, tipLeads.value))
 const status = shallowRef<'idle' | 'sending' | 'failed'>('idle')
 // With a grade band, the student's WAM range without this subject goes too (when the form has the
 // question and My page has enough other marks): that's what makes a band comparable across students.
@@ -100,7 +104,7 @@ const complete = computed(
     Object.values(facts.value).some(Boolean) ||
     languages.value.length > 0 ||
     recommend.value !== '' ||
-    wish.value.trim() !== '' ||
+    tip.value !== '' ||
     BANDS.includes(grade.value),
 )
 const periods: Period[] = ['summer', 'semester-1', 'winter', 'semester-2']
@@ -167,7 +171,7 @@ async function send(): Promise<void> {
       cost: facts.value.cost ?? '',
       languages: hasLanguages ? languages.value : [],
       recommend: recommend.value,
-      wish: wish.value.trim(),
+      wish: tip.value,
       language: locale.value,
       ...(mine.editable ? { editId } : {}),
     }

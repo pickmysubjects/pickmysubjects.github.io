@@ -199,3 +199,24 @@ describe('tips on the page', () => {
     expect(withDetail(core.subjects.COMP30027!, details.COMP?.COMP30027).comments).toEqual(tips)
   })
 })
+
+describe('tipText', () => {
+  it('drops lead-ins with nothing written after them, keeps the rest', async () => {
+    const { tipText } = await import('../src/engine/comments')
+    const leads = ['The exam:', 'Assignments:', 'To do well:', 'Watch out:']
+    expect(tipText('To do well: ', leads)).toBe('')
+    expect(tipText('To do well: Watch out:', leads)).toBe('')
+    expect(tipText('To do well: Watch out: start early', leads)).toBe('Watch out: start early')
+    expect(tipText('The exam: open book. To do well:', leads)).toBe('The exam: open book.')
+    expect(tipText('考试：开卷', ['考试：'])).toBe('考试：开卷')
+    expect(tipText('just a tip', leads)).toBe('just a tip')
+  })
+})
+
+describe('screenComment: lead-ins only', () => {
+  it('drops a tip that is only a tapped lead-in, in any language', () => {
+    expect(screenComment('To do well:')).toBeNull()
+    expect(screenComment('考试： ')).toBeNull()
+    expect(screenComment('To do well: start the problem sets early')).toBe('To do well: start the problem sets early')
+  })
+})

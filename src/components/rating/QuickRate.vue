@@ -7,6 +7,7 @@ import { useRated } from '@/composables/useRated'
 import { useMyRatings, type QuickStart } from '@/composables/useMyRatings'
 import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { trackEvent } from '@/utils/analytics'
+import { tipText } from '@/engine/comments'
 import RatingScale from './RatingScale.vue'
 import TipBox from './TipBox.vue'
 
@@ -106,10 +107,13 @@ async function send(tip = ''): Promise<void> {
   } else trackEvent('rating-quick')
 }
 
+// The tip with any lead-in tapped but left empty taken out ("To do well:" alone is no tip).
+const tipLeads = computed(() => (['exam', 'work', 'study', 'watch'] as const).map((k) => t.value(`rating.tipLead.${k}`)))
+const tip = computed(() => tipText(wish.value, tipLeads.value))
+
 async function sendTip(): Promise<void> {
-  const tip = wish.value.trim()
-  if (!tip) return
-  await send(tip)
+  if (!tip.value) return
+  await send(tip.value)
 }
 
 // Handed to the full form: it sends the difficulty, so nothing still waiting here goes on its own.
@@ -158,7 +162,7 @@ onBeforeUnmount(() => {
       <template v-else>
         <TipBox v-model="wish" :code="code" />
         <div class="rating-actions">
-          <button class="button" type="button" :disabled="!wish.trim() || status === 'sending'" @click="sendTip">{{ t('rating.tipSend') }}</button>
+          <button class="button" type="button" :disabled="!tip || status === 'sending'" @click="sendTip">{{ t('rating.tipSend') }}</button>
           <button class="button button-quiet" type="button" @click="more">{{ t('rating.quickMore') }}</button>
         </div>
       </template>

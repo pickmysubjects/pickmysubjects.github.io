@@ -29,3 +29,18 @@ export const commentsFileSchema = z.record(
   z.string().regex(/^[A-Z]{4}\d{5}$/),
   z.array(studentCommentSchema).min(MIN_COMMENTS),
 )
+
+/**
+ * A tip as it goes out: the lead-ins the student tapped ("To do well:") count only with words
+ * after them, so a tap and nothing else is no tip at all.
+ */
+export function tipText(text: string, leads: readonly string[]): string {
+  let out = text.trim()
+  for (const lead of leads.filter(Boolean)) {
+    const esc = lead.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const others = leads.filter((l) => l && l !== lead).map((l) => l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    // A lead followed only by spaces, then another lead or the end.
+    out = out.replace(new RegExp(`${esc}\\s*(?=${others.length ? `(?:${others.join('|')})|` : ''}$)`, 'g'), '').trim()
+  }
+  return out
+}

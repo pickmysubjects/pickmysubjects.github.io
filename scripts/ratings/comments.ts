@@ -10,7 +10,16 @@
  */
 import { createHash } from 'node:crypto'
 import { COLUMNS, latestEdits, screenRows } from './aggregate'
-import { MAX_COMMENT_LENGTH, MIN_COMMENTS, type StudentComment } from '../../src/engine/comments'
+import { MAX_COMMENT_LENGTH, MIN_COMMENTS, tipText, type StudentComment } from '../../src/engine/comments'
+import { en } from '../../src/i18n/messages/en'
+import { zhCN } from '../../src/i18n/messages/zh-CN'
+import { zhTW } from '../../src/i18n/messages/zh-TW'
+import { ja } from '../../src/i18n/messages/ja'
+import { ko } from '../../src/i18n/messages/ko'
+import { vi } from '../../src/i18n/messages/vi'
+import { ms } from '../../src/i18n/messages/ms'
+import { id } from '../../src/i18n/messages/id'
+import { hi } from '../../src/i18n/messages/hi'
 import { PERIODS, type Period } from '../../src/engine/schema'
 import { LOCALE_CODES, type LocaleCode } from '../../src/i18n/codes'
 
@@ -45,8 +54,12 @@ const PATTERNS: RegExp[] = [
  * The automatic filter. Returns the trimmed text, or null when the comment must not be published.
  * Conservative: anything that might identify someone drops the whole comment; nothing is edited.
  */
+// Every language's tip lead-ins ("To do well:"…): one tapped with nothing after it is no tip,
+// whichever version of the site sent it.
+const TIP_LEADS: readonly string[] = [en, zhCN, zhTW, ja, ko, vi, ms, id, hi].flatMap((m) => Object.values(m.rating.tipLead))
+
 export function screenComment(raw: string): string | null {
-  const text = raw.replace(/\s+/g, ' ').trim()
+  const text = tipText(raw.replace(/\s+/g, ' '), TIP_LEADS)
   if (text.length < 3 || text.length > MAX_COMMENT_LENGTH) return null
   if (PATTERNS.some((p) => p.test(text))) return null
   return text
