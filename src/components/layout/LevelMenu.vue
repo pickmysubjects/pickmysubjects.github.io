@@ -1,90 +1,98 @@
 <script setup lang="ts">
-import { GraduationCap } from 'lucide-vue-next'
 import { useStudyLevel, type StudyLevel } from '@/composables/useStudyLevel'
 import { useI18n } from '@/i18n'
 import { trackEvent } from '@/utils/analytics'
 
-/** Bachelor's or master's: which side of the site the lists and search show (see useStudyLevel). */
+/**
+ * Bachelor's or master's: which side of the site the lists, search and plans show (see
+ * useStudyLevel). Both sides are always visible as two segments, the current one filled, so
+ * students can see where they are and switch in one tap.
+ */
 const { t } = useI18n()
 const { level } = useStudyLevel()
 const LEVELS: StudyLevel[] = ['bachelor', 'master']
 
-function onChange(event: Event): void {
-  level.value = (event.target as HTMLSelectElement).value as StudyLevel
-  trackEvent(`level-${level.value}`)
+function choose(l: StudyLevel): void {
+  if (level.value === l) return
+  level.value = l
+  trackEvent(`level-${l}`)
 }
 </script>
 
 <template>
-  <label class="level" :class="{ master: level === 'master' }" :title="t('level.label')">
-    <GraduationCap class="level-icon" :size="17" aria-hidden="true" />
-    <span class="level-name">{{ t(`level.${level}`) }}</span>
-    <!-- A real <select> over the button, like the language menu: native and accessible. -->
-    <select class="level-select" :value="level" :aria-label="t('level.label')" @change="onChange">
-      <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`level.${l}`) }}</option>
-    </select>
-  </label>
+  <div class="level" role="group" :aria-label="t('level.label')">
+    <button
+      v-for="l in LEVELS"
+      :key="l"
+      type="button"
+      class="seg"
+      :class="{ on: level === l }"
+      :aria-pressed="level === l"
+      @click="choose(l)"
+    >
+      {{ t(`level.${l}`) }}
+    </button>
+  </div>
 </template>
 
 <style scoped>
 .level {
-  position: relative;
-  overflow: hidden;
   display: inline-flex;
   flex: none;
-  white-space: nowrap;
-  align-items: center;
-  gap: 6px;
+  gap: 2px;
   height: 36px;
-  padding: 0 12px;
+  padding: 3px;
   border: 1px solid var(--glass-edge);
   border-radius: 999px;
   background: var(--glass-fill);
   box-shadow: var(--glass-shadow);
-  font-size: 0.875rem;
-  font-weight: 500;
+}
+
+.seg {
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
   color: var(--ink-soft);
   cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
 }
 
-/* On the master's side the button wears the accent, so it's clear which side this is. */
-.level.master {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
-  background: var(--accent-soft);
-}
-
-.level:hover {
+.seg:hover:not(.on) {
   color: var(--ink);
   background: var(--glass-fill-hover);
 }
 
-.level.master:hover {
-  color: var(--accent);
+/* The current side is filled in its accent: pink on the bachelor's side, purple on the master's. */
+.seg.on {
+  color: var(--accent-fill-ink);
+  background: var(--accent-fill);
 }
 
-.level:focus-within {
+.seg:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.level-select {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-
-@media (max-width: 1180px) {
-  .level-name {
-    display: none;
+@media (max-width: 640px) {
+  .level {
+    height: 34px;
+    padding: 2px;
   }
 
-  .level {
-    width: 36px;
-    padding: 0;
-    justify-content: center;
+  .seg {
+    padding: 0 7px;
+    font-size: 0.6875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seg {
+    transition: none;
   }
 }
 </style>
