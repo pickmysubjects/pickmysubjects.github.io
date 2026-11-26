@@ -58,6 +58,17 @@ export const SITE_RELEASES: SiteRelease[] = [
         id: "Ambil mata kuliah Summer atau Winter Term? 'Semester ini' menampilkannya beserta tanggal kuliah dan ujian term itu.",
         hi: "समर या विंटर टर्म का विषय लिया है? 'यह सेमेस्टर' उसे उस टर्म की क्लास और परीक्षा की तारीख़ों के साथ दिखाता है।",
       },
+      {
+        en: "This semester and the final mark calculator are linked: parts you add or change, hurdles, marks and an optional week show on the semester page.",
+        'zh-CN': "「本学期」页和期末计算器连在一起了：在计算器里加的、改的考核项目、hurdle、成绩和选填的周数都会显示在本学期页。",
+        'zh-TW': "「本學期」頁和期末計算器連在一起了：在計算器裡加的、改的考核項目、hurdle、成績和選填的週數都會顯示在本學期頁。",
+        ja: "「今学期」と期末計算機が連動。計算機で追加・変更した評価項目、hurdle、点数が今学期にも出ます。",
+        ko: "'이번 학기'와 기말 계산기가 연결됐어요. 계산기에서 추가·변경한 평가 항목, hurdle, 점수가 이번 학기에도 보여요.",
+        vi: "Học kỳ này và máy tính điểm cuối kỳ đã liên kết: phần bạn thêm hay sửa, hurdle và điểm đều hiện trên trang học kỳ.",
+        ms: "Semester ini dan kalkulator markah akhir kini dipautkan: bahagian yang anda tambah atau ubah, hurdle dan markah dipaparkan di halaman semester.",
+        id: "Semester ini dan kalkulator nilai akhir kini terhubung: bagian yang kamu tambah atau ubah, hurdle dan nilai tampil di halaman semester.",
+        hi: "‘यह सेमेस्टर’ और फ़ाइनल मार्क कैलकुलेटर अब जुड़े हैं: वहाँ जोड़े या बदले हिस्से, hurdle और अंक सेमेस्टर पेज पर दिखते हैं।",
+      },
     ],
   },
   {

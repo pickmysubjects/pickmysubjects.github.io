@@ -1672,6 +1672,8 @@ export const ko: Messages = {
     openShort: "기말 점수 계산기",
     unknown: "{code} 과목을 찾을 수 없어요. 위에서 검색해 보세요.",
     subjectPage: "과목 페이지",
+    semesterLink: "이번 학기",
+    week: "주차",
   },
   can: {
     tiles: {"final":"기말 필요 점수","finalLine":"원하는 등급에서 거꾸로 계산","wamLine":"목표와 만약 계산","easy":"꿀강 목록","easyLine":"쉬운 과목과 어려운 과목","compare":"A와 B 비교","compareLine":"두 플랜 나란히 보기","share":"플랜 공유","shareLine":"링크 하나로 보내기"},
@@ -2367,6 +2369,7 @@ export const ko: Messages = {
     mineFrom: "내 계획과 성적 기록에서",
     handbookNote: "평가는 Handbook 기준이에요. 시기는 대략적이니 마감일은 Canvas에서 확인하세요.",
     doneOf: "{total}개 중 {done}개 완료",
+    fromCalc: "평가 항목은 기말 계산기에서 바꾼 대로예요",
     shortTitle: "내 {term} 과목",
     shortWhen: "수업 {classes} · 시험 {exams}",
     shortClasses: "수업 {classes}",

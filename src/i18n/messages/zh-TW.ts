@@ -1672,6 +1672,8 @@ export const zhTW: Messages = {
     openShort: "期末分數計算機",
     unknown: "找不到 {code} 這門課，在上面搜尋看看。",
     subjectPage: "課程頁面",
+    semesterLink: "本學期",
+    week: "第幾週",
   },
   can: {
     tiles: {"final":"期末要考幾分","finalLine":"按想要的等級倒推","wamLine":"目標和「如果」都能算","easy":"涼課榜","easyLine":"好拿分，也看硬課","compare":"比較 A 和 B","compareLine":"兩個計畫並排看","share":"分享計畫","shareLine":"一個連結傳給朋友"},
@@ -2367,6 +2369,7 @@ export const zhTW: Messages = {
     mineFrom: "來自你的計畫和我的紀錄",
     handbookNote: "考核資訊來自 Handbook。時間只是大概：確切截止日期請看 Canvas。",
     doneOf: "已完成 {done}/{total}",
+    fromCalc: "考核項目按你在期末計算器裡改過的",
     shortTitle: "你的 {term}課程",
     shortWhen: "上課 {classes} · 考試 {exams}",
     shortClasses: "上課 {classes}",

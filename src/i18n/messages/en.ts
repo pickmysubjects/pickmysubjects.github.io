@@ -1678,6 +1678,8 @@ export const en = {
     openShort: "Final calculator",
     unknown: "No subject {code} in our data. Search for it above.",
     subjectPage: "Subject page",
+    semesterLink: "This semester",
+    week: "Week",
   },
   can: {
     tiles: {"final":"Final calculator","finalLine":"From the grade you want","wamLine":"Targets and what-ifs","easy":"Easy subjects","easyLine":"And the hardest ones","compare":"Compare A and B","compareLine":"Two plans side by side","share":"Share your plan","shareLine":"Send it as one link"},
@@ -2373,6 +2375,7 @@ export const en = {
     mineFrom: "From your plan and My record",
     handbookNote: "Assessment from the Handbook. Timing is approximate: check Canvas for due dates.",
     doneOf: "{done} of {total} done",
+    fromCalc: "Parts as you set them in the final mark calculator",
     shortTitle: "Your {term} subjects",
     shortWhen: "Classes {classes} · exams {exams}",
     shortClasses: "Classes {classes}",

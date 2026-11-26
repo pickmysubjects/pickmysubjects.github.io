@@ -142,6 +142,8 @@ export interface CalcRow {
   hurdle?: boolean
   score: number | ''
   outOf: number | ''
+  /** Optional: the teaching week it's due, set by the student (used on This semester only). */
+  week?: number
 }
 
 export interface CalcEntry {
@@ -149,6 +151,9 @@ export interface CalcEntry {
   /** True once the rows differ from the Handbook's (edited, added or removed). */
   custom?: boolean
 }
+
+/** A teaching week (1–12) the student set for a part, for This semester's week strip. */
+export const isWeek = (n: unknown): n is number => typeof n === 'number' && Number.isInteger(n) && n >= 1 && n <= 12
 
 const savedNum = (x: unknown): number | '' => (typeof x === 'number' && Number.isFinite(x) && x >= 0 && x <= 1000 ? x : '')
 
@@ -161,7 +166,7 @@ export function cleanCalc(raw: unknown): Record<string, CalcEntry> {
     const rows = (v as CalcEntry).rows
       .filter((r) => r && (ASSESSMENT_KINDS as readonly string[]).includes(r.kind))
       .slice(0, 30)
-      .map((r): CalcRow => ({ kind: r.kind, weight: typeof r.weight === 'number' && r.weight >= 0 && r.weight <= 100 ? r.weight : 0, ...(r.hurdle ? { hurdle: true } : {}), score: savedNum(r.score), outOf: savedNum(r.outOf) }))
+      .map((r): CalcRow => ({ kind: r.kind, weight: typeof r.weight === 'number' && r.weight >= 0 && r.weight <= 100 ? r.weight : 0, ...(r.hurdle ? { hurdle: true } : {}), score: savedNum(r.score), outOf: savedNum(r.outOf), ...(isWeek(r.week) ? { week: r.week } : {}) }))
     out[code] = { rows, ...((v as CalcEntry).custom ? { custom: true } : {}) }
   }
   return out

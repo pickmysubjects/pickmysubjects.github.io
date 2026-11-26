@@ -200,3 +200,12 @@ describe('partsFromRows', () => {
     ])
   })
 })
+
+describe('cleanCalc: the optional week', () => {
+  it('keeps a teaching week 1–12 and drops anything else', async () => {
+    const { cleanCalc } = await import('../src/engine/finalCalc')
+    const row = (week: unknown) => ({ kind: 'assignment', weight: 10, score: '', outOf: '', week })
+    const out = cleanCalc({ COMP10001: { rows: [row(6), row(0), row(13), row(2.5), row('3')] } })
+    expect(out.COMP10001!.rows.map((r) => r.week)).toEqual([6, undefined, undefined, undefined, undefined])
+  })
+})

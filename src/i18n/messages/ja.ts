@@ -1672,6 +1672,8 @@ export const ja: Messages = {
     openShort: "期末点数計算",
     unknown: "科目 {code} は見つかりません。上で検索してください。",
     subjectPage: "科目ページ",
+    semesterLink: "今学期",
+    week: "週",
   },
   can: {
     tiles: {"final":"期末の必要点","finalLine":"目標の成績から逆算","wamLine":"目標ともしもの計算","easy":"楽単リスト","easyLine":"難しい科目も一緒に","compare":"A と B を比較","compareLine":"2つのプランを並べて","share":"プランを共有","shareLine":"リンク1つで送れる"},
@@ -2367,6 +2369,7 @@ export const ja: Messages = {
     mineFrom: "プランと成績記録から",
     handbookNote: "評価はHandbookより。時期は目安です。締め切りはCanvasで確認してください。",
     doneOf: "{total}件中{done}件完了",
+    fromCalc: "評価項目は期末計算機で変更した内容です",
     shortTitle: "{term}の科目",
     shortWhen: "授業 {classes} · 試験 {exams}",
     shortClasses: "授業 {classes}",

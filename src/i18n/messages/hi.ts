@@ -1672,6 +1672,8 @@ export const hi: Messages = {
     openShort: "फ़ाइनल कैलकुलेटर",
     unknown: "हमारे डेटा में सब्जेक्ट {code} नहीं है। ऊपर खोजें।",
     subjectPage: "सब्जेक्ट पेज",
+    semesterLink: "यह सेमेस्टर",
+    week: "हफ़्ता",
   },
   can: {
     tiles: {"final":"फ़ाइनल में कितने चाहिए","finalLine":"मनचाहे ग्रेड से उल्टा हिसाब","wamLine":"लक्ष्य और “अगर” वाला हिसाब","easy":"आसान सब्जेक्ट","easyLine":"WAM बढ़ाने वाले, कठिन भी","compare":"A और B की तुलना","compareLine":"दो प्लान साथ-साथ","share":"प्लान शेयर करें","shareLine":"एक लिंक से भेजें"},
@@ -2367,6 +2369,7 @@ export const hi: Messages = {
     mineFrom: "आपके प्लान और रिकॉर्ड से",
     handbookNote: "मूल्यांकन Handbook से। समय अंदाज़न है: डेडलाइन Canvas पर देखें।",
     doneOf: "{total} में से {done} पूरे",
+    fromCalc: "हिस्से वैसे ही जैसे आपने फ़ाइनल मार्क कैलकुलेटर में बदले",
     shortTitle: "आपके {term} के विषय",
     shortWhen: "क्लास {classes} · परीक्षा {exams}",
     shortClasses: "क्लास {classes}",

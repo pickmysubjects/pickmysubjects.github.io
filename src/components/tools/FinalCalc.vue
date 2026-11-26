@@ -7,10 +7,11 @@ import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useFinalCalc, type CalcRow } from '@/composables/useFinalCalc'
+import { useSemester } from '@/composables/useSemester'
 import { usePlan } from '@/composables/usePlan'
 import { link, replaceAddress } from '@/composables/useView'
 import { ASSESSMENT_KINDS } from '@/engine/schema'
-import { finalBand, finalNeeds, handbookChanged, partsFromAssessment, partsFromRows, percentOf, sameCalcParts, type CalcPart } from '@/engine/finalCalc'
+import { finalBand, finalNeeds, handbookChanged, isWeek, partsFromAssessment, partsFromRows, percentOf, sameCalcParts, type CalcPart } from '@/engine/finalCalc'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { attendanceText } from '@/utils/attendance'
@@ -30,6 +31,9 @@ const fromPlan = computed(() => {
 })
 
 const subject = computed(() => (props.code ? data.value.subjects[props.code] : undefined))
+// The same parts and marks show on This semester for a subject taken this term: link across.
+const { termSubjects } = useSemester()
+const inThisTerm = computed(() => !!props.code && termSubjects.value.includes(props.code))
 const handbookRows = computed<CalcRow[]>(() => partsFromAssessment(subject.value?.assessment).map((p) => ({ ...p, score: '', outOf: '' })))
 const entry = computed(() => (props.code ? saved.value[props.code] : undefined))
 const rows = computed<CalcRow[]>(() => entry.value?.rows ?? handbookRows.value)
@@ -51,6 +55,15 @@ function setWeight(i: number, e: Event): void {
   const n = numberOf(e)
   if (n === '' || n === rows.value[i]?.weight) return
   setField(i, 'weight', Math.min(100, n))
+}
+// The week is optional and only asked for a subject this term (it places the part on This semester).
+function setWeek(i: number, e: Event): void {
+  const n = Number((e.target as HTMLInputElement).value)
+  save(rows.value.map((r, j) => {
+    if (j !== i) return r
+    const { week: _old, ...rest } = r
+    return isWeek(n) ? { ...rest, week: n } : rest
+  }))
 }
 function weightDone(i: number, e: Event): void {
   const el = e.target as HTMLInputElement
@@ -143,7 +156,10 @@ watch(() => anyDone.value, (on) => on && offerInstall())
       <div v-if="subject" class="calc-subject">
         <p class="calc-code code">{{ subject.code }}</p>
         <p class="calc-name">{{ localTitle(subject, locale) || subject.title }}</p>
-        <a class="calc-link" :href="link(`subject/${subject.code}`)">{{ t('calc.subjectPage') }}</a>
+        <span class="calc-links">
+          <a class="calc-link" :href="link(`subject/${subject.code}`)">{{ t('calc.subjectPage') }}</a>
+          <a v-if="inThisTerm" class="calc-link" :href="link('this-semester/')">{{ t('calc.semesterLink') }}</a>
+        </span>
       </div>
       <label class="calc-search">
         <span class="calc-label">{{ subject ? t('calc.change') : t('calc.pick') }}</span>
@@ -171,7 +187,7 @@ watch(() => anyDone.value, (on) => on && offerInstall())
         <p class="calc-hint" :class="{ warn: changed }">{{ changed ? t('calc.handbookChanged') : handbookRows.length ? t('calc.fromHandbook') : t('calc.noData') }}</p>
 
         <ul v-if="rows.length" class="rows">
-          <li v-for="(r, i) in rows" :key="ids[i] ?? `i${i}`" class="row">
+          <li v-for="(r, i) in rows" :key="ids[i] ?? `i${i}`" class="row" :class="{ 'has-week': inThisTerm }">
             <label class="f f-kind">
               <span class="visually-hidden">{{ t('calc.part') }}</span>
               <select class="input" :value="r.kind" @change="setField(i, 'kind', ($event.target as HTMLSelectElement).value)">
@@ -181,6 +197,10 @@ watch(() => anyDone.value, (on) => on && offerInstall())
             <label class="f f-weight">
               <span class="f-label">{{ t('calc.weight') }}</span>
               <input class="input" type="number" inputmode="decimal" min="0" max="100" :value="r.weight" @input="setWeight(i, $event)" @change="weightDone(i, $event)" />
+            </label>
+            <label v-if="inThisTerm" class="f f-week">
+              <span class="f-label">{{ t('calc.week') }}</span>
+              <input class="input" type="number" inputmode="numeric" min="1" max="12" :aria-label="`${t('calc.week')} (${t('rev.optional')})`" :value="r.week ?? ''" @input="setWeek(i, $event)" />
             </label>
             <label class="f f-score">
               <span class="f-label">{{ t('calc.score') }} / {{ t('calc.outOf') }}</span>
@@ -299,6 +319,12 @@ watch(() => anyDone.value, (on) => on && offerInstall())
   overflow-wrap: anywhere;
 }
 
+.calc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+}
+
 .calc-link {
   display: inline-flex;
   align-items: center;
@@ -389,6 +415,10 @@ watch(() => anyDone.value, (on) => on && offerInstall())
   gap: 4px var(--space-3);
   padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--divider);
+}
+
+.row.has-week {
+  grid-template-columns: minmax(0, 1fr) 5.5em 4.5em minmax(11em, 1.2fr) auto auto;
 }
 
 .f {
@@ -637,6 +667,13 @@ watch(() => anyDone.value, (on) => on && offerInstall())
     grid-template-columns: 5.5em minmax(0, 1fr);
     grid-template-areas: 'kind kind' 'weight score' 'hurdle x';
   }
+
+  .row.has-week {
+    grid-template-columns: 5.5em minmax(0, 1fr);
+    grid-template-areas: 'kind kind' 'weight score' 'week week' 'hurdle x';
+  }
+
+  .f-week { grid-area: week; }
 
   .f-kind { grid-area: kind; }
   .f-weight { grid-area: weight; }

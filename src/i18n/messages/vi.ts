@@ -1672,6 +1672,8 @@ export const vi: Messages = {
     openShort: "Tính điểm thi cuối kỳ",
     unknown: "Không tìm thấy môn {code}. Hãy tìm ở ô phía trên.",
     subjectPage: "Trang môn học",
+    semesterLink: "Học kỳ này",
+    week: "Tuần",
   },
   can: {
     tiles: {"final":"Điểm thi cần đạt","finalLine":"Tính từ mức muốn đạt","wamLine":"Mục tiêu và “nếu như”","easy":"Môn dễ","easyLine":"Kèm cả môn khó nhất","compare":"So sánh A và B","compareLine":"Đặt cạnh nhau để xem","share":"Chia sẻ kế hoạch","shareLine":"Gửi bằng một link"},
@@ -2367,6 +2369,7 @@ export const vi: Messages = {
     mineFrom: "Từ kế hoạch và hồ sơ của bạn",
     handbookNote: "Đánh giá theo Handbook. Thời gian chỉ là ước lượng: xem hạn nộp trên Canvas.",
     doneOf: "Xong {done}/{total}",
+    fromCalc: "Các phần theo chỉnh sửa của bạn trong máy tính điểm cuối kỳ",
     shortTitle: "Các môn {term} của bạn",
     shortWhen: "Học {classes} · thi {exams}",
     shortClasses: "Học {classes}",

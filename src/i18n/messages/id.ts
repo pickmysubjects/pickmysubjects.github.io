@@ -1672,6 +1672,8 @@ export const id: Messages = {
     openShort: "Kalkulator ujian akhir",
     unknown: "Mata kuliah {code} tidak ada di data kami. Cari di atas.",
     subjectPage: "Halaman mata kuliah",
+    semesterLink: "Semester ini",
+    week: "Minggu",
   },
   can: {
     tiles: {"final":"Nilai ujian akhir","finalLine":"Dari grade incaranmu","wamLine":"Target dan simulasi","easy":"Mata kuliah mudah","easyLine":"Dan yang paling sulit","compare":"Rencana A vs B","compareLine":"Dua rencana sejajar","share":"Bagikan rencana","shareLine":"Kirim lewat satu tautan"},
@@ -2367,6 +2369,7 @@ export const id: Messages = {
     mineFrom: "Dari rencana dan catatanmu",
     handbookNote: "Penilaian dari Handbook. Waktunya perkiraan: cek tenggat di Canvas.",
     doneOf: "{done} dari {total} selesai",
+    fromCalc: "Bagian sesuai yang kamu ubah di kalkulator nilai akhir",
     shortTitle: "Mata kuliah {term}-mu",
     shortWhen: "Kuliah {classes} · ujian {exams}",
     shortClasses: "Kuliah {classes}",

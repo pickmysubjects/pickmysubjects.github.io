@@ -1672,6 +1672,8 @@ export const zhCN: Messages = {
     openShort: "期末分数计算器",
     unknown: "没找到 {code} 这门课，在上面搜一下吧。",
     subjectPage: "课程页面",
+    semesterLink: "本学期",
+    week: "第几周",
   },
   can: {
     tiles: {"final":"期末要考几分","finalLine":"按想要的等级倒推","wamLine":"目标和“如果”都能算","easy":"水课榜","easyLine":"好拿分，也看难课","compare":"对比 A 和 B","compareLine":"两个计划并排看","share":"分享计划","shareLine":"一个链接发给朋友"},
@@ -2367,6 +2369,7 @@ export const zhCN: Messages = {
     mineFrom: "来自你的计划和我的记录",
     handbookNote: "考核信息来自 Handbook。时间只是大概：具体截止日期请看 Canvas。",
     doneOf: "已完成 {done}/{total}",
+    fromCalc: "考核项目按你在期末计算器里改过的",
     shortTitle: "你的 {term}课程",
     shortWhen: "上课 {classes} · 考试 {exams}",
     shortClasses: "上课 {classes}",

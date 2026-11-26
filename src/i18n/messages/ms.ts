@@ -1672,6 +1672,8 @@ export const ms: Messages = {
     openShort: "Kalkulator peperiksaan akhir",
     unknown: "Subjek {code} tiada dalam data kami. Cari di atas.",
     subjectPage: "Halaman subjek",
+    semesterLink: "Semester ini",
+    week: "Minggu",
   },
   can: {
     tiles: {"final":"Markah akhir perlu","finalLine":"Dari gred yang dimahu","wamLine":"Sasaran dan andaian","easy":"Subjek mudah","easyLine":"Dan yang paling susah","compare":"Banding A dan B","compareLine":"Sebelah-menyebelah","share":"Kongsi rancangan","shareLine":"Hantar satu pautan"},
@@ -2367,6 +2369,7 @@ export const ms: Messages = {
     mineFrom: "Dari pelan dan rekod anda",
     handbookNote: "Penilaian dari Handbook. Masa hanya anggaran: semak tarikh akhir di Canvas.",
     doneOf: "{done} daripada {total} siap",
+    fromCalc: "Bahagian seperti yang anda ubah dalam kalkulator markah akhir",
     shortTitle: "Subjek {term} anda",
     shortWhen: "Kelas {classes} · peperiksaan {exams}",
     shortClasses: "Kelas {classes}",

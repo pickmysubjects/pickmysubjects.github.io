@@ -18,7 +18,8 @@ import { localTitle } from '@/i18n/localized'
 import { summariseAssessment } from '@/utils/assessment'
 import { buildIcs, datesForTerms, downloadIcs, KEY_DATES, type KeyDate } from '@/utils/keyDates'
 import { useFinalCalc } from '@/composables/useFinalCalc'
-import { finalBand, finalNeeds, partsFromRows } from '@/engine/finalCalc'
+import { finalBand, finalNeeds, partsFromRows, percentOf } from '@/engine/finalCalc'
+import type { Timing } from '@/engine/timing'
 import { cleanStringLists } from '@/utils/sanitize'
 import { nextKeyDates } from '@/utils/semester'
 import { subjectsIn } from '@/utils/whatsNext'
@@ -43,6 +44,7 @@ const art = () => import('@/components/tools/art/ArtRevision.vue')
 
 // Saved on this device only: hidden subjects and ticked tasks, by term ("2027-semester-1").
 const asStringLists = cleanStringLists
+const calc = useFinalCalc()
 const hiddenStore = usePersisted<Record<string, string[]>>('sc:semHidden', {}, asStringLists)
 const doneStore = usePersisted<Record<string, string[]>>('sc:semDone', {}, asStringLists)
 const rateSeen = usePersisted<string[]>('sc:semRateSeen', [], (raw) => (Array.isArray(raw) ? raw.filter((x): x is string => typeof x === 'string') : []))
@@ -66,29 +68,45 @@ function showAll(): void {
 const examRange = computed(() => (now.value?.sem.exams ? numericRange(locale.value, now.value.sem.exams.start, now.value.sem.exams.end) : ''))
 
 // Each task of a subject, numbered within its kind ("Assignment 2"), with its Handbook timing,
-// in the order they come up (untimed ones last).
+// in the order they come up (untimed ones last). Once the student has the subject in the final
+// mark calculator, its parts come from there instead (a part added, a weight or hurdle changed),
+// each with the mark typed; a part keeps the Handbook timing of the same kind in the same place.
 const cardsFor = (codes: string[]) =>
   codes.map((code) => {
     const s = data.value.subjects[code]!
-    const tasks = Array.isArray(s.assessment) ? s.assessment : []
+    const handbook = Array.isArray(s.assessment) ? s.assessment : []
+    const rows = calc.value[code]?.rows
+    // The nth part of a kind in the calculator is the nth of that kind in the Handbook.
+    const nth = new Map<string, number>()
+    const parts = rows
+      ? rows.map((r, j) => {
+          const k = nth.get(r.kind) ?? 0
+          nth.set(r.kind, k + 1)
+          const i = handbook.map((x, ix) => (x.kind === r.kind ? ix : -1)).filter((ix) => ix >= 0)[k] ?? -1
+          const pct = r.score === '' ? null : percentOf(r.score, r.outOf === '' ? 100 : r.outOf)
+          // A week the student set in the calculator wins over the Handbook's timing.
+          const timing: Timing | undefined = r.week ? { kind: 'week', from: r.week, text: '' } : i >= 0 ? handbook[i]!.timing : undefined
+          return { kind: r.kind, weight: r.weight, hurdle: !!r.hurdle, timing, id: i >= 0 ? `${code}:${i}` : `${code}:calc${j}`, mark: pct === null ? '' : `${r.score}/${r.outOf === '' ? 100 : r.outOf}` }
+        })
+      : handbook.map((x, i) => ({ kind: x.kind, weight: x.weight, hurdle: !!x.hurdle, timing: x.timing, id: `${code}:${i}`, mark: '' }))
     const counts = new Map<string, number>()
-    for (const x of tasks) counts.set(x.kind, (counts.get(x.kind) ?? 0) + 1)
+    for (const x of parts) counts.set(x.kind, (counts.get(x.kind) ?? 0) + 1)
     // Sorted by when they happen, then numbered in that order; the id keeps the Handbook position.
     const seen = new Map<string, number>()
-    const items = tasks
-      .map((x, i) => ({ x, i }))
-      .sort((a, b) => timingOrder(a.x.timing) - timingOrder(b.x.timing))
-      .map(({ x, i }) => {
+    const items = [...parts]
+      .sort((a, b) => timingOrder(a.timing) - timingOrder(b.timing))
+      .map((x) => {
         const n = (seen.get(x.kind) ?? 0) + 1
         seen.set(x.kind, n)
         const label = t.value(`assess.kind.${x.kind}`) + ((counts.get(x.kind) ?? 0) > 1 ? ` ${n}` : '')
-        return { id: `${code}:${i}`, label, weight: x.weight, hurdle: !!x.hurdle, timing: x.timing, when: timingLabel(t.value, x.timing, examRange.value) }
+        return { id: x.id, label, weight: x.weight, hurdle: x.hurdle, timing: x.timing, when: timingLabel(t.value, x.timing, examRange.value), mark: x.mark }
       })
     const done = new Set(doneStore.value[termKey.value] ?? [])
     return {
       code,
       title: localTitle(s, locale.value) || s.title,
-      summary: summariseAssessment(s.assessment),
+      summary: summariseAssessment(rows ? parts.map((p) => ({ kind: p.kind, weight: p.weight, ...(p.hurdle ? { hurdle: true } : {}) })) : s.assessment),
+      fromCalc: calc.value[code]?.custom === true,
       items,
       done: items.filter((i) => done.has(i.id)).length,
       doneSet: done,
@@ -98,7 +116,6 @@ const cards = computed(() => cardsFor(shown.value))
 
 // Marks typed into the final calculator, in a line under each subject: what's in so far and the
 // best grade still within reach ("H1 needs 81% on the rest"), or the mark once everything is in.
-const calc = useFinalCalc()
 function marksLine(code: string): string {
   const rows = calc.value[code]?.rows
   const r = rows ? finalNeeds(partsFromRows(rows)) : null
@@ -331,6 +348,7 @@ const caption = computed(() => {
               <summary class="subject-head">
                 <span class="subject-name"><span class="code">{{ c.code }}</span> {{ c.title }}</span>
                 <span class="subject-sum">{{ plainSummary(c) }}</span>
+                <span v-if="c.fromCalc" class="subject-from">{{ t('sem.fromCalc') }}</span>
                 <span v-if="marksLine(c.code)" class="subject-marks">{{ marksLine(c.code) }}</span>
                 <span v-if="c.items.length" class="subject-done" :class="{ tall: marksLine(c.code) }">{{ t('sem.doneOf', { done: c.done, total: c.items.length }) }}</span>
               </summary>
@@ -339,10 +357,10 @@ const caption = computed(() => {
                   <label class="task-tick">
                     <input type="checkbox" :checked="c.doneSet.has(i.id)" @change="toggle(i.id)" />
                     <span class="tick-box" aria-hidden="true"><Check :size="14" /></span>
-                    <span class="task-name" :class="{ 'is-done': c.doneSet.has(i.id) }">{{ i.label }} {{ i.weight }}%</span>
+                    <span class="task-name" :class="{ 'is-done': c.doneSet.has(i.id) }">{{ i.label }} {{ i.weight }}%<span v-if="i.mark" class="task-mark">{{ i.mark }}</span></span>
                   </label>
                   <span v-if="i.hurdle" class="pill">{{ t('next.hurdle') }}</span>
-                  <span class="task-when" :class="{ quote: i.timing?.kind === 'other' }" :title="i.timing && i.timing.kind !== 'other' ? t('timing.source', { text: i.timing.text }) : undefined">{{ i.when }}</span>
+                  <span class="task-when" :class="{ quote: i.timing?.kind === 'other' }" :title="i.timing?.text && i.timing.kind !== 'other' ? t('timing.source', { text: i.timing.text }) : undefined">{{ i.when }}</span>
                 </li>
               </ul>
               <div class="subject-actions">
@@ -736,6 +754,19 @@ const caption = computed(() => {
 
 .row-actions {
   padding: 0;
+}
+
+.subject-from {
+  grid-column: 1;
+  color: var(--ink-soft);
+  font-size: var(--fs-meta);
+}
+
+.task-mark {
+  margin-inline-start: 8px;
+  color: var(--accent);
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
 }
 
 .subject-marks {
