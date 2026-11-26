@@ -10,34 +10,42 @@ The University's My Course Planner tells you whether a plan is *valid*. PickMySu
 
 ## What's covered
 
-Five degrees from the 2026 Handbook: Bachelor of Arts, Biomedicine, Commerce, Design and Science, with their majors, Arts minors, specialisations and Design's informal specialisations. About 1,360 subjects. The exact list and counts come from `data/` and are printed in the site's `llms.txt` on every build.
+18 bachelor's degrees from the 2027 Handbook (Agriculture, Arts, Biomedicine, Commerce, Design, Fine Arts in nine streams, Music, Oral Health, Science and Science Extended), with 126 majors, 43 minors, 31 specialisations and 1,988 subjects. The exact list and counts come from `data/` and are printed in the site's `llms.txt` on every build.
 
 ## What you can do
 
 **Look up a subject.** Each subject has a page with:
 - when it runs, points and level;
 - prerequisites, corequisites, subjects it can't be taken with, and what it leads to (tap "I meet this" for requirements the site can't check);
-- assessment: each task's share, the final-exam share, hurdles, group work, weekly class hours;
+- assessment: each task's share and when it's due, the final-exam share, hurdles, group work, weekly class hours;
 - a short summary of what it teaches, and which majors, minors and specialisations it counts toward;
-- for about 390 subjects, a summary of public student reviews in all 9 languages, with a link to the source;
-- anonymous ratings from students on this site (shown once 3 people have rated it), and a form to rate subjects you've taken;
-- quick answers: is it hard, is there an exam, can I take it as breadth, what comes after.
+- for 423 subjects, a summary of public student reviews in all 9 languages, with a link to the source;
+- anonymous ratings and tips from students on this site (shown once 3 people have rated it), and a form to rate subjects you've taken;
+- quick answers: is it hard, is it right for me, is there an exam, can I take it as breadth, what comes after.
 
-**Find subjects.** Search by code or name, filter by breadth, level, semester, no prerequisites, no final exam or no group work, and sort by exam share, class hours or rating. One row of quick choices at the top: easy subjects (水课), hard subjects, no final exam, first semester, breadth. The easy and hard lists give each subject's reasons.
+**Find subjects.** Search by code or name, filter by breadth, level, semester, no prerequisites, no final exam or no group work, and sort by exam share, class hours or rating. Quick lists: easy subjects, hard subjects, no final exam, first semester, summer and winter, breadth. The easy and hard lists give each subject's reasons.
 
-**Majors, minors and specialisations.** What each one needs, year by year: compulsory subjects, the ones you choose from, and what to take first. Majors with several entry points (languages) show each one. Compare two majors to see what they share.
+**Sort for me.** Orders subjects by how well they fit you: your marks, strengths, interests, goal (protect my WAM, balanced, stretch me) and career goal, plus how hard students found them. Every subject comes with its reasons.
 
-**Sort for me.** A switch on Find subjects that orders the list by your marks, strengths and interests, each subject with a reason. Goals: protect my WAM, balanced, stretch me.
+**Compare subjects.** Up to five similar subjects side by side: when they run, exam share, difficulty, prerequisites, hurdles and ratings, and which fits you best and why. Open it from a subject's Similar subjects, from Tools, or by saving subjects.
 
-**Plan the whole degree.** Pick a degree and major (plus a second major, minor or specialisation where the degree allows) and the site lays out every semester. It checks prerequisites, course rules and how heavy each semester is compared with that degree's normal load, explains heavy semesters and suggests swaps. Drag subjects around, add subjects, add summer or winter terms. Failed subjects get planned again. It warns when the plan runs longer than usual (student visas), shows census dates, and can share a plan as a link or print the whole degree.
+**Majors, minors and specialisations.** What each one needs, year by year: compulsory subjects, the ones you choose from, and what to take first.
 
-**Plan A, Plan B.** Keep up to five plans, each with its own major, strengths, interests and goal, and compare two side by side.
+**Careers.** Which majors and subjects lead to a job, including accreditation routes. Set one as your career goal and suggestions and plans lean toward it.
 
-**My record.** Finished subjects and marks, your WAM, a target-WAM calculator, strengths, interests, goal and weekly work hours. Back up to a file and restore it elsewhere. Optionally share grade bands anonymously.
+**Plan the whole degree.** Pick a degree and major (plus a second major, minor, specialisation or concurrent diploma where the degree allows) and the site lays out every semester. It checks prerequisites, course rules and how heavy each semester is, explains heavy semesters and suggests swaps. Drag subjects around, add summer or winter terms, and change how a subject counts when your faculty approved an exception. Failed subjects get planned again. Share a plan as a link, save it as an image, print it, or add its key dates to your calendar.
 
-**Guide (墨大入门).** Credit points, majors, double majors (双主修) and minors (辅修), discipline and breadth limits, study load, grades, WAM, census dates and dropping, failing and repeating, how the degree is recognised abroad, and what to check yourself before you enrol.
+**Plan A, Plan B.** Keep up to five plans, each with its own major, strengths, interests and goal, and compare them side by side. Thinking of switching major or degree? Try the new major on a copy of your plan and see what still counts.
 
-**Also:** add a missing subject by pasting its Handbook page, send feedback, works offline once opened and can be installed to your home screen.
+**This semester.** Which teaching week it is, the next key dates, and each of your subjects' assessments in its week, with ticks for what's done. Marks from the final mark calculator show here, you can add the semester to your calendar, and after results it asks you to rate what you just finished.
+
+**Tools.** What you need on the final for each grade, your WAM and a target, a day-by-day revision timetable, resume lines from your subjects, and subject comparison.
+
+**My record.** Finished subjects and marks, your WAM, strengths, interests, goal, career goal and weekly work hours. Back up to a file and restore it elsewhere. Optionally share grade bands anonymously.
+
+**Guide.** Credit points, majors, double majors and minors, discipline and breadth limits, study load, grades, WAM, enrolling, switching major or degree, the first weeks of semester, census dates and dropping, special consideration, failing and repeating, support services, international students, and key dates.
+
+**Also:** add a missing subject by pasting its Handbook page, send feedback, works offline once opened, and can be installed as an app on a phone or computer.
 
 ## The problems it solves
 
@@ -52,20 +60,20 @@ These are the problems PickMySubjects exists for, with honest status. The same l
 | Which subjects are easier marks / good for my WAM? | Partly | "Protect my WAM" goal, review summaries and ratings; ratings are still being collected |
 | Which subjects are known to be very hard? | Works | Review summaries, ratings once a subject has 3, heavy-semester warnings |
 | What skills does a subject need, and do I have them? | Works | Skill tags on subjects, your strengths shape suggestions and plans |
-| Which subjects suit *me*? | Works | Ranked from your results, skills and interests, with every score explained |
-| Rules differ by year, degree, major and level | Partly | Rules stored per Handbook year; five degrees for 2026 so far |
-| Where do subjects lead after uni? | Not yet | Career pathways are planned |
+| Which subjects suit *me*? | Works | Ranked from your results, skills, interests and goals, with every score explained |
+| Rules differ by year, degree, major and level | Partly | Rules stored per Handbook year; 18 degrees for 2027 so far |
+| Where do subjects lead after uni? | Works | Career pages: majors, subjects and accreditation routes for each job |
 
 ## Languages
 
-English, 简体中文, 繁體中文, 日本語, 한국어, Tiếng Việt, Bahasa Indonesia, Bahasa Melayu and हिन्दी. Students switch languages in the header. Non-English text is machine-assisted; fixes are very welcome (`src/i18n/messages/`). Subject and course names stay as the University publishes them.
+Nine languages: English, Simplified Chinese (简体中文), Traditional Chinese (繁體中文), Japanese (日本語), Korean (한국어), Vietnamese (Tiếng Việt), Indonesian (Bahasa Indonesia), Malay (Bahasa Melayu) and Hindi (हिन्दी). Students switch languages in the header. Non-English text is machine-assisted; fixes are very welcome (`src/i18n/messages/`). Subject and course names stay as the University publishes them.
 
 ## Principles
 
 - **Facts only, from the official Handbook.** Each subject records facts such as when it runs, prerequisites and assessment weights, written in our own words and checked by people. No Handbook text is reproduced, and nothing is scraped. See [docs/research.md](docs/research.md).
 - **Honest about what it doesn't know.** Every check is *met*, *not met* or *can't tell yet*. Missing data never counts as a pass.
 - **Private by default.** Your results and plans stay in your browser. There is no account and no server.
-- **Links, not copies.** Discussion on Reddit, StudentVIP, 小红书 and elsewhere is linked, never copied. Where a subject has enough public reviews, a short summary in our own words sits next to the link. See [docs/discussion-sources.md](docs/discussion-sources.md).
+- **Links, not copies.** Discussion on Reddit, StudentVIP, Xiaohongshu and elsewhere is linked, never copied. Where a subject has enough public reviews, a short summary in our own words sits next to the link. See [docs/discussion-sources.md](docs/discussion-sources.md).
 
 ## Feedback
 
@@ -91,7 +99,7 @@ npm run indexnow   # tell Bing/IndexNow about every URL in the live sitemap (sen
 
 There are two datasets:
 - **Demo**: a fictional "Example University" that shows every feature.
-- **UniMelb**: the real data, five degrees and about 1,360 subjects so far.
+- **UniMelb**: the real data, 18 degrees and 1,988 subjects from the 2027 Handbook.
 
 ## How it's built
 

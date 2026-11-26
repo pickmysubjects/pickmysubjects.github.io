@@ -28,7 +28,7 @@ npm run typecheck
 - One file per subject: `data/real/subjects/CODE.yaml`. Set `source_year`, and set `verified_on` to the date you checked it against the Handbook.
 - `unknown` means "not curated yet". Use `none` only when you've confirmed there is nothing.
 - What students check first, as structured facts (all optional):
-  - `assessment`: the semester version of the assessment table, one entry per task: `kind` (exam, test, quiz, assignment, project, report, presentation, participation), `weight` (%), `group: true` if done in groups, `hurdle: true` if it must be passed on its own. Weights must add up to 100.
+  - `assessment`: the semester version of the assessment table, one entry per task: `kind` (exam, test, quiz, assignment, project, report, presentation, participation), `weight` (%), `group: true` if done in groups, `hurdle: true` if it must be passed on its own, and `timing` from the Handbook's Timing cell (`scripts/import-timing.ts` reads it; wording it can't read for sure is kept as `kind: other` and only quoted). Weights must add up to 100.
   - `weekly_contact_hours`: class hours a week (a "48 hours" semester total is 4).
   - `min_attendance`: an attendance hurdle in %.
   - `skills` and `topics`: tags from the fixed lists in `src/engine/schema.ts` (`SKILLS`, `TOPICS`). They drive "Subjects that suit me".
@@ -49,5 +49,5 @@ npm run typecheck
 ### Good first tasks
 
 - Curate a subject that `npm run data` lists as "referenced but not curated".
-- Add the structure of a B-SCI major (`data/real/components/B-SCI/2026/*.yaml` is `unknown` today).
+- Check a subject's assessment timing that is still `kind: other` (the Handbook's own words) against its Handbook page, and turn it into a week where the page is clear.
 - Improve the Handbook-paste parser for a requirement format it doesn't handle yet, with a test.
