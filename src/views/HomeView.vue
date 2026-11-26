@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, CalendarCheck, Gauge, Globe } from 'lucide-vue-next'
@@ -17,23 +18,25 @@ import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
 const { t, locale } = useI18n()
-const { data } = useDataset()
+const { data, subjectList } = useDataset()
 
 // The title is split into phrases that never break inside; languages written with spaces keep one between them.
 // "|" marks where the title may break; "*…*" marks the words to emphasise.
 const titleParts = computed(() =>
-  t.value('home.title')
+  t.value(isMaster.value ? 'home.titleMaster' : 'home.title')
     .split('|')
     .map((part) => part.split('*').map((text, i) => ({ text, em: i % 2 === 1 })).filter((x) => x.text)),
 )
 const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
 // How many subjects the site knows, counted from the data itself.
-const subjectCount = computed(() => Object.keys(data.value.subjects).length.toLocaleString(locale.value))
+// This side's subjects only (a bachelor's or a master's), as Find subjects counts them.
+const subjectCount = computed(() => subjectList.value.length.toLocaleString(locale.value))
 
 const { profile, wam } = useProfile()
 const plan = usePlan()
 // Someone who has been here before (a degree, a record or a plan): the hero sends them back to it.
 const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value || profile.value.results.length > 0)
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
@@ -42,7 +45,7 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
     <section class="hero">
       <div class="hero-panel rim">
         <ReleasePill />
-        <p class="eyebrow">{{ t('home.eyebrow') }}</p>
+        <p class="eyebrow">{{ t(isMaster ? 'home.eyebrowMaster' : 'home.eyebrow') }}</p>
         <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
         <h1 class="hero-title">
           <template v-for="(part, i) in titleParts" :key="i">
@@ -55,7 +58,7 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
         <!-- Second to the search: plan a degree, or, for someone who has, go back to it. -->
         <div class="hero-actions">
           <a class="hero-second" :href="link('plan')">
-            {{ returning ? t('home.continuePlan') : t('home.cardPlan') }} <ArrowRight :size="17" aria-hidden="true" />
+            {{ returning ? t('home.continuePlan') : t(isMaster ? 'home.cardPlanMaster' : 'home.cardPlan') }} <ArrowRight :size="17" aria-hidden="true" />
           </a>
           <a v-if="returning && wam !== null" class="hero-wam" :href="link('tools/wam/')">{{ t('record.sumWam', { wam }) }}</a>
         </div>
