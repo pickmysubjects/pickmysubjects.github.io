@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { link } from '@/composables/useView'
-import { planComponentIds, subjectRoles } from '@/engine'
+import { planComponentIds, subjectRoles, type SubjectRole } from '@/engine'
+import { isMasterCourse, useStudyLevel } from '@/composables/useStudyLevel'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
@@ -17,8 +18,26 @@ const phone = usePhone()
 
 const ORDER = { core: 0, option: 1, pathway: 2, route: 3 } as const
 const mine = computed(() => new Set(planComponentIds(plan.plan.value).filter(Boolean)))
+const { isMaster } = useStudyLevel()
+// The master's side: every master's course's specialisations that take this subject, an entry
+// program's copies (MC-IT 200/150/100) once, named with their course ("Information Technology:
+// Artificial Intelligence"). Only where it counts outright, not the bachelor's routes towards one.
+const masterRoles = computed<SubjectRole[]>(() => {
+  const seen = new Map<string, SubjectRole>()
+  const courses = [...new Set(data.value.courses.map((c) => c.code).filter(isMasterCourse))].sort((a, b) => b.localeCompare(a))
+  for (const course of courses) {
+    const name = (data.value.courses.find((c) => c.code === course)?.title ?? course).replace(/\s*\(.*\)$/, '').replace(/^Master of /, '')
+    for (const role of subjectRoles(data.value, props.code, course)) {
+      if (role.role !== 'core' && role.role !== 'option') continue
+      const title = `${name}: ${role.title}`
+      const had = seen.get(title)
+      if (!had || (had.role === 'option' && role.role === 'core')) seen.set(title, { ...role, title })
+    }
+  }
+  return [...seen.values()]
+})
 const roles = computed(() =>
-  subjectRoles(data.value, props.code, plan.setup.value.course)
+  (isMaster.value ? masterRoles.value : subjectRoles(data.value, props.code, plan.setup.value.course))
     .map((r) => ({ ...r, mine: mine.value.has(r.component) }))
     .sort((a, b) => Number(b.mine) - Number(a.mine) || ORDER[a.role] - ORDER[b.role] || a.title.localeCompare(b.title)),
 )
@@ -30,8 +49,8 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
 
 <template>
   <component :is="phone ? 'details' : 'section'" v-if="roles.length" class="roles" :class="{ 'roles-fold': phone }">
-    <summary v-if="phone" class="roles-title roles-summary">{{ t('subject.rolesTitle') }}</summary>
-    <h3 v-else class="roles-title">{{ t('subject.rolesTitle') }}</h3>
+    <summary v-if="phone" class="roles-title roles-summary">{{ t(isMaster ? 'subject.rolesTitleMaster' : 'subject.rolesTitle') }}</summary>
+    <h3 v-else class="roles-title">{{ t(isMaster ? 'subject.rolesTitleMaster' : 'subject.rolesTitle') }}</h3>
     <ul class="roles-list">
       <li v-for="r in shown" :key="r.component" class="role" :class="`role-${r.role}`">
         <a class="role-link" :href="link(`majors/${r.component}`)">{{ r.title }}</a>

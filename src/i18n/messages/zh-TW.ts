@@ -2540,6 +2540,7 @@ export const zhTW: Messages = {
     unlocks: '修完能解鎖',
     unlocksNone: '目前資料裡還沒有後續課程。',
     rolesTitle: '主修與方向',
+    rolesTitleMaster: "用到這門課的碩士專業方向",
     role: { core: '必修', option: '可選其一', pathway: '必須先修', route: '常見先修路線' },
     roleVia: '通往 {code}',
     yours: '你的主修',

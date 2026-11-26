@@ -2540,6 +2540,7 @@ export const hi: Messages = {
     unlocks: 'इसके बाद',
     unlocksNone: 'हमारे डेटा में अभी आगे के विषय नहीं हैं।',
     rolesTitle: 'मेजर और स्पेशलाइज़ेशन',
+    rolesTitleMaster: "इसका उपयोग करने वाली मास्टर विशेषज्ञताएँ",
     role: { core: 'अनिवार्य', option: 'विकल्पों में से एक', pathway: 'पहले लेना ज़रूरी', route: 'आम रास्ता' },
     roleVia: '{code} तक ले जाता है',
     yours: 'आपका',

@@ -2540,6 +2540,7 @@ export const id: Messages = {
     unlocks: 'Mengarah ke',
     unlocksNone: 'Belum ada mata kuliah lanjutan di data kami.',
     rolesTitle: 'Jurusan dan spesialisasi',
+    rolesTitleMaster: "Peminatan master yang memakainya",
     role: { core: 'Wajib', option: 'Salah satu pilihan', pathway: 'Wajib diambil dulu', route: 'Jalur yang umum' },
     roleVia: 'menuju {code}',
     yours: 'milikmu',

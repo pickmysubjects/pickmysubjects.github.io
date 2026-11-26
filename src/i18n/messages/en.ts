@@ -2546,6 +2546,7 @@ export const en = {
     unlocks: 'What it leads to',
     unlocksNone: 'No later subjects in our data yet.',
     rolesTitle: 'Majors and specialisations',
+    rolesTitleMaster: "Master's specialisations that use it",
     role: { core: 'Compulsory', option: 'One of the choices', pathway: 'Must take first', route: 'Usual way in' },
     roleVia: 'leads to {code}',
     yours: 'yours',

@@ -2540,6 +2540,7 @@ export const ms: Messages = {
     unlocks: 'Membawa kepada',
     unlocksNone: 'Belum ada subjek lanjutan dalam data kami.',
     rolesTitle: 'Major dan pengkhususan',
+    rolesTitleMaster: "Pengkhususan sarjana yang menggunakannya",
     role: { core: 'Wajib', option: 'Salah satu pilihan', pathway: 'Wajib diambil dahulu', route: 'Laluan biasa' },
     roleVia: 'membawa ke {code}',
     yours: 'anda',

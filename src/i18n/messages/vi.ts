@@ -2540,6 +2540,7 @@ export const vi: Messages = {
     unlocks: 'Mở ra môn tiếp theo',
     unlocksNone: 'Chưa có môn tiếp theo trong dữ liệu.',
     rolesTitle: 'Chuyên ngành',
+    rolesTitleMaster: "Chuyên ngành hẹp thạc sĩ dùng môn này",
     role: { core: 'Bắt buộc', option: 'Một trong các lựa chọn', pathway: 'Phải học trước', route: 'Lộ trình thường gặp' },
     roleVia: 'dẫn tới {code}',
     yours: 'của bạn',

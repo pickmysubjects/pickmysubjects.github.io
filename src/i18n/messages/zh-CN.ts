@@ -2540,6 +2540,7 @@ export const zhCN: Messages = {
     unlocks: '修完能解锁',
     unlocksNone: '目前数据里还没有后续课程。',
     rolesTitle: '专业与方向',
+    rolesTitleMaster: "用到这门课的硕士专业方向",
     role: { core: '必修', option: '可选其一', pathway: '必须先修', route: '常见先修路线' },
     roleVia: '通往 {code}',
     yours: '你的专业',

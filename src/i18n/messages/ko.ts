@@ -2540,6 +2540,7 @@ export const ko: Messages = {
     unlocks: '이어지는 과목',
     unlocksNone: '데이터에 아직 이어지는 과목이 없습니다.',
     rolesTitle: '전공·세부전공',
+    rolesTitleMaster: "이 과목을 쓰는 석사 세부 전공",
     role: { core: '필수', option: '선택 중 하나', pathway: '먼저 필수', route: '흔한 선수 경로' },
     roleVia: '{code}(으)로 이어짐',
     yours: '내 전공',

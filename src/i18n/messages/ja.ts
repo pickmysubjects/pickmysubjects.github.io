@@ -2540,6 +2540,7 @@ export const ja: Messages = {
     unlocks: 'この科目の次',
     unlocksNone: 'データ上、まだ次の科目はありません。',
     rolesTitle: '専攻・専門分野',
+    rolesTitleMaster: "この科目を使う修士の専攻分野",
     role: { core: '必修', option: '選択肢の一つ', pathway: '先に必須', route: 'よくある履修ルート' },
     roleVia: '{code} につながる',
     yours: 'あなたの専攻',
