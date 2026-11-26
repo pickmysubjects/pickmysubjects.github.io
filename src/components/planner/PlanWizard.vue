@@ -5,13 +5,14 @@ import { link } from '@/composables/useView'
 import { computed, onMounted, shallowRef, watch } from 'vue'
 import { trackEvent } from '@/utils/analytics'
 import { ArrowLeft, ArrowRight, Check, Search } from 'lucide-vue-next'
-import { STUDY_LOADS, canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
+import { STUDY_LOADS, entryAdvice, streamSpecialisations, canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
+import BackgroundPicker from './BackgroundPicker.vue'
 import InfoTip from '@/components/InfoTip.vue'
 import { useI18n } from '@/i18n'
-import { useProfile } from '@/composables/useProfile'
+import { useBachelorRecord, useProfile } from '@/composables/useProfile'
 import { termLabel } from '@/i18n/format'
 
 /**
@@ -107,7 +108,9 @@ const specs = computed(() =>
       !c.informal &&
       (c.requiresMajor.length === 0 || chosenMajors.value.some((m) => c.requiresMajor.includes(m))) &&
       // Not one the major's own subjects rule out (Mechatronics with a computing specialisation).
-      !chosenMajors.value.some((m) => cannotCombine(data.value, m, c.id)),
+      !chosenMajors.value.some((m) => cannotCombine(data.value, m, c.id)) &&
+      // MC-DATASC: only the specialisations the student's background stream may complete.
+      (!adviceFor(draft.value.course)?.stream || streamSpecialisations(adviceFor(draft.value.course)!.stream!).includes(c.id)),
   ),
 )
 
@@ -172,6 +175,10 @@ function chooseCourse(c: Course): void {
 const { isMaster } = useStudyLevel()
 // A coursework master's: no majors, minors or diplomas; one specialisation is required.
 const masterCourse = computed(() => isMasterCourse(draft.value.course))
+// What the student's bachelor's points to (an entry program, a Data Science stream): a hint only.
+const bachelor = useBachelorRecord()
+const advice = computed(() => (isMaster.value && draft.value.background ? entryAdvice(data.value, draft.value.background, bachelor.value ?? undefined) : []))
+const adviceFor = (code: string) => advice.value.find((a) => a.course === code)
 </script>
 
 <template>
@@ -186,6 +193,7 @@ const masterCourse = computed(() => isMasterCourse(draft.value.course))
 
     <div v-if="step === 0" class="q">
       <h2 class="q-title">{{ t(isMaster ? 'wizard.qCourseMaster' : 'wizard.qCourse') }}</h2>
+      <BackgroundPicker v-if="isMaster" :model-value="draft.background" :record="bachelor" @update:model-value="set({ background: $event })" />
       <label v-if="courses.length > 8" class="course-search">
         <Search :size="18" aria-hidden="true" class="course-search-icon" />
         <input v-model="courseQuery" type="search" class="course-search-input" :placeholder="t('wizard.searchCourse')" :aria-label="t('wizard.searchCourse')" />
@@ -200,8 +208,12 @@ const masterCourse = computed(() => isMasterCourse(draft.value.course))
           @click="chooseCourse(c)"
         >
           <span>
+            <!-- An entry program the background points to gets the tag; a Data Science stream is a line only. -->
+            <span v-if="adviceFor(c.code) && !adviceFor(c.code)!.stream" class="likely">{{ t('entryAdvice.likely') }}</span>
             {{ c.title }}
-            <span v-if="c.entryNote" class="intl-hint">{{ t(`entry.${c.entryNote}`) }}</span>
+            <span v-if="adviceFor(c.code)" class="intl-hint likely-why">{{ t(`entryAdvice.${adviceFor(c.code)!.reason}`) }}</span>
+            <!-- The entry conditions, unless the line above already says why this one. -->
+            <span v-else-if="c.entryNote" class="intl-hint">{{ t(`entry.${c.entryNote}`) }}</span>
           </span>
           <Check v-if="isChosen(c)" :size="18" aria-hidden="true" />
         </button>
@@ -365,6 +377,22 @@ const masterCourse = computed(() => isMasterCourse(draft.value.course))
 </template>
 
 <style scoped>
+.likely {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  vertical-align: 2px;
+}
+
+.likely-why {
+  color: var(--accent);
+}
+
 .lead {
   margin: -4px 0 0;
   color: var(--ink-soft);

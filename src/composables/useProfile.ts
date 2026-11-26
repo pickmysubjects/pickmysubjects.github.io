@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { computeWam, type Goal, type OwnRating, type Profile, type Skill } from '@/engine'
+import { computeWam, passedCodes, type Goal, type OwnRating, type Profile, type Skill, type UniMelbRecord } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePersisted } from './usePersisted'
 import { activePlan, books, prefsOf, withPrefs, type PlanPrefs } from './planStore'
@@ -80,4 +80,31 @@ export function useProfile() {
         return { ...p, confirmed: meets ? [...rest, code] : rest }
       }),
   }
+}
+
+/**
+ * The bachelor's side as the master's side sees it: results, WAM and planned majors saved there
+ * (null when it has none). Read only: the master's side never changes it.
+ */
+export function useBachelorRecord() {
+  const { all } = useDataset()
+  return computed<UniMelbRecord | null>(() => {
+    const stored = profiles.value[all.name]
+    const plan = activePlan(books.value[all.name])
+    const results = stored?.results ?? []
+    const majorIds = plan?.setup.confirmed ? [plan.setup.major, plan.setup.major2] : []
+    const majors = majorIds.map((id) => all.components.find((c) => c.id === id)?.title).filter((x): x is string => !!x)
+    if (!results.length && !majors.length) return null
+    const wam = computeWam(results, all)
+    return { passed: passedCodes(results, all.subjects), ...(wam !== null ? { wam } : {}), majors }
+  })
+}
+
+/** The bachelor's side's strengths, interests, goal and career, to start the master's side from. */
+export function bachelorPrefs(): PlanPrefs | null {
+  const { all } = useDataset()
+  const stored = profiles.value[all.name]
+  const plan = activePlan(books.value[all.name])
+  if (!stored && !plan) return null
+  return prefsOf(plan, stored ?? emptyProfile())
 }

@@ -1,4 +1,4 @@
-import type { Goal, Note, Period, PlanTerm, Profile, Skill } from '@/engine'
+import type { Background, Goal, Note, Period, PlanTerm, Profile, Skill } from '@/engine'
 import { usePersisted } from './usePersisted'
 import { cleanPlans } from '@/utils/sanitize'
 
@@ -28,6 +28,8 @@ export interface PlanSetup {
   field?: string
   /** The student answered the setup questions (until then it's only the default). */
   confirmed?: boolean
+  /** A master's plan: the bachelor's the student brings (only to suggest an entry program). */
+  background?: Background
 }
 
 export interface PlanState {

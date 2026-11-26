@@ -1,4 +1,4 @@
-import { CREDIT_MAX_POINTS, PERIODS, SKILLS, STUDY_LOADS, TOPICS, type Credit, type Profile } from '@/engine'
+import { CREDIT_MAX_POINTS, PERIODS, SKILLS, STUDY_LOADS, TOPICS, type Background, type Credit, type Profile } from '@/engine'
 import { isMarkScale } from './markScales'
 import type { PlanBook, PlanPrefs, PlanState, SavedPlan } from '@/composables/planStore'
 
@@ -92,6 +92,20 @@ function cleanCountsAs(x: unknown): { countsAs?: Record<string, string> } {
   return Object.keys(out).length ? { countsAs: out } : {}
 }
 
+const AREAS = ['computing', 'statistics', 'both', 'engineering', 'other'] as const
+
+/** A master's plan's background answers: only the known fields, of the right types. */
+function cleanBackground(x: unknown): Background | undefined {
+  if (!isObject(x) || (x.where !== 'unimelb' && x.where !== 'other')) return undefined
+  return {
+    where: x.where,
+    ...((AREAS as readonly unknown[]).includes(x.area) ? { area: x.area as Background['area'] } : {}),
+    ...(typeof x.wam65 === 'boolean' ? { wam65: x.wam65 } : {}),
+    ...(typeof x.fourYear === 'boolean' ? { fourYear: x.fourYear } : {}),
+    ...(typeof x.work === 'boolean' ? { work: x.work } : {}),
+  }
+}
+
 function cleanState(v: unknown): PlanState | null {
   if (!isObject(v) || !isObject(v.setup) || typeof v.setup.course !== 'string' || !Array.isArray(v.terms)) return null
   const terms = v.terms
@@ -115,6 +129,7 @@ function cleanState(v: unknown): PlanState | null {
       ...(typeof major2 === 'string' ? { major2 } : {}),
       ...(typeof diploma === 'string' && diploma ? { diploma } : {}),
       ...(typeof diplomaStream === 'string' && diplomaStream ? { diplomaStream } : {}),
+      ...(cleanBackground(rest.background) ? { background: cleanBackground(rest.background) } : { background: undefined }),
     }))(v.setup) as unknown as PlanState['setup'],
     terms: terms as PlanState['terms'],
     // Notes and unplaced subjects are only shown; one that isn't the right shape is left out.
