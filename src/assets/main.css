@@ -1075,6 +1075,27 @@ button.chip {
   }
 }
 
+/* Master's side: the same steps as above, in purple (all AA on their glass). */
+@media (prefers-color-scheme: light) {
+  :root[data-level='master'] .surface {
+    --accent: #52258f;
+  }
+
+  :root[data-level='master'] :is(.surface, .flat) .button-accent {
+    --accent: #5b2a9e;
+  }
+
+  :root[data-level='master'] .flat {
+    --accent: #4a2183;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-level='master'] .flat {
+    --accent: #d6c2fd;
+  }
+}
+
 /* Floating glass panels keep the blur. */
 .glass {
   border: 1px solid rgb(255 255 255 / 65%);
