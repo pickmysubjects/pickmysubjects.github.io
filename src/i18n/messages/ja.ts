@@ -350,6 +350,7 @@ export const ja: Messages = {
     areaCapOver: "{over} が {max} ポイントを超えています",
     areaCapOk: "1つの分野で最大 {have} ポイント",
     noSpec: '未選択（任意）',
+    noSpecYet: '専攻分野を選ぶと確認されます',
     needsMajor: '{title} には次のいずれかのメジャーが必要です：{majors}',
     cannotCombine: 'このメジャーとスペシャライゼーションは組み合わせられません：{reason}',
     areas: '{count} 分野',

@@ -350,6 +350,7 @@ export const id: Messages = {
     areaCapOver: "lebih dari {max} poin di {over}",
     areaCapOk: "paling banyak {have} poin di satu disiplin",
     noSpec: 'tidak dipilih (opsional)',
+    noSpecYet: 'pilih peminatan dan ini akan diperiksa',
     needsMajor: '{title} memerlukan salah satu jurusan ini: {majors}',
     cannotCombine: 'Jurusan dan spesialisasi ini tidak dapat digabungkan: {reason}',
     areas: '{count} bidang',

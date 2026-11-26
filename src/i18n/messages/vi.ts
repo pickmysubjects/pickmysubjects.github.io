@@ -350,6 +350,7 @@ export const vi: Messages = {
     areaCapOver: "vượt {max} điểm ở {over}",
     areaCapOk: "nhiều nhất {have} điểm ở một ngành học",
     noSpec: 'chưa chọn (không bắt buộc)',
+    noSpecYet: 'chọn chuyên ngành hẹp rồi mục này sẽ được kiểm tra',
     needsMajor: '{title} cần một trong các chuyên ngành: {majors}',
     cannotCombine: 'Không thể kết hợp chuyên ngành này với hướng chuyên sâu này: {reason}',
     areas: '{count} lĩnh vực',

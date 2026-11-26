@@ -350,6 +350,7 @@ export const zhCN: Messages = {
     areaCapOver: "{over} 超过了 {max} 学分",
     areaCapOk: "同一学科最多 {have} 学分",
     noSpec: '未选择（可选）',
+    noSpecYet: '选好专业方向后就会检查',
     needsMajor: '{title} 需要以下主修之一：{majors}',
     cannotCombine: '这个主修和专业方向不能同时选：{reason}',
     areas: '{count} 个领域',

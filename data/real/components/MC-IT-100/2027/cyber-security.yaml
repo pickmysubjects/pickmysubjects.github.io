@@ -1,0 +1,17 @@
+id: mc-it-100-cyber-security
+course: MC-IT-100
+year: 2027
+kind: specialisation
+title: Cyber Security
+points: 100
+# 50–62.5 points of selectives; the remaining points come from more selectives or
+# the advanced CIS electives (at most 12.5 points of those).
+requirements:
+  - all: [SWEN90016]
+  - choose: { points: 50, from: [COMP90043, COMP90073, COMP90091, SWEN90010, COMP90088, ISYS90120, COMP90049] }
+  - choose: { points: 25, from: [COMP90055, COMP90082, INFO90010, COMP90099] }
+limits:
+  - max: 12.5
+    from: [BUSA90473, COMP90015, BUSA90485, COMP90018, COMP90051, COMP90054, COMP90057, COMP90084, COMP90085, COMP90086, COMP90087, ENGR90033, MULT90063, INFO90014, ENGR90034, COMP90020]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-it-spec-3-100
+verified_on: 2026-11-26 # structure; source: 2027 Handbook component page

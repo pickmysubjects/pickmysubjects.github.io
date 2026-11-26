@@ -1,0 +1,35 @@
+# Master of Data Science, 2027 Handbook. Facts re-expressed in our own words.
+# Students are placed in a background stream on admission (Statistics, Computer Science, Data
+# Science, Mixed, Foundation); the stream decides which specialisations are open. Foundation
+# subjects a student is exempted from are replaced by electives, as their offer letter says.
+code: MC-DATASC
+title: Master of Data Science
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-datasc/course-structure
+verified_on: 2026-11-26 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: compulsory
+    kind: compulsory
+    subjects: [MAST90139, MAST90138, MAST90083, COMP90024, COMP90050, COMP90051]
+    description: The six compulsory subjects (75 points)
+  - id: capstone
+    kind: requirement
+    # The research project needs a WAM of 80 in Data Science subjects and the coordinator's approval.
+    paths:
+      - - all: [MAST90106, MAST90107]
+      - - all: [MAST90145]
+      - - all: [MAST90108, MAST90109]
+    description: One 25-point capstone project
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: Complete one specialisation (100 points)

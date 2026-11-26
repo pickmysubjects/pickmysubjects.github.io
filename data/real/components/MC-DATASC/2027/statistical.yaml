@@ -1,0 +1,16 @@
+id: mc-datasc-statistical
+course: MC-DATASC
+year: 2027
+kind: specialisation
+title: Statistical Data Science
+points: 100
+# Open to the Mixed, Statistics, Computer Science and Data Science streams.
+requirements:
+  - all: [MAST90104, COMP90041, COMP90038, COMP20008, INFO90002]
+  - choose: { points: 12.5, from: [MAST90122, MAST90125] }
+  - choose: { points: 12.5, from: [MAST90014, MAST90019, MAST90027, MAST90051, MAST90059, MAST90081, MAST90082, MAST90103, MAST90111, MAST90112, MAST90122, MAST90125, MAST90144] }
+limits:
+  - max: 12.5
+    from: [ISYS90035, GEOM90006, GEOM90007, GEOM90008, SCIE90034]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-datasc-spec-5
+verified_on: 2026-11-26 # structure; source: 2027 Handbook component page

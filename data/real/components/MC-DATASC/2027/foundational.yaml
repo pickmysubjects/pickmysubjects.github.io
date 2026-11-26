@@ -1,0 +1,15 @@
+id: mc-datasc-foundational
+course: MC-DATASC
+year: 2027
+kind: specialisation
+title: Foundational Data Science
+points: 100
+# Open to every background stream; the only one for the Foundation stream.
+requirements:
+  - all: [MAST90105, MAST90104]
+  - all: [COMP90041, COMP90038, COMP20008, INFO90002]
+limits:
+  - max: 12.5
+    from: [ISYS90035, GEOM90006, GEOM90007, GEOM90008, SCIE90034]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-datasc-spec-1
+verified_on: 2026-11-26 # structure; source: 2027 Handbook component page

@@ -350,6 +350,7 @@ export const ms: Messages = {
     areaCapOver: "lebih {max} mata dalam {over}",
     areaCapOk: "paling banyak {have} mata dalam satu disiplin",
     noSpec: 'tidak dipilih (pilihan)',
+    noSpecYet: 'pilih pengkhususan dan ini akan disemak',
     needsMajor: '{title} memerlukan salah satu major ini: {majors}',
     cannotCombine: 'Major dan pengkhususan ini tidak boleh digabungkan: {reason}',
     areas: '{count} bidang',

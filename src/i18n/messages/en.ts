@@ -356,6 +356,7 @@ export const en = {
     areaCapOver: "over {max} points in {over}",
     areaCapOk: "at most {have} points in any one discipline",
     noSpec: 'none chosen (optional)',
+    noSpecYet: 'pick a specialisation and this gets checked',
     needsMajor: '{title} needs one of these majors: {majors}',
     cannotCombine: 'This major and specialisation can’t be combined: {reason}',
     areas: '{count} area(s)',

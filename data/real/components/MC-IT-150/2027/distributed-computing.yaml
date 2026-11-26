@@ -1,0 +1,17 @@
+id: mc-it-150-distributed-computing
+course: MC-IT-150
+year: 2027
+kind: specialisation
+title: Distributed Computing
+points: 150
+# 50–75 points of selectives; the remaining points come from more selectives or
+# the advanced CIS electives (at most 25 points of those).
+requirements:
+  - all: [SWEN90016, COMP90015, COMP90020, COMP90025]
+  - choose: { points: 50, from: [COMP90018, SWEN90004, COMP90017, COMP90024, COMP90056, COMP90084, COMP90088, ELEN90096, MCEN90031, MULT90063, COMP30026, COMP90049, COMP90043] }
+  - choose: { points: 25, from: [COMP90055, COMP90082, INFO90010, COMP90099] }
+limits:
+  - max: 25
+    from: [COMP90042, COMP90045, COMP90046, COMP90048, COMP90050, COMP90051, COMP90053, ISYS90039, BUSA90473, BUSA90485, COMP90054, COMP90057, COMP90085, COMP90086, COMP90087, ENGR90033, GEOM90007, GEOM90008, COMP90083, ELEN90095, INFO90014, ENGR90034]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-it-spec-4-150
+verified_on: 2026-11-26 # structure; source: 2027 Handbook component page

@@ -1,0 +1,23 @@
+# Master of Information Technology, 200-point entry program, 2027 Handbook. The Handbook runs
+# MC-IT as three entry programs (200/150/100 points, by prior study); each is kept as its own
+# course here so its specialisations can carry that program's subject lists.
+# Facts re-expressed in our own words.
+code: MC-IT-200
+title: Master of Information Technology (200-point program)
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-it/course-structure
+verified_on: 2026-11-26 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: Complete one specialisation (50 points of Foundation subjects; 50 points of specialisation core; 50 to 75 points of advanced specialisation selectives; at most 25 points of advanced CIS electives; 25 points of capstone)

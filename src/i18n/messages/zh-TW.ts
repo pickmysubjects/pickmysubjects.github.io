@@ -350,6 +350,7 @@ export const zhTW: Messages = {
     areaCapOver: "{over} 超過了 {max} 學分",
     areaCapOk: "同一學科最多 {have} 學分",
     noSpec: '未選擇（可選）',
+    noSpecYet: '選好專業方向後就會檢查',
     needsMajor: '{title} 需要以下主修之一：{majors}',
     cannotCombine: '這個主修和專業方向不能同時選：{reason}',
     areas: '{count} 個領域',

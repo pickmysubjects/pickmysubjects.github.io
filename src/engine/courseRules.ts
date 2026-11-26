@@ -496,6 +496,7 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
     }
     case 'specialisation': {
       const spec = findComponent(ctx.data, ctx.plan.specialisation)
+      if (!spec && rule.required) return { ...base, status: 'unknown', detail: 'no specialisation chosen', detailKey: 'noSpecYet', params: {} }
       if (!spec) return { ...base, status: 'ok', detail: 'none chosen (optional)', detailKey: 'noSpec', params: {} }
       if (spec.requiresMajor.length > 0 && !spec.requiresMajor.includes(ctx.plan.major ?? '') && !spec.requiresMajor.includes(ctx.plan.major2 ?? '')) {
         return { ...base, status: 'fail', detail: `${spec.title} needs one of these majors: ${spec.requiresMajor.join(', ')}`, detailKey: 'needsMajor', params: { title: spec.title, majors: spec.requiresMajor.join(', ') } }

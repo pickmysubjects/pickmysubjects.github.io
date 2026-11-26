@@ -1,0 +1,17 @@
+id: mc-it-100-human-computer-interaction
+course: MC-IT-100
+year: 2027
+kind: specialisation
+title: Human-Computer Interaction
+points: 100
+# 50–62.5 points of selectives; the remaining points come from more selectives or
+# the advanced CIS electives (at most 12.5 points of those).
+requirements:
+  - all: [SWEN90016]
+  - choose: { points: 50, from: [INFO30005, COMP30019, ISYS90039, INFO90007, COMP90018, INFO90005] }
+  - choose: { points: 25, from: [INFO90008, INFO90009] }
+limits:
+  - max: 12.5
+    from: [BUSA90473, BUSA90485, COMP90015, COMP90049, COMP90084, COMP90085, COMP90086, COMP90087, COMP90088, ENGR90033, GEOM90007, GEOM90008, ISYS90035, ISYS90069, MULT90063, INFO90014, COMP90099, ENGR90034]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-it-spec-5-100
+verified_on: 2026-11-26 # structure; source: 2027 Handbook component page

@@ -350,6 +350,7 @@ export const hi: Messages = {
     areaCapOver: "{over} में {max} पॉइंट से ज़्यादा",
     areaCapOk: "किसी एक विषय-क्षेत्र में अधिकतम {have} पॉइंट",
     noSpec: 'नहीं चुना (वैकल्पिक)',
+    noSpecYet: 'विशेषज्ञता चुनें, फिर यह जाँचा जाएगा',
     needsMajor: '{title} के लिए इनमें से एक मेजर चाहिए: {majors}',
     cannotCombine: 'यह मेजर और स्पेशलाइज़ेशन साथ नहीं लिए जा सकते: {reason}',
     areas: '{count} क्षेत्र',

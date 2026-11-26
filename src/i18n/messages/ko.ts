@@ -350,6 +350,7 @@ export const ko: Messages = {
     areaCapOver: "{over}이(가) {max}학점을 넘었어요",
     areaCapOk: "한 분야에서 최대 {have}학점",
     noSpec: '선택 안 함 (선택 사항)',
+    noSpecYet: '세부 전공을 고르면 확인됩니다',
     needsMajor: '{title}에는 다음 전공 중 하나가 필요합니다: {majors}',
     cannotCombine: '이 전공과 세부 전공은 함께 선택할 수 없습니다: {reason}',
     areas: '영역 {count}개',

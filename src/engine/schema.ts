@@ -556,7 +556,8 @@ const courseRule = z.discriminatedUnion('kind', [
     })
     .strict(),
   z
-    .object({ ...ruleBase, kind: z.literal('specialisation'), max: z.number().int().nonnegative() })
+    // `required`: the course needs one (a coursework master's: "completion of one specialisation").
+    .object({ ...ruleBase, kind: z.literal('specialisation'), max: z.number().int().nonnegative(), required: z.boolean().default(false) })
     .strict(),
   // Optional minors: at most `max` of them (B-ARTS: one). `informal`: this course's picks of this
   // kind are informal specialisations (B-DES), which a plan holds the same way as a minor.
@@ -660,7 +661,7 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
     case 'area-cap':
       return { id: r.id, description: r.description, kind: r.kind, max: r.max, category: r.category, areas: r.areas, levels: r.levels, groups: r.groups, exceptions: r.exceptions }
     case 'specialisation':
-      return { id: r.id, description: r.description, kind: r.kind, max: r.max }
+      return { id: r.id, description: r.description, kind: r.kind, max: r.max, ...(r.required ? { required: true } : {}) }
     case 'minor':
       return { id: r.id, description: r.description, kind: r.kind, max: r.max, informal: r.informal }
     case 'level1-areas':
@@ -691,7 +692,7 @@ export type CourseRule =
   | { id: string; description: string; kind: 'points'; min?: number; max?: number; level?: number; category?: string }
   | { id: string; description: string; kind: 'major'; count: number; max: number; noDoubleCount: boolean | [string, string][] }
   | { id: string; description: string; kind: 'area-cap'; max: number; category?: string; areas?: string[]; levels?: number[]; groups: string[][]; exceptions: { components: string[] }[] }
-  | { id: string; description: string; kind: 'specialisation'; max: number }
+  | { id: string; description: string; kind: 'specialisation'; max: number; required?: boolean }
   | { id: string; description: string; kind: 'minor'; max: number; informal: boolean }
   | {
       id: string
