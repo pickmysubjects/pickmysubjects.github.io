@@ -19,6 +19,12 @@ export const zhTW: Messages = {
     tip: "課程是一門一門更新的。還沒更新的課，開課學期和規定都依 {old} Handbook。選課前請以官方 Handbook 為準。",
     dismiss: "關閉",
   },
+  bachelorCard: {
+    open: "打開學士那邊",
+    copy: "用學士填的強項、興趣和目標",
+    copied: "已複製，可以在下面隨時修改。",
+    passed: "已通過 {n} 門課",
+  },
   entryAdvice: {
     where: "你的學士",
     unimelb: "在墨爾本大學",

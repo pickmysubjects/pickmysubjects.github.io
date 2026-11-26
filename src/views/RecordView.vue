@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import BachelorCard from '@/components/profile/BachelorCard.vue'
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
@@ -139,6 +141,7 @@ async function onRestore(event: Event): Promise<void> {
   // Saved state is read when the app starts, so reload to pick up the restored copy.
   if (!restoreFailed.value) location.reload()
 }
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
@@ -178,6 +181,14 @@ async function onRestore(event: Event): Promise<void> {
             <span v-if="!setupChosen" class="sec-state">{{ t('record.stepFirst') }}</span>
           </header>
           <DegreeCard />
+        </section>
+
+        <!-- Master's side: the bachelor's the student brings, read from the other side. -->
+        <section v-if="isMaster" class="sec surface" aria-labelledby="sec-bachelor">
+          <header class="sec-head">
+            <h2 id="sec-bachelor" class="sec-title">{{ t('entryAdvice.where') }}</h2>
+          </header>
+          <BachelorCard />
         </section>
 
         <section class="sec surface" aria-labelledby="sec-results">

@@ -51,6 +51,8 @@ export function useProfile() {
         return credit.length ? { ...rest, credit } : rest
       }),
     setSkills: (skills: Partial<Record<Skill, number>>) => updatePrefs((p) => ({ ...p, skills })),
+    /** The open plan's strengths, interests, goal and career, all at once (copied from the other side). */
+    setPrefs: (prefs: PlanPrefs) => updatePrefs(() => cloneJson(prefs)),
     setInterests: (interests: string[]) => updatePrefs((p) => ({ ...p, interests })),
     setGoal: (goal: Goal) => updatePrefs((p) => ({ ...p, goal })),
     /** The open plan's career goal; undefined clears it. */
@@ -93,7 +95,10 @@ export function useBachelorRecord() {
     const plan = activePlan(books.value[all.name])
     const results = stored?.results ?? []
     const majorIds = plan?.setup.confirmed ? [plan.setup.major, plan.setup.major2] : []
-    const majors = majorIds.map((id) => all.components.find((c) => c.id === id)?.title).filter((x): x is string => !!x)
+    const named = majorIds.map((id) => all.components.find((c) => c.id === id)?.title).filter((x): x is string => !!x)
+    // No major chosen yet: the degree itself says where they are.
+    const degree = plan?.setup.confirmed ? all.courses.find((c) => c.code === plan.setup.course)?.title : undefined
+    const majors = named.length ? named : degree ? [degree] : []
     if (!results.length && !majors.length) return null
     const wam = computeWam(results, all)
     return { passed: passedCodes(results, all.subjects), ...(wam !== null ? { wam } : {}), majors }

@@ -19,6 +19,12 @@ export const ja: Messages = {
     tip: "科目は一つずつ更新しています。未更新の科目の開講学期やルールは{old}年版Handbookのものです。履修登録の前に公式Handbookで確認してください。",
     dismiss: "閉じる",
   },
+  bachelorCard: {
+    open: "学士側を開く",
+    copy: "学士で入力した強み・興味・目標を使う",
+    copied: "コピーしました。下でいつでも変えられます。",
+    passed: "{n} 科目合格",
+  },
   entryAdvice: {
     where: "あなたの学士課程",
     unimelb: "メルボルン大学",

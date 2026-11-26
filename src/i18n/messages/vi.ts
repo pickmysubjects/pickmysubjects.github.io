@@ -19,6 +19,12 @@ export const vi: Messages = {
     tip: "Các môn được cập nhật từng môn một. Môn chưa cập nhật thì học kỳ và quy định lấy theo Handbook {old}. Hãy kiểm tra Handbook chính thức trước khi đăng ký.",
     dismiss: "Ẩn",
   },
+  bachelorCard: {
+    open: "Mở phía cử nhân",
+    copy: "Dùng điểm mạnh, sở thích và mục tiêu bên cử nhân",
+    copied: "Đã chép. Có thể đổi bên dưới bất cứ lúc nào.",
+    passed: "Đã qua {n} môn",
+  },
   entryAdvice: {
     where: "Bằng cử nhân của bạn",
     unimelb: "Tại Đại học Melbourne",

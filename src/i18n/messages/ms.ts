@@ -19,6 +19,12 @@ export const ms: Messages = {
     tip: "Subjek dikemas kini satu demi satu. Selagi belum, semester dan peraturannya ikut Handbook {old}. Semak Handbook rasmi sebelum mendaftar.",
     dismiss: "Tutup",
   },
+  bachelorCard: {
+    open: "Buka bahagian Sarjana Muda",
+    copy: "Guna kekuatan, minat dan matlamat sarjana muda saya",
+    copied: "Disalin. Ubah di bawah bila-bila masa.",
+    passed: "{n} subjek lulus",
+  },
   entryAdvice: {
     where: "Ijazah sarjana muda anda",
     unimelb: "Di University of Melbourne",

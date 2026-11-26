@@ -19,6 +19,12 @@ export const zhCN: Messages = {
     tip: "课是一门一门更新的。还没更新的课，开课学期和规则都按 {old} Handbook。选课前请以官方 Handbook 为准。",
     dismiss: "关闭",
   },
+  bachelorCard: {
+    open: "打开本科那边",
+    copy: "用本科填的强项、兴趣和目标",
+    copied: "已复制，可以在下面随时修改。",
+    passed: "已通过 {n} 门课",
+  },
   entryAdvice: {
     where: "你的本科",
     unimelb: "在墨尔本大学",

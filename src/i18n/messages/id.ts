@@ -19,6 +19,12 @@ export const id: Messages = {
     tip: "Mata kuliah diperbarui satu per satu. Selama belum, semester dan aturannya mengikuti Handbook {old}. Cek Handbook resmi sebelum mendaftar.",
     dismiss: "Tutup",
   },
+  bachelorCard: {
+    open: "Buka sisi Sarjana",
+    copy: "Pakai kekuatan, minat, dan tujuan dari sisi sarjana",
+    copied: "Tersalin. Ubah di bawah kapan saja.",
+    passed: "{n} mata kuliah lulus",
+  },
   entryAdvice: {
     where: "Gelar sarjanamu",
     unimelb: "Di University of Melbourne",

@@ -24,6 +24,12 @@ export const en = {
     dismiss: "Hide",
   },
   /** The site search (header, ⌘K): labels, and extra words each feature or guide topic is found by (| between them). */
+  bachelorCard: {
+    open: "Open the Bachelor's side",
+    copy: "Use my bachelor's strengths, interests and goal",
+    copied: "Copied. Change them below any time.",
+    passed: "{n} subjects passed",
+  },
   entryAdvice: {
     where: "Your bachelor's",
     unimelb: "At the University of Melbourne",

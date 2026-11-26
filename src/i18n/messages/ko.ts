@@ -19,6 +19,12 @@ export const ko: Messages = {
     tip: "과목은 하나씩 업데이트해요. 아직 업데이트되지 않은 과목의 개설 학기와 규정은 {old} Handbook 기준이에요. 수강 신청 전에 공식 Handbook을 꼭 확인하세요.",
     dismiss: "닫기",
   },
+  bachelorCard: {
+    open: "학사 쪽 열기",
+    copy: "학사에서 입력한 강점, 관심사, 목표 쓰기",
+    copied: "복사했어요. 아래에서 언제든 바꿀 수 있어요.",
+    passed: "{n}과목 통과",
+  },
   entryAdvice: {
     where: "학사 과정",
     unimelb: "멜버른 대학교",
