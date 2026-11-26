@@ -19,6 +19,12 @@ export const zhTW: Messages = {
     tip: "課程是一門一門更新的。還沒更新的課，開課學期和規定都依 {old} Handbook。選課前請以官方 Handbook 為準。",
     dismiss: "關閉",
   },
+  afterDegree: {
+    title: "學士之後",
+    program: "{n} 學分級別",
+    note: "按 Handbook 的入學規則，根據你的主修和 WAM 估計。最終由學校決定。",
+    try: "去碩士那邊試試",
+  },
   bachelorCard: {
     open: "打開學士那邊",
     copy: "用學士填的強項、興趣和目標",

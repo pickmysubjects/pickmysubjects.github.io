@@ -19,6 +19,12 @@ export const ms: Messages = {
     tip: "Subjek dikemas kini satu demi satu. Selagi belum, semester dan peraturannya ikut Handbook {old}. Semak Handbook rasmi sebelum mendaftar.",
     dismiss: "Tutup",
   },
+  afterDegree: {
+    title: "Selepas ijazah anda",
+    program: "program {n} mata",
+    note: "Berdasarkan major dan WAM anda mengikut syarat kemasukan Handbook. Universiti yang menentukan.",
+    try: "Cuba di bahagian Sarjana",
+  },
   bachelorCard: {
     open: "Buka bahagian Sarjana Muda",
     copy: "Guna kekuatan, minat dan matlamat sarjana muda saya",

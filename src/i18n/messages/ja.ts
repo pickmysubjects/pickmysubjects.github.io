@@ -19,6 +19,12 @@ export const ja: Messages = {
     tip: "科目は一つずつ更新しています。未更新の科目の開講学期やルールは{old}年版Handbookのものです。履修登録の前に公式Handbookで確認してください。",
     dismiss: "閉じる",
   },
+  afterDegree: {
+    title: "卒業後",
+    program: "{n}単位プログラム",
+    note: "Handbook の入学規則に沿って、専攻と WAM から見たものです。決めるのは大学です。",
+    try: "修士側で試す",
+  },
   bachelorCard: {
     open: "学士側を開く",
     copy: "学士で入力した強み・興味・目標を使う",

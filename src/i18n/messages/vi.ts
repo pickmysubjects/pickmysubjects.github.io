@@ -19,6 +19,12 @@ export const vi: Messages = {
     tip: "Các môn được cập nhật từng môn một. Môn chưa cập nhật thì học kỳ và quy định lấy theo Handbook {old}. Hãy kiểm tra Handbook chính thức trước khi đăng ký.",
     dismiss: "Ẩn",
   },
+  afterDegree: {
+    title: "Sau khi tốt nghiệp",
+    program: "chương trình {n} điểm",
+    note: "Dựa trên chuyên ngành và WAM theo quy định đầu vào trong Handbook. Trường là nơi quyết định.",
+    try: "Thử bên thạc sĩ",
+  },
   bachelorCard: {
     open: "Mở phía cử nhân",
     copy: "Dùng điểm mạnh, sở thích và mục tiêu bên cử nhân",

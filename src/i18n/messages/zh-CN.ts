@@ -19,6 +19,12 @@ export const zhCN: Messages = {
     tip: "课是一门一门更新的。还没更新的课，开课学期和规则都按 {old} Handbook。选课前请以官方 Handbook 为准。",
     dismiss: "关闭",
   },
+  afterDegree: {
+    title: "本科之后",
+    program: "{n} 学分档",
+    note: "按 Handbook 的入学规则，根据你的专业和 WAM 估计。最终由学校决定。",
+    try: "去硕士那边试试",
+  },
   bachelorCard: {
     open: "打开本科那边",
     copy: "用本科填的强项、兴趣和目标",

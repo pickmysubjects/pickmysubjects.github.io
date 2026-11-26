@@ -19,6 +19,12 @@ export const ko: Messages = {
     tip: "과목은 하나씩 업데이트해요. 아직 업데이트되지 않은 과목의 개설 학기와 규정은 {old} Handbook 기준이에요. 수강 신청 전에 공식 Handbook을 꼭 확인하세요.",
     dismiss: "닫기",
   },
+  afterDegree: {
+    title: "졸업 후",
+    program: "{n}학점 과정",
+    note: "Handbook 입학 규칙에 따라 전공과 WAM으로 본 거예요. 결정은 학교가 해요.",
+    try: "석사 쪽에서 해 보기",
+  },
   bachelorCard: {
     open: "학사 쪽 열기",
     copy: "학사에서 입력한 강점, 관심사, 목표 쓰기",

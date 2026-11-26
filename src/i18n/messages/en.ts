@@ -24,6 +24,12 @@ export const en = {
     dismiss: "Hide",
   },
   /** The site search (header, ⌘K): labels, and extra words each feature or guide topic is found by (| between them). */
+  afterDegree: {
+    title: "After your degree",
+    program: "{n}-point program",
+    note: "From your major and WAM under the Handbook's entry rules. The University decides.",
+    try: "Try it on the Master's side",
+  },
   bachelorCard: {
     open: "Open the Bachelor's side",
     copy: "Use my bachelor's strengths, interests and goal",

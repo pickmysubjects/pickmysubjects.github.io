@@ -19,6 +19,12 @@ export const id: Messages = {
     tip: "Mata kuliah diperbarui satu per satu. Selama belum, semester dan aturannya mengikuti Handbook {old}. Cek Handbook resmi sebelum mendaftar.",
     dismiss: "Tutup",
   },
+  afterDegree: {
+    title: "Setelah lulus",
+    program: "program {n} poin",
+    note: "Dari jurusan dan WAM-mu menurut aturan masuk di Handbook. Universitas yang memutuskan.",
+    try: "Coba di sisi Master",
+  },
   bachelorCard: {
     open: "Buka sisi Sarjana",
     copy: "Pakai kekuatan, minat, dan tujuan dari sisi sarjana",

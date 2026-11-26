@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import BachelorCard from '@/components/profile/BachelorCard.vue'
+import AfterDegreeCard from '@/components/profile/AfterDegreeCard.vue'
+import { useBachelorRecord } from '@/composables/useProfile'
 import { useStudyLevel } from '@/composables/useStudyLevel'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
@@ -142,6 +144,9 @@ async function onRestore(event: Event): Promise<void> {
   if (!restoreFailed.value) location.reload()
 }
 const { isMaster } = useStudyLevel()
+// Only once the bachelor's side has a degree or results to read.
+const bachelorRecord = useBachelorRecord()
+const hasAfter = computed(() => !!bachelorRecord.value)
 </script>
 
 <template>
@@ -181,6 +186,14 @@ const { isMaster } = useStudyLevel()
             <span v-if="!setupChosen" class="sec-state">{{ t('record.stepFirst') }}</span>
           </header>
           <DegreeCard />
+        </section>
+
+        <!-- Bachelor's side: the master's this record points to, once there's a degree to read. -->
+        <section v-if="!isMaster && hasAfter" class="sec surface" aria-labelledby="sec-after">
+          <header class="sec-head">
+            <h2 id="sec-after" class="sec-title">{{ t('afterDegree.title') }}</h2>
+          </header>
+          <AfterDegreeCard />
         </section>
 
         <!-- Master's side: the bachelor's the student brings, read from the other side. -->
