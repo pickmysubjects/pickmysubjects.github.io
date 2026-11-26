@@ -10,6 +10,13 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ENGR90033
+skills:
+  - business
+  - teamwork
+  - writing
+topics:
+  - business
+  - management
 assessment:
   - kind: presentation
     weight: 40

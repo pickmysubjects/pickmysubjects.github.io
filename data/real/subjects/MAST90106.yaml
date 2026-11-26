@@ -20,6 +20,11 @@ prerequisites:
       note: Admission into the Computational and Statistical Data Science specialisation (formal) in the MC-DATASC Master of Data Science
 corequisites: none
 non_allowed: []
+skills:
+  - data
+  - writing
+topics:
+  - data-science
 assessment:
   - kind: report
     weight: 70

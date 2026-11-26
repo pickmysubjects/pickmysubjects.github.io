@@ -19,6 +19,14 @@ prerequisites:
           note: Selection of the Distributed Computing specialisation (formal) in the MC-IT Master of Information Technology
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+  - systems
+topics:
+  - systems
+  - engineering
+  - physics
 assessment:
   - kind: assignment
     weight: 10

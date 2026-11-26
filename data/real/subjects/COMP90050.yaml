@@ -31,6 +31,12 @@ prerequisites:
       note: "Admission into one of: Master of Data Science (MC-DATASC) - Data Science Background Stream Master of Data Science (MC-DATASC) - Computer Science Background Stream"
 corequisites: none
 non_allowed: []
+skills:
+  - systems
+  - data
+topics:
+  - databases
+  - systems
 assessment:
   - kind: quiz
     weight: 10

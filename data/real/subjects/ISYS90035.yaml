@@ -8,6 +8,12 @@ offerings:
 prerequisites: ISYS90026
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - management
+  - databases
 assessment:
   - kind: report
     weight: 30

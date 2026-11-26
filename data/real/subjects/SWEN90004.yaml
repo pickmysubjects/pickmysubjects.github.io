@@ -18,6 +18,12 @@ prerequisites:
 corequisites: none
 non_allowed:
   - COMP90083
+skills:
+  - maths
+  - programming
+topics:
+  - software-engineering
+  - modelling
 assessment:
   - kind: project
     weight: 25

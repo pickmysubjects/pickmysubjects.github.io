@@ -16,6 +16,13 @@ prerequisites:
 corequisites: none
 non_allowed:
   - MAST90084
+skills:
+  - statistics
+  - data
+topics:
+  - statistics
+  - data-science
+  - modelling
 assessment:
   - kind: assignment
     weight: 15

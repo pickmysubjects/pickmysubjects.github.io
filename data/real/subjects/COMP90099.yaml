@@ -8,6 +8,13 @@ offerings:
 prerequisites: ISYS90039
 corequisites: none
 non_allowed: []
+skills:
+  - teamwork
+  - design
+  - business
+topics:
+  - entrepreneurship
+  - software-engineering
 assessment:
   - kind: report
     weight: 20

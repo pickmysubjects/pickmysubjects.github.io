@@ -28,6 +28,13 @@ prerequisites:
           note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering MC-ENG Master of Engineering 100pt Program course entry point in the MC-IS Master of Information Systems, 150pt Program course entry point in the MC-IS Master of Information Systems 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science MC-DATASC Master of Data Science"
 corequisites: none
 non_allowed: []
+skills:
+  - systems
+  - programming
+  - data
+topics:
+  - systems
+  - data-science
 assessment:
   - kind: assignment
     weight: 10

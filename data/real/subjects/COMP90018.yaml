@@ -23,6 +23,12 @@ prerequisites:
           note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - design
+topics:
+  - software-engineering
+  - systems
 assessment:
   - kind: assignment
     weight: 30

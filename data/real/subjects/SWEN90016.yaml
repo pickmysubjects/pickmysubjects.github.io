@@ -19,6 +19,12 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ISYS90050
+skills:
+  - business
+  - writing
+topics:
+  - software-engineering
+  - management
 assessment:
   - kind: assignment
     weight: 15

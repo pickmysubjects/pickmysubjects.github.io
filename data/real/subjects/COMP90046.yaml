@@ -26,6 +26,13 @@ prerequisites:
       note: Admission into the MC-CS Master of Computer Science
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+  - algorithms
+topics:
+  - optimisation
+  - modelling
 assessment:
   - kind: project
     weight: 30

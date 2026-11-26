@@ -21,6 +21,12 @@ prerequisites:
       note: Admission into the MC-INDENG Master of Industrial Engineering
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+  - programming
+topics:
+  - optimisation
+  - modelling
 assessment:
   - kind: assignment
     weight: 20

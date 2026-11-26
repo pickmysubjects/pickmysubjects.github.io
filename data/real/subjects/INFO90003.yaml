@@ -17,6 +17,11 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering 100pt Program course entry point in the MC-IT Master of Information Technology 150pt Program course entry point in the MC-IT Master of Information Technology"
 corequisites: none
 non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - programming
 assessment:
   - kind: assignment
     weight: 30

@@ -7,6 +7,11 @@ offerings:
 prerequisites: MAST30020
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+topics:
+  - probability
+  - modelling
 assessment:
   - kind: assignment
     weight: 30

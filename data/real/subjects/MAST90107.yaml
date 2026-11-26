@@ -17,3 +17,8 @@ handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90107
 source_year: 2027
 verified_on: 2026-11-26
 notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - data
+  - presentation
+topics:
+  - data-science

@@ -7,6 +7,11 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - systems
+topics:
+  - systems
+  - engineering
 assessment:
   - kind: project
     weight: 20

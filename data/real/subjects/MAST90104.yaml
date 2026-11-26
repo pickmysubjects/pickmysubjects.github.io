@@ -14,6 +14,13 @@ corequisites: none
 non_allowed:
   - MAST30025
   - MAST30027
+skills:
+  - statistics
+  - maths
+  - programming
+topics:
+  - statistics
+  - machine-learning
 assessment:
   - kind: assignment
     weight: 20

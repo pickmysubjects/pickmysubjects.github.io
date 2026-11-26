@@ -17,6 +17,11 @@ prerequisites:
 corequisites: none
 non_allowed:
   - INFO90008
+skills:
+  - design
+  - presentation
+topics:
+  - design
 assessment:
   - kind: report
     weight: 0

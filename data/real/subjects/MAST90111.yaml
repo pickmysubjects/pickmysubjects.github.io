@@ -12,6 +12,12 @@ prerequisites:
         - MAST90104
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - maths
+topics:
+  - statistics
+  - modelling
 assessment:
   - kind: assignment
     weight: 20

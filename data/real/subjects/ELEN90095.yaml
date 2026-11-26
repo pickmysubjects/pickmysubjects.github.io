@@ -21,6 +21,13 @@ prerequisites:
       note: "Admission into one of the following: Admission into one of the following: MC-ELECENG Master of Electrical Engineering, MC-MTRNENG Master of Mechatronics Engineering, MC-MECHENG Master of Mechanical Engineering, MC-IT Master of Information Technology, MC-SOFTENG Master of Software Engineering, MC-CS Master of Computer Science"
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - algorithms
+  - maths
+topics:
+  - ai
+  - engineering
 assessment:
   - kind: presentation
     weight: 15

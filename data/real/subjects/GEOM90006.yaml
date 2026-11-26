@@ -8,6 +8,14 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - data
+  - programming
+topics:
+  - geography
+  - statistics
+  - data-science
 assessment:
   - kind: assignment
     weight: 5

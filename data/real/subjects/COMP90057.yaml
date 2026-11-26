@@ -19,6 +19,12 @@ corequisites: none
 non_allowed:
   - COMP30025
   - COMP30021
+skills:
+  - maths
+  - algorithms
+topics:
+  - theory
+  - pure-maths
 assessment:
   - kind: quiz
     weight: 5

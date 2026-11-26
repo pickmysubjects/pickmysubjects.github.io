@@ -27,6 +27,12 @@ prerequisites:
 corequisites: none
 non_allowed:
   - SWEN90004
+skills:
+  - programming
+  - maths
+topics:
+  - modelling
+  - systems
 assessment:
   - kind: report
     weight: 20

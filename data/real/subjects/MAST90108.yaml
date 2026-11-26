@@ -11,6 +11,12 @@ prerequisites:
   manual: Students must have agreement from a supervisor.
 corequisites: none
 non_allowed: []
+skills:
+  - data
+  - writing
+  - presentation
+topics:
+  - data-science
 assessment:
   - kind: presentation
     weight: 10

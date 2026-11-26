@@ -39,6 +39,11 @@ prerequisites:
           note: Selection of the Human-Computer Interaction specialisation (formal) in the MC-IT Master of Information Technology
 corequisites: none
 non_allowed: []
+skills:
+  - systems
+  - programming
+topics:
+  - systems
 assessment:
   - kind: project
     weight: 40

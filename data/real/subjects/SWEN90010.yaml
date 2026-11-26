@@ -17,6 +17,12 @@ prerequisites:
           note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+topics:
+  - software-engineering
+  - security
 assessment:
   - kind: assignment
     weight: 35

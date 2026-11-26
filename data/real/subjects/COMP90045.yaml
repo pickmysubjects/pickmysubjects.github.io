@@ -21,6 +21,12 @@ prerequisites:
           note: "Selection of one of the following: Computing specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing specialisation (formal) in the MC-IT Master of Information Technology Cyber Security specialisation (formal) in the MC-IT Master of Information Technology"
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - algorithms
+topics:
+  - programming
+  - theory
 assessment:
   - kind: project
     weight: 30

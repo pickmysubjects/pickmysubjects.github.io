@@ -14,6 +14,14 @@ prerequisites:
       note: Admission into the 100pt Program course entry point in the MC-IT Master of Information Technology
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+  - algorithms
+topics:
+  - ai
+  - machine-learning
+  - graphics
 assessment:
   - kind: assignment
     weight: 20

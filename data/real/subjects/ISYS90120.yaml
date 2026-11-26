@@ -15,6 +15,13 @@ prerequisites:
           note: Special permission from the subject coordinator to enrol in the subject.
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - presentation
+  - writing
+topics:
+  - security
+  - management
 assessment:
   - kind: assignment
     weight: 20

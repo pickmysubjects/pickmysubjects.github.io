@@ -16,6 +16,13 @@ prerequisites:
 corequisites: none
 non_allowed:
   - MAST90085
+skills:
+  - statistics
+  - data
+topics:
+  - statistics
+  - machine-learning
+  - data-science
 assessment:
   - kind: assignment
     weight: 20

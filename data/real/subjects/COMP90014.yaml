@@ -22,6 +22,12 @@ prerequisites:
       note: Admission into the MC-SOFTENG Master of Software Engineering
 corequisites: none
 non_allowed: []
+skills:
+  - algorithms
+  - programming
+topics:
+  - algorithms
+  - biology
 assessment:
   - kind: assignment
     weight: 40

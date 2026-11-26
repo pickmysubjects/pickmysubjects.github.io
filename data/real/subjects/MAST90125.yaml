@@ -15,6 +15,12 @@ prerequisites:
         - MAST30020
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - programming
+topics:
+  - statistics
+  - machine-learning
 assessment:
   - kind: assignment
     weight: 10

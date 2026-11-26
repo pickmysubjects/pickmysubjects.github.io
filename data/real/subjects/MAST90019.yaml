@@ -8,6 +8,11 @@ offerings:
 prerequisites: MAST90081
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+topics:
+  - probability
+  - pure-maths
 assessment:
   - kind: assignment
     weight: 20

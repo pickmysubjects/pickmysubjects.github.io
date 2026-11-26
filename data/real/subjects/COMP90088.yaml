@@ -15,6 +15,13 @@ prerequisites:
     - COMP90059
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+topics:
+  - security
+  - systems
+  - finance
 assessment:
   - kind: assignment
     weight: 20

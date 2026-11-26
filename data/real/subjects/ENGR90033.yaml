@@ -15,6 +15,10 @@ non_allowed:
   - CHEN90028
   - GEOM90017
   - ENGR90027
+skills:
+  - writing
+topics:
+  - engineering
 assessment:
   - kind: assignment
     weight: 5

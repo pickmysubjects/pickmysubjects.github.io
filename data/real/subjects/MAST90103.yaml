@@ -12,6 +12,12 @@ prerequisites:
         - MAST20032
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+topics:
+  - pure-maths
+  - probability
+  - linear-algebra
 assessment:
   - kind: assignment
     weight: 40

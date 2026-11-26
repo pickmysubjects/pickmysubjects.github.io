@@ -8,6 +8,14 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - design
+  - data
+  - programming
+topics:
+  - visual-communication
+  - data-science
+  - design
 assessment:
   - kind: assignment
     weight: 15

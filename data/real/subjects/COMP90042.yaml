@@ -18,6 +18,14 @@ prerequisites:
           note: "Admission into or selection of one of the following: Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - algorithms
+  - data
+topics:
+  - ai
+  - machine-learning
+  - languages
 assessment:
   - kind: assignment
     weight: 7

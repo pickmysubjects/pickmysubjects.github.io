@@ -28,6 +28,11 @@ prerequisites:
 corequisites: none
 non_allowed:
   - COMP30020
+skills:
+  - programming
+topics:
+  - programming
+  - theory
 assessment:
   - kind: assignment
     weight: 10

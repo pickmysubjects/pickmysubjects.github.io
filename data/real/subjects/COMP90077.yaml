@@ -26,6 +26,12 @@ prerequisites:
           note: Subject Coordinator Approval
 corequisites: none
 non_allowed: []
+skills:
+  - algorithms
+  - maths
+topics:
+  - algorithms
+  - theory
 assessment:
   - kind: assignment
     weight: 30

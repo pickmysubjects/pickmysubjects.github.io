@@ -17,6 +17,13 @@ non_allowed:
   - INFO90008
   - INFO90010
   - COMP90019
+skills:
+  - programming
+  - teamwork
+  - presentation
+topics:
+  - software-engineering
+  - management
 assessment:
   - kind: project
     weight: 30

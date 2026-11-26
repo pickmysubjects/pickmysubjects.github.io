@@ -9,6 +9,11 @@ prerequisites: none
 corequisites: none
 non_allowed:
   - SCIE90013
+skills:
+  - writing
+  - presentation
+topics:
+  - science-communication
 assessment:
   - kind: participation
     weight: 10

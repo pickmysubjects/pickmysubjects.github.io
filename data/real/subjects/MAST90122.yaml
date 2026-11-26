@@ -11,6 +11,13 @@ prerequisites:
     - MAST90138
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - maths
+  - data
+topics:
+  - statistics
+  - probability
 assessment:
   - kind: assignment
     weight: 30

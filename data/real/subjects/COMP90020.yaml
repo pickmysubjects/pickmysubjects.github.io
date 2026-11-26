@@ -11,6 +11,12 @@ prerequisites:
     - COMP90015
 corequisites: none
 non_allowed: []
+skills:
+  - algorithms
+  - systems
+topics:
+  - algorithms
+  - systems
 assessment:
   - kind: exam
     weight: 60

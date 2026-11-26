@@ -30,6 +30,12 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science"
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+  - algorithms
+topics:
+  - security
+  - mathematics
 assessment:
   - kind: project
     weight: 20

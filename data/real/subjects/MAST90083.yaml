@@ -17,6 +17,13 @@ prerequisites:
       note: Admission into the Statistics and Stochastic Processes informal specialisation in the MC-SCIMAT Master of Science (Mathematics and Statistics)
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - programming
+  - data
+topics:
+  - statistics
+  - data-science
 assessment:
   - kind: assignment
     weight: 40

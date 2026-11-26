@@ -12,6 +12,13 @@ prerequisites:
     - COMP90051
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+topics:
+  - machine-learning
+  - security
+  - ethics
 assessment:
   - kind: project
     weight: 15

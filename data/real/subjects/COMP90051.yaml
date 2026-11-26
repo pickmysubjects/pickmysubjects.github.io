@@ -31,6 +31,14 @@ prerequisites:
           note: Admission into the MC-DATASC Master of Data Science - Data Science Background Stream
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+  - statistics
+  - programming
+topics:
+  - machine-learning
+  - statistics
+  - ai
 assessment:
   - kind: project
     weight: 17.5

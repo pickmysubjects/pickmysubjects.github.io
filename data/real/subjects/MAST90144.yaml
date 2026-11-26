@@ -25,6 +25,11 @@ prerequisites:
       note: "Admission into one of: Master of Data Science (MC-DATASC) - Statistics Background Stream Master of Data Science (MC-DATASC) - Data Science Background Stream"
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+topics:
+  - optimisation
+  - probability
 assessment:
   - kind: assignment
     weight: 40

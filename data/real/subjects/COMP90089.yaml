@@ -29,6 +29,14 @@ prerequisites:
       note: Permission of the coordinator is required prior to enrolling in this subject (some programming experience in Python is required)
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - data
+  - statistics
+topics:
+  - machine-learning
+  - health
+  - data-science
 assessment:
   - kind: quiz
     weight: 20

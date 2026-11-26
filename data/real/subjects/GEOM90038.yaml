@@ -8,6 +8,12 @@ offerings:
 prerequisites: GEOM30009
 corequisites: none
 non_allowed: []
+skills:
+  - data
+  - lab
+topics:
+  - engineering
+  - earth-science
 assessment:
   - kind: assignment
     weight: 40

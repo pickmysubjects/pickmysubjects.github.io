@@ -25,6 +25,12 @@ non_allowed:
   - MAST20004
   - MAST20005
   - MAST20006
+skills:
+  - maths
+  - statistics
+topics:
+  - statistics
+  - probability
 assessment:
   - kind: assignment
     weight: 20

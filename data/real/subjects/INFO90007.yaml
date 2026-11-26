@@ -17,6 +17,12 @@ prerequisites:
       note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-IT100 Master of Information Technology MC-IT150 Master of Information Technology"
 corequisites: none
 non_allowed: []
+skills:
+  - data
+  - writing
+topics:
+  - society
+  - media
 assessment:
   - kind: assignment
     weight: 20

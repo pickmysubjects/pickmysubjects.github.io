@@ -10,6 +10,10 @@ prerequisites: none
 corequisites: none
 non_allowed:
   - COMP30023
+skills:
+  - systems
+topics:
+  - systems
 assessment:
   - kind: assignment
     weight: 10

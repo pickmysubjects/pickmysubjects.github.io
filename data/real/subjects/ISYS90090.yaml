@@ -15,6 +15,11 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ISYS90070
+skills:
+  - business
+topics:
+  - security
+  - management
 assessment:
   - kind: quiz
     weight: 20

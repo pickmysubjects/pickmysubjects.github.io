@@ -11,6 +11,13 @@ prerequisites:
     - MAST90104
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - writing
+  - data
+topics:
+  - statistics
+  - data-science
 assessment:
   - kind: assignment
     weight: 25

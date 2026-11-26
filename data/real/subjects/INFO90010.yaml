@@ -17,6 +17,12 @@ non_allowed:
   - COMP90055
   - COMP90082
   - SWEN90013
+skills:
+  - design
+  - presentation
+topics:
+  - entrepreneurship
+  - design
 assessment:
   - kind: presentation
     weight: 10

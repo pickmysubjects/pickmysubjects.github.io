@@ -17,6 +17,12 @@ prerequisites:
 corequisites: none
 non_allowed:
   - INFO90009
+skills:
+  - writing
+  - presentation
+  - data
+topics:
+  - design
 assessment:
   - kind: assignment
     weight: 0

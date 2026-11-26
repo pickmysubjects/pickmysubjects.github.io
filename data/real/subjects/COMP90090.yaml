@@ -23,6 +23,13 @@ prerequisites:
           note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-IT Master of Information Technology Admission into or selection of one of the following: MC-CS Master of Computer Science Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-IS Master of Information Systems"
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - data
+topics:
+  - ai
+  - health
+  - data-science
 assessment:
   - kind: assignment
     weight: 15

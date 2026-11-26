@@ -26,6 +26,12 @@ prerequisites:
         - ENGR30004
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - algorithms
+topics:
+  - ai
+  - algorithms
 assessment:
   - kind: participation
     weight: 4

@@ -18,6 +18,14 @@ prerequisites:
             - COMP90059
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+  - algorithms
+topics:
+  - algorithms
+  - physics
+  - programming
 assessment:
   - kind: project
     weight: 30

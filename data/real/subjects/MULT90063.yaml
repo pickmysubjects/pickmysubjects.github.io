@@ -27,6 +27,14 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-SCIPHY Master of Science (Physics) MC-SCIMAT Master of Science (Mathematics and Statistics) MC-SCICHE Master of Science (Chemistry) MC-IT Master of Information Technology MC-ELECENG Master of Electrical Engineering"
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - maths
+  - lab
+topics:
+  - physics
+  - programming
+  - algorithms
 assessment:
   - kind: assignment
     weight: 40

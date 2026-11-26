@@ -35,6 +35,12 @@ corequisites: none
 non_allowed:
   - ISYS90051
   - ISYS90095
+skills:
+  - writing
+topics:
+  - ethics
+  - ai
+  - society
 assessment:
   - kind: participation
     weight: 10

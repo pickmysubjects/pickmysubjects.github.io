@@ -48,6 +48,12 @@ non_allowed:
   - INFO90009
   - INFO90010
   - ENGR90051
+skills:
+  - teamwork
+  - presentation
+topics:
+  - management
+  - engineering
 assessment:
   - kind: assignment
     weight: 22.5

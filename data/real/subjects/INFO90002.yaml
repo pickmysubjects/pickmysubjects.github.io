@@ -10,6 +10,11 @@ prerequisites: none
 corequisites: none
 non_allowed:
   - INFO20003
+skills:
+  - data
+  - programming
+topics:
+  - databases
 assessment:
   - kind: assignment
     weight: 20

@@ -11,6 +11,13 @@ prerequisites:
     - MAST90105
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+  - statistics
+topics:
+  - statistics
+  - linear-algebra
+  - data-science
 assessment:
   - kind: assignment
     weight: 20
