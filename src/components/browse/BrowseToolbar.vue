@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { computed } from 'vue'
 import { GraduationCap, SlidersHorizontal, X } from 'lucide-vue-next'
 import { activeFilters, type ListGroup, type BrowseFilters, type BrowseSort, latestCourse } from '@/engine'
@@ -59,6 +60,8 @@ function optionName(g: ListGroup, v: string | number): string {
   if (g === 'hours') return tr(`browse.hoursBand.${v}`)
   return tr(`browse.easeOpt.${v}`)
 }
+// Master's courses have no rules on the site yet, so no degree line on that side.
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
@@ -68,7 +71,7 @@ function optionName(g: ListGroup, v: string | number): string {
         <SlidersHorizontal :size="16" aria-hidden="true" />{{ t('browse.filters') }}<span v-if="active" class="fbadge">{{ active }}</span>
       </button>
       <p class="count" role="status">{{ t('browse.count', { n: count }) }}</p>
-      <p class="degree">
+      <p v-if="!isMaster" class="degree">
         <GraduationCap :size="15" aria-hidden="true" />
         <span>{{ plan.courseChosen.value ? t('majors.shownFor', { course: courseTitle }) : t('majors.shownDefault', { course: courseTitle }) }}</span>
         <a class="degree-change" :href="link('record')">{{ t('majors.change') }}</a>

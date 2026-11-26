@@ -19,6 +19,7 @@ export const id: Messages = {
     tip: "Mata kuliah diperbarui satu per satu. Selama belum, semester dan aturannya mengikuti Handbook {old}. Cek Handbook resmi sebelum mendaftar.",
     dismiss: "Tutup",
   },
+  level: { bachelor: "Sarjana", master: "Magister", label: "Jenjang studi" },
   search: {
     open: "Cari",
     label: "Cari di situs",

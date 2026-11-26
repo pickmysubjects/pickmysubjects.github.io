@@ -19,6 +19,7 @@ export const zhTW: Messages = {
     tip: "課程是一門一門更新的。還沒更新的課，開課學期和規定都依 {old} Handbook。選課前請以官方 Handbook 為準。",
     dismiss: "關閉",
   },
+  level: { bachelor: "大學部", master: "碩士", label: "學歷層級" },
   search: {
     open: "搜尋",
     label: "全站搜尋",

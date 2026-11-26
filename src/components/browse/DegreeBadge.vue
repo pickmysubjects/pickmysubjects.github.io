@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { latestCourse } from '@/engine'
 import { computed } from 'vue'
 import { GraduationCap } from 'lucide-vue-next'
@@ -14,10 +15,12 @@ const plan = usePlan()
 const { t } = useI18n()
 const title = computed(() => latestCourse(data.value, props.course)?.title ?? props.course)
 const chosen = plan.courseChosen
+// Master's courses have no rules on the site yet, so no degree line on that side.
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
-  <p class="degree" :class="{ 'degree-default': !chosen }">
+  <p v-if="!isMaster" class="degree" :class="{ 'degree-default': !chosen }">
     <GraduationCap :size="16" aria-hidden="true" />
     <span>{{ chosen ? t('majors.shownFor', { course: title }) : t('majors.shownDefault', { course: title }) }}</span>
     <a class="degree-change" :href="link('record')">{{ t('majors.change') }}</a>

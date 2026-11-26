@@ -19,6 +19,7 @@ export const zhCN: Messages = {
     tip: "课是一门一门更新的。还没更新的课，开课学期和规则都按 {old} Handbook。选课前请以官方 Handbook 为准。",
     dismiss: "关闭",
   },
+  level: { bachelor: "本科", master: "硕士", label: "学历层次" },
   search: {
     open: "搜索",
     label: "全站搜索",

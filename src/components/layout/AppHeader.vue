@@ -2,6 +2,7 @@
 import { link, useView } from '@/composables/useView'
 import { ChevronDown } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
+import LevelMenu from './LevelMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import GlobalSearch from './GlobalSearch.vue'
 import { IS_BETA } from '@/release'
@@ -227,6 +228,7 @@ watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
       <span v-if="title" class="phone-title">{{ t(title) }}</span>
       <div class="tools">
         <GlobalSearch />
+        <LevelMenu />
         <LangMenu />
       </div>
     </div>

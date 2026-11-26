@@ -24,6 +24,7 @@ export const en = {
     dismiss: "Hide",
   },
   /** The site search (header, ⌘K): labels, and extra words each feature or guide topic is found by (| between them). */
+  level: { bachelor: "Bachelor's", master: "Master's", label: "Study level" },
   search: {
     open: "Search",
     label: "Search the site",

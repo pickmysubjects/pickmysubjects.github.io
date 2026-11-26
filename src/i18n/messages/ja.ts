@@ -19,6 +19,7 @@ export const ja: Messages = {
     tip: "科目は一つずつ更新しています。未更新の科目の開講学期やルールは{old}年版Handbookのものです。履修登録の前に公式Handbookで確認してください。",
     dismiss: "閉じる",
   },
+  level: { bachelor: "学部", master: "修士", label: "課程" },
   search: {
     open: "検索",
     label: "サイト内検索",

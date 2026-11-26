@@ -19,6 +19,7 @@ export const ko: Messages = {
     tip: "과목은 하나씩 업데이트해요. 아직 업데이트되지 않은 과목의 개설 학기와 규정은 {old} Handbook 기준이에요. 수강 신청 전에 공식 Handbook을 꼭 확인하세요.",
     dismiss: "닫기",
   },
+  level: { bachelor: "학부", master: "석사", label: "과정" },
   search: {
     open: "검색",
     label: "사이트 검색",

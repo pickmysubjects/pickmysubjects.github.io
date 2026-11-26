@@ -99,6 +99,8 @@ const messagesChunk = (code: LocaleCode): string | undefined => {
   return hits.length === 1 ? `${BASE}assets/${hits[0]}` : undefined
 }
 const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
+// The bachelor's lists (Find subjects and its quick lists) never mix in master's subjects; each subject keeps its own page.
+const undergradSubjects = subjects.filter((s) => s.level <= 3)
 // Codes with a page of their own: guide text links them (termLinks.ts).
 const SUBJECT_CODES = new Set(Object.keys(data.subjects))
 
@@ -554,7 +556,7 @@ const PRESET_ORDER: Record<PresetName, BrowseSort> = { firstSemester: 'code', br
 function browseBody(code: LocaleCode, t: Translate): string {
   const year = YEAR
   const section = (preset: PresetName) => {
-    const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset], sort: PRESET_ORDER[preset] }, 'B-SCI', year)
+    const rows = browse(undergradSubjects, { ...EMPTY_FILTERS, ...PRESETS[preset], sort: PRESET_ORDER[preset] }, 'B-SCI', year)
     if (rows.length === 0) return ''
     return `<h2><a href="${href(code, `subjects/${PRESET_SLUGS[preset]}`)}">${esc(t(`browse.preset.${preset}`))}</a></h2><ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`
   }
@@ -615,7 +617,7 @@ function rankPages(code: LocaleCode, t: Translate): Page[] {
  */
 function presetPages(code: LocaleCode, t: Translate): Page[] {
   return (Object.keys(PRESETS) as PresetName[]).flatMap((preset) => {
-    const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset], sort: PRESET_ORDER[preset] }, 'B-SCI', YEAR)
+    const rows = browse(undergradSubjects, { ...EMPTY_FILTERS, ...PRESETS[preset], sort: PRESET_ORDER[preset] }, 'B-SCI', YEAR)
     if (rows.length === 0) return []
     const facts = { n: rows.length, year: YEAR }
     const title = t(PRESET_TITLE_KEYS[preset], facts)

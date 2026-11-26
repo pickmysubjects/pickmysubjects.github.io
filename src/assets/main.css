@@ -213,6 +213,26 @@
   }
 }
 
+/* The master's side of the site: the same design with a purple accent, so a student always sees
+   which side they're on (useStudyLevel sets data-level on <html>). */
+:root[data-level='master'] {
+  --accent: #5b2a9e;
+  --accent-fill: #7a3fd1;
+  --accent-fill-ink: #ffffff;
+  --accent-ink: #ffffff;
+  --accent-soft: #f1e9fd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-level='master'] {
+    --accent: #cdb4fb;
+    --accent-fill: #7a3fd1;
+    --accent-fill-ink: #ffffff;
+    --accent-ink: #150a29;
+    --accent-soft: #261843;
+  }
+}
+
 /*
  * Plan board cards: every card (planned, done, failed, with a problem) is the same height within a
  * language, the status line reserved even when empty. Code and title each take one fixed line;

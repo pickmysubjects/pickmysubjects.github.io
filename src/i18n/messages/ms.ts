@@ -19,6 +19,7 @@ export const ms: Messages = {
     tip: "Subjek dikemas kini satu demi satu. Selagi belum, semester dan peraturannya ikut Handbook {old}. Semak Handbook rasmi sebelum mendaftar.",
     dismiss: "Tutup",
   },
+  level: { bachelor: "Sarjana muda", master: "Sarjana", label: "Peringkat pengajian" },
   search: {
     open: "Cari",
     label: "Cari dalam laman",

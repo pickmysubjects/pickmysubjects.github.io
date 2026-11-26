@@ -19,6 +19,7 @@ export const vi: Messages = {
     tip: "Các môn được cập nhật từng môn một. Môn chưa cập nhật thì học kỳ và quy định lấy theo Handbook {old}. Hãy kiểm tra Handbook chính thức trước khi đăng ký.",
     dismiss: "Ẩn",
   },
+  level: { bachelor: "Cử nhân", master: "Thạc sĩ", label: "Bậc học" },
   search: {
     open: "Tìm kiếm",
     label: "Tìm trong trang",

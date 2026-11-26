@@ -13,6 +13,8 @@ export type AnalyticsEvent =
   | 'plan-step-2'
   | 'plan-step-3'
   | 'plan-switch-major'
+  | 'level-bachelor'
+  | 'level-master'
   | 'plan-share'
   | 'plan-image-save'
   | 'list-image-save'
