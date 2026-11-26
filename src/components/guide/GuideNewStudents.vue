@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
+import GuideMasters from './GuideMasters.vue'
 import { computed } from 'vue'
 import GuideItem from './GuideItem.vue'
 import TermText from './TermText.vue'
@@ -33,10 +35,13 @@ const steps = computed(() => {
     ...(teaching ? [{ id: 'teaching', when: day(teaching.start), past: teaching.start < today }] : []),
   ]
 })
+// The master's side leaves out the bachelor's-only topics (ATAR, first year, changing major).
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
-  <GuideItem id="after-atar" :title="t('guide.ns.timelineTitle')" :short="t('guide.ns.timelineShort')">
+  <GuideMasters v-if="isMaster" part="new-students" />
+  <GuideItem v-if="!isMaster" id="after-atar" :title="t('guide.ns.timelineTitle')" :short="t('guide.ns.timelineShort')">
     <ol class="steps">
       <li v-for="s in steps" :key="s.id" :class="{ past: s.past }">
         <strong>{{ t(`guide.ns.step.${s.id}`) }}</strong>
@@ -53,7 +58,7 @@ const steps = computed(() => {
     />
   </GuideItem>
 
-  <GuideItem id="atar-offers" :title="t('guide.ns.offersTitle')" :short="t('guide.ns.offersShort')">
+  <GuideItem v-if="!isMaster" id="atar-offers" :title="t('guide.ns.offersTitle')" :short="t('guide.ns.offersShort')">
     <ul class="plain">
       <li><TermText :text="t('guide.ns.offerGuaranteed')" /></li>
       <li><TermText :text="t('guide.ns.offerLsr')" /></li>
@@ -68,11 +73,11 @@ const steps = computed(() => {
     />
   </GuideItem>
 
-  <GuideItem id="first-year" :title="t('guide.ns.firstYearTitle')" :short="t('guide.ns.firstYearShort')">
+  <GuideItem v-if="!isMaster" id="first-year" :title="t('guide.ns.firstYearTitle')" :short="t('guide.ns.firstYearShort')">
     <FirstYearPreview />
   </GuideItem>
 
-  <GuideItem id="first-tips" :title="t('guide.ns.tipsTitle')" :short="t('guide.ns.tipsShort')">
+  <GuideItem v-if="!isMaster" id="first-tips" :title="t('guide.ns.tipsTitle')" :short="t('guide.ns.tipsShort')">
     <ul class="plain">
       <li><TermText :text="t('guide.ns.tipBreadth')" /></li>
       <li><TermText :text="t('guide.ns.tipLoad')" /></li>

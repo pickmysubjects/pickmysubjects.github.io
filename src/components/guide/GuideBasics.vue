@@ -8,16 +8,20 @@ import DegreeGlance from './DegreeGlance.vue'
 import { link } from '@/composables/useView'
 import GradeScale from './GradeScale.vue'
 import { useProfile } from '@/composables/useProfile'
+import { useStudyLevel } from '@/composables/useStudyLevel'
+import GuideMasters from './GuideMasters.vue'
 
 // The "basics" category of the basics guide (see utils/guideSections).
 const { t } = useI18n()
 const { wam } = useProfile()
+// The master's side: its own topics in place of majors, breadth caps and the bachelor's rules.
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
-  <DegreeGlance />
+  <DegreeGlance v-if="!isMaster" />
 
-  <GuideItem id="first" :title="t('guide.firstTitle')" :short="t('guide.firstShort')">
+  <GuideItem v-if="!isMaster" id="first" :title="t('guide.firstTitle')" :short="t('guide.firstShort')">
     <ol class="steps">
       <li><TermText :text="t('guide.firstStep1')" /></li>
       <li><TermText :text="t('guide.firstStep2')" /></li>
@@ -42,14 +46,16 @@ const { wam } = useProfile()
     </p>
   </GuideItem>
 
-  <GuideItem id="points" :title="t('guide.pointsTitle')" :short="t('guide.pointsShort')">
+  <GuideItem v-if="!isMaster" id="points" :title="t('guide.pointsTitle')" :short="t('guide.pointsShort')">
     <p><TermText :text="t('guide.pointsText')" /></p>
     <p><TermText :text="t('guide.pointsYearLong')" /></p>
     <p><TermText :text="t('guide.pointsCredit')" /></p>
     <GuideCallout><TermText :text="t('guide.findCredit')" /></GuideCallout>
   </GuideItem>
 
-  <GuideItem id="majors" :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">
+  <GuideMasters v-if="isMaster" part="basics" />
+
+  <GuideItem v-if="!isMaster" id="majors" :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">
     <ul class="plain">
       <li><TermText :text="t('guide.majorsOne')" /></li>
       <li><TermText :text="t('guide.majorsSecond')" /></li>
@@ -70,7 +76,7 @@ const { wam } = useProfile()
     <GuideSee to="plans" />
   </GuideItem>
 
-  <GuideItem id="caps" :title="t('guide.capsTitle')" :short="t('guide.capsShort')">
+  <GuideItem v-if="!isMaster" id="caps" :title="t('guide.capsTitle')" :short="t('guide.capsShort')">
     <ul class="plain">
       <li><TermText :text="t('guide.capsDiscipline')" /></li>
       <li><TermText :text="t('guide.capsDesignBreadth')" /></li>
@@ -78,7 +84,7 @@ const { wam } = useProfile()
     </ul>
   </GuideItem>
 
-  <GuideItem id="rules" :title="t('guide.rulesTitle')" :short="t('guide.rulesShort')">
+  <GuideItem v-if="!isMaster" id="rules" :title="t('guide.rulesTitle')" :short="t('guide.rulesShort')">
     <dl class="terms">
       <div>
         <dt><TermText :text="t('guide.prereqTerm')" /></dt>

@@ -20,8 +20,8 @@ export type GuidePageSlug = (typeof GUIDE_PAGES)[number]
  * would look in for it. Other pages link to it instead of repeating it.
  */
 export const GUIDE_TOPICS: Record<GuidePageSlug, readonly string[]> = {
-  'new-students': ['after-atar', 'atar-offers', 'first-year', 'first-tips'],
-  basics: ['first', 'points', 'majors', 'caps', 'rules', 'grades', 'wam'],
+  'new-students': ['master-from-bachelor', 'after-atar', 'atar-offers', 'first-year', 'first-tips'],
+  basics: ['first', 'points', 'master-entry', 'master-specs', 'master-capstone', 'majors', 'caps', 'rules', 'grades', 'wam'],
   systems: ['systems', 'systems-class', 'systems-lookup'],
   enrolling: ['enrol', 'plans', 'change-major', 'load', 'check', 'waiver', 'timetable', 'late-enrol', 'cross-institutional', 'exchange', 'fees'],
   semester: ['first-week', 'special-consideration', 'hurdles', 'late', 'integrity', 'exams', 'drop', 'fail'],
@@ -31,12 +31,20 @@ export const GUIDE_TOPICS: Record<GuidePageSlug, readonly string[]> = {
   'key-dates': ['dates'],
 }
 
+/** Topics only the master's side shows, and the bachelor's-only ones it leaves out. */
+export const MASTER_TOPICS = new Set(['master-from-bachelor', 'master-entry', 'master-specs', 'master-capstone'])
+export const BACHELOR_TOPICS = new Set(['first', 'points', 'after-atar', 'atar-offers', 'first-year', 'first-tips', 'majors', 'caps', 'rules', 'change-major', 'accreditation'])
+
 /** The message key of each topic's title (the topic's h2 and its line in "On this page"). */
 const TITLE_KEYS: Record<string, string> = {
   'after-atar': 'guide.ns.timelineTitle',
   'atar-offers': 'guide.ns.offersTitle',
   'first-year': 'guide.ns.firstYearTitle',
   'first-tips': 'guide.ns.tipsTitle',
+  'master-from-bachelor': 'guide.m.fromTitle',
+  'master-entry': 'guide.m.entryTitle',
+  'master-specs': 'guide.m.specTitle',
+  'master-capstone': 'guide.m.capTitle',
   first: 'guide.firstTitle',
   points: 'guide.pointsTitle',
   majors: 'guide.majorsTitle',

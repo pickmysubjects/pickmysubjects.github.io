@@ -104,7 +104,7 @@ const { level: side } = useStudyLevel()
                 <span class="sheet-icon"><component :is="item.icon" :size="17" aria-hidden="true" /></span>
                 <span class="sheet-text">
                   <span class="sheet-name">{{ t(sideKey(item.key, side)) }}</span>
-                  <span class="sheet-desc">{{ t(item.desc) }}</span>
+                  <span class="sheet-desc">{{ t(sideKey(item.desc, side)) }}</span>
                 </span>
               </a>
             </li>

@@ -33,6 +33,8 @@ export const URLS = {
   ONLINE_LIMIT: 'https://students.unimelb.edu.au/support-and-wellbeing/international-student-support/visas/understand-your-online-study-allowance',
   REENROL: 'https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course',
   ADVANCED_STANDING: 'https://study.unimelb.edu.au/how-to-apply/advanced-standing',
+  // Master of Data Science: its four specialisations, exemptions and how to change (School of Maths and Stats).
+  MDS_SPECS: 'https://ms.unimelb.edu.au/study/masters-studies/master-of-data-science-specialisations',
   WAIVER: 'https://students.unimelb.edu.au/course-admin/subject-requisite-waivers',
   WAIVER_LIMITS: 'https://students.unimelb.edu.au/course-admin/subject-requisite-waivers/faculty-or-school-restrictions-on-requisite-waivers',
   QUOTA: 'https://students.unimelb.edu.au/course-admin/quota-subjects',

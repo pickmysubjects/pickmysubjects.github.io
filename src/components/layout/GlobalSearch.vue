@@ -11,6 +11,7 @@ import { localTitle } from '@/i18n/localized'
 import { latestDataYear } from '@/engine'
 import { searchSubjects } from '@/utils/subjectSearch'
 import { BACHELOR_ONLY, MENUS } from './nav'
+import { BACHELOR_TOPICS, MASTER_TOPICS } from '@/utils/guideSections'
 import { searchFeatures, type FeatureGroup } from './featureIndex'
 import { registerSiteSearch, searchShortcut } from '@/composables/useSiteSearch'
 
@@ -76,12 +77,16 @@ const rows = computed<Row[]>(() => {
       icon: m.icon,
     }))
   }
-  const hits = searchFeatures(q, texts).filter((h) => !(isMaster.value && BACHELOR_ONLY.has(h.entry.to)))
+  // Each side's own features and guide topics only.
+  const topicOf = (id: string) => (id.startsWith('topic:') ? id.slice(6) : '')
+  const hits = searchFeatures(q, texts).filter((h) =>
+    isMaster.value ? !BACHELOR_ONLY.has(h.entry.to) && !BACHELOR_TOPICS.has(topicOf(h.entry.id)) : !MASTER_TOPICS.has(topicOf(h.entry.id)),
+  )
   const take = (g: FeatureGroup, n: number): Row[] =>
     hits
       .filter((h) => h.entry.group === g)
       .slice(0, n)
-      .map(({ entry: e }) => ({ key: e.id, group: g, to: e.to, href: link(e.to), name: t.value(sideKey(e.title, side.value)), line: e.desc ? t.value(e.desc) : undefined, icon: e.icon }))
+      .map(({ entry: e }) => ({ key: e.id, group: g, to: e.to, href: link(e.to), name: t.value(sideKey(e.title, side.value)), line: e.desc ? t.value(sideKey(e.desc, side.value)) : undefined, icon: e.icon }))
   const subjects = searchSubjects(subjectList.value, q, {
     topicNames: (id) => [t.value(`topic.${id}`), id.replace(/-/g, ' ')],
     groupNames: (id) => [t.value(`topicGroup.${id}`)],

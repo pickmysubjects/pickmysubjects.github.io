@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import Interp from '@/components/Interp.vue'
 import { computed, nextTick, provide, shallowRef, type Component, useTemplateRef, watch } from 'vue'
 import { GUIDE_PAGE } from '@/components/guide/termContext'
@@ -35,13 +36,13 @@ const SECTIONS: Partial<Record<GuideCategory, Component>> = { 'new-students': Gu
 
 const title = computed(() => {
   const p = page.value
-  if (p.kind === 'category') return t.value(`guide.cat.${p.category}.title`)
+  if (p.kind === 'category') return t.value(sideKey(`guide.cat.${p.category}.title`, side.value))
   if (p.kind === 'extra') return t.value('guide.kd.title')
   return t.value('guide.title')
 })
 
 const navName = (s: GuidePageSlug) => t.value(s === 'key-dates' ? 'guide.datesTitle' : `guide.cat.${s}.nav`)
-const navDesc = (s: GuidePageSlug) => t.value(`menu.d.${s === 'key-dates' ? 'keyDates' : s}`)
+const navDesc = (s: GuidePageSlug) => t.value(sideKey(`menu.d.${s === 'key-dates' ? 'keyDates' : s}`, side.value))
 // The sections before and after this one, so a student can read the guide straight through;
 // the ends lead back to the overview.
 const pager = computed(() => {
@@ -67,6 +68,7 @@ watch(
 )
 // Topics only: a system or another part inside a topic adds a line, not a reason for the list.
 const hasToc = computed(() => showToc(toc.value.filter((i) => !i.sub).length))
+const { level: side } = useStudyLevel()
 </script>
 
 <template>

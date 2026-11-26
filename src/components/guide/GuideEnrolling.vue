@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
@@ -17,6 +18,8 @@ import { useTryMajor } from '@/composables/useTryMajor'
 const { t } = useI18n()
 // "Try it here": a copy of the plan with another major, side by side (needs a plan first).
 const { canTry, tryMajor } = useTryMajor()
+// The master's side leaves out the bachelor's-only topics (ATAR, first year, changing major).
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
@@ -73,7 +76,7 @@ const { canTry, tryMajor } = useTryMajor()
   </GuideItem>
 
   <!-- A year in and thinking of switching: the University's two routes, then trying it here. -->
-  <GuideItem id="change-major" :title="t('guide.changeTitle')" :short="t('guide.changeShort')">
+  <GuideItem v-if="!isMaster" id="change-major" :title="t('guide.changeTitle')" :short="t('guide.changeShort')">
     <h3>{{ t('guide.changeSameTitle') }}</h3>
     <p><TermText :text="t('guide.changeSame')" /></p>
     <h3>{{ t('guide.changeOtherTitle') }}</h3>

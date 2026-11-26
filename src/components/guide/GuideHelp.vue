@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
@@ -16,6 +17,8 @@ const RANKINGS = [
   { key: 'guide.the', href: 'https://www.timeshighereducation.com/world-university-rankings' },
   { key: 'guide.arwu', href: 'https://www.shanghairanking.com/rankings/arwu/2025' },
 ] as const
+// Accreditation routes are a bachelor's majors': not on the master's side.
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
@@ -72,7 +75,7 @@ const RANKINGS = [
     />
   </GuideItem>
 
-  <GuideItem id="accreditation" :title="t('guide.accTitle')" :short="t('guide.accShort')">
+  <GuideItem v-if="!isMaster" id="accreditation" :title="t('guide.accTitle')" :short="t('guide.accShort')">
     <ul class="acc">
       <li v-for="a in ACC" :key="a.href">
         <p class="acc-head"><strong>{{ a.degree }}</strong> · {{ a.major ?? t('guide.accWhole') }}</p>

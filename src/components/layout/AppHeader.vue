@@ -217,7 +217,7 @@ const { level: side } = useStudyLevel()
                     <span class="menu-icon"><component :is="item.icon" :size="17" aria-hidden="true" /></span>
                     <span class="menu-text">
                       <span class="menu-name">{{ t(sideKey(item.key, side)) }}</span>
-                      <span class="menu-desc">{{ t(item.desc) }}</span>
+                      <span class="menu-desc">{{ t(sideKey(item.desc, side)) }}</span>
                     </span>
                   </a>
                 </li>
