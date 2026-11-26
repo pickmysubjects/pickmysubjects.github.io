@@ -17,7 +17,7 @@ describe("master's plans across every specialisation, start and load", async () 
           it(`${spec.id} from ${startPeriod}, ${load} a semester`, () => {
             const r = generatePlan({ data, profile, course: course.code, courseYear: 2027, specialisation: spec.id, startYear: 2027, startPeriod, load })
             const codes = r.plan.terms.flatMap((t) => t.subjects)
-            expect(codes.filter((c) => data.subjects[c]?.categories[course.code] !== 'course'), 'outside the course').toEqual([])
+            expect(codes.filter((c) => data.subjects[c]?.categories[course.code] === undefined), 'outside the course').toEqual([])
             expect(r.unplaced.map((u) => u.code), 'left out').toEqual([])
             const check = checkCourse({ ...r.plan, course: course.code, courseYear: 2027, specialisation: spec.id } as never, data)
             expect(check.statuses.filter((s) => s.status === 'fail').map((s) => `${s.ruleId}: ${s.detail}`)).toEqual([])

@@ -71,7 +71,7 @@ describe("master's plans", () => {
   ] as const) {
     it(`${course} ${spec}: only course subjects, full-time length, every rule met`, async () => {
       const { r, codes, data, check } = await plan(course, spec)
-      expect(codes.filter((c) => data.subjects[c]?.categories[course] !== 'course')).toEqual([])
+      expect(codes.filter((c) => data.subjects[c]?.categories[course] === undefined)).toEqual([])
       expect(r.plan.terms.filter((t) => t.subjects.length).length).toBe(terms)
       expect(check.statuses.filter((s) => s.status !== 'ok').map((s) => `${s.ruleId}: ${s.detail}`)).toEqual([])
       // Subjects a specialisation says must be done in a course year are never earlier.
@@ -86,4 +86,21 @@ describe("master's plans", () => {
       }
     })
   }
+})
+
+describe('MC-SOFTENG Year 1 Group A and B', () => {
+  const base = ['COMP30026', 'INFO20003', 'SWEN20003', 'SWEN30006', 'ENGR90051', 'COMP20007', 'COMP30023', 'SWEN90004', 'SWEN90006', 'SWEN90009', 'SWEN90014', 'SWEN90016', 'SWEN90007', 'SWEN90010', 'SWEN90017', 'SWEN90018']
+  const electives = ['COMP90048', 'COMP90049', 'COMP90050', 'COMP90053', 'COMP90054', 'COMP90073']
+  const check = async (extra: string[]) => {
+    const { checkCourse } = await import('../src/engine/courseRules')
+    const r = checkCourse({ course: 'MC-SOFTENG', courseYear: 2027, specialisation: 'mc-softeng-no-specialisation', completed: [...base, ...electives, ...extra], terms: [] } as never, realData())
+    return Object.fromEntries(r.statuses.map((s) => [s.ruleId, s.status]))
+  }
+  it('a Bachelor of Science level-2 subject can be half of the 25 (Group A)', async () => {
+    expect(await check(['MAST20005', 'COMP30019'])).toMatchObject({ 'group-ab': 'ok', 'group-b': 'ok' })
+  })
+  it('at least 12.5 must be Group B, and no more than 25 of the two', async () => {
+    expect((await check(['MAST20005', 'MAST20009']))['group-b']).not.toBe('ok')
+    expect((await check(['MAST20005', 'COMP30019', 'COMP30024']))['group-ab']).not.toBe('ok')
+  })
 })

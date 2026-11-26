@@ -129,7 +129,10 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     }
     for (const r of c.rules) {
       if (r.kind === 'compulsory') r.subjects.forEach((x) => named.add(x))
-      if (r.kind === 'requirement') r.paths.forEach(addReqs)
+      // A choice the other course's subjects also fill (MC-SOFTENG Group B, level-3 COMP) counts
+      // with them, as `course-extra` below, so one rule can sum the two groups.
+      if (r.kind === 'requirement' && !c.alsoFrom) r.paths.forEach(addReqs)
+      if (r.kind === 'requirement' && c.alsoFrom) for (const p of r.paths) for (const q of p) if ('all' in q) q.all.forEach((x) => named.add(x))
     }
     for (const comp of components) {
       if (comp.course !== c.code) continue
@@ -140,6 +143,13 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     for (const code of named) {
       const s = subjects[code]
       if (s && !c.closed.includes(code)) s.categories[c.code] = 'course'
+    }
+    // Another course's subjects it also takes, at these levels (capped by a rule of its own).
+    const extra = c.alsoFrom
+    if (extra) {
+      for (const s of Object.values(subjects)) {
+        if (s.categories[c.code] === undefined && s.categories[extra.course] === extra.category && extra.levels.includes(s.level) && !c.closed.includes(s.code)) s.categories[c.code] = 'course-extra'
+      }
     }
   }
 

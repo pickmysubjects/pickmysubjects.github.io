@@ -26,7 +26,8 @@ if (typeof document !== 'undefined') {
  */
 export function onSide(s: Subject, side: StudyLevel, course?: string, masterUses?: ReadonlySet<string>): boolean {
   const graduate = s.level > 3
-  if (side === 'master') return graduate || !!masterUses?.has(s.code)
+  // Master's: also another course's subjects the student's own master's takes (MC-SOFTENG Group A).
+  if (side === 'master') return graduate || !!masterUses?.has(s.code) || (!!course && isMasterCourse(course) && !!s.categories[course])
   return !graduate || (!!course && !!s.categories[course])
 }
 

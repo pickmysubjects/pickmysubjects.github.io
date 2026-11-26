@@ -282,7 +282,7 @@ export const subjectFileSchema = z
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
     // 'diploma-only' is never in the data: the plan generator sets it on a diploma's subjects (DIPLOMA_ONLY).
-    categories: z.record(z.string(), z.enum(['science', 'commerce', 'arts', 'design', 'music', 'fine-arts', 'agriculture', 'oral-health', 'breadth', 'core', 'diploma-only', 'course'])).default({}),
+    categories: z.record(z.string(), z.enum(['science', 'commerce', 'arts', 'design', 'music', 'fine-arts', 'agriculture', 'oral-health', 'breadth', 'core', 'diploma-only', 'course', 'course-extra'])).default({}),
     skills: z.array(z.enum(SKILLS)).default([]),
     topics: z.array(z.enum(TOPICS)).default([]),
     // Semester version from the Handbook; weights add up to 100.
@@ -627,6 +627,9 @@ export const courseFileSchema = z
     // Only the subjects its rules and components name count (a coursework master's): they get the
     // category `course`, every other subject none, so plans never fill up with unrelated ones.
     listed_only: z.boolean().default(false),
+    // A listed-only course that also takes another course's subjects of some levels (MC-SOFTENG
+    // Group A: any level-2 or level-3 Bachelor of Science science subject): those are `course-extra`.
+    also_from: z.object({ course: z.string().min(1), category: z.string().min(1), levels: z.array(z.number().int().min(1).max(3)).min(1) }).strict().optional(),
     // Subjects an entry program's credit stands in for (MC-IT 150/100-point: the Foundation
     // subjects): they meet prerequisites as if passed, but add no points.
     assumed_done: z.array(subjectCode).default([]),
@@ -653,6 +656,7 @@ export const courseFileSchema = z
     categories: c.categories,
     areaCategories: c.area_categories,
     listedOnly: c.listed_only,
+    alsoFrom: c.also_from,
     assumedDone: c.assumed_done,
     closed: c.closed,
     listed: c.listed,

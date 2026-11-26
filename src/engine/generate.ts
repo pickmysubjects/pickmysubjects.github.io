@@ -116,7 +116,7 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   // elsewhere (COMP20008 for a Group B option in MC-SOFTENG) is a fault, though the check only
   // calls the total "unknown" for it.
   const listedOnly = !!findCourse(raw.data, raw.course, raw.courseYear)?.listedOnly
-  const outsideCount = (r: GenerateResult) => (listedOnly ? r.plan.terms.flatMap((t) => t.subjects).filter((c) => input.data.subjects[c]?.categories[raw.course] !== 'course').length : 0)
+  const outsideCount = (r: GenerateResult) => (listedOnly ? r.plan.terms.flatMap((t) => t.subjects).filter((c) => input.data.subjects[c]?.categories[raw.course] === undefined).length : 0)
   const shortfall = (r: GenerateResult) =>
     r.unplaced.length * 100 + checkCourse(r.plan, input.data).statuses.filter((st) => st.status === 'fail').length + outsideCount(r)
   let result = buildPlan(input)
@@ -871,7 +871,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const outside = (c: string) => {
       const sub = data.subjects[c]
       if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
-      return resolvePrereqs(sub.prerequisites, done, required, data, input.course, c, majorsOf(input)).filter((x) => !required.has(x) && data.subjects[x]?.categories[input.course] !== 'course').length
+      return resolvePrereqs(sub.prerequisites, done, required, data, input.course, c, majorsOf(input)).filter((x) => !required.has(x) && data.subjects[x]?.categories[input.course] === undefined).length
     }
     const extra = (c: string) => (course?.listedOnly ? adds(c) + 100 * outside(c) : adds(c) >= 3 ? adds(c) : adds(c) > 0 && chain(c) >= 4 ? chain(c) : 0)
     // Each subject an option brings in first takes an elective's place (and, in a full plan, can
@@ -1614,6 +1614,8 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
       const valid = (code: string): boolean => {
         const s = data.subjects[code]
         if (!s || termShare(s) > ctx.room) return false
+        // A listed-only course (a coursework master's) counts nothing it doesn't name.
+        if (course.listedOnly && s.categories[course.code] === undefined) return false
         if (isYearLong(s) && termShare(s) > ctx.secondRoom) return false
         if (offeredIn(s, term.year, term.period).status !== 'ok') return false
         if (!withinCaps(s, all, course, data, planComponentIds(input))) return false
