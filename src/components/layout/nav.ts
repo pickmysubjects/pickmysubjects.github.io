@@ -54,6 +54,8 @@ export interface MenuItem {
   /** Path after the language part, with any ?query or #anchor the feature needs. */
   to: string
   icon: Icon
+  /** Only for a bachelor's (breadth, first semester): left out on the master's side. */
+  bachelorOnly?: boolean
 }
 
 export type Area = 'browse' | 'plan' | 'tools' | 'guide' | 'me' | 'about'
@@ -92,8 +94,8 @@ export const MENUS: MenuArea[] = [
       { key: 'tools.hard', desc: 'menu.d.hard', to: 'subjects/hard/', icon: Flame },
       { key: 'tools.noExam', desc: 'menu.d.noExam', to: 'subjects/no-exam/', icon: FileX },
       { key: 'tools.summerWinter', desc: 'menu.d.summerWinter', to: 'subjects/summer-winter/', icon: Snowflake },
-      { key: 'tools.breadth', desc: 'menu.d.breadth', to: 'subjects/breadth/', icon: Shapes },
-      { key: 'tools.firstSem', desc: 'menu.d.firstSem', to: 'subjects/first-semester/', icon: Sprout },
+      { key: 'tools.breadth', desc: 'menu.d.breadth', to: 'subjects/breadth/', icon: Shapes, bachelorOnly: true },
+      { key: 'tools.firstSem', desc: 'menu.d.firstSem', to: 'subjects/first-semester/', icon: Sprout, bachelorOnly: true },
       { key: 'browse.preset.mine', desc: 'browse.presetDesc.mine', to: 'subjects/?mine=1', icon: Sparkles },
     ],
   },
@@ -217,3 +219,6 @@ export function pageTitleKey(view: View, param: string): string | null {
   const area = areaOf(view)
   return area ? (MENUS.find((m) => m.area === area)?.key ?? null) : null
 }
+
+/** Paths of the features only a bachelor's student has (see MenuItem.bachelorOnly). */
+export const BACHELOR_ONLY = new Set(MENUS.flatMap((m) => [...m.items, ...(m.searchOnly ?? [])]).filter((i) => i.bachelorOnly).map((i) => i.to))

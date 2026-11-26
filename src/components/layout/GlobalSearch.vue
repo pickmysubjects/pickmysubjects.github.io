@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { useImeGuard } from '@/utils/ime'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useId, useTemplateRef, watch } from 'vue'
 import { ArrowLeft, BookOpen, CornerDownLeft, Search, X } from 'lucide-vue-next'
@@ -9,7 +10,7 @@ import { en } from '@/i18n/messages/en'
 import { localTitle } from '@/i18n/localized'
 import { latestDataYear } from '@/engine'
 import { searchSubjects } from '@/utils/subjectSearch'
-import { MENUS } from './nav'
+import { BACHELOR_ONLY, MENUS } from './nav'
 import { searchFeatures, type FeatureGroup } from './featureIndex'
 import { registerSiteSearch, searchShortcut } from '@/composables/useSiteSearch'
 
@@ -75,7 +76,7 @@ const rows = computed<Row[]>(() => {
       icon: m.icon,
     }))
   }
-  const hits = searchFeatures(q, texts)
+  const hits = searchFeatures(q, texts).filter((h) => !(isMaster.value && BACHELOR_ONLY.has(h.entry.to)))
   const take = (g: FeatureGroup, n: number): Row[] =>
     hits
       .filter((h) => h.entry.group === g)
@@ -186,6 +187,7 @@ onBeforeUnmount(() => {
 watch(() => [view.value, param.value], close)
 
 defineExpose({ open })
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
