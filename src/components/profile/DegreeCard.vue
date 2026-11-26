@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pickableCourses, useStudyLevel } from '@/composables/useStudyLevel'
 import { computed, shallowRef } from 'vue'
 import { Pencil } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
@@ -6,7 +7,7 @@ import type { PlanSetup } from '@/composables/usePlan'
 import { usePlan } from '@/composables/usePlan'
 import { useDataset } from '@/composables/useDataset'
 import { termLabel } from '@/i18n/format'
-import { degreeCourses, informalPicks, isFail, latestCourse } from '@/engine'
+import { informalPicks, isFail, latestCourse } from '@/engine'
 import { useI18n } from '@/i18n'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { useProfile } from '@/composables/useProfile'
@@ -64,6 +65,7 @@ function done(setup: PlanSetup): void {
   if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
 }
+const { level } = useStudyLevel()
 </script>
 
 <template>
@@ -92,7 +94,7 @@ function done(setup: PlanSetup): void {
       v-if="editing"
       class="degree-wizard"
       :setup="plan.setup.value"
-      :courses="degreeCourses(data).filter((c) => c.listed)"
+      :courses="pickableCourses(data, level)"
       :components="data.components"
       @done="done"
       @cancel="editing = false"

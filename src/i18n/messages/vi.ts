@@ -303,6 +303,10 @@ export const vi: Messages = {
     dmathsc: "Cần điểm Specialist Maths 30 hoặc tương đương; không mở cho visa du học",
     dmusic: "Xét tuyển theo kết quả học tập; không mở cho visa du học",
     oralhealth: "Từ 2027, năm 1 và năm 3 dùng môn mới chưa có mã; kế hoạch tạm hiện các môn hiện tại",
+    mcit200: 'Cử nhân bất kỳ ngành nào, WAM 65 và một môn lập trình',
+    mcit150: 'Cử nhân chuyên ngành máy tính, CNTT hoặc gần, WAM 65: miễn tối đa 50 điểm',
+    mcit100: 'Bằng máy tính bốn năm, WAM 65, cộng môn nâng cao trong ngành hoặc hai năm làm việc liên quan: miễn tối đa 100 điểm',
+    mcdatasc: 'WAM 65, một môn lập trình, Calculus 2 và Linear Algebra (hoặc tương đương); nền tảng của bạn quyết định chuyên ngành hẹp nào được mở',
   },
   rule: {
     diploma: "{title}: {rule}",

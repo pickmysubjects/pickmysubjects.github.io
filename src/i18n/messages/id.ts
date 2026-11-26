@@ -303,6 +303,10 @@ export const id: Messages = {
     dmathsc: "Perlu nilai Specialist Maths 30 atau setara; tidak terbuka untuk visa pelajar",
     dmusic: "Seleksi berdasarkan nilai sejauh ini; tidak terbuka untuk visa pelajar",
     oralhealth: "Mulai 2027, tahun 1 dan 3 memakai mata kuliah baru yang belum bernomor; rencana menampilkan yang sekarang",
+    mcit200: 'Sarjana dari bidang apa pun, WAM 65, dan satu mata kuliah pemrograman',
+    mcit150: 'Sarjana dengan jurusan komputasi, TI, atau yang dekat, WAM 65: kredit hingga 50 poin',
+    mcit100: 'Gelar komputasi empat tahun, WAM 65, ditambah studi lanjutan di bidang itu atau dua tahun kerja terkait: kredit hingga 100 poin',
+    mcdatasc: 'WAM 65, satu mata kuliah pemrograman, Calculus 2 dan Linear Algebra (atau setara); latar belakangmu menentukan peminatan mana yang terbuka',
   },
   rule: {
     diploma: "{title}: {rule}",

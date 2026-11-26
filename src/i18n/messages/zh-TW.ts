@@ -303,6 +303,10 @@ export const zhTW: Messages = {
     dmathsc: "要求 VCE Specialist Maths 30 分或同等；持學生簽證不能讀",
     dmusic: "依已有成績擇優錄取；持學生簽證不能讀",
     oralhealth: "2027 年起一、三年級改用還沒編號的新課，計畫裡先顯示現有的課",
+    mcit200: '任何學士學位，WAM 65，修過一門程式設計課',
+    mcit150: '學士主修資訊、IT 或相近科系，WAM 65：最多抵免 50 學分',
+    mcit100: '四年制資訊學士，WAM 65，另有該方向的進階課程或兩年相關工作：最多抵免 100 學分',
+    mcdatasc: 'WAM 65，修過一門程式設計課、Calculus 2 和 Linear Algebra（或同等課程）；你的背景決定能選哪些專業方向',
   },
   rule: {
     diploma: "{title}：{rule}",

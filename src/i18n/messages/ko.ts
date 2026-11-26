@@ -303,6 +303,10 @@ export const ko: Messages = {
     dmathsc: "Specialist Maths 30점 이상(또는 동등) 필요. 학생 비자로는 들을 수 없어요",
     dmusic: "지금까지의 성적으로 선발해요. 학생 비자로는 들을 수 없어요",
     oralhealth: "2027년부터 1·3학년은 아직 번호가 없는 새 과목으로 바뀌어요. 계획에는 현재 과목을 보여 줘요",
+    mcit200: '전공 무관 학사, WAM 65, 프로그래밍 과목 1개',
+    mcit150: '컴퓨팅·IT 또는 비슷한 전공 학사, WAM 65: 최대 50학점 인정',
+    mcit100: '4년제 컴퓨팅 학위, WAM 65, 해당 분야 심화 과목 또는 2년 관련 경력: 최대 100학점 인정',
+    mcdatasc: 'WAM 65, 프로그래밍 과목, Calculus 2, Linear Algebra(또는 동등 과목); 배경에 따라 고를 수 있는 세부 전공이 정해집니다',
   },
   rule: {
     diploma: "{title}: {rule}",

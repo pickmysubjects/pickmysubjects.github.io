@@ -1,5 +1,6 @@
 import { computed, watchEffect } from 'vue'
-import type { ComponentReq, Dataset, Subject } from '@/engine'
+import type { ComponentReq, Course, Dataset, Subject } from '@/engine'
+import { degreeCourses } from '@/engine/courseRules'
 import { usePersisted } from './usePersisted'
 
 /**
@@ -59,4 +60,12 @@ export function masterSubjects(data: Dataset): Set<string> {
     }
   }
   return out
+}
+
+/**
+ * The degrees a student can pick on this side: listed bachelor's courses, or the master's ones
+ * (kept unlisted until the master's planner ships, so they only show on the master's side).
+ */
+export function pickableCourses(data: Dataset, side: StudyLevel): Course[] {
+  return degreeCourses(data).filter((c) => (side === 'master' ? isMasterCourse(c.code) : c.listed && !isMasterCourse(c.code)))
 }

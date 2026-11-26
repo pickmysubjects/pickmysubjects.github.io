@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pickableCourses, useStudyLevel } from '@/composables/useStudyLevel'
 import { trackEvent } from '@/utils/analytics'
 import { listImageFileName } from '@/utils/listImage'
 import { viewYear } from '@/engine/dataYear'
@@ -19,7 +20,7 @@ import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { compareQuery, computeWam, degreeCourses, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, countsAsChoices, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import { compareQuery, computeWam, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, countsAsChoices, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Plus } from 'lucide-vue-next'
 import { usePhone } from '@/composables/usePhone'
@@ -634,6 +635,7 @@ watch(
 )
 // Arriving with ?add= when the plan is already set up: it goes in straight away.
 watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShared.value && !editing.value) placePending() }, { immediate: true })
+const { level } = useStudyLevel()
 </script>
 
 <template>
@@ -725,7 +727,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
       v-if="showWizard"
       :key="dataName"
       :setup="plan.setup.value"
-      :courses="degreeCourses(data).filter((c) => c.listed)"
+      :courses="pickableCourses(data, level)"
       :components="data.components"
       :cancellable="!plan.isEmpty.value"
       :start-at="switchFrom ? 2 : 0"

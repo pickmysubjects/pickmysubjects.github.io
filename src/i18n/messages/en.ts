@@ -309,6 +309,10 @@ export const en = {
     dmathsc: "Needs a Specialist Maths study score of 30 or equivalent; not open on a student visa",
     dmusic: "Selected on your results so far; not open on a student visa",
     oralhealth: "From 2027, years 1 and 3 use new subjects not numbered yet; the plan shows the current ones",
+    mcit200: "Any bachelor's with a WAM of 65 and one programming subject",
+    mcit150: "A bachelor's majoring in computing, IT or close, WAM 65: up to 50 points of credit",
+    mcit100: "A four-year computing degree, WAM 65, plus advanced study in the area or two years' related work: up to 100 points of credit",
+    mcdatasc: 'WAM 65, a programming subject, Calculus 2 and Linear Algebra (or equivalents); your background decides which specialisations are open',
   },
   rule: {
     diploma: "{title}: {rule}",

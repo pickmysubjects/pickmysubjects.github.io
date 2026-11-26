@@ -303,6 +303,10 @@ export const ms: Messages = {
     dmathsc: "Perlu skor Specialist Maths 30 atau setara; tidak dibuka untuk visa pelajar",
     dmusic: "Dipilih berdasarkan keputusan setakat ini; tidak dibuka untuk visa pelajar",
     oralhealth: "Mulai 2027, tahun 1 dan 3 guna subjek baharu yang belum bernombor; pelan menunjukkan subjek semasa",
+    mcit200: 'Mana-mana ijazah sarjana muda, WAM 65 dan satu subjek pengaturcaraan',
+    mcit150: 'Ijazah sarjana muda dengan major pengkomputeran, IT atau berkaitan, WAM 65: kredit hingga 50 mata',
+    mcit100: 'Ijazah pengkomputeran empat tahun, WAM 65, serta pengajian lanjutan dalam bidang itu atau dua tahun kerja berkaitan: kredit hingga 100 mata',
+    mcdatasc: 'WAM 65, satu subjek pengaturcaraan, Calculus 2 dan Linear Algebra (atau setara); latar belakang anda menentukan pengkhususan yang dibuka',
   },
   rule: {
     diploma: "{title}: {rule}",

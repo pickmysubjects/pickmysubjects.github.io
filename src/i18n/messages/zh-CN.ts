@@ -303,6 +303,10 @@ export const zhCN: Messages = {
     dmathsc: "要求 VCE Specialist Maths 30 分或同等；持学生签证不能读",
     dmusic: "按已有成绩择优录取；持学生签证不能读",
     oralhealth: "2027 年起一、三年级改用还没编号的新课，计划里先显示现有的课",
+    mcit200: '任何本科学位，WAM 65，修过一门编程课',
+    mcit150: '本科主修计算机、IT 或相近专业，WAM 65：最多减免 50 学分',
+    mcit100: '四年制计算机本科，WAM 65，另有该方向的高阶课程或两年相关工作：最多减免 100 学分',
+    mcdatasc: 'WAM 65，修过一门编程课、Calculus 2 和 Linear Algebra（或同等课程）；你的背景决定能选哪些专业方向',
   },
   rule: {
     diploma: "{title}：{rule}",
