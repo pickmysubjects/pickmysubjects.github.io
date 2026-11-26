@@ -1,0 +1,81 @@
+code: ENGR90026
+title: Engineering Entrepreneurship
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - all:
+        - any:
+            - admission: MC-CIVENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-CHEMENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-MECHENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-SOFTENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-SPATENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-ENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-ELECENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-DINFENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+            - admission: MC-MTRNENG
+              note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-CHEMENG Master of Chemical Engineering MC-MECHENG Master of Mechanical Engineering MC-SOFTENG Master of Software Engineering MC-SPATENG Master of Spatial Engineering MC-ENG Master of Engineering MC-ELECENG Master of Electrical Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-MTRNENG Master of Mechatronics Engineering"
+        - manual: Completion of a minimum of 100 credit points of study or equivalent advanced standing.
+    - manual: "Admission into or selection of one of the following: 761EM Master of Engineering Management"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 5
+    group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
+  - kind: presentation
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 9
+      to: 10
+      text: From Week 9 to Week 10
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: exam
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr90026
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

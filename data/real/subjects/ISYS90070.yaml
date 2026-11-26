@@ -1,0 +1,51 @@
+code: ISYS90070
+title: Information Security Consulting
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - ISYS90045
+    - all:
+        - admission: MC-IT
+          note: Selection of the Cyber Security specialisation (formal) in the MC-IT Master of Information Technology
+        - permission: coordinator
+          note: Special permission from the subject oorcdinator to enrol in the subject.
+corequisites: none
+non_allowed:
+  - ISYS90090
+assessment:
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90070
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

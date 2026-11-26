@@ -1,0 +1,45 @@
+code: SWEN90007
+title: Software Design and Architecture
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - SWEN30006
+    - any:
+        - SWEN90016
+        - SWEN90003
+        - SWEN90008
+corequisites: none
+non_allowed:
+  - SWEN90002
+assessment:
+  - kind: project
+    weight: 20
+    group: true
+    hurdle: true
+  - kind: project
+    weight: 40
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: project
+    weight: 40
+    group: true
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+recommended:
+  - SWEN40004
+handbook: https://handbook.unimelb.edu.au/2027/subjects/swen90007
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
