@@ -118,6 +118,31 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     }
   }
 
+  // A listed-only course (a coursework master's): every subject its rules or components name is
+  // `course` for it, at any level; nothing else counts.
+  for (const c of courses) {
+    if (!c.listedOnly) continue
+    const named = new Set<string>()
+    const addReqs = (reqs: unknown) => {
+      if (!Array.isArray(reqs)) return
+      for (const r of reqs as ({ all: string[] } | { choose: { from: string[] } })[]) for (const code of 'all' in r ? r.all : r.choose.from) named.add(code)
+    }
+    for (const r of c.rules) {
+      if (r.kind === 'compulsory') r.subjects.forEach((x) => named.add(x))
+      if (r.kind === 'requirement') r.paths.forEach(addReqs)
+    }
+    for (const comp of components) {
+      if (comp.course !== c.code) continue
+      addReqs(comp.requirements)
+      for (const route of comp.routes ?? []) addReqs(route.requirements)
+      for (const l of comp.limits) l.from.forEach((x) => named.add(x))
+    }
+    for (const code of named) {
+      const s = subjects[code]
+      if (s && !c.closed.includes(code)) s.categories[c.code] = 'course'
+    }
+  }
+
   // A course based on another counts every subject the way that course does, unless its own
   // file says otherwise or it closes the subject (B-SCIEXTD takes B-SCI's science and breadth).
   for (const c of courses) {
