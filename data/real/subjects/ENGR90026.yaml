@@ -31,6 +31,12 @@ prerequisites:
     - manual: "Admission into or selection of one of the following: 761EM Master of Engineering Management"
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - presentation
+topics:
+  - entrepreneurship
+  - engineering
 assessment:
   - kind: report
     weight: 5

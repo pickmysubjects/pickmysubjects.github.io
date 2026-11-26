@@ -9,6 +9,12 @@ offerings:
 prerequisites: SWEN90017
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - design
+topics:
+  - software-engineering
+  - programming
 assessment:
   - kind: project
     weight: 50

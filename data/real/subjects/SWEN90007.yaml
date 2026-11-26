@@ -15,6 +15,12 @@ prerequisites:
 corequisites: none
 non_allowed:
   - SWEN90002
+skills:
+  - design
+  - systems
+topics:
+  - software-engineering
+  - systems
 assessment:
   - kind: project
     weight: 20

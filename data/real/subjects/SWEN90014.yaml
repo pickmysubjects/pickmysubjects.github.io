@@ -12,6 +12,12 @@ prerequisites:
 corequisites: none
 non_allowed:
   - SWEN40001
+skills:
+  - programming
+  - design
+topics:
+  - software-engineering
+  - programming
 assessment:
   - kind: assignment
     weight: 50

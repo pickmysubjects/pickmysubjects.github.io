@@ -10,6 +10,13 @@ prerequisites: none
 corequisites: none
 non_allowed:
   - GEOM90016
+skills:
+  - writing
+  - presentation
+  - data
+topics:
+  - ethics
+  - data-science
 assessment:
   - kind: assignment
     weight: 5

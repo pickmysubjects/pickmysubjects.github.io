@@ -15,6 +15,13 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ISYS90090
+skills:
+  - writing
+  - presentation
+  - business
+topics:
+  - security
+  - management
 assessment:
   - kind: presentation
     weight: 10

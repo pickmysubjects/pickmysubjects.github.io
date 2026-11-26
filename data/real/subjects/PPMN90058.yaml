@@ -8,6 +8,11 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - writing
+topics:
+  - politics
+  - society
 assessment:
   - kind: quiz
     weight: 30

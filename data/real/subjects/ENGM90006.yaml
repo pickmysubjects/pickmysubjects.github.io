@@ -8,6 +8,14 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - engineering
+  - management
+  - law
+  - construction
 assessment:
   - kind: exam
     weight: 30

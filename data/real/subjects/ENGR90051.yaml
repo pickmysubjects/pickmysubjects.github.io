@@ -11,6 +11,11 @@ corequisites: none
 non_allowed:
   - ENGR90034
   - ENGR90039
+skills:
+  - design
+topics:
+  - engineering
+  - design
 assessment:
   - kind: project
     weight: 10

@@ -9,6 +9,12 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - business
+  - management
 assessment:
   - kind: participation
     weight: 10

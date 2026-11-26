@@ -10,6 +10,13 @@ prerequisites:
   manual: Admission into the null Bachelor of Medical Science (Degree with Honours) This subject is not available for students admitted in any other courses.
 corequisites: none
 non_allowed: []
+skills:
+  - writing
+  - presentation
+  - data
+topics:
+  - health
+  - biology
 assessment:
   - kind: quiz
     weight: 15

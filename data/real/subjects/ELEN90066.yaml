@@ -12,6 +12,13 @@ prerequisites:
     - ELEN30014
 corequisites: none
 non_allowed: []
+skills:
+  - programming
+  - systems
+  - design
+topics:
+  - engineering
+  - systems
 assessment:
   - kind: assignment
     weight: 20

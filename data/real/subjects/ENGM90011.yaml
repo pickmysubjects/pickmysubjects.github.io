@@ -8,6 +8,13 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - data
+topics:
+  - economics
+  - finance
+  - engineering
 assessment:
   - kind: participation
     weight: 10

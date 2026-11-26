@@ -8,6 +8,12 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - marketing
+  - engineering
+  - business
 assessment:
   - kind: participation
     weight: 10

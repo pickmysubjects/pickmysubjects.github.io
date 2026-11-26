@@ -19,6 +19,13 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ELEN30002
+skills:
+  - maths
+  - statistics
+topics:
+  - probability
+  - mathematics
+  - engineering
 assessment:
   - kind: exam
     weight: 50
