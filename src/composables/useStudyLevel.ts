@@ -69,3 +69,12 @@ export function masterSubjects(data: Dataset): Set<string> {
 export function pickableCourses(data: Dataset, side: StudyLevel): Course[] {
   return degreeCourses(data).filter((c) => (side === 'master' ? isMasterCourse(c.code) : c.listed && !isMasterCourse(c.code)))
 }
+
+// Menu and page names that read differently on the master's side (a master's has specialisations
+// within courses, not majors).
+const MASTER_LABELS: Record<string, string> = { 'browse.switchMajors': 'majors.navMaster' }
+
+/** The i18n key to show for a menu or page name on this side. */
+export function sideKey(key: string, side: StudyLevel): string {
+  return side === 'master' ? (MASTER_LABELS[key] ?? key) : key
+}

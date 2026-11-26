@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isMasterCourse, useStudyLevel } from '@/composables/useStudyLevel'
 import { pickText } from '@/utils/majorPick'
 import { starterYear } from '@/engine/dataYear'
 import BrowseHero from '@/components/browse/BrowseHero.vue'
@@ -25,11 +26,17 @@ const { query: address } = useView()
 const kindOf = (c: Major): Kind => (c.informal ? 'informal' : c.kind === 'minor' ? 'minor' : c.kind === 'specialisation' ? 'specialisation' : 'major')
 
 // Closed to new students: not listed (their pages still open from an existing plan).
-const open = computed(() => data.value.components.filter((c) => c.closedFrom === undefined || starterYear() < c.closedFrom))
+// Only this side's: a bachelor's majors and minors, or a master's specialisations.
+const open = computed(() => data.value.components.filter((c) => (c.closedFrom === undefined || starterYear() < c.closedFrom) && isMasterCourse(c.course) === isMaster.value))
 // The degrees that have majors; a degree based on another (B-SCIEXTD) shows that one's.
 const baseOf = (code: string) => latestCourse(data.value, code)?.basedOn ?? code
 const courseTitle = (code: string) => latestCourse(data.value, code)?.title ?? code
-const degrees = computed(() => [...new Set(open.value.map((c) => c.course))].map((code) => ({ code, title: courseTitle(code) })))
+// A master's entry programs (MC-IT 200/150/100) from the longest down, as in the setup.
+const degrees = computed(() =>
+  [...new Set(open.value.map((c) => c.course))]
+    .map((code) => ({ code, title: courseTitle(code), points: latestCourse(data.value, code)?.totalPoints ?? 0 }))
+    .sort((a, b) => a.title.replace(/\s*\(.*\)$/, '').localeCompare(b.title.replace(/\s*\(.*\)$/, ''), 'en') || b.points - a.points),
+)
 
 // Degree, kind, field and search are kept in the address (see majorsAddress): what it names when
 // that's on offer, else the defaults (the student's own degree, majors first, any field).
@@ -38,7 +45,7 @@ const hasKind = (course: string, k: string) => open.value.some((c) => c.course =
 // The student's own degree, unless a kind is asked for that it doesn't have (/majors/?kind=minor
 // with no minors in Science): then the first degree that has it.
 function defaultDegreeFor(k: string): string {
-  const own = baseOf(plan.setup.value.course || 'B-SCI')
+  const own = baseOf(plan.setup.value.course || (isMaster.value ? (degrees.value[0]?.code ?? '') : 'B-SCI'))
   const ok = (code: string) => !k || hasKind(code, k)
   if (degrees.value.some((d) => d.code === own) && ok(own)) return own
   return degrees.value.find((d) => ok(d.code))?.code ?? (degrees.value.some((d) => d.code === own) ? own : (degrees.value[0]?.code ?? ''))
@@ -111,14 +118,15 @@ const factsOf = computed(() => {
   return out
 })
 const accredited = computed(() => new Set(data.value.components.filter((c) => componentCareers(data.value.careers, c.id)?.accreditation).map((c) => c.id)))
+const { isMaster } = useStudyLevel()
 </script>
 
 <template>
   <div class="list">
-    <BrowseHero :title="t('majors.title')">
+    <BrowseHero :title="t(isMaster ? 'majors.titleMaster' : 'majors.title')">
       <label class="search">
         <Search :size="18" aria-hidden="true" class="search-icon" />
-        <input v-model="query" class="search-input" type="search" :placeholder="t('majors.search')" :aria-label="t('majors.search')" />
+        <input v-model="query" class="search-input" type="search" :placeholder="t(isMaster ? 'majors.searchMaster' : 'majors.search')" :aria-label="t(isMaster ? 'majors.searchMaster' : 'majors.search')" />
       </label>
     </BrowseHero>
 
@@ -127,7 +135,7 @@ const accredited = computed(() => new Set(data.value.components.filter((c) => co
       <div class="pick-row" role="group" :aria-label="t('majors.degree')">
         <span class="pick-label">{{ t('majors.degree') }}</span>
         <button v-for="d in degrees" :key="d.code" type="button" class="opt" :aria-pressed="degree === d.code" @click="setDegree(d.code)">
-          {{ d.title.replace(/^Bachelor of /, '') }}
+          {{ d.title.replace(/^(Bachelor|Master) of /, '') }}
         </button>
       </div>
       <div class="pick-row" role="group" :aria-label="t('majors.kind')">

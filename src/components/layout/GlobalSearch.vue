@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStudyLevel } from '@/composables/useStudyLevel'
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { useImeGuard } from '@/utils/ime'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useId, useTemplateRef, watch } from 'vue'
 import { ArrowLeft, BookOpen, CornerDownLeft, Search, X } from 'lucide-vue-next'
@@ -72,7 +72,7 @@ const rows = computed<Row[]>(() => {
       to: m.to,
       href: link(m.to),
       name: t.value(m.key),
-      line: m.items.slice(0, 3).map((i) => t.value(i.key)).join(sep),
+      line: m.items.slice(0, 3).map((i) => t.value(sideKey(i.key, side.value))).join(sep),
       icon: m.icon,
     }))
   }
@@ -81,7 +81,7 @@ const rows = computed<Row[]>(() => {
     hits
       .filter((h) => h.entry.group === g)
       .slice(0, n)
-      .map(({ entry: e }) => ({ key: e.id, group: g, to: e.to, href: link(e.to), name: t.value(e.title), line: e.desc ? t.value(e.desc) : undefined, icon: e.icon }))
+      .map(({ entry: e }) => ({ key: e.id, group: g, to: e.to, href: link(e.to), name: t.value(sideKey(e.title, side.value)), line: e.desc ? t.value(e.desc) : undefined, icon: e.icon }))
   const subjects = searchSubjects(subjectList.value, q, {
     topicNames: (id) => [t.value(`topic.${id}`), id.replace(/-/g, ' ')],
     groupNames: (id) => [t.value(`topicGroup.${id}`)],
@@ -187,7 +187,7 @@ onBeforeUnmount(() => {
 watch(() => [view.value, param.value], close)
 
 defineExpose({ open })
-const { isMaster } = useStudyLevel()
+const { isMaster, level: side } = useStudyLevel()
 </script>
 
 <template>

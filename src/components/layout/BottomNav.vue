@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { link, useView } from '@/composables/useView'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
@@ -52,6 +53,7 @@ onMounted(() => {
   wide.addEventListener('change', onWide)
 })
 onBeforeUnmount(() => wide?.removeEventListener('change', onWide))
+const { level: side } = useStudyLevel()
 </script>
 
 <template>
@@ -101,7 +103,7 @@ onBeforeUnmount(() => wide?.removeEventListener('change', onWide))
               <a class="sheet-item" :href="link(item.to)" :aria-current="isHere(item, view, param) ? 'page' : undefined" @click="closeSheet">
                 <span class="sheet-icon"><component :is="item.icon" :size="17" aria-hidden="true" /></span>
                 <span class="sheet-text">
-                  <span class="sheet-name">{{ t(item.key) }}</span>
+                  <span class="sheet-name">{{ t(sideKey(item.key, side)) }}</span>
                   <span class="sheet-desc">{{ t(item.desc) }}</span>
                 </span>
               </a>

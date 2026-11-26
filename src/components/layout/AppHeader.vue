@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { link, useView } from '@/composables/useView'
 import { ChevronDown } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
@@ -155,6 +156,7 @@ onBeforeUnmount(() => {
 watch(() => [props.view, param.value], close)
 // A new language (or a page with/without the beta chip) changes the widths.
 watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
+const { level: side } = useStudyLevel()
 </script>
 
 <template>
@@ -214,7 +216,7 @@ watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
                   >
                     <span class="menu-icon"><component :is="item.icon" :size="17" aria-hidden="true" /></span>
                     <span class="menu-text">
-                      <span class="menu-name">{{ t(item.key) }}</span>
+                      <span class="menu-name">{{ t(sideKey(item.key, side)) }}</span>
                       <span class="menu-desc">{{ t(item.desc) }}</span>
                     </span>
                   </a>
@@ -225,7 +227,7 @@ watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
         </ul>
       </nav>
       <!-- Phones: the menus live in the tab bar and its sheet; the bar says where you are. -->
-      <span v-if="title" class="phone-title">{{ t(title) }}</span>
+      <span v-if="title" class="phone-title">{{ t(sideKey(title, side)) }}</span>
       <div class="tools">
         <GlobalSearch />
         <LevelMenu />
