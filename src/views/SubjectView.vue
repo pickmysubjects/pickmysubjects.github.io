@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { COMPARE_MAX } from '@/composables/useShortlist'
 import { viewYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, nextTick, shallowRef } from 'vue'
@@ -165,6 +166,8 @@ const sections = computed(() => {
 
           <SubjectSection v-if="similar.length" id="similar" :title="t('subject.similar')" fold>
             <SubjectLinks :codes="similar" :year="year" />
+            <!-- Torn between them: this one and its closest matches, side by side, with which fits. -->
+            <a class="button compare-similar" :href="link(`shortlist?compare=${[subject.code, ...similar].slice(0, COMPARE_MAX).join(',')}`)">{{ t('subject.compareSimilar') }}</a>
           </SubjectSection>
 
           <p class="foot">
@@ -185,6 +188,11 @@ const sections = computed(() => {
 </template>
 
 <style scoped>
+.compare-similar {
+  justify-self: start;
+  margin-top: var(--space-3);
+}
+
 /* The guide's measures (GuideView, InfoPage): frostier cards, the hero and the article sharing
    their edges, so the colour field stays calm under text. */
 .subject {

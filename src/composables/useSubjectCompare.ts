@@ -1,12 +1,19 @@
 import { viewYear } from '@/engine/dataYear'
 import { computed, type Ref } from 'vue'
 import {
+  hasFitProfile,
+  recommend,
+  studyYear,
+  subjectFit,
   periodsFor,
   prereqStatus,
   simplifyFor,
   standingOf,
   subjectDifficulty,
   type Difficulty,
+  type Exclusion,
+  type Recommendation,
+  type SubjectFit,
   type Period,
   type ReqField,
   type Subject,
@@ -15,6 +22,7 @@ import {
 import { useDataset } from './useDataset'
 import { usePlan } from './usePlan'
 import { useProfile } from './useProfile'
+import { useSortForMeOptions } from './useSubjectFit'
 
 /** One saved subject's row on the shortlist: the same answers its own page gives. */
 export interface CompareColumn {
@@ -32,6 +40,8 @@ export interface CompareColumn {
   prereq: 'none' | Tri
   /** How many students rated it. */
   reviews: number
+  /** How it fits the student, as its subject page's card says; null without a profile. */
+  fit: SubjectFit | null
 }
 
 /**
@@ -45,6 +55,30 @@ export function useSubjectCompare(codes: Ref<string[]>) {
   // As the subject page: the plan's degree (else the one the data shows) and first planned year.
   const course = computed(() => plan.setup.value.course || listCourse.value)
   const year = computed(() => viewYear(plan.terms.value[0]?.year))
+
+  const options = useSortForMeOptions()
+  const hasProfile = computed(() => hasFitProfile(profile.value))
+  // The subject card's answer (cardFit): the "sort for me" list, with the year cap lifted to a
+  // later-year subject's own level. One recommend() run per cap, shared by the rows that need it.
+  const fitRuns = computed(() => {
+    const runs = new Map<number | undefined, { recs: Recommendation[]; skipped: Map<string, Exclusion> }>()
+    return (maxLevel: number | undefined) => {
+      let run = runs.get(maxLevel)
+      if (!run) {
+        const skipped = new Map<string, Exclusion>()
+        run = { recs: recommend(data.value, profile.value, { ...options.value, maxLevel, skipped }), skipped }
+        runs.set(maxLevel, run)
+      }
+      return run
+    }
+  })
+  function fitOf(s: Subject): SubjectFit | null {
+    if (!hasProfile.value) return null
+    const level = studyYear(s.level)
+    const cap = options.value.maxLevel !== undefined && level > options.value.maxLevel ? level : options.value.maxLevel
+    const run = fitRuns.value(cap)
+    return subjectFit(data.value, profile.value, { ...options.value, maxLevel: cap }, s.code, { year: year.value, recs: run.recs, skipped: run.skipped })
+  }
 
   const columns = computed<CompareColumn[]>(() =>
     codes.value
@@ -70,8 +104,9 @@ export function useSubjectCompare(codes: Ref<string[]>) {
           ? 'none'
           : prereqStatus(s, standing, { subjects: data.value.subjects, course: course.value }).status,
       reviews: s.signals?.reviews ?? 0,
+      fit: fitOf(s),
     }
   }
 
-  return { columns, course, year }
+  return { columns, course, year, hasProfile }
 }

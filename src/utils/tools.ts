@@ -6,7 +6,7 @@ export interface Tool {
   key: string
   to: string
   text: string
-  art: 'final' | 'wam' | 'revision' | 'resume'
+  art: 'final' | 'wam' | 'revision' | 'resume' | 'compare'
 }
 
 export const TOOLS: readonly Tool[] = [
@@ -14,4 +14,6 @@ export const TOOLS: readonly Tool[] = [
   { key: 'tools.wam', to: 'tools/wam/', text: 'tools.line.wam', art: 'wam' },
   { key: 'rev.title', to: 'tools/revision/', text: 'tools.line.revision', art: 'revision' },
   { key: 'tools.resume', to: 'tools/resume/', text: 'tools.line.resume', art: 'resume' },
+  // The comparison lives on the saved-subjects page; listed here so it's found where tools are.
+  { key: 'tools.compare', to: 'shortlist/', text: 'tools.line.compare', art: 'compare' },
 ]

@@ -69,6 +69,17 @@ export const SITE_RELEASES: SiteRelease[] = [
         id: "Semester ini dan kalkulator nilai akhir kini terhubung: bagian yang kamu tambah atau ubah, hurdle dan nilai tampil di halaman semester.",
         hi: "‘यह सेमेस्टर’ और फ़ाइनल मार्क कैलकुलेटर अब जुड़े हैं: वहाँ जोड़े या बदले हिस्से, hurdle और अंक सेमेस्टर पेज पर दिखते हैं।",
       },
+      {
+        en: "Torn between similar subjects? Compare up to 5 side by side and see which fits you best, and why (from a subject's Similar subjects, or Tools).",
+        'zh-CN': "几门相似的课不知道选哪门？最多 5 门并排对比，看哪门最适合你、为什么（课程页的「相似课程」或工具里都能进）。",
+        'zh-TW': "幾門相似的課不知道選哪門？最多 5 門並排對比，看哪門最適合你、為什麼（課程頁的「相似課程」或工具裡都能進）。",
+        ja: "似た科目で迷ったら、最大 5 科目を並べて、どれがいちばん合うかと理由を確認（科目ページの「似た科目」かツールから）。",
+        ko: "비슷한 과목 중 고민될 때, 최대 5개를 나란히 놓고 어떤 게 가장 맞는지와 이유를 볼 수 있어요 (과목 페이지 ‘비슷한 과목’이나 도구에서).",
+        vi: "Phân vân giữa các môn tương tự? So sánh tối đa 5 môn và xem môn nào hợp với bạn nhất, vì sao (từ Môn tương tự hoặc Công cụ).",
+        ms: "Keliru antara subjek serupa? Banding hingga 5 bersebelahan dan lihat yang mana paling sesuai, serta sebabnya (dari Subjek serupa atau Alat).",
+        id: "Bingung di antara mata kuliah serupa? Bandingkan hingga 5 dan lihat mana yang paling cocok serta alasannya (dari Mata kuliah serupa atau Alat).",
+        hi: "मिलते-जुलते विषयों में उलझन? 5 तक साथ-साथ तुलना करें और देखें कौन-सा सबसे सही है, और क्यों (मिलते-जुलते विषय या टूल्स से)।",
+      },
     ],
   },
   {

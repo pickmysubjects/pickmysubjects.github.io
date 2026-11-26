@@ -10,6 +10,11 @@ import { useShortlist } from '@/composables/useShortlist'
 import { useSubjectCompare, type CompareColumn } from '@/composables/useSubjectCompare'
 import { useI18n } from '@/i18n'
 import { prereqGist } from '@/i18n/gist'
+import { reasonText } from '@/i18n/format'
+import { fitHeadlineText, whyText } from '@/i18n/fitText'
+import { whyNotFit } from '@/engine'
+import { useDataset } from '@/composables/useDataset'
+import { useProfile } from '@/composables/useProfile'
 import { localTitle } from '@/i18n/localized'
 
 /**
@@ -24,10 +29,14 @@ const emit = defineEmits<{ drop: [code: string] }>()
 const { t, locale } = useI18n()
 const shortlist = useShortlist()
 const phone = usePhone('(max-width: 720px)')
-const { columns } = useSubjectCompare(toRef(props, 'codes'))
+const { columns, hasProfile } = useSubjectCompare(toRef(props, 'codes'))
+const { data } = useDataset()
+const { profile } = useProfile()
 
-type Key = 'points' | 'runs' | 'exam' | 'difficulty' | 'prereq' | 'hurdles' | 'ratings'
-const KEYS: Key[] = ['points', 'runs', 'exam', 'difficulty', 'prereq', 'hurdles', 'ratings']
+type Key = 'fit' | 'points' | 'runs' | 'exam' | 'difficulty' | 'prereq' | 'hurdles' | 'ratings'
+const FACTS: Key[] = ['points', 'runs', 'exam', 'difficulty', 'prereq', 'hurdles', 'ratings']
+// "Fits you" leads once the student has a profile to judge by (marks, strengths, interests).
+const KEYS = computed<Key[]>(() => (hasProfile.value ? ['fit', ...FACTS] : FACTS))
 interface Cell {
   text: string
   sub?: string
@@ -42,6 +51,18 @@ const PREREQ_RANK = { none: 0, ok: 1, unknown: 2, fail: 3 } as const
 function cell(c: CompareColumn, key: Key): Cell {
   const tr = t.value
   switch (key) {
+    case 'fit': {
+      // The subject page card's answer: its band and "fits better than n%", or why it's off the list now.
+      const f = c.fit
+      if (!f || f.kind === 'missing') return { text: '—', rank: 999 }
+      if (f.kind === 'out') return { text: fitHeadlineText(tr, f, () => prereqGist(tr, c.needs)), tone: 'warn', rank: 500 }
+      return {
+        text: tr(`suggest.band.${f.band}`),
+        sub: tr('suggest.betterPct', { n: f.rec.betterThan }),
+        tone: f.band === 'great' || f.band === 'good' ? 'good' : f.band === 'low' ? 'warn' : undefined,
+        rank: -f.rec.betterThan,
+      }
+    }
     case 'points':
       return { text: String(c.subject.points), rank: c.subject.points }
     case 'runs':
@@ -81,7 +102,7 @@ const rows = computed(() =>
     title: localTitle(c.subject, locale.value) || c.subject.title,
     saved: shortlist.has(c.subject.code),
     marked: props.highlight.includes(c.subject.code),
-    cells: Object.fromEntries(KEYS.map((k) => [k, cell(c, k)])) as Record<Key, Cell>,
+    cells: Object.fromEntries(KEYS.value.map((k) => [k, cell(c, k)])) as Record<Key, Cell>,
   })),
 )
 
@@ -112,10 +133,32 @@ function ariaSort(key: Key | 'subject'): 'ascending' | 'descending' | undefined 
   return sortKey.value === key ? (sortDir.value === 1 ? 'ascending' : 'descending') : undefined
 }
 
+// "Which fits you": the subjects by how well they fit, each with its two strongest reasons (or
+// what holds it back), the same words as its subject page's card. Nothing here scores anything.
+const trimEnd = (x: string) => x.replace(/[。.]\s*$/, '')
+const fitList = computed(() => {
+  if (!hasProfile.value || rows.value.length < 2) return []
+  return [...rows.value]
+    .filter((r) => r.c.fit && r.c.fit.kind !== 'missing')
+    .sort((a, b) => a.cells.fit!.rank - b.cells.fit!.rank || a.i - b.i)
+    .map((r) => {
+      const f = r.c.fit!
+      let why: string[] = []
+      if (f.kind === 'fit') {
+        const weak = f.band === 'low' || f.band === 'ok'
+        why = weak
+          ? whyNotFit(f.rec, profile.value, r.c.subject, data.value).slice(0, 2).map((x) => trimEnd(whyText(t.value, x)))
+          : f.reasons.filter((n) => n.key !== 'noMatch').slice(0, 2).map((n) => trimEnd(reasonText(t.value, n)))
+      }
+      return { code: r.c.subject.code, title: r.title, cell: r.cells.fit!, why, difficulty: r.cells.difficulty.text }
+    })
+})
+const best = computed(() => (fitList.value[0]?.cell.rank ?? 999) < 0 ? fitList.value[0] : null)
+
 const onlyDiff = shallowRef(false)
 // A column every subject answers the same way says nothing about which to pick.
-const same = computed(() => new Set(KEYS.filter((k) => rows.value.length > 1 && rows.value.every((r) => r.cells[k].text === rows.value[0]!.cells[k].text && r.cells[k].sub === rows.value[0]!.cells[k].sub))))
-const shown = computed(() => (onlyDiff.value ? KEYS.filter((k) => !same.value.has(k)) : KEYS))
+const same = computed(() => new Set(KEYS.value.filter((k) => rows.value.length > 1 && rows.value.every((r) => r.cells[k].text === rows.value[0]!.cells[k].text && r.cells[k].sub === rows.value[0]!.cells[k].sub))))
+const shown = computed(() => (onlyDiff.value ? KEYS.value.filter((k) => !same.value.has(k)) : KEYS.value))
 // Sorting by a column that "Only differences" just hid would order the list by something unseen.
 watch(shown, (keys) => {
   if (sortKey.value && sortKey.value !== 'subject' && !keys.includes(sortKey.value)) sortKey.value = ''
@@ -124,6 +167,27 @@ watch(shown, (keys) => {
 
 <template>
   <div class="saved">
+    <section v-if="rows.length > 1" class="fitsum" aria-labelledby="fitsum-title">
+      <h3 id="fitsum-title" class="fitsum-title">{{ t('shortlist.fitTitle') }}</h3>
+      <template v-if="hasProfile">
+        <p v-if="best" class="fitsum-best">{{ t('shortlist.fitBest', { code: best.code, title: best.title }) }}</p>
+        <ol class="fitsum-list">
+          <li v-for="x in fitList" :key="x.code" class="fitsum-row">
+            <span class="fitsum-head">
+              <span class="code">{{ x.code }}</span>
+              <span class="fitsum-band" :class="x.cell.tone && `tone-${x.cell.tone}`">{{ x.cell.text }}</span>
+              <span v-if="x.cell.sub" class="fitsum-pct">{{ x.cell.sub }}</span>
+              <span class="fitsum-diff">{{ t('shortlist.col.difficulty') }}{{ t('labelSep') }}{{ x.difficulty }}</span>
+            </span>
+            <span v-if="x.why.length" class="fitsum-why">{{ x.why.join(t('listSep')) }}</span>
+          </li>
+        </ol>
+        <p class="fitsum-note">{{ t('shortlist.fitNote') }}</p>
+      </template>
+      <p v-else class="fitsum-note">
+        {{ t('shortlist.fitNeedsProfile') }} <a :href="link('record/')">{{ t('shortlist.fitAdd') }}</a>
+      </p>
+    </section>
     <div class="bar">
       <label v-if="rows.length > 1" class="diff">
         <input v-model="onlyDiff" type="checkbox" />
@@ -169,7 +233,7 @@ watch(shown, (keys) => {
                 {{ t('shortlist.col.subject') }}<span class="arrow" aria-hidden="true">{{ sortKey === 'subject' ? (sortDir === 1 ? '↑' : '↓') : '' }}</span>
               </button>
             </th>
-            <th v-for="k in shown" :key="k" scope="col" :aria-sort="ariaSort(k)">
+            <th v-for="k in shown" :key="k" scope="col" :class="{ 'col-fit': k === 'fit' }" :aria-sort="ariaSort(k)">
               <button type="button" class="sort-btn" @click="sortBy(k)">
                 {{ t(`shortlist.col.${k}`) }}<span class="arrow" aria-hidden="true">{{ sortKey === k ? (sortDir === 1 ? '↑' : '↓') : '' }}</span>
               </button>
@@ -183,7 +247,7 @@ watch(shown, (keys) => {
               <span class="code">{{ r.c.subject.code }}</span>
               <a class="title" :href="link(`subject/${r.c.subject.code}`)">{{ r.title }}</a>
             </th>
-            <td v-for="k in shown" :key="k" :class="r.cells[k].tone && `tone-${r.cells[k].tone}`">
+            <td v-for="k in shown" :key="k" :class="[r.cells[k].tone && `tone-${r.cells[k].tone}`, { 'col-fit': k === 'fit' }]">
               <span class="val">{{ r.cells[k].text }}</span>
               <span v-if="r.cells[k].sub" class="sub">{{ r.cells[k].sub }}</span>
             </td>
@@ -203,6 +267,68 @@ watch(shown, (keys) => {
 </template>
 
 <style scoped>
+.fitsum {
+  display: grid;
+  gap: 10px;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.fitsum-title {
+  margin: 0;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+}
+
+.fitsum-best {
+  margin: 0;
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+.fitsum-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fitsum-row {
+  display: grid;
+  gap: 2px;
+  padding-top: 8px;
+  border-top: 1px solid var(--divider);
+}
+
+.fitsum-row:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.fitsum-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.fitsum-band {
+  font-weight: var(--fw-semibold);
+}
+
+.fitsum-pct,
+.fitsum-diff,
+.fitsum-why,
+.fitsum-note {
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+.fitsum-note {
+  margin: 0;
+}
+
 .saved {
   display: grid;
   min-width: 0;
@@ -268,6 +394,15 @@ watch(shown, (keys) => {
 }
 
 th,
+/* "Fits you" keeps its band on one line ("Great fit"), its percentage under it. */
+.col-fit {
+  min-width: 9em;
+}
+
+.col-fit .val {
+  white-space: nowrap;
+}
+
 td {
   padding: 12px 10px;
   text-align: left;

@@ -15,8 +15,8 @@ describe('shortlist storage', () => {
     expect(cleanShortlist(many)).toHaveLength(SHORTLIST_MAX)
   })
 
-  it('reads ?compare= the same way, at most three', () => {
-    expect(compareFromQuery('comp10001,MAST10006,junk,COMP10001,INFO10003,BIOL10004')).toEqual(['COMP10001', 'MAST10006', 'INFO10003'])
+  it('reads ?compare= the same way, at most five', () => {
+    expect(compareFromQuery('comp10001,MAST10006,junk,COMP10001,INFO10003,BIOL10004,ECON10004,PSYC10003')).toEqual(['COMP10001', 'MAST10006', 'INFO10003', 'BIOL10004', 'ECON10004'])
     expect(compareFromQuery(null)).toEqual([])
   })
 

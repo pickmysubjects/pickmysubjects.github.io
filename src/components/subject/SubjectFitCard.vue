@@ -10,7 +10,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useSubjectFit } from '@/composables/useSubjectFit'
 import { useI18n } from '@/i18n'
 import { describeReq, reasonText } from '@/i18n/format'
-import { basisText, rankReasonText, whyText } from '@/i18n/fitText'
+import { basisText, fitHeadlineText, rankReasonText, whyText } from '@/i18n/fitText'
 
 /**
  * The body of "Is it hard? Is it right for me?" (its heading is the section's): two plain answers first (difficulty from the easy/hard
@@ -53,11 +53,8 @@ const fitTone = computed<Tone>(() => {
 })
 const fitHeadline = computed(() => {
   const f = fit.value
-  if (!hasProfile.value || !f || f.kind === 'missing') return ''
-  if (f.kind === 'fit') return t.value(`suggest.band.${f.band}`)
-  const w = f.why
-  if (w.key === 'needsFirst') return t.value('fit.out.needsFirst', { needs: trim(describeReq(t.value, props.subject.prerequisites, course.value)) })
-  return t.value(`fit.out.${w.key}`, { codes: (w.codes ?? []).join(t.value('listSep')), level: w.level ?? '' })
+  if (!hasProfile.value || !f) return ''
+  return fitHeadlineText(t.value, f, () => trim(describeReq(t.value, props.subject.prerequisites, course.value)))
 })
 const suitsItems = computed(() => (fit.value?.kind === 'fit' ? fit.value.reasons.filter((n) => n.key !== 'noMatch').map((n) => ({ text: trim(reasonText(t.value, n)), range: RANGE_KEYS.has(n.key) })) : []))
 const cautions = computed(() =>

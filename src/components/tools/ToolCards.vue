@@ -11,6 +11,7 @@ const ARTS = {
   wam: defineAsyncComponent(() => import('./art/ArtWam.vue')),
   revision: defineAsyncComponent(() => import('./art/ArtRevision.vue')),
   resume: defineAsyncComponent(() => import('./art/ArtResume.vue')),
+  compare: defineAsyncComponent(() => import('./art/ArtCompare.vue')),
 }
 </script>
 
@@ -32,8 +33,8 @@ const ARTS = {
 <style scoped>
 .cards {
   display: grid;
-  /* Four tools: one row of four on wide screens, two by two below that. */
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Five tools: one row on wide screens; two a row below that, the odd one out full width. */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-4);
   margin: 0;
   padding: 0;
@@ -118,6 +119,10 @@ const ARTS = {
 @media (max-width: 1199px) and (min-width: 721px) {
   .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cards > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 

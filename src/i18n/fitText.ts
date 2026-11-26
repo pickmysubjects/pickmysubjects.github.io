@@ -1,4 +1,4 @@
-import type { FitBasis, FitFactor, RankReason } from '@/engine'
+import type { FitBasis, FitFactor, RankReason, SubjectFit } from '@/engine'
 import { localList, type Translate } from './interpolate'
 
 /**
@@ -45,4 +45,16 @@ export function whyText(t: Translate, f: FitFactor): string {
 export function rankReasonText(t: Translate, r: RankReason): string {
   const p = r.params && typeof r.params.codes === 'string' ? { ...r.params, codes: localList(t, r.params.codes) } : r.params
   return t(r.key === 'hurdles' && r.params?.n === 1 ? 'rank.reason.hurdlesOne' : `rank.reason.${r.key}`, p)
+}
+
+/**
+ * A fit's one-line answer: the band ("Strong fit") for a subject on the student's list, else why
+ * it isn't on it now ("Needs MAST10006 first"). `needs` words a needsFirst prerequisite.
+ */
+export function fitHeadlineText(t: Translate, fit: SubjectFit, needs: () => string): string {
+  if (fit.kind === 'missing') return ''
+  if (fit.kind === 'fit') return t(`suggest.band.${fit.band}`)
+  const w = fit.why
+  if (w.key === 'needsFirst') return t('fit.out.needsFirst', { needs: needs() })
+  return t(`fit.out.${w.key}`, { codes: (w.codes ?? []).join(t('listSep')), level: w.level ?? '' })
 }

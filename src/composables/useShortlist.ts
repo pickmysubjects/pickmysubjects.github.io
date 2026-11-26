@@ -8,7 +8,7 @@ import { cleanShortlist, SHORTLIST_MAX } from '@/utils/sanitize'
 const saved = usePersisted<string[]>('sc:shortlist', [], cleanShortlist)
 
 /** Most subjects compared side by side. */
-export const COMPARE_MAX = 3
+export const COMPARE_MAX = 5
 
 /** Codes from a ?compare=A,B,C address: well-formed, each once, at most COMPARE_MAX. */
 export function compareFromQuery(value: string | null): string[] {
