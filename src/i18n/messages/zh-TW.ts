@@ -341,6 +341,7 @@ export const zhTW: Messages = {
     mcit150: '學士主修資訊、IT 或相近科系，WAM 65：最多抵免 50 學分',
     mcit100: '四年制資訊學士，WAM 65，另有該方向的進階課程或兩年相關工作：最多抵免 100 學分',
     mcdatasc: 'WAM 65，修過一門程式設計課、Calculus 2 和 Linear Algebra（或同等課程）；你的背景決定能選哪些專業方向',
+    mcsofteng: "WAM 65，修過 25 學分數學和 25 學分程式設計；墨大 Computing and Software Systems 主修或資訊相關工程學位且 WAM 65：最多抵免 100 學分",
   },
   rule: {
     diploma: "{title}：{rule}",

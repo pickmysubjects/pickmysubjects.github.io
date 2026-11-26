@@ -341,6 +341,7 @@ export const ms: Messages = {
     mcit150: 'Ijazah sarjana muda dengan major pengkomputeran, IT atau berkaitan, WAM 65: kredit hingga 50 mata',
     mcit100: 'Ijazah pengkomputeran empat tahun, WAM 65, serta pengajian lanjutan dalam bidang itu atau dua tahun kerja berkaitan: kredit hingga 100 mata',
     mcdatasc: 'WAM 65, satu subjek pengaturcaraan, Calculus 2 dan Linear Algebra (atau setara); latar belakang anda menentukan pengkhususan yang dibuka',
+    mcsofteng: "WAM 65, 25 mata matematik dan 25 mata pengaturcaraan; major Computing and Software Systems UniMelb atau ijazah kejuruteraan pengkomputeran dengan WAM 65: kredit hingga 100 mata",
   },
   rule: {
     diploma: "{title}: {rule}",

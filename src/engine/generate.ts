@@ -112,8 +112,13 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   const input = { ...raw, data: withDiplomaCredit(withCredit(withCountsAs(withBarredBreadth(withAssumedDone(forCourse(raw.data, raw.course), assumed), raw.course, planComponentIds(raw)), raw.course, raw.countsAs), raw.profile.credit, raw.course), raw) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
+  // A listed-only course (a coursework master's) counts nothing outside its lists: a subject from
+  // elsewhere (COMP20008 for a Group B option in MC-SOFTENG) is a fault, though the check only
+  // calls the total "unknown" for it.
+  const listedOnly = !!findCourse(raw.data, raw.course, raw.courseYear)?.listedOnly
+  const outsideCount = (r: GenerateResult) => (listedOnly ? r.plan.terms.flatMap((t) => t.subjects).filter((c) => input.data.subjects[c]?.categories[raw.course] !== 'course').length : 0)
   const shortfall = (r: GenerateResult) =>
-    r.unplaced.length * 100 + checkCourse(r.plan, input.data).statuses.filter((st) => st.status === 'fail').length
+    r.unplaced.length * 100 + checkCourse(r.plan, input.data).statuses.filter((st) => st.status === 'fail').length + outsideCount(r)
   let result = buildPlan(input)
   if (input.maxTerms !== undefined) return result
   if (shortfall(result) === 0) return finishEarlier(input, result, shortfall)
@@ -137,16 +142,44 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   // (Semester 1 only, after a prerequisite) costs a whole semester: try once more passing over the
   // chosen options that landed in the extra semesters, at the usual length.
   if (findCourse(input.data, input.course, input.courseYear)?.listedOnly && semesters(result) > base) {
+    // The other way through a course requirement with several paths (COMP20003 runs only in
+    // Semester 2, COMP20007 in Semester 1: a whole chain moves with it), then the chosen options
+    // that landed late or didn't fit, a few rounds each: the next option may not fit either.
+    const planned = new Set(result.plan.terms.flatMap((t) => t.subjects))
+    const course0 = findCourse(input.data, input.course, input.courseYear)
+    const pathTries: string[][] = [[]]
+    for (const rule of course0?.rules ?? []) {
+      if (rule.kind !== 'requirement' || rule.paths.length < 2) continue
+      const taken = rule.paths.flat().flatMap((q) => ('all' in q ? q.all : [])).filter((c) => planned.has(c))
+      if (taken.length) pathTries.push(taken)
+    }
     const late = result.plan.terms.slice(base).flatMap((t) => t.subjects)
     const chosen = new Set(result.notes.filter((n) => n.key === 'chose').map((n) => String(n.params.code)))
-    const avoid = late.filter((c) => chosen.has(c))
-    // A few rounds: the next option may not fit either (INFO30005 needing more first).
-    for (let round = 0; round < 4 && avoid.length; round++) {
-      const shorter = buildPlan({ ...input, avoid: [...(input.avoid ?? []), ...avoid] })
-      if (shortfall(shorter) === 0) return finishEarlier(input, shorter, shortfall)
-      const stuck = shorter.unplaced.map((u) => u.code).filter((c) => !avoid.includes(c))
-      if (!stuck.length) break
-      avoid.push(...stuck)
+    // Lightest first: the other path alone, then also the options that landed late.
+    for (const lateToo of [false, true]) for (const pathAvoid of pathTries) {
+      if (!lateToo && !pathAvoid.length) continue
+      const avoid = [...pathAvoid, ...(lateToo ? late.filter((c) => chosen.has(c)) : [])]
+      for (let round = 0; round < 4; round++) {
+        const shorter = buildPlan({ ...input, avoid: [...(input.avoid ?? []), ...avoid] })
+        if (shortfall(shorter) === 0 && semesters(shorter) <= base) return finishEarlier(input, shorter, shortfall)
+        const stuck = shorter.unplaced.map((u) => u.code).filter((c) => !avoid.includes(c))
+        if (!stuck.length) break
+        const picked = new Set(shorter.notes.filter((n) => n.key === 'chose').map((n) => String(n.params.code)))
+        // A required subject left out (ENGM90013, Semester 1 only) needs a chosen option out of its
+        // only semester: those there that also run in no other semester make room.
+        const crowding = stuck
+          .filter((c) => !picked.has(c))
+          .flatMap((c) => {
+            const own = periodsFor(input.data.subjects[c]!, input.startYear)
+            return shorter.plan.terms
+              .filter((t) => own.includes(t.period))
+              .flatMap((t) => t.subjects)
+              .filter((x) => picked.has(x) && !avoid.includes(x) && periodsFor(input.data.subjects[x]!, input.startYear).every((p) => own.includes(p)))
+          })
+        const next = [...stuck.filter((c) => picked.has(c)), ...crowding]
+        if (!next.length) break
+        avoid.push(...next)
+      }
     }
   }
   // A longer plan whose last semester holds only a subject or two: summer/winter may still save it.
@@ -299,6 +332,10 @@ function buildPlan(given: GenerateInput): GenerateResult {
     (course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' && r.firstYear ? r.subjects : r.kind === 'requirement' && r.firstYear ? r.paths.flat().flatMap((q) => ('all' in q ? q.all : q.choose.from)) : [])),
   )
   const early = new Set([...firstSemester, ...firstYear])
+  // Compulsory subjects of a later course year (MC-SOFTENG Year 2 and 3): the Handbook's
+  // recommended order, with "some flexibility": earlier years' subjects are placed first, but a
+  // later one may come early when its chain needs it (SWEN90016 before a Semester 1-only SWEN90009).
+  const yearOf = new Map((course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' && r.year ? r.subjects.map((c) => [c, r.year as number] as const) : [])))
 
   const remainingPoints = Math.max(
     0,
@@ -366,6 +403,9 @@ function buildPlan(given: GenerateInput): GenerateResult {
   const soonest = earliestStart(pending, needs, terms, data)
   const inFirstYear = (i: number) => terms.slice(0, i).filter((t) => !isShort(t)).length < 2
   const firstYearBound = (c: string) => firstYear.has(c) && inFirstYear(soonest.get(c) ?? 0)
+  // Full course years done before term i (semesters only), and the year a subject is due in.
+  const yearAt = (i: number) => Math.floor(terms.slice(0, i).filter((t) => !isShort(t)).length / 2) + 1
+  const dueYear = (c: string) => (firstYear.has(c) ? 1 : (yearOf.get(c) ?? Infinity))
   let now = 0
   const urgency = (c: string) => ((latest.get(c) ?? Infinity) <= now ? 1 : 0)
 
@@ -391,7 +431,7 @@ function buildPlan(given: GenerateInput): GenerateResult {
       placedAny = false
       const ready = pending
         .filter((c) => !term.subjects.includes(c) && fits(c, groupOf(c)) && (!isShort(term) || urgency(c) === 1))
-        .sort((a, b) => Number(firstYear.has(b)) - Number(firstYear.has(a)) || urgency(b) - urgency(a) || priority(b, early, depth, data, term.year) - priority(a, early, depth, data, term.year))
+        .sort((a, b) => Number(firstYear.has(b)) - Number(firstYear.has(a)) || urgency(b) - urgency(a) || Math.min(dueYear(a), yearAt(termIndex) + 1) - Math.min(dueYear(b), yearAt(termIndex) + 1) || priority(b, early, depth, data, term.year) - priority(a, early, depth, data, term.year))
       for (const code of ready) {
         if (term.subjects.includes(code)) continue
         const group = groupOf(code).filter((c) => !before.has(c) && !term.subjects.includes(c))
@@ -656,7 +696,13 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const codesOf = (path: ComponentReq[]) => path.flatMap((r) => ('all' in r ? r.all : r.choose.from))
     // A path with a subject that can't be taken alongside one already required is out.
     // So is one that, chosen before, clashed with what the plan went on to add.
-    const usable = rule.paths.filter((p, i) => !avoid.has(`${rule.id}:${i}`) && !(p.flatMap((r) => ('all' in r ? r.all : [])).some((c) => clashes(c, done, ahead, data))))
+    const usable = rule.paths.filter(
+      (p, i) =>
+        !avoid.has(`${rule.id}:${i}`) &&
+        !(p.flatMap((r) => ('all' in r ? r.all : [])).some((c) => clashes(c, done, ahead, data))) &&
+        // A retry for a shorter plan passes over this path (its subject ran only late).
+        !codesOf(p).some((c) => input.avoid?.includes(c)),
+    )
     const score = (path: ComponentReq[]) => {
       const codes = codesOf(path)
       return codes.filter((c) => done.has(c) || required.has(c)).length * 10 + codes.filter((c) => named.has(c)).length
@@ -809,7 +855,14 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
     // A coursework master's runs two to four semesters: even one subject brought in first can add
     // a semester, so any option needing something more comes after the ones that don't.
-    const extra = (c: string) => (course?.listedOnly ? adds(c) : adds(c) >= 3 ? adds(c) : adds(c) > 0 && chain(c) >= 4 ? chain(c) : 0)
+    // Any subject it brings in from outside the course's own lists counts for nothing towards it:
+    // such an option comes last of all.
+    const outside = (c: string) => {
+      const sub = data.subjects[c]
+      if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
+      return resolvePrereqs(sub.prerequisites, done, required, data, input.course, c, majorsOf(input)).filter((x) => !required.has(x) && data.subjects[x]?.categories[input.course] !== 'course').length
+    }
+    const extra = (c: string) => (course?.listedOnly ? adds(c) + 100 * outside(c) : adds(c) >= 3 ? adds(c) : adds(c) > 0 && chain(c) >= 4 ? chain(c) : 0)
     // Each subject an option brings in first takes an elective's place (and, in a full plan, can
     // push a cap over): it has to fit clearly better than an option that needs nothing more.
     const fit = (c: string) => (score.get(c) ?? -1) - EXTRA_SUBJECT_COST * adds(c)

@@ -341,6 +341,7 @@ export const zhCN: Messages = {
     mcit150: '本科主修计算机、IT 或相近专业，WAM 65：最多减免 50 学分',
     mcit100: '四年制计算机本科，WAM 65，另有该方向的高阶课程或两年相关工作：最多减免 100 学分',
     mcdatasc: 'WAM 65，修过一门编程课、Calculus 2 和 Linear Algebra（或同等课程）；你的背景决定能选哪些专业方向',
+    mcsofteng: "WAM 65，修过 25 学分数学和 25 学分编程；墨大 Computing and Software Systems 专业或计算机相关工程学位且 WAM 65：最多减免 100 学分",
   },
   rule: {
     diploma: "{title}：{rule}",

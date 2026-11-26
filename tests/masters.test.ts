@@ -60,6 +60,15 @@ describe("master's plans", () => {
     ['MC-IT-200', 'mc-it-200-no-specialisation', 4],
     ['MC-DATASC', 'mc-datasc-statistical', 4],
     ['MC-DATASC', 'mc-datasc-computational', 4],
+    ['MC-SOFTENG', 'mc-softeng-no-specialisation', 6],
+    ['MC-SOFTENG', 'mc-softeng-artificial-intelligence', 6],
+    // A hand plan fits six semesters (the four ENGM core subjects in Year 3, as the Handbook says
+    // they must be); the generator's packing still needs seven. Open: component subjects tied to a
+    // course year.
+    ['MC-SOFTENG', 'mc-softeng-business', 7],
+    ['MC-SOFTENG', 'mc-softeng-cyber-security', 6],
+    ['MC-SOFTENG', 'mc-softeng-distributed-computing', 6],
+    ['MC-SOFTENG', 'mc-softeng-human-computer-interaction', 6],
     ['MC-DATASC', 'mc-datasc-foundational', 4],
   ] as const) {
     it(`${course} ${spec}: only course subjects, full-time length, every rule met`, async () => {

@@ -531,6 +531,9 @@ const courseRule = z.discriminatedUnion('kind', [
       first_semester: z.boolean().default(false),
       // Normally taken in the first year (B-SCIEXTD's foundation subjects): planned there.
       first_year: z.boolean().default(false),
+      // The course year these belong to (MC-SOFTENG's "Year 2 compulsory subjects"): earlier
+      // years' subjects are placed first; a later one may still come early when a chain needs it.
+      year: z.number().int().min(1).max(6).optional(),
     })
     .strict(),
   z
@@ -630,7 +633,7 @@ export const courseFileSchema = z
     // so they are kept once, under that course.
     based_on: z.string().min(1).optional(),
     // Who can enrol, when that limits the course (an i18n key under entry.*): shown under it.
-    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc']).optional(),
+    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc', 'mcsofteng']).optional(),
     // The periods a new student can start the course in, when it doesn't take every intake.
     entry_periods: z.array(z.enum(PERIODS)).min(1).optional(),
     rules: z.array(courseRule),
@@ -661,7 +664,7 @@ export const courseFileSchema = z
 function camelRule(r: z.output<typeof courseRule>): CourseRule {
   switch (r.kind) {
     case 'compulsory':
-      return { id: r.id, description: r.description, kind: r.kind, subjects: r.subjects, firstSemester: r.first_semester, ...(r.first_year ? { firstYear: true } : {}) }
+      return { id: r.id, description: r.description, kind: r.kind, subjects: r.subjects, firstSemester: r.first_semester, ...(r.first_year ? { firstYear: true } : {}), ...(r.year ? { year: r.year } : {}) }
     case 'points':
       return { id: r.id, description: r.description, kind: r.kind, min: r.min, max: r.max, level: r.level, category: r.category }
     case 'major':
@@ -696,7 +699,7 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
 }
 
 export type CourseRule =
-  | { id: string; description: string; kind: 'compulsory'; subjects: string[]; firstSemester: boolean; firstYear?: boolean }
+  | { id: string; description: string; kind: 'compulsory'; subjects: string[]; firstSemester: boolean; firstYear?: boolean; year?: number }
   | { id: string; description: string; kind: 'points'; min?: number; max?: number; level?: number; category?: string }
   | { id: string; description: string; kind: 'major'; count: number; max: number; noDoubleCount: boolean | [string, string][] }
   | { id: string; description: string; kind: 'area-cap'; max: number; category?: string; areas?: string[]; levels?: number[]; groups: string[][]; exceptions: { components: string[] }[] }

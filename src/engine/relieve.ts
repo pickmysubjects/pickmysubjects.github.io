@@ -383,7 +383,9 @@ function replaceFor(
     // Ranked once per kind of slot (category, level, teaching period) and student; whether
     // the prerequisites are met where it would go is checked on the whole plan below.
     const recs = alternatives(data, student, plan.course, s.categories[plan.course] as string, s.level, term, goalMajors(plan), before)
-      .filter((x) => !inPlan.includes(x) && !done.includes(x) && data.subjects[x]?.points === s.points)
+      // A stand-in runs then for certain: a subject not timetabled the year before (COMP30020,
+      // nothing in 2027) is only "unknown" for the year after, not a safe swap.
+      .filter((x) => !inPlan.includes(x) && !done.includes(x) && data.subjects[x]?.points === s.points && offeredIn(data.subjects[x]!, term.year, term.period).status === 'ok')
       .slice(0, REPLACE_TRIES)
     // Swapping a subject the student picked for their interests for one they don't care about
     // makes a lighter semester nobody wants; then the heavy one stays and is flagged instead.

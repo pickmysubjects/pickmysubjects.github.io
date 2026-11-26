@@ -341,6 +341,7 @@ export const id: Messages = {
     mcit150: 'Sarjana dengan jurusan komputasi, TI, atau yang dekat, WAM 65: kredit hingga 50 poin',
     mcit100: 'Gelar komputasi empat tahun, WAM 65, ditambah studi lanjutan di bidang itu atau dua tahun kerja terkait: kredit hingga 100 poin',
     mcdatasc: 'WAM 65, satu mata kuliah pemrograman, Calculus 2 dan Linear Algebra (atau setara); latar belakangmu menentukan peminatan mana yang terbuka',
+    mcsofteng: "WAM 65, 25 poin matematika dan 25 poin pemrograman; jurusan Computing and Software Systems UniMelb atau gelar teknik komputasi dengan WAM 65: kredit hingga 100 poin",
   },
   rule: {
     diploma: "{title}: {rule}",

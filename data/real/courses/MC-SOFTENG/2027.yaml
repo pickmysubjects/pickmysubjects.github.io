@@ -1,0 +1,58 @@
+# Master of Software Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Three years, 300 points. The degree can be done with or without a specialisation; both ways
+# are kept as options (one required), so each carries its own elective rules.
+code: MC-SOFTENG
+title: Master of Software Engineering
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcsofteng
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-softeng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    category: course
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [COMP30026, INFO20003, SWEN20003, SWEN30006, ENGR90051]
+    # The Handbook's year lists are the recommended order, not fixed (a student with credit may
+    # take them later): planned first, never flagged for being late.
+    year: 1
+    description: Year 1 compulsory subjects (62.5 points)
+  - id: year1-selective
+    kind: requirement
+    paths:
+      - - all: [COMP20003]
+      - - all: [COMP20007]
+    description: One Year 1 Software Engineering selective
+  - id: group-b
+    kind: requirement
+    # Group A (any level-2 or level-3 Bachelor of Science subject) may fill 12.5 of these 25
+    # points; plans take both from Group B, which the Handbook also allows.
+    paths:
+      - - choose: { points: 25, from: [COMP30013, COMP30019, COMP30020, COMP30022, COMP30024, COMP30027] }
+    # Listed under Year 1 as the recommended order; not fixed there, so a compulsory chain
+    # (SWEN90016 before SWEN90009) can have the room.
+    description: 25 points of Year 1 Group A and B electives, at least 12.5 from Group B (level-3 COMP)
+  - id: year2
+    kind: compulsory
+    subjects: [COMP30023, SWEN90004, SWEN90006, SWEN90009, SWEN90014, SWEN90016]
+    year: 2
+    description: Year 2 compulsory subjects (75 points)
+  - id: year3
+    kind: compulsory
+    subjects: [SWEN90007, SWEN90010, SWEN90017, SWEN90018]
+    year: 3
+    description: Year 3 compulsory subjects (50 points)
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: A specialisation, or the degree without one

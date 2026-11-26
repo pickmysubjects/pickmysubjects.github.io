@@ -341,6 +341,7 @@ export const ko: Messages = {
     mcit150: '컴퓨팅·IT 또는 비슷한 전공 학사, WAM 65: 최대 50학점 인정',
     mcit100: '4년제 컴퓨팅 학위, WAM 65, 해당 분야 심화 과목 또는 2년 관련 경력: 최대 100학점 인정',
     mcdatasc: 'WAM 65, 프로그래밍 과목, Calculus 2, Linear Algebra(또는 동등 과목); 배경에 따라 고를 수 있는 세부 전공이 정해집니다',
+    mcsofteng: "WAM 65, 수학 25학점과 프로그래밍 25학점. 멜버른대 Computing and Software Systems 전공 또는 컴퓨팅 관련 공학 학위와 WAM 65: 최대 100학점 인정",
   },
   rule: {
     diploma: "{title}: {rule}",

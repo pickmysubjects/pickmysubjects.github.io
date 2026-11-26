@@ -341,6 +341,7 @@ export const vi: Messages = {
     mcit150: 'Cử nhân chuyên ngành máy tính, CNTT hoặc gần, WAM 65: miễn tối đa 50 điểm',
     mcit100: 'Bằng máy tính bốn năm, WAM 65, cộng môn nâng cao trong ngành hoặc hai năm làm việc liên quan: miễn tối đa 100 điểm',
     mcdatasc: 'WAM 65, một môn lập trình, Calculus 2 và Linear Algebra (hoặc tương đương); nền tảng của bạn quyết định chuyên ngành hẹp nào được mở',
+    mcsofteng: "WAM 65, 25 điểm toán và 25 điểm lập trình; chuyên ngành Computing and Software Systems của UniMelb hoặc bằng kỹ thuật ngành máy tính với WAM 65: miễn tối đa 100 điểm",
   },
   rule: {
     diploma: "{title}: {rule}",

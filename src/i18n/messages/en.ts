@@ -347,6 +347,7 @@ export const en = {
     mcit150: "A bachelor's majoring in computing, IT or close, WAM 65: up to 50 points of credit",
     mcit100: "A four-year computing degree, WAM 65, plus advanced study in the area or two years' related work: up to 100 points of credit",
     mcdatasc: 'WAM 65, a programming subject, Calculus 2 and Linear Algebra (or equivalents); your background decides which specialisations are open',
+    mcsofteng: "WAM 65, 25 points of maths and 25 of programming; a UniMelb Computing and Software Systems major or a computing engineering degree with WAM 65: up to 100 points of credit",
   },
   rule: {
     diploma: "{title}: {rule}",
