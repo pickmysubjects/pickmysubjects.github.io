@@ -195,6 +195,7 @@ export const zhCN: Messages = {
     openDetails: '查看 {code} 详情',
     title: "把你的本科学位画成一张路线图",
     titleMaster: '你的硕士学位，一条路线',
+    masterSoon: "硕士排课 12 月 15 日上线。在那之前，可以先看各个课程的专业方向和课。",
     lede: "按学位规则排好的每学期课表，拖动卡片就能调整。",
     addTerm: '增加一个学期',
     addFab: "添加课程",

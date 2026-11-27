@@ -195,6 +195,7 @@ export const id: Messages = {
     openDetails: 'Detail {code}',
     title: "Kuliah S1-mu dalam satu peta rute",
     titleMaster: 'Gelar mastermu, sebagai satu rute',
+    masterSoon: "Perencanaan master hadir tanggal 15 Desember. Sebelum itu kamu bisa melihat peminatan dan mata kuliah tiap program.",
     lede: "Rencana per semester yang mengikuti aturan gelarmu; seret kartu untuk mengubahnya.",
     addTerm: 'Tambah semester',
     addFab: "Tambah mata kuliah",

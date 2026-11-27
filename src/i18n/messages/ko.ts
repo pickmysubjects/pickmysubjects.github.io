@@ -195,6 +195,7 @@ export const ko: Messages = {
     openDetails: '{code} 자세히 보기',
     title: "나의 학사 학위를 한 장의 경로도로",
     titleMaster: '나의 석사 과정을 하나의 경로로',
+    masterSoon: "석사 계획 기능은 12월 15일에 열려요. 그 전까지는 각 과정의 세부 전공과 과목을 볼 수 있어요.",
     lede: "학위 규칙에 맞춘 학기별 계획이에요. 카드를 끌어서 바꿀 수 있어요.",
     addTerm: '학기 추가',
     addFab: "과목 추가",

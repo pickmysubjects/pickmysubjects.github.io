@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import { ArrowLeft, BookOpen, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
 import { isDone, isFail, isQuotaSubject, passedCodes, knownNotRunning, listPlace, periodsFor, prereqStatus, prerequisiteRoute, referencedSubjects, simplifyFor, standingOf, RANK_SLUGS, type Period, type Subject } from '@/engine'
@@ -135,7 +136,8 @@ const termChoices = computed(() =>
     (x) => props.subject.discontinuedFrom === undefined || x.year < props.subject.discontinuedFrom,
   ),
 )
-const canAdd = computed(() => !gone.value || termChoices.value.some((x) => x.offered))
+// The master's side adds to plans once master's planning opens (1.2.0).
+const canAdd = computed(() => planningOpen.value && (!gone.value || termChoices.value.some((x) => x.offered)))
 const chosenTerm = shallowRef('')
 const target = computed(() => {
   const all = termChoices.value
@@ -187,6 +189,7 @@ onBeforeUnmount(() => {
   io?.disconnect()
   clearTimeout(copiedTimer)
 })
+const { planningOpen } = useStudyLevel()
 </script>
 
 <template>

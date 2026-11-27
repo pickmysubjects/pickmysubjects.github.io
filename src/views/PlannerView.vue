@@ -640,11 +640,22 @@ watch(
 )
 // Arriving with ?add= when the plan is already set up: it goes in straight away.
 watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShared.value && !editing.value) placePending() }, { immediate: true })
-const { level, isMaster } = useStudyLevel()
+const { level, isMaster, planningOpen } = useStudyLevel()
 </script>
 
 <template>
-  <div class="planner">
+  <!-- The master's side before master's planning opens (1.2.0): what's coming, and where to look now. -->
+  <div v-if="!planningOpen" class="planner">
+    <section class="soon surface">
+      <h1 class="soon-title">{{ t('plan.titleMaster') }}</h1>
+      <p>{{ t('plan.masterSoon') }}</p>
+      <p class="soon-links">
+        <a class="button button-accent" :href="link('majors/')">{{ t('majors.titleMaster') }}</a>
+        <a class="button button-quiet" :href="link('subjects/')">{{ t('nav.browse') }}</a>
+      </p>
+    </section>
+  </div>
+  <div v-else class="planner">
     <PlanHero
       :title="onBoard ? t('menu.myPlan') : t(isMaster ? 'plan.titleMaster' : 'plan.title')"
       :setup="!showWizard && !viewingShared ? summary : undefined"
@@ -903,6 +914,30 @@ const { level, isMaster } = useStudyLevel()
 </template>
 
 <style scoped>
+.soon {
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+  margin: var(--space-6) auto;
+  padding: var(--space-6);
+}
+
+.soon-title {
+  margin: 0;
+  font-size: var(--fs-h2, 1.6rem);
+}
+
+.soon p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.soon-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 /* The guide's measures (GuideView, the subject page): the hero and the article sharing their
    edges. Two glass panels (hero with its rules, the board) at the site's own glass strength, so
    the frost reads; everything inside them is flat. */

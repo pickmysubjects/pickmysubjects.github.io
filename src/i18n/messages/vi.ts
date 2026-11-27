@@ -195,6 +195,7 @@ export const vi: Messages = {
     openDetails: 'Chi tiết {code}',
     title: "Lộ trình cho tấm bằng cử nhân của bạn",
     titleMaster: 'Bằng thạc sĩ của bạn, thành một lộ trình',
+    masterSoon: "Lên kế hoạch thạc sĩ sẽ có từ ngày 15 tháng 12. Trước đó bạn có thể xem chuyên ngành hẹp và các môn của từng chương trình.",
     lede: "Kế hoạch theo từng học kỳ, đúng quy định của bằng; kéo thẻ để thay đổi.",
     addTerm: 'Thêm học kỳ',
     addFab: "Thêm môn",

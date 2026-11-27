@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { MASTER_PLANNING } from '@/release'
 import { ExternalLink } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
@@ -24,7 +25,7 @@ const { t } = useI18n()
       <p><TermText :text="t('guide.m.entryCredit')" /></p>
       <p><TermText :text="t('guide.m.entryVisa')" /></p>
       <GuideCallout>
-        <p><TermText :text="t('guide.m.entrySite')" /></p>
+        <p v-if="MASTER_PLANNING"><TermText :text="t('guide.m.entrySite')" /></p>
         <p><a :href="URLS.ADVANCED_STANDING" target="_blank" rel="noopener">{{ t('guide.m.entryLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></p>
       </GuideCallout>
     </GuideItem>
@@ -51,6 +52,6 @@ const { t } = useI18n()
     <p><TermText :text="t('guide.m.fromApply')" /></p>
     <p><TermText :text="t('guide.m.fromCredit')" /></p>
     <p><TermText :text="t('guide.m.fromNotAllowed')" /></p>
-    <GuideCallout><p><a :href="link('plan/')">{{ t('guide.m.fromSite') }}</a></p></GuideCallout>
+    <GuideCallout v-if="MASTER_PLANNING"><p><a :href="link('plan/')">{{ t('guide.m.fromSite') }}</a></p></GuideCallout>
   </GuideItem>
 </template>

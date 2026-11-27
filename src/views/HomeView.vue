@@ -36,7 +36,7 @@ const { profile, wam } = useProfile()
 const plan = usePlan()
 // Someone who has been here before (a degree, a record or a plan): the hero sends them back to it.
 const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value || profile.value.results.length > 0)
-const { isMaster } = useStudyLevel()
+const { isMaster, planningOpen } = useStudyLevel()
 </script>
 
 <template>
@@ -57,7 +57,7 @@ const { isMaster } = useStudyLevel()
         <SubjectSearch class="hero-search" hero :placeholder="t('home.searchHero')" />
         <!-- Second to the search: plan a degree, or, for someone who has, go back to it. -->
         <div class="hero-actions">
-          <a class="hero-second" :href="link('plan')">
+          <a v-if="!isMaster || planningOpen" class="hero-second" :href="link('plan')">
             {{ returning ? t('home.continuePlan') : t(isMaster ? 'home.cardPlanMaster' : 'home.cardPlan') }} <ArrowRight :size="17" aria-hidden="true" />
           </a>
           <a v-if="returning && wam !== null" class="hero-wam" :href="link('tools/wam/')">{{ t('record.sumWam', { wam }) }}</a>

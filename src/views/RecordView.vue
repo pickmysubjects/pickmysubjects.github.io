@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { MASTER_PLANNING } from '@/release'
 import BachelorCard from '@/components/profile/BachelorCard.vue'
 import AfterDegreeCard from '@/components/profile/AfterDegreeCard.vue'
 import { useBachelorRecord } from '@/composables/useProfile'
@@ -189,7 +190,7 @@ const hasAfter = computed(() => !!bachelorRecord.value)
         </section>
 
         <!-- Bachelor's side: the master's this record points to, once there's a degree to read. -->
-        <section v-if="!isMaster && hasAfter" class="sec surface" aria-labelledby="sec-after">
+        <section v-if="!isMaster && hasAfter && MASTER_PLANNING" class="sec surface" aria-labelledby="sec-after">
           <header class="sec-head">
             <h2 id="sec-after" class="sec-title">{{ t('afterDegree.title') }}</h2>
           </header>

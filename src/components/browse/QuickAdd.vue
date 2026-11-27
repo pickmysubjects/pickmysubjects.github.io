@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { computed, shallowRef } from 'vue'
 import { Check, Plus } from 'lucide-vue-next'
 import { isFail, type Period, type Subject } from '@/engine'
@@ -37,9 +38,12 @@ function add(): void {
   plan.addSubjectAt(where.year, where.period, code.value)
   added.value = { year: where.year, period: where.period }
 }
+const { planningOpen } = useStudyLevel()
 </script>
 
 <template>
+  <!-- Nothing to add to on the master's side until master's planning opens (1.2.0). -->
+  <template v-if="planningOpen">
   <span v-if="passed" class="qa qa-done"><Check v-if="!text" :size="15" aria-hidden="true" />{{ t('subject.passed') }}</span>
   <a v-else-if="plannedAt" class="qa qa-done" :href="link('plan')" role="status">
     <Check v-if="!text" :size="15" aria-hidden="true" />{{ added ? t('subject.added', { term: termLabel(t, plannedAt) }) : t('subject.inPlanAt', { term: termLabel(t, plannedAt) }) }}
@@ -50,6 +54,7 @@ function add(): void {
   <button v-else-if="target" type="button" class="qa" :aria-label="t('browse.addLabel', { code })" :title="termLabel(t, target)" @click="add">
     <Plus :size="15" aria-hidden="true" />{{ text ? t('shortlist.addToPlan') : t('browse.add') }}
   </button>
+  </template>
 </template>
 
 <style scoped>

@@ -200,6 +200,7 @@ export const en = {
     openDetails: 'Details for {code}',
     title: "Your bachelor's degree, as a route",
     titleMaster: "Your master's degree, as a route",
+    masterSoon: "Planning a master's arrives on 15 December. Until then you can look at each course's specialisations and subjects.",
     lede: "A semester-by-semester plan that follows your degree’s rules; drag cards to change it.",
     addTerm: 'Add a term',
     addFab: "Add a subject",

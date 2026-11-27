@@ -195,6 +195,7 @@ export const ja: Messages = {
     openDetails: '{code} の詳細',
     title: "あなたの学士課程を一枚のルートマップに",
     titleMaster: 'あなたの修士課程を一本のルートに',
+    masterSoon: "修士のプラン作成は12月15日に公開します。それまでは各課程の専攻分野と科目を見られます。",
     lede: "学位の規則に沿った学期ごとのプランです。カードをドラッグして変えられます。",
     addTerm: 'セメスターを追加',
     addFab: "科目を追加",

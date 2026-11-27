@@ -707,6 +707,21 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
 
   // Each topic's HTML, keyed by its anchor (the same ids the app uses).
   const topics: Record<string, string> = {
+    // The master's side's own topics (the app shows them there; search engines get them all).
+    'master-from-bachelor': [
+      `<h2 id="master-from-bachelor">${esc(t('guide.m.fromTitle'))}</h2>`, p('m.fromShort'), p('m.fromApply'), p('m.fromCredit'), p('m.fromNotAllowed'),
+    ].join('\n'),
+    'master-entry': [
+      `<h2 id="master-entry">${esc(t('guide.m.entryTitle'))}</h2>`, p('m.entryShort'), p('m.entryPoints'), p('m.entryApply'), p('m.entryReview'), p('m.entryCredit'), p('m.entryVisa'),
+      `<p><a href="https://study.unimelb.edu.au/how-to-apply/advanced-standing">${esc(t('guide.m.entryLink'))}</a></p>`,
+    ].join('\n'),
+    'master-specs': [
+      `<h2 id="master-specs">${esc(t('guide.m.specTitle'))}</h2>`, p('m.specShort'), p('m.specOne'), p('m.specStream'), p('m.specExempt'), p('m.specChange'),
+      `<p><a href="https://ms.unimelb.edu.au/study/masters-studies/master-of-data-science-specialisations">${esc(t('guide.m.specLink'))}</a></p>`,
+    ].join('\n'),
+    'master-capstone': [
+      `<h2 id="master-capstone">${esc(t('guide.m.capTitle'))}</h2>`, p('m.capShort'), li(['m.capEnd', 'm.capResearch', 'm.capHurdle', 'm.capYear']),
+    ].join('\n'),
     'after-atar': [
       `<h2 id="after-atar">${esc(t('guide.ns.timelineTitle'))}</h2>`, `<p>${esc(t('guide.ns.timelineShort'))}</p>`,
       `<ol>${nsSteps.map((x) => `<li><strong>${esc(t(`guide.ns.step.${x.id}`))}</strong>${x.when ? ` · ${esc(x.when)}` : ''}: ${esc(t(`guide.ns.stepText.${x.id}`))}</li>`).join('')}</ol>`,

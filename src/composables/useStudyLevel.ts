@@ -2,6 +2,7 @@ import { computed, watchEffect } from 'vue'
 import type { ComponentReq, Course, Dataset, Subject } from '@/engine'
 import { degreeCourses } from '@/engine/courseRules'
 import { usePersisted } from './usePersisted'
+import { MASTER_PLANNING } from '@/release'
 
 /**
  * Bachelor's or master's: which side of the site a student is on. Kept apart so an undergraduate
@@ -32,7 +33,8 @@ export function onSide(s: Subject, side: StudyLevel, course?: string, masterUses
 }
 
 export function useStudyLevel() {
-  return { level, isMaster: computed(() => level.value === 'master') }
+  // Planning is open on the bachelor's side, and on the master's once 1.2.0 ships.
+  return { level, isMaster: computed(() => level.value === 'master'), planningOpen: computed(() => level.value !== 'master' || MASTER_PLANNING) }
 }
 
 /** A coursework master's course (MC-IT-200, MC-DATASC): Handbook codes start with MC-. */

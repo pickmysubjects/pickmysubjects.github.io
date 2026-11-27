@@ -195,6 +195,7 @@ export const zhTW: Messages = {
     openDetails: '查看 {code} 詳情',
     title: "把你的學士學位畫成一張路線圖",
     titleMaster: '你的碩士學位，一條路線',
+    masterSoon: "碩士排課 12 月 15 日上線。在那之前，可以先看各個課程的專業方向和課。",
     lede: "依學位規則排好的每學期課表，拖動卡片就能調整。",
     addTerm: '增加一個學期',
     addFab: "新增課程",

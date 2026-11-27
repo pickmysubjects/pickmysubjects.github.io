@@ -25,3 +25,14 @@ export function copyright(updated: string = APP_UPDATED): string {
 export function releaseDate(locale: string, updated: string = APP_UPDATED): string {
   return new Intl.DateTimeFormat(locale === 'en' ? 'en-AU' : locale, { month: 'long', day: 'numeric', timeZone: 'Australia/Melbourne' }).format(new Date(updated))
 }
+
+/**
+ * Master's planning (setup, plans, adding subjects on the master's side) opens with 1.2.0; until
+ * then the master's side shows subjects, courses and the guide only.
+ */
+export function masterPlanningOpen(version: string = APP_VERSION): boolean {
+  const [major = 0, minor = 0] = version.split('.').map(Number)
+  return major > 1 || (major === 1 && minor >= 2)
+}
+// Open in local development too, so the master's planner can be worked on before it ships.
+export const MASTER_PLANNING = masterPlanningOpen() || !!import.meta.env?.DEV

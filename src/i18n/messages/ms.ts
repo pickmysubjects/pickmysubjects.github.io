@@ -195,6 +195,7 @@ export const ms: Messages = {
     openDetails: 'Butiran {code}',
     title: "Ijazah sarjana muda anda sebagai peta laluan",
     titleMaster: 'Ijazah sarjana anda, sebagai satu laluan',
+    masterSoon: "Perancangan sarjana dibuka pada 15 Disember. Sebelum itu anda boleh melihat pengkhususan dan subjek setiap kursus.",
     lede: "Rancangan ikut semester yang mematuhi peraturan ijazah anda; seret kad untuk mengubahnya.",
     addTerm: 'Tambah semester',
     addFab: "Tambah subjek",
