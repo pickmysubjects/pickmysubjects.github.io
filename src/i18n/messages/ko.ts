@@ -59,6 +59,8 @@ export const ko: Messages = {
     "ds-foundation": "기초 배경: Foundational Data Science만 가능",
     seCredit: "학사 과정으로 최대 100학점 인정 가능",
     isCredit: "경력으로 최대 50학점 인정 가능",
+    finMajor: "금융 전공이 입학 요건에 맞아요",
+    finNoMajor: "금융 전공이 필요해요. 없으면 Handbook은 Master of Management (Finance)를 권해요",
   },
   level: { bachelor: "학부", master: "석사", label: "과정" },
   search: {
@@ -353,6 +355,7 @@ export const ko: Messages = {
     mcdatasc: 'WAM 65, 프로그래밍 과목, Calculus 2, Linear Algebra(또는 동등 과목); 배경에 따라 고를 수 있는 세부 전공이 정해집니다',
     mcsofteng: "WAM 65, 수학 25학점과 프로그래밍 25학점. 멜버른대 Computing and Software Systems 전공 또는 컴퓨팅 관련 공학 학위와 WAM 65: 최대 100학점 인정",
     mcis: "전공 무관 학사 WAM 65. 관련 경력 1년이면 최대 50학점, 정보시스템 학위와 경력 2년이면 최대 100학점 인정",
+    mcfinance: "금융 전공 학사, 그리고 Corporate Finance, Investments, Derivative Securities(또는 동등 과목) 이수",
   },
   rule: {
     diploma: "{title}: {rule}",

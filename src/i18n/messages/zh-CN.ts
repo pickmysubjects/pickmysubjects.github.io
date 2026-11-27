@@ -59,6 +59,8 @@ export const zhCN: Messages = {
     "ds-foundation": "基础背景：只能选 Foundational Data Science",
     seCredit: "你的本科可能减免最多 100 学分",
     isCredit: "你的工作经验可能减免最多 50 学分",
+    finMajor: "你的金融专业符合入学要求",
+    finNoMajor: "需要主修金融；没有的话，Handbook 建议读 Master of Management (Finance)",
   },
   level: { bachelor: "本科", master: "硕士", label: "学历层次" },
   search: {
@@ -353,6 +355,7 @@ export const zhCN: Messages = {
     mcdatasc: 'WAM 65，修过一门编程课、Calculus 2 和 Linear Algebra（或同等课程）；你的背景决定能选哪些专业方向',
     mcsofteng: "WAM 65，修过 25 学分数学和 25 学分编程；墨大 Computing and Software Systems 专业或计算机相关工程学位且 WAM 65：最多减免 100 学分",
     mcis: "任何本科 WAM 65；有一年相关工作最多减免 50 学分，信息系统本科加两年工作最多减免 100 学分",
+    mcfinance: "主修金融的本科，并修过 Corporate Finance、Investments 和 Derivative Securities（或同等课程）",
   },
   rule: {
     diploma: "{title}：{rule}",

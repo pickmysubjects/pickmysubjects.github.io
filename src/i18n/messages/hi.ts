@@ -59,6 +59,8 @@ export const hi: Messages = {
     "ds-foundation": "फ़ाउंडेशन स्ट्रीम: केवल Foundational Data Science",
     seCredit: "आपकी स्नातक डिग्री से 100 पॉइंट तक क्रेडिट मिल सकता है",
     isCredit: "आपके काम के अनुभव से 50 पॉइंट तक क्रेडिट मिल सकता है",
+    finMajor: "आपका फ़ाइनेंस मेजर प्रवेश की शर्त पूरी करता है",
+    finNoMajor: "फ़ाइनेंस मेजर चाहिए; उसके बिना Handbook Master of Management (Finance) सुझाती है",
   },
   level: { bachelor: "स्नातक", master: "मास्टर्स", label: "पढ़ाई का स्तर" },
   search: {
@@ -353,6 +355,7 @@ export const hi: Messages = {
     mcdatasc: 'WAM 65, एक प्रोग्रामिंग विषय, Calculus 2 और Linear Algebra (या समकक्ष); आपकी पृष्ठभूमि तय करती है कि कौन-सी विशेषज्ञताएँ खुली हैं',
     mcsofteng: "WAM 65, 25 पॉइंट गणित और 25 पॉइंट प्रोग्रामिंग; UniMelb का Computing and Software Systems मेजर या कंप्यूटिंग इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
     mcis: "किसी भी स्नातक डिग्री में WAM 65; एक साल के संबंधित काम से 50 पॉइंट तक, सूचना प्रणाली डिग्री और दो साल के काम से 100 पॉइंट तक क्रेडिट",
+    mcfinance: "फ़ाइनेंस मेजर वाली स्नातक डिग्री, साथ में Corporate Finance, Investments और Derivative Securities (या समकक्ष)",
   },
   rule: {
     diploma: "{title}: {rule}",

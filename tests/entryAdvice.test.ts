@@ -49,4 +49,10 @@ describe('entry advice for coursework masters', () => {
     expect(is(entryAdvice(data, { where: 'other', area: 'other', wam65: true, work: true }))?.reason).toBe('isCredit')
     expect(is(entryAdvice(data, { where: 'other', area: 'other', wam65: true }))).toBeUndefined()
   })
+
+  it('MC-FINANCE: whether a UniMelb major is in finance', () => {
+    const fin = (a: ReturnType<typeof entryAdvice>) => a.find((x) => x.course === 'MC-FINANCE')
+    expect(fin(entryAdvice(data, { where: 'unimelb' }, { passed: [], majors: ['Finance'] }))?.reason).toBe('finMajor')
+    expect(fin(entryAdvice(data, { where: 'unimelb' }, { passed: [], majors: ['Psychology'] }))?.reason).toBe('finNoMajor')
+  })
 })

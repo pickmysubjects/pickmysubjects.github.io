@@ -119,6 +119,11 @@ export function entryAdvice(data: Dataset, b: Background, rec?: UniMelbRecord): 
   // MC-IS: up to 50 points of credit for any bachelor's with WAM 65 and a year of related work
   // (Handbook "Advanced standing"; the 100-point case needs an IS degree, not asked here).
   if (has('MC-IS') && b.where === 'other' && b.wam65 && b.work) out.push({ course: 'MC-IS', reason: 'isCredit', info: true })
+  // MC-FINANCE: open only to a bachelor's with a finance major (Handbook entry notes); from a
+  // UniMelb record we can say which.
+  if (has('MC-FINANCE') && b.where === 'unimelb' && rec && rec.majors.length) {
+    out.push({ course: 'MC-FINANCE', reason: rec.majors.some((m) => /\bfinance\b/i.test(m)) ? 'finMajor' : 'finNoMajor', info: true })
+  }
   return out
 }
 

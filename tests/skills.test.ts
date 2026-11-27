@@ -56,9 +56,13 @@ describe('skillsOf', () => {
       // pages show no lab work sit in lab areas, so the area guess says lab: precision 0.68.
       // Master's batch (2026-11-26): MAST project and practice subjects (MAST90106–09, MAST90145,
       // MAST90027) are data and writing work, not maths, but sit in a maths area: precision 0.74.
-      // Likewise COMP/INFO/MAST theory, ethics and project subjects aren't programming: 0.70.
-      // MC-IS research projects (ISYS90109/90110) collect and analyse data but aren't statistics: 0.74.
-      const minPrecision = skill === 'lab' ? 0.65 : skill === 'maths' ? 0.72 : skill === 'programming' ? 0.68 : skill === 'statistics' ? 0.73 : 0.75
+      // Likewise COMP/INFO/MAST theory, ethics and project subjects aren't programming: 0.68 (and
+      // FNCE90084's page names no language, so it isn't tagged).
+      // Master of Finance ethics, behavioural, communication and project subjects sit in FNCE but
+      // aren't maths: maths precision 0.71.
+      // MC-IS research projects (ISYS90109/90110) and Master of Finance case and project subjects
+      // collect and analyse data but aren't statistics: 0.72.
+      const minPrecision = skill === 'lab' ? 0.65 : skill === 'maths' ? 0.7 : skill === 'programming' ? 0.67 : skill === 'statistics' ? 0.71 : 0.75
       expect(tp / (tp + fp), `${skill} precision`).toBeGreaterThanOrEqual(minPrecision)
       // Optometry and biomedical physics subjects with practical classes (2026-10-21 import) are
       // tagged lab, but their area isn't a lab area and the assessment kinds don't say "practical",

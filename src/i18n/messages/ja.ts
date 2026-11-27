@@ -59,6 +59,8 @@ export const ja: Messages = {
     "ds-foundation": "ファウンデーション・ストリーム：Foundational Data Science のみ",
     seCredit: "学士課程により最大100単位の単位認定の可能性",
     isCredit: "職務経験により最大50単位の単位認定の可能性",
+    finMajor: "金融専攻は入学要件を満たします",
+    finNoMajor: "金融専攻が必要。ない場合、Handbook は Master of Management (Finance) を勧めています",
   },
   level: { bachelor: "学部", master: "修士", label: "課程" },
   search: {
@@ -353,6 +355,7 @@ export const ja: Messages = {
     mcdatasc: 'WAM 65、プログラミング科目、Calculus 2、Linear Algebra（または同等科目）；経歴によって選べる専攻分野が決まります',
     mcsofteng: "WAM 65、数学25単位とプログラミング25単位。メルボルン大学の Computing and Software Systems 専攻、またはコンピューティング系の工学学位で WAM 65：最大100単位の単位認定",
     mcis: "分野を問わない学士で WAM 65。関連職務1年で最大50単位、情報システムの学位と2年の職務経験で最大100単位の単位認定",
+    mcfinance: "金融専攻の学士で、Corporate Finance・Investments・Derivative Securities（または同等科目）を履修済み",
   },
   rule: {
     diploma: "{title}：{rule}",

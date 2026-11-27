@@ -59,6 +59,8 @@ export const id: Messages = {
     "ds-foundation": "Aliran Dasar: hanya Foundational Data Science",
     seCredit: "Gelar sarjanamu mungkin memberi kredit hingga 100 poin",
     isCredit: "Pengalaman kerjamu mungkin memberi kredit hingga 50 poin",
+    finMajor: "Jurusan keuanganmu memenuhi syarat masuk",
+    finNoMajor: "Perlu jurusan keuangan; tanpa itu, Handbook menyarankan Master of Management (Finance)",
   },
   level: { bachelor: "Sarjana", master: "Magister", label: "Jenjang studi" },
   search: {
@@ -353,6 +355,7 @@ export const id: Messages = {
     mcdatasc: 'WAM 65, satu mata kuliah pemrograman, Calculus 2 dan Linear Algebra (atau setara); latar belakangmu menentukan peminatan mana yang terbuka',
     mcsofteng: "WAM 65, 25 poin matematika dan 25 poin pemrograman; jurusan Computing and Software Systems UniMelb atau gelar teknik komputasi dengan WAM 65: kredit hingga 100 poin",
     mcis: "WAM 65 dari gelar sarjana apa pun; kredit hingga 50 poin dengan setahun kerja terkait, hingga 100 dengan gelar Sistem Informasi dan dua tahun kerja",
+    mcfinance: "Sarjana dengan jurusan keuangan, plus Corporate Finance, Investments, dan Derivative Securities (atau setara)",
   },
   rule: {
     diploma: "{title}: {rule}",

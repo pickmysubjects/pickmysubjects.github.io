@@ -64,6 +64,8 @@ export const en = {
     "ds-foundation": "Foundation stream: Foundational Data Science only",
     seCredit: "Your bachelor's may give up to 100 points of credit",
     isCredit: "Your work experience may give up to 50 points of credit",
+    finMajor: "Your Finance major meets the entry requirement",
+    finNoMajor: "Needs a finance major; without one, the Handbook points to the Master of Management (Finance)",
   },
   level: { bachelor: "Bachelor's", master: "Master's", label: "Study level" },
   search: {
@@ -359,6 +361,7 @@ export const en = {
     mcdatasc: 'WAM 65, a programming subject, Calculus 2 and Linear Algebra (or equivalents); your background decides which specialisations are open',
     mcsofteng: "WAM 65, 25 points of maths and 25 of programming; a UniMelb Computing and Software Systems major or a computing engineering degree with WAM 65: up to 100 points of credit",
     mcis: "WAM 65 in any bachelor's; up to 50 points of credit with a year of related work, up to 100 with an Information Systems degree and two years' work",
+    mcfinance: "A bachelor's with a finance major, plus Corporate Finance, Investments and Derivative Securities (or equivalents)",
   },
   rule: {
     diploma: "{title}: {rule}",

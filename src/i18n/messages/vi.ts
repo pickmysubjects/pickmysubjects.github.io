@@ -59,6 +59,8 @@ export const vi: Messages = {
     "ds-foundation": "Nhóm nền tảng: chỉ Foundational Data Science",
     seCredit: "Bằng cử nhân của bạn có thể được miễn tối đa 100 điểm",
     isCredit: "Kinh nghiệm làm việc có thể được miễn tối đa 50 điểm",
+    finMajor: "Chuyên ngành tài chính của bạn đáp ứng yêu cầu đầu vào",
+    finNoMajor: "Cần chuyên ngành tài chính; nếu không có, Handbook gợi ý Master of Management (Finance)",
   },
   level: { bachelor: "Cử nhân", master: "Thạc sĩ", label: "Bậc học" },
   search: {
@@ -353,6 +355,7 @@ export const vi: Messages = {
     mcdatasc: 'WAM 65, một môn lập trình, Calculus 2 và Linear Algebra (hoặc tương đương); nền tảng của bạn quyết định chuyên ngành hẹp nào được mở',
     mcsofteng: "WAM 65, 25 điểm toán và 25 điểm lập trình; chuyên ngành Computing and Software Systems của UniMelb hoặc bằng kỹ thuật ngành máy tính với WAM 65: miễn tối đa 100 điểm",
     mcis: "WAM 65 với bằng cử nhân bất kỳ; một năm làm việc liên quan được miễn tối đa 50 điểm, bằng Hệ thống thông tin cộng hai năm làm việc tối đa 100 điểm",
+    mcfinance: "Cử nhân chuyên ngành tài chính, đã học Corporate Finance, Investments và Derivative Securities (hoặc tương đương)",
   },
   rule: {
     diploma: "{title}: {rule}",

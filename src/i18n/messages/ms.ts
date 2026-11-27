@@ -59,6 +59,8 @@ export const ms: Messages = {
     "ds-foundation": "Aliran Asas: Foundational Data Science sahaja",
     seCredit: "Ijazah sarjana muda anda mungkin memberi kredit hingga 100 mata",
     isCredit: "Pengalaman kerja anda mungkin memberi kredit hingga 50 mata",
+    finMajor: "Major kewangan anda memenuhi syarat kemasukan",
+    finNoMajor: "Perlu major kewangan; tanpanya, Handbook mencadangkan Master of Management (Finance)",
   },
   level: { bachelor: "Sarjana muda", master: "Sarjana", label: "Peringkat pengajian" },
   search: {
@@ -353,6 +355,7 @@ export const ms: Messages = {
     mcdatasc: 'WAM 65, satu subjek pengaturcaraan, Calculus 2 dan Linear Algebra (atau setara); latar belakang anda menentukan pengkhususan yang dibuka',
     mcsofteng: "WAM 65, 25 mata matematik dan 25 mata pengaturcaraan; major Computing and Software Systems UniMelb atau ijazah kejuruteraan pengkomputeran dengan WAM 65: kredit hingga 100 mata",
     mcis: "WAM 65 dalam mana-mana ijazah sarjana muda; kredit hingga 50 mata dengan setahun kerja berkaitan, hingga 100 dengan ijazah Sistem Maklumat dan dua tahun kerja",
+    mcfinance: "Ijazah sarjana muda dengan major kewangan, serta Corporate Finance, Investments dan Derivative Securities (atau setara)",
   },
   rule: {
     diploma: "{title}: {rule}",

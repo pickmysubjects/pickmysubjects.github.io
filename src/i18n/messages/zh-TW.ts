@@ -59,6 +59,8 @@ export const zhTW: Messages = {
     "ds-foundation": "基礎背景：只能選 Foundational Data Science",
     seCredit: "你的學士可能抵免最多 100 學分",
     isCredit: "你的工作經驗可能抵免最多 50 學分",
+    finMajor: "你的金融主修符合入學要求",
+    finNoMajor: "需要主修金融；沒有的話，Handbook 建議讀 Master of Management (Finance)",
   },
   level: { bachelor: "大學部", master: "碩士", label: "學歷層級" },
   search: {
@@ -353,6 +355,7 @@ export const zhTW: Messages = {
     mcdatasc: 'WAM 65，修過一門程式設計課、Calculus 2 和 Linear Algebra（或同等課程）；你的背景決定能選哪些專業方向',
     mcsofteng: "WAM 65，修過 25 學分數學和 25 學分程式設計；墨大 Computing and Software Systems 主修或資訊相關工程學位且 WAM 65：最多抵免 100 學分",
     mcis: "任何學士 WAM 65；有一年相關工作最多抵免 50 學分，資訊系統學士加兩年工作最多抵免 100 學分",
+    mcfinance: "主修金融的學士，並修過 Corporate Finance、Investments 和 Derivative Securities（或同等課程）",
   },
   rule: {
     diploma: "{title}：{rule}",
