@@ -17,6 +17,8 @@ import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
+import { sideKey, useStudyLevel } from './composables/useStudyLevel'
+import { isCourseCard, withCourseCards } from '@/engine/courseCards'
 import { useI18n } from './i18n'
 import { listPageTitle, PRESET_TITLE_KEYS, subjectPageTitle } from '@/utils/seo'
 import { careerTarget, presetFromSlug, rankFromSlug, subjectDifficulty, latestCourse } from '@/engine'
@@ -52,6 +54,7 @@ watchEffect(() => {
 })
 const { t, locale } = useI18n()
 const { data, course } = useDataset()
+const { level } = useStudyLevel()
 
 // The tab title follows the page and the language (the built page only has the first one).
 const TITLES: Partial<Record<string, string>> = {
@@ -72,11 +75,12 @@ const TITLES: Partial<Record<string, string>> = {
 }
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
-  const key = TITLES[view.value]
+  const plain = TITLES[view.value]
+  const key = plain ? sideKey(plain, level.value) : plain
   const guidePage = view.value === 'guide' ? guidePageOf(param.value) : ({ kind: 'overview' } as const)
   const career = view.value === 'careers' && param.value ? careerTarget(data.value, param.value) : undefined
   const club = view.value === 'clubs' && param.value ? CLUBS.find((c) => c.slug === param.value) : undefined
-  const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
+  const major = view.value === 'majors' && param.value ? withCourseCards(data.value).components.find((c) => c.id === param.value) : undefined
   // A quick pick's own page keeps the title its static page has, so search engines that run
   // the app see the same one.
   const preset = view.value === 'subjects' ? presetFromSlug(param.value) : undefined
@@ -100,7 +104,9 @@ watchEffect(() => {
     : career
       ? `${t.value('careerPath.seoTitle', { job: careerPhrase(career.names, locale.value) })} | PickMySubjects`
     : major
-      ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : major.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: majorTitle(major) })} | PickMySubjects`
+      ? isCourseCard(major.id)
+        ? `${major.title}: ${t.value('majors.courseKind')} | PickMySubjects`
+        : `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : major.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: majorTitle(major) })} | PickMySubjects`
       : ranking
         ? `${t.value(ranking === 'easy' ? 'seo.rankEasy' : 'seo.rankHard', { year })} | PickMySubjects`
       : preset

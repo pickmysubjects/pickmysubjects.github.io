@@ -77,6 +77,7 @@ export function pickableCourses(data: Dataset, side: StudyLevel): Course[] {
 // Menu and page names that read differently on the master's side (a master's has specialisations
 // within courses, not majors).
 const MASTER_LABELS: Record<string, string> = {
+  'plan.title': 'plan.titleMaster',
   'browse.switchMajors': 'majors.navMaster',
   'guide.cat.new-students.title': 'guide.catMaster.newStudentsTitle',
   'guide.cat.basics.title': 'guide.catMaster.basicsTitle',

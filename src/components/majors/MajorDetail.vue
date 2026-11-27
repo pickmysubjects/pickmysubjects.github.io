@@ -13,6 +13,7 @@ import SubjectSection from '@/components/subject/SubjectSection.vue'
 import { closeComponents, componentCareers, componentCourse, heldAsMinor, majorOverview, minorClash, sharedSubjects, latestCourse } from '@/engine'
 import { go, link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
+import { isCourseCard, withCourseCards } from '@/engine/courseCards'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 
@@ -22,7 +23,9 @@ import { useI18n } from '@/i18n'
  * prerequisite links on it, where it leads and a comparison with another.
  */
 const props = defineProps<{ id: string }>()
-const { data } = useDataset()
+const { data: rawData } = useDataset()
+// Courses with no specialisations get a card built from their rules (browsing only; courseCards.ts).
+const data = computed(() => withCourseCards(rawData.value))
 const plan = usePlan()
 const { t } = useI18n()
 
@@ -37,6 +40,7 @@ const pathwayCount = computed(() => overview.value?.pathway.length ?? 0)
 const kind = computed(() => {
   const m = major.value
   if (!m) return ''
+  if (isCourseCard(m.id)) return t.value('majors.courseKind')
   return m.informal ? t.value('majors.informalKind') : m.kind === 'minor' ? t.value('majors.minorKind') : m.kind === 'specialisation' ? t.value('majors.specKind') : t.value('majors.majorKind')
 })
 // What it adds up to, said once at the top of the structure: compulsory, picks, what comes first.
@@ -84,6 +88,12 @@ const sections = computed(() =>
 function planWithIt(): void {
   const m = major.value
   if (!m) return
+  // A course's own structure card: plan that course (it has no specialisations to pick).
+  if (isCourseCard(m.id)) {
+    if (!plan.updateSetup({ ...plan.setup.value, course: m.course, major: '', major2: '', specialisation: '', minors: [] })) plan.generate()
+    go('plan')
+    return
+  }
   // A course based on this one (B-SCIEXTD on B-SCI) keeps its own degree.
   const own = componentCourse(data.value, plan.setup.value.course) === m.course
   const course = own ? plan.setup.value.course : m.course
@@ -139,7 +149,7 @@ function planWithIt(): void {
       </dl>
       <div class="actions">
         <button class="button button-accent" type="button" @click="planWithIt">
-          <Route :size="16" aria-hidden="true" /> {{ major.informal || major.kind === 'specialisation' ? t('majors.planInformal') : major.kind === 'minor' ? t('majors.planMinor') : t('majors.planIt') }}
+          <Route :size="16" aria-hidden="true" /> {{ isCourseCard(major.id) ? t('majors.planCourse') : major.informal || major.kind === 'specialisation' ? t('majors.planInformal') : major.kind === 'minor' ? t('majors.planMinor') : t('majors.planIt') }}
         </button>
         <a v-if="major.handbook" class="button button-quiet" :href="major.handbook" target="_blank" rel="noopener">
           {{ t('subject.handbook') }} <ExternalLink :size="15" aria-hidden="true" />

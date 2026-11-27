@@ -13,7 +13,8 @@
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
 import './releaseGlobals'
-import { registerGraduateCourses } from '../src/engine/graduateCourses'
+import { isGraduateCode, registerGraduateCourses } from '../src/engine/graduateCourses'
+import { isCourseCard, withCourseCards } from '../src/engine/courseCards'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { degreeCourses, latestCourse } from '../src/engine/courseRules'
@@ -468,7 +469,12 @@ const informals = data.components.filter((c) => c.informal && listedCourses.has(
 // Formal specialisations (taken with a major that allows them), under their own heading too.
 const specs = data.components.filter((c) => c.kind === 'specialisation' && !c.informal && listedCourses.has(c.course))
 // Worked out once; the same for every language.
+// Master's specialisations, and a card for each master's course with none (courseCards.ts): the
+// pages the Courses & specialisations list opens, prerendered so search engines can read them.
+const cardData = withCourseCards(data)
+const masterSpecs = cardData.components.filter((c) => isGraduateCode(c.course) && (c.closedFrom === undefined || starterYear() < c.closedFrom))
 const overviews = new Map([...majors, ...minors, ...informals, ...specs].map((m) => [m.id, majorOverview(data, m.id, m.course)]))
+for (const m of masterSpecs) overviews.set(m.id, majorOverview(cardData, m.id, m.course))
 
 function majorsListBody(code: LocaleCode, t: Translate): string {
   // One section per course, each with its majors grouped by field.
@@ -498,24 +504,40 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
     })
     .join('')
     .replace(/^/, `<h1>${esc(t('majors.title'))}</h1>`)
+    .concat(masterSection(code, t))
+}
+
+/** The master's side of the list: each master's course with its specialisations or its own structure. */
+function masterSection(code: LocaleCode, t: Translate): string {
+  const courses = [...new Set(masterSpecs.map((m) => m.course))]
+    .map((c) => latestCourse(data, c))
+    .filter((c): c is NonNullable<typeof c> => !!c)
+    .sort((a, b) => a.title.localeCompare(b.title) || b.totalPoints - a.totalPoints)
+  const items = courses.map((c) => {
+    const own = masterSpecs.filter((m) => m.course === c.code).sort((a, b) => a.title.localeCompare(b.title))
+    return `<h3>${esc(c.title)}</h3><ul>${own.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(isCourseCard(m.id) ? t('majors.courseKind') : m.title)}</a></li>`).join('')}</ul>`
+  })
+  return items.length ? `<h2>${esc(`${t('level.master')} · ${t('majors.navMaster')}`)}</h2>${items.join('')}` : ''
 }
 
 function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const t = translator(code)
   const o = overviews.get(m.id)
   const list = (codes: string[]) => `<ul>${codes.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`
-  const heading = t(m.informal ? 'majors.informalTitle' : m.kind === 'minor' ? 'majors.minorTitle' : m.kind === 'specialisation' ? 'majors.specTitle' : 'majors.majorTitle', { title: m.title })
+  const card = isCourseCard(m.id)
+  const heading = card ? `${m.title}: ${t('majors.courseKind')}` : t(m.informal ? 'majors.informalTitle' : m.kind === 'minor' ? 'majors.minorTitle' : m.kind === 'specialisation' ? 'majors.specTitle' : 'majors.majorTitle', { title: m.title })
   const parts = [`<h1>${esc(heading)}</h1>`, `<p>${esc(t('majors.points', { n: m.points }))}</p>`]
   if (!o) parts.push(`<p>${esc(t('majors.notCurated'))}</p>`)
   else {
-    if (o.core.length) parts.push(`<h2>${esc(t('majors.coreTitle'))}</h2>${list(o.core)}`)
+    const coreTitle = t(isGraduateCode(m.course) ? 'majors.coreTitleMaster' : 'majors.coreTitle')
+    if (o.core.length) parts.push(`<h2>${esc(coreTitle)}</h2>${list(o.core)}`)
     for (const c of o.choices) parts.push(`<h2>${esc(pickText(t, 'majors.sumPick', c, data.subjects))}</h2>${list(c.from)}`)
     if (o.pathway.length) parts.push(`<h2>${esc(t('majors.pathwayTitle'))}</h2>${list(o.pathway.map((p) => p.code))}`)
     if (o.gaps) parts.push(`<p>${esc(t('majors.noPathway'))}</p>`)
     // The prerequisite route as text: the same thing the app draws.
     if (o.core.length || o.choices.length) {
       const say = (key: string, cs: string[]) => (cs.length ? esc(t(key, { list: cs.join(t('listSep')) })) : '')
-      const levels = routeLines(majorRoute(data, o, m.course)).map(
+      const levels = routeLines(majorRoute(cardData, o, m.course)).map(
         (col) =>
           `<h3>${esc(t('majors.level', { n: col.level }))}</h3><ul>${col.lines
             .map((l) => {
@@ -541,9 +563,9 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const shownTitle = shared && courseTitle ? `${m.title} (${courseTitle})` : m.title
   return {
     path: `majors/${m.id}`,
-    title: `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : m.kind === 'specialisation' ? 'seo.specTitle' : withCareers ? 'seo.majorTitleCareers' : 'seo.majorTitle', { title: shownTitle })} | PickMySubjects`,
+    title: card ? `${heading} | PickMySubjects` : `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : m.kind === 'specialisation' ? 'seo.specTitle' : withCareers ? 'seo.majorTitleCareers' : 'seo.majorTitle', { title: shownTitle })} | PickMySubjects`,
     // No empty "compulsory:" when a minor or specialisation has no fixed core.
-    description: [`${heading} (${courseTitle}).`, core ? `${t('majors.coreTitle')} ${core}.` : '', jobs.length ? `${t('careers.title')}: ${jobs.slice(0, 4).join(', ')}.` : '', ce?.accreditation ? `${t('careers.accTitle')}: ${ce.accreditation.body}.` : '', t('majors.cardText')].filter(Boolean).join(' '),
+    description: [`${heading} (${courseTitle}).`, core ? `${t(isGraduateCode(m.course) ? 'majors.coreTitleMaster' : 'majors.coreTitle')} ${core}.` : '', jobs.length ? `${t('careers.title')}: ${jobs.slice(0, 4).join(', ')}.` : '', ce?.accreditation ? `${t('careers.accTitle')}: ${ce.accreditation.body}.` : '', t('majors.cardText')].filter(Boolean).join(' '),
     body: parts.join('\n'),
   }
 }
@@ -1334,7 +1356,7 @@ for (const code of LOCALE_CODES) {
   const main = mainPages(code).map((p) => withFeature(code, p))
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
   const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav><footer><p>${esc(copyright())} · v${APP_VERSION}</p></footer>`
-  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...CLUBS.map((c) => clubPage(code, c)), ...subjects.map((s) => subjectPage(code, s)), ...pairs.map((p) => comparePage(code, p))]
+  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...masterSpecs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...CLUBS.map((c) => clubPage(code, c)), ...subjects.map((s) => subjectPage(code, s)), ...pairs.map((p) => comparePage(code, p))]
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))

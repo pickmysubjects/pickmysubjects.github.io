@@ -6,6 +6,7 @@ import { periodsFor, type MajorOverview } from '@/engine'
 import { majorRoute, routeChain, type RouteRole } from '@/engine/majorRoute'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
+import { withCourseCards } from '@/engine/courseCards'
 import { useDataYear } from '@/composables/useDataYear'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
@@ -19,7 +20,9 @@ import { localTitle } from '@/i18n/localized'
  * lights up. Every subject links to its page (or the Handbook, when it isn't in our data yet).
  */
 const props = defineProps<{ overview: MajorOverview; year: number; course: string }>()
-const { data } = useDataset()
+const { data: rawData } = useDataset()
+// Courses with no specialisations get a card built from their rules (browsing only; courseCards.ts).
+const data = computed(() => withCourseCards(rawData.value))
 const { handbookFor } = useDataYear()
 const { t, locale } = useI18n()
 

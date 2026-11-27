@@ -8,6 +8,7 @@ import { BadgeCheck, ChevronRight, Search, SearchX } from 'lucide-vue-next'
 import { componentCareers, type Component as Major, latestCourse } from '@/engine'
 import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
+import { isCourseCard, withCourseCards } from '@/engine/courseCards'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { groupMajors, majorGroupOf } from '@/utils/majorGroups'
@@ -18,7 +19,9 @@ import { MAJOR_KINDS, majorsAddress, majorsFromQuery, rememberMajorsList, type M
  * degree (the student's own first), the kind, and for majors the field. Each card says what it
  * asks for in numbers and names a few of its compulsory subjects.
  */
-const { data } = useDataset()
+const { data: rawData } = useDataset()
+// Courses with no specialisations get a card built from their rules (browsing only; courseCards.ts).
+const data = computed(() => withCourseCards(rawData.value))
 const plan = usePlan()
 const { t } = useI18n()
 const { query: address } = useView()
@@ -80,6 +83,9 @@ function choose(next: Partial<MajorsChoice>): void {
 // Another degree or kind starts from any field.
 const setDegree = (d: string) => choose({ degree: d, kind: '', field: '' })
 const setKind = (k: Kind) => choose({ kind: k, field: '' })
+// A course's own structure card (no specialisations): named as that, not as a specialisation.
+const kindName = (k: Kind) => (inDegree.value.length && inDegree.value.every((c) => isCourseCard(c.id)) ? t.value('majors.courseKind') : t.value(`majors.kinds.${k}`))
+const cardKind = (m: Major) => (isCourseCard(m.id) ? t.value('majors.courseKind') : t.value(`majors.kinds.${kindOf(m)}`))
 const setField = (f: string) => choose({ field: f })
 
 // A search looks across every degree and kind (by name or field); otherwise the chosen degree,
@@ -141,7 +147,7 @@ const { isMaster } = useStudyLevel()
       <div class="pick-row" role="group" :aria-label="t('majors.kind')">
         <span class="pick-label">{{ t('majors.kind') }}</span>
         <button v-for="x in kinds" :key="x.k" type="button" class="opt" :aria-pressed="kind === x.k" @click="setKind(x.k)">
-          {{ t(`majors.kinds.${x.k}`) }} <span class="opt-n">{{ x.n }}</span>
+          {{ kindName(x.k) }} <span class="opt-n">{{ x.n }}</span>
         </button>
       </div>
       <div v-if="fields.length > 1" class="pick-row" role="group" :aria-label="t('majors.field')">
@@ -166,7 +172,7 @@ const { isMaster } = useStudyLevel()
         <li v-for="m in g.majors" :key="m.id">
           <a class="card" :href="link(`majors/${m.id}`)">
             <span class="card-top">
-              <span class="card-kind">{{ t(`majors.kinds.${kindOf(m)}`) }}<template v-if="q"> · {{ courseTitle(m.course) }}</template></span>
+              <span class="card-kind">{{ cardKind(m) }}<template v-if="q"> · {{ courseTitle(m.course) }}</template></span>
               <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
             </span>
             <span class="card-title">{{ m.title }}</span>
