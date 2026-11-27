@@ -1,0 +1,52 @@
+# Master of International Business, 200-point entry program, 2027 Handbook. Facts re-expressed in
+# our own words. Two entry programs (200/150 points); each kept as its own course, as for MC-MGMT.
+code: MC-IB-200
+title: Master of International Business (200-point program)
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcib200
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-ib-entry-2
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry program pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: foundation-core
+    kind: compulsory
+    subjects: [MGMT90141, MGMT90140, MKTG90037]
+    first_year: true
+    description: The three foundation subjects, in the first semester
+  - id: foundation-selectives
+    kind: requirement
+    # Listed with the first-semester foundation subjects.
+    first_year: true
+    paths:
+      - - choose: { points: 12.5, from: [ACCT90041, ECON90015, FNCE90065] }
+    description: One foundation selective
+  - id: core
+    kind: compulsory
+    # The Handbook lists MGMT90146 among the core subjects here (it is the capstone in MC-MGMT).
+    subjects: [IBUS90003, MGMT90280, MGMT90038, IBUS90004, IBUS90002, MGMT90146, IBUS90008]
+    description: The seven core subjects
+  - id: capstone
+    kind: requirement
+    # Coursework option, or the research option (only after 100 points with a WAM of 80, limited
+    # places, Program Director approval; a research proposal may be asked for).
+    paths:
+      - - all: [IBUS90001]
+          year: 2
+        - choose: { points: 12.5, from: [MGMT90148, BUSA90485, BUSA90473, BUSA90525, ENGR90034] }
+      - - all: [MGMT90206]
+        - choose: { points: 12.5, from: [MGMT90195, MKTG90024, IBUS90006, MGMT90193, MGMT90196, MGMT90197, MGMT90200, MKTG90023] }
+    description: "Capstone: IBUS90001 in the final semester plus one capstone selective, or the research option"
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 37.5, from: [MGMT90027, MGMT90208, MGMT90165, MGMT90011, MGMT90031, MGMT90026, MGMT90030, MGMT90037, MGMT90032, MKTG90004, MGMT90148, BUSA90473, BUSA90525, ENGR90039, MKTG90002, FNCE90065, ACCT90041, MKTG90049, MGMT90012, MGMT90013, MGMT90267, ECON90015] }
+    description: Three electives

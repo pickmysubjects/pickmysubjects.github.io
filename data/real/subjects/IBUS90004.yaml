@@ -1,0 +1,48 @@
+code: IBUS90004
+title: Cross Cultural Management and Teamwork
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+  - writing
+topics:
+  - business
+  - management
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: presentation
+    weight: 30
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ibus90004
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
