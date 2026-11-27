@@ -1,0 +1,53 @@
+code: ECON90016
+title: Environmental Economics and Strategy
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMT
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-MGMTACT
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-MGMTAFN
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-MGMTFIN
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-MGMTHRE
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-MGMTMKT
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-AEMTRCS
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-AECOENH
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+        - admission: MC-IB
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-IB Master of International Business"
+    - manual: Admission into a Graduate Program in Environmental Studies
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - economics
+  - environment
+assessment:
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ90016
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

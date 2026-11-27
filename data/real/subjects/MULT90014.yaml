@@ -1,0 +1,39 @@
+code: MULT90014
+title: Business Risk Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - management
+  - business
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: project
+    weight: 25
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 9
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mult90014
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

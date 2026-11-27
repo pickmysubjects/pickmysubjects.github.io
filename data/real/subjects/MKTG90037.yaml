@@ -1,0 +1,47 @@
+code: MKTG90037
+title: Managing for Value Creation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MKTG90038
+skills:
+  - business
+topics:
+  - marketing
+  - management
+assessment:
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: early
+      text: First half of the teaching period
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mktg90037
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,48 @@
+code: ACCT90008
+title: Acc.Information and Security Valuation
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - all:
+        - all:
+            - ACCT90012
+            - FNCE90060
+        - admission: MC-MGMTACT
+          note: Admission into the MC-MGMTACT Master of Management (Accounting)
+    - all:
+        - ACCT90012
+        - admission: MC-MGMTAFN
+          note: Admission into the MC-MGMTAFN Master of Management (Accounting and Finance)
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - accounting
+  - finance
+assessment:
+  - kind: test
+    weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: late
+      text: Late in the teaching period
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90008
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

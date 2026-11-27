@@ -1,0 +1,61 @@
+code: FNCE90051
+title: Fundamentals of Portfolio Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  any:
+    - any:
+        - admission: MC-FINANCE
+          note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) GD-FINANCE Graduate Diploma in Finance"
+        - admission: MC-FINENH
+          note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) GD-FINANCE Graduate Diploma in Finance"
+        - admission: GD-FINANCE
+          note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) GD-FINANCE Graduate Diploma in Finance"
+    - all:
+        - manual: Admission into a Master of Management program
+        - all:
+            - FNCE90018
+            - FNCE90056
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - business
+topics:
+  - finance
+assessment:
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 2
+      text: From Week 1 to Week 2
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 3
+      text: From Week 2 to Week 3
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: exam
+    weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90051
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

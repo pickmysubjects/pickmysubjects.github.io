@@ -1,0 +1,35 @@
+code: ACCT90007
+title: Assurance Practices
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: ACCT90014
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - accounting
+assessment:
+  - kind: assignment
+    weight: 75
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: report
+    weight: 10
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90007
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

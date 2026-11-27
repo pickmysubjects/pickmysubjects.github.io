@@ -1,0 +1,53 @@
+code: IBUS90003
+title: The Multinational
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-IB
+      note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMT Master of Management"
+    - admission: MC-MGMTAFN
+      note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMT Master of Management"
+    - admission: MC-MGMT
+      note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMT Master of Management"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - business
+  - management
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: report
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ibus90003
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,50 @@
+code: ACCT90016
+title: Taxation for Business Decision Making
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: ACCT90015
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - accounting
+  - law
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90016
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

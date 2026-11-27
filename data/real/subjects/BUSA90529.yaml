@@ -1,0 +1,41 @@
+code: BUSA90529
+title: Building Entrepreneurial Ventures
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+topics:
+  - entrepreneurship
+  - business
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: test
+    weight: 20
+  - kind: test
+    weight: 20
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: end
+      text: End of the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/busa90529
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

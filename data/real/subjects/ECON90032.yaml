@@ -1,0 +1,55 @@
+code: ECON90032
+title: Macroeconomics for Managers
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMT
+          note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+        - admission: MC-MGMTACT
+          note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+        - admission: MC-MGMTAFN
+          note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+        - admission: MC-MGMTFIN
+          note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+        - admission: MC-MGMTHRE
+          note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+        - admission: MC-MGMTMKT
+          note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+    - manual: Admission into programs offered by the Graduate School of Humanities and Social Sciences.
+corequisites: none
+non_allowed:
+  - ECON10003
+skills:
+  - business
+topics:
+  - economics
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ90032
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,48 @@
+code: MGMT90025
+title: People and Change
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - management
+  - human-resources
+  - psychology
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 10
+      text: From Week 3 to Week 10
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 7
+      to: 12
+      text: From Week 7 to Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90025
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

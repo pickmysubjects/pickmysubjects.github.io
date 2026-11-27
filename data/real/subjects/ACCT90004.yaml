@@ -1,0 +1,54 @@
+code: ACCT90004
+title: Accounting for Decision Making
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-MGMTACT
+      note: "Admission into one of the following: MC-MGMTACT Master of Management (Accounting), MC-MGMTFIN Master of Management (Finance)"
+    - admission: MC-MGMTFIN
+      note: "Admission into one of the following: MC-MGMTACT Master of Management (Accounting), MC-MGMTFIN Master of Management (Finance)"
+corequisites: none
+non_allowed:
+  - ACCT90040
+  - ACCT90041
+skills:
+  - business
+  - maths
+topics:
+  - accounting
+  - business
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90004
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

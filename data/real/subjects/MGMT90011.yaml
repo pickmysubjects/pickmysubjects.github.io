@@ -1,0 +1,52 @@
+code: MGMT90011
+title: Managing Stakeholders
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+topics:
+  - human-resources
+  - management
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 7
+      text: From Week 3 to Week 7
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90011
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

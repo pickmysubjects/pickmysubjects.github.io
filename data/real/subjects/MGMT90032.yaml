@@ -1,0 +1,45 @@
+code: MGMT90032
+title: Operations and Process Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - management
+  - supply-chain
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: report
+    weight: 30
+    group: true
+    timing:
+      kind: late
+      text: Late in the teaching period
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: late
+      text: Late in the teaching period
+  - kind: exam
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90032
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

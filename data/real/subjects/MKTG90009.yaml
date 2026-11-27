@@ -1,0 +1,51 @@
+code: MKTG90009
+title: Advertising and Communications Strategy
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - marketing
+  - media
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mktg90009
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

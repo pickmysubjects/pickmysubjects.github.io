@@ -1,0 +1,54 @@
+code: MKTG90004
+title: Marketing Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - marketing
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 3
+      to: 11
+      text: From Week 3 to Week 11
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mktg90004
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

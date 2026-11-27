@@ -1,0 +1,47 @@
+code: FNCE90056
+title: Investment Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMTAFN
+          note: "Admission into one of the following: MC-MGMTAFN Master of Management (Accounting and Finance) 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+        - admission: MC-MGMTFIN
+          note: "Admission into one of the following: MC-MGMTAFN Master of Management (Accounting and Finance) 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+    - FNCE90060
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - business
+topics:
+  - finance
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: test
+    weight: 35
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
+  - kind: exam
+    weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90056
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

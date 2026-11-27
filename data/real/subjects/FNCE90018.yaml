@@ -1,0 +1,49 @@
+code: FNCE90018
+title: Corporate Financial Policy
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMTAFN
+          note: "Admission into one of the following: Admission into or selection of one of the following: MC-MGMTAFN Master of Management (Accounting and Finance) Admission into or selection of one of the following: 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+        - admission: MC-MGMTFIN
+          note: "Admission into one of the following: Admission into or selection of one of the following: MC-MGMTAFN Master of Management (Accounting and Finance) Admission into or selection of one of the following: 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+    - FNCE90060
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
+assessment:
+  - kind: test
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: test
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90018
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

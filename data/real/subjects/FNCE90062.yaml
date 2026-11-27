@@ -1,0 +1,57 @@
+code: FNCE90062
+title: Capstone Studies in Finance
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - admission: MC-MGMTFIN
+          note: "Admission into one of the following: MC-MGMTFIN Master of Management (Finance), MC-MGMTAFN Master of Management (Accounting and Finance)"
+        - admission: MC-MGMTAFN
+          note: "Admission into one of the following: MC-MGMTFIN Master of Management (Finance), MC-MGMTAFN Master of Management (Accounting and Finance)"
+    - manual: Completion of all foundation subjects and compulsory subjects plus at least one elective subject
+corequisites: FNCE90011
+non_allowed: []
+skills:
+  - business
+  - presentation
+  - maths
+topics:
+  - finance
+assessment:
+  - kind: test
+    weight: 25
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
+  - kind: test
+    weight: 25
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: assignment
+    weight: 40
+    group: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90062
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

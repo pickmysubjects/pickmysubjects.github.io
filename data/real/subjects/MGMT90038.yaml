@@ -1,0 +1,46 @@
+code: MGMT90038
+title: Global Corporate Governance
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - management
+  - ethics
+  - law
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90038
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

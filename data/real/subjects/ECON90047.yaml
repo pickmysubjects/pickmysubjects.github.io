@@ -1,0 +1,64 @@
+code: ECON90047
+title: Macroeconomics 2
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-AEMTRCS
+          note: "Admission into one of the following: MC-AEMTRCS Master of Applied Econometrics, MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-AECOENH
+          note: "Admission into one of the following: MC-AEMTRCS Master of Applied Econometrics, MC-AECOENH Master of Applied Econometrics (Enhanced)"
+    - ECON90032
+corequisites: none
+non_allowed:
+  - ECON20001
+skills:
+  - maths
+  - business
+topics:
+  - economics
+assessment:
+  - kind: test
+    weight: 30
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 5
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: assignment
+    weight: 5
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 5
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: assignment
+    weight: 5
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ90047
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

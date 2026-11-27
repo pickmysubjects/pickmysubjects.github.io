@@ -1,0 +1,54 @@
+code: ACCT90009
+title: Strategic Cost Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMTAFN
+          note: "Admission into one of the following: MC-MGMTAFN Master of Management (Accounting and Finance), 150pt Program course entry point in the MC-MGMTACT Master of Management (Accounting)"
+        - admission: MC-MGMTACT
+          note: "Admission into one of the following: MC-MGMTAFN Master of Management (Accounting and Finance), 150pt Program course entry point in the MC-MGMTACT Master of Management (Accounting)"
+    - ACCT90004
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - accounting
+  - management
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
+  - kind: exam
+    weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90009
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

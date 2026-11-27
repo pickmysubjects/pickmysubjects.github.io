@@ -1,0 +1,44 @@
+code: MGMT90037
+title: Conflict and Negotiation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+topics:
+  - management
+assessment:
+  - kind: participation
+    weight: 0
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90037
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

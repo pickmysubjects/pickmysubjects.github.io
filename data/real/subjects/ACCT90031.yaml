@@ -1,0 +1,41 @@
+code: ACCT90031
+title: Sustainability Reporting & Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - accounting
+  - environment
+assessment:
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90031
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

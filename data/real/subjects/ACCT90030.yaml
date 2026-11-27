@@ -1,0 +1,55 @@
+code: ACCT90030
+title: Information Processes & Control
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMTAFN
+          note: "Admission into one of the following: MC-MGMTAFN Master of Management (Accounting and Finance), 150pt Program course entry point in the MC-MGMTACT Master of Management (Accounting)"
+        - admission: MC-MGMTACT
+          note: "Admission into one of the following: MC-MGMTAFN Master of Management (Accounting and Finance), 150pt Program course entry point in the MC-MGMTACT Master of Management (Accounting)"
+    - ACCT90004
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - systems
+topics:
+  - accounting
+  - systems
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: presentation
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90030
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,63 @@
+code: MGMT90013
+title: Leadership and Team Dynamics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-MGMT
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: MC-MGMTHRE
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: MC-MGMTFIN
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: MC-MGMTACT
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: MC-MGMTAFN
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: MC-MGMTMKT
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: MC-IB
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: MC-MGMTEIN
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - management
+  - psychology
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90013
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
