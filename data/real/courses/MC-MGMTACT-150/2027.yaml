@@ -1,0 +1,44 @@
+# Master of Management (Accounting), 150-point entry program (50 points of advanced standing), 2027
+# Handbook. Facts re-expressed in our own words.
+code: MC-MGMTACT-150
+title: Master of Management (Accounting) (150-point program)
+year: 2027
+total_points: 150
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+# The credit stands in for the 200-point program's foundation core. (A student whose offer names
+# one of them takes it in the first semester; otherwise they may not enrol in them.)
+assumed_done: [ACCT90004, ECOM90009, ECON90015, FNCE90060]
+entry_note: mcmgmtact150
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-mgmtact-entry-1
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry program pages
+rules:
+  - id: total
+    kind: points
+    min: 150
+    description: 150 points in total
+  - id: foundation-selectives
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [MGMT90140, MKTG90037] }
+    description: At least one foundation selective
+  - id: discipline-core
+    kind: compulsory
+    subjects: [ACCT90002, ACCT90009, ACCT90010, ACCT90012, ACCT90013, ACCT90014, ACCT90015, ACCT90016, ACCT90030]
+    description: The nine discipline core subjects
+  - id: electives
+    kind: requirement
+    # One subject from any of the accounting, economics, finance, management, marketing,
+    # work-integrated learning or law elective lists (a further foundation selective counts too).
+    paths:
+      - - choose: { points: 12.5, from: [ACCT90005, ACCT90006, ACCT90007, ACCT90008, ACCT90026, ACCT90031, BISY90009, BUSA90520, MULT90014, ECON90016, ECON90025, ECON90032, ECON90045, ECON90047, FNCE90011, FNCE90016, FNCE90018, FNCE90045, FNCE90046, FNCE90048, FNCE90049, FNCE90051, FNCE90056, FNCE90057, FNCE90086, FNCE90087, BUSA90529, IBUS90002, IBUS90003, IBUS90008, MGMT90011, MGMT90012, MGMT90013, MGMT90014, MGMT90015, MGMT90016, MGMT90017, MGMT90018, MGMT90025, MGMT90026, MGMT90027, MGMT90030, MGMT90031, MGMT90032, MGMT90037, MGMT90038, MGMT90140, MGMT90141, MGMT90146, MGMT90148, MGMT90165, MGMT90176, MGMT90201, MGMT90208, MGMT90261, MKTG90026, MKTG90037, MKTG90001, MKTG90002, MKTG90003, MKTG90004, MKTG90006, MKTG90007, MKTG90008, MKTG90009, MKTG90011, MKTG90017, MKTG90033, MKTG90040, MKTG90048, MKTG90049, BUSA90473, BUSA90485, BUSA90525, ENGR90034, LAWS90125] }
+    description: One elective
+  - id: capstone
+    kind: compulsory
+    # Taken in the final semester.
+    subjects: [ACCT90033]
+    year: 2
+    description: The capstone, ACCT90033, in the final semester

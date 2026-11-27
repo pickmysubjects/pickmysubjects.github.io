@@ -1,0 +1,45 @@
+code: MGMT90206
+title: Management & Marketing Special Topics 1
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - admission: MC-COMMGMT
+          note: "Admission into or selection of one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+        - admission: MC-COMMKTG
+          note: "Admission into or selection of one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+    - points:
+        min: 100
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+  - presentation
+topics:
+  - management
+  - marketing
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: project
+    weight: 90
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90206
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,56 @@
+code: ACCT90033
+title: Integrated Accounting Studies
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - ACCT90009
+    - ACCT90012
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+  - exams
+topics:
+  - accounting
+  - finance
+  - business
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 8
+      to: 9
+      text: From Week 8 to Week 9
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/acct90033
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

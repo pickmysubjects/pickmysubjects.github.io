@@ -1,0 +1,55 @@
+code: MGMT90193
+title: Advanced Human Resource Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-COMMGMT
+      note: "Admission into one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+    - admission: MC-COMMKTG
+      note: "Admission into one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - human-resources
+  - management
+  - psychology
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 5
+      text: From Week 3 to Week 5
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: exam
+    weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90193
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

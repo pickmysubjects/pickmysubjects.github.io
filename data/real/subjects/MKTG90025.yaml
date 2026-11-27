@@ -1,0 +1,45 @@
+code: MKTG90025
+title: Marketing for Entrepreneurs
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+  - teamwork
+topics:
+  - marketing
+  - entrepreneurship
+  - business
+assessment:
+  - kind: test
+    weight: 40
+    timing:
+      kind: week
+      from: 7
+      to: 10
+      text: From Week 7 to Week 10
+  - kind: presentation
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: presentation
+    weight: 20
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mktg90025
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

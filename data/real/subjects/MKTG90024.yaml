@@ -1,0 +1,57 @@
+code: MKTG90024
+title: Advanced Marketing Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-COMMGMT
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+    - admission: MC-COMMKTG
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+  - presentation
+topics:
+  - marketing
+  - management
+  - theory
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mktg90024
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

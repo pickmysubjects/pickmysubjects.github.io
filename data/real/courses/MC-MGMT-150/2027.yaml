@@ -1,0 +1,42 @@
+# Master of Management, 150-point entry program (50 points of advanced standing), 2027 Handbook.
+# Facts re-expressed in our own words.
+code: MC-MGMT-150
+title: Master of Management (150-point program)
+year: 2027
+total_points: 150
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+# The credit stands in for the 200-point program's foundation subjects (three set ones plus one
+# selective; ECON90015 stands for the selective, as in MC-MGMTFIN-150).
+assumed_done: [MGMT90141, MKTG90037, MGMT90140, ECON90015]
+entry_note: mcmgmt150
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-mgmt-entry-1
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry program pages
+rules:
+  - id: total
+    kind: points
+    min: 150
+    description: 150 points in total
+  - id: core
+    kind: compulsory
+    subjects: [MGMT90018, MGMT90280, MGMT90025, MKTG90004, MGMT90015, IBUS90003, MGMT90032]
+    description: The seven core subjects
+  - id: capstone
+    kind: requirement
+    # Coursework option, or the research option (only after 100 points with a WAM of 80, limited
+    # places, Program Director approval; a research proposal may be asked for).
+    paths:
+      - - all: [MGMT90146]
+          year: 2
+        - choose: { points: 12.5, from: [MGMT90148, BUSA90485, BUSA90473, BUSA90525, ENGR90034] }
+      - - all: [MGMT90206]
+        - choose: { points: 12.5, from: [MGMT90195, MKTG90024, IBUS90006, MGMT90193, MGMT90196, MGMT90197, MGMT90200, MKTG90023] }
+    description: "Capstone: MGMT90146 in the final semester plus one capstone selective, or the research option"
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 37.5, from: [MGMT90148, MGMT90011, MGMT90013, MGMT90030, MGMT90037, IBUS90002, MGMT90201, IBUS90008, BUSA90485, BUSA90473, ENGR90039, BUSA90525, MGMT90026, MGMT90027, MKTG90011, MGMT90267, MGMT90165, MGMT90038, MGMT90031, MGMT90208, BUSA90529, MKTG90049, MGMT90176, MKTG90008, MKTG90048] }
+    description: Three electives

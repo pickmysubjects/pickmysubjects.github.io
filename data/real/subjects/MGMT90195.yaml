@@ -1,0 +1,45 @@
+code: MGMT90195
+title: Advanced Management Theory
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-COMMGMT
+      note: "Admission into one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+    - admission: MC-COMMKTG
+      note: "Admission into one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+  - writing
+topics:
+  - management
+  - theory
+  - economics
+assessment:
+  - kind: participation
+    weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90195
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

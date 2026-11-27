@@ -1,0 +1,63 @@
+code: MKTG90023
+title: Advanced Consumer Behaviour
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-COMMGMT
+      note: "Admission into one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+    - admission: MC-COMMKTG
+      note: "Admission into one of the following: MC-COMMGMT Master of Commerce (Management) MC-COMMKTG Master of Commerce (Marketing)"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - marketing
+  - psychology
+assessment:
+  - kind: participation
+    weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: project
+    weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mktg90023
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
