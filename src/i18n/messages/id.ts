@@ -175,7 +175,7 @@ export const id: Messages = {
   period: { summer: 'Semester musim panas', 'semester-1': 'Semester 1', winter: 'Semester musim dingin', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
-  countsAs: { title: "Dihitung sebagai", handbook: "Sesuai Handbook", help: "Pakai hanya jika fakultas menyetujuinya; simpan persetujuan tertulisnya.", changed: "Kamu mengubah cara {n} mata kuliah dihitung di rencana ini.", undo: "Batalkan semua", changedShort: "diubah olehmu", cardLabel: "Dihitung sebagai {category} (diubah olehmu)" },
+  countsAs: { change: "Ubah", handbookIs: "Handbook: {cat}", tapToChange: "Ketuk untuk mengubah", title: "Dihitung sebagai", handbook: "Sesuai Handbook", help: "Pakai hanya jika fakultas menyetujuinya; simpan persetujuan tertulisnya.", changed: "Kamu mengubah cara {n} mata kuliah dihitung di rencana ini.", undo: "Batalkan semua", changedShort: "diubah olehmu", cardLabel: "Dihitung sebagai {category} (diubah olehmu)" },
   category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', music: 'musik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesehatan gigi dan mulut', breadth: 'breadth', core: 'inti', course: 'dalam program' },
   plan: {
     saveImage: "Simpan sebagai gambar",

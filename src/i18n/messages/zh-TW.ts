@@ -175,7 +175,7 @@ export const zhTW: Messages = {
   period: { summer: '夏季學期', 'semester-1': '第一學期', winter: '冬季學期', 'semester-2': '第二學期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   termFull: '{year} {period}',
-  countsAs: { title: "算作", handbook: "依 Handbook", help: "只在學院核准後使用，並保留書面核准。", changed: "你改了 {n} 門課的算法。", undo: "全部復原", changedShort: "你改的", cardLabel: "算作{category}（你改的）" },
+  countsAs: { change: "修改", handbookIs: "Handbook：{cat}", tapToChange: "點一下就能改", title: "算作", handbook: "依 Handbook", help: "只在學院核准後使用，並保留書面核准。", changed: "你改了 {n} 門課的算法。", undo: "全部復原", changedShort: "你改的", cardLabel: "算作{category}（你改的）" },
   category: { science: '理科', commerce: '商科', arts: '文科', design: '設計', music: '音樂', 'fine-arts': '藝術', agriculture: '農業', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修', course: '課程內' },
   plan: {
     saveImage: "存成圖片",

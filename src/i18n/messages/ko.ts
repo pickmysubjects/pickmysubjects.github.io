@@ -175,7 +175,7 @@ export const ko: Messages = {
   period: { summer: '여름 학기', 'semester-1': '1학기', winter: '겨울 학기', 'semester-2': '2학기' },
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
   termFull: '{year}년 {period}',
-  countsAs: { title: "인정 구분", handbook: "Handbook대로", help: "학부 승인을 받았을 때만 쓰고, 서면 승인을 보관하세요.", changed: "{n}과목의 인정 구분을 바꿨어요.", undo: "모두 되돌리기", changedShort: "직접 변경", cardLabel: "{category}(으)로 인정 (직접 변경)" },
+  countsAs: { change: "바꾸기", handbookIs: "Handbook: {cat}", tapToChange: "눌러서 바꾸기", title: "인정 구분", handbook: "Handbook대로", help: "학부 승인을 받았을 때만 쓰고, 서면 승인을 보관하세요.", changed: "{n}과목의 인정 구분을 바꿨어요.", undo: "모두 되돌리기", changedShort: "직접 변경", cardLabel: "{category}(으)로 인정 (직접 변경)" },
   category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', music: '음악', 'fine-arts': '예술', agriculture: '농업', 'oral-health': '구강보건', breadth: '교양(Breadth)', core: '필수', course: '과정 과목' },
   plan: {
     saveImage: "이미지로 저장",

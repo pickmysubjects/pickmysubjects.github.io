@@ -175,7 +175,7 @@ export const ms: Messages = {
   period: { summer: 'Penggal musim panas', 'semester-1': 'Semester 1', winter: 'Penggal musim sejuk', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim sejuk', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
-  countsAs: { title: "Dikira sebagai", handbook: "Ikut Handbook", help: "Guna hanya jika fakulti meluluskannya; simpan kelulusan bertulis.", changed: "Anda menukar cara {n} subjek dikira dalam pelan ini.", undo: "Batalkan semua", changedShort: "ditukar oleh anda", cardLabel: "Dikira sebagai {category} (ditukar oleh anda)" },
+  countsAs: { change: "Tukar", handbookIs: "Handbook: {cat}", tapToChange: "Ketik untuk tukar", title: "Dikira sebagai", handbook: "Ikut Handbook", help: "Guna hanya jika fakulti meluluskannya; simpan kelulusan bertulis.", changed: "Anda menukar cara {n} subjek dikira dalam pelan ini.", undo: "Batalkan semua", changedShort: "ditukar oleh anda", cardLabel: "Dikira sebagai {category} (ditukar oleh anda)" },
   category: { science: 'sains', commerce: 'perdagangan', arts: 'sastera', design: 'reka bentuk', music: 'muzik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesihatan oral', breadth: 'breadth', core: 'teras', course: 'dalam kursus' },
   plan: {
     saveImage: "Simpan sebagai imej",

@@ -5,6 +5,8 @@ import { isDone, isFail, isQuotaSubject, passedCodes, knownNotRunning, listPlace
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
+import CountsAsControl from '@/components/planner/CountsAsControl.vue'
+import { countsAsChoices } from '@/engine'
 import { useProfile } from '@/composables/useProfile'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
@@ -63,6 +65,13 @@ const category = computed(() => {
   const tag = categoryTag(t.value, props.subject.categories[plan.setup.value.course])
   return tag ? t.value('subject.categoryInCourse', { cat: tag }) : ''
 })
+// How it counts can be changed here too, for a subject in the plan (only with faculty approval):
+// the same setting as the plan's subject window.
+const countsChoicesHere = computed(() => countsAsChoices(plan.course.value))
+const inPlanHere = computed(() => plan.plan.value.terms.some((term) => term.subjects.includes(code.value)))
+const canChangeCounts = computed(() => !closedForYou.value && inPlanHere.value && countsChoicesHere.value.length > 0)
+const countsMine = computed(() => plan.countsAs.value[code.value])
+const countsOpen = shallowRef(false)
 const runs = computed(() => {
   if (gone.value) return t.value('subject.discontinued', { year: props.subject.discontinuedFrom ?? '' })
   if (props.subject.offerings === 'unknown') return t.value('subject.runsUnknown')
@@ -273,11 +282,22 @@ onBeforeUnmount(() => {
       </dl>
 
       <ul v-if="category || subject.campus || gist.length || quota" class="facts">
-        <li v-if="category" class="chip chip-strong">{{ category }}</li>
+        <li v-if="category" class="chip chip-strong">
+          {{ countsMine ? t('countsAs.cardLabel', { category: categoryTag(t, countsMine) }) : category }}
+          <button v-if="canChangeCounts" type="button" class="counts-change" :aria-expanded="countsOpen" @click="countsOpen = !countsOpen">{{ t('countsAs.change') }}</button>
+        </li>
         <li v-if="subject.campus" class="chip"><MapPin :size="14" aria-hidden="true" />{{ subject.campus }}</li>
         <li v-for="g in gist" :key="g" class="chip">{{ g }}</li>
         <li v-if="quota" class="chip chip-tip">{{ t('subject.quota') }}<InfoTip :text="t('subject.quotaTip')" /></li>
       </ul>
+      <CountsAsControl
+        v-if="canChangeCounts && countsOpen"
+        class="counts-here"
+        :handbook="subject.categories[plan.setup.value.course]"
+        :choices="countsChoicesHere"
+        :model-value="countsMine"
+        @update:model-value="plan.setCountsAs(code, $event)"
+      />
     </div>
     <ul v-if="onlyOneOf.length || change" class="notes">
       <li v-for="c in onlyOneOf" :key="c">
@@ -314,6 +334,23 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.counts-change {
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.counts-here {
+  margin-top: 12px;
+  max-width: 560px;
+}
+
 /* A glass hero like the guide's (GuideHero), with the subject's facts in place of a scene. */
 .hero {
   display: grid;

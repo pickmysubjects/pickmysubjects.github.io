@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CountsAsControl from './CountsAsControl.vue'
 import { link } from '@/composables/useView'
 import { useDataYear } from '@/composables/useDataYear'
 import FactsYearNote from '@/components/subject/FactsYearNote.vue'
@@ -329,14 +330,14 @@ function onClick(event: MouseEvent): void {
           </p>
 
           <!-- How it counts for the degree: the Handbook's, or the student's faculty-approved exception. -->
-          <div v-if="planned && countsChoices?.length" class="peek-counts">
-            <h4 class="peek-sub">{{ t('countsAs.title') }}</h4>
-            <div class="peek-counts-chips" role="group" :aria-label="t('countsAs.title')">
-              <button type="button" class="chip" :aria-pressed="!countsAs" @click="emit('countsAs', undefined)">{{ t('countsAs.handbook') }}</button>
-              <button v-for="c in countsChoices" :key="c" type="button" class="chip" :aria-pressed="countsAs === c" @click="emit('countsAs', c)">{{ categoryTag(t, c) }}</button>
-            </div>
-            <p class="muted peek-counts-help">{{ t('countsAs.help') }}</p>
-          </div>
+          <CountsAsControl
+            v-if="planned && countsChoices?.length"
+            class="peek-counts"
+            :handbook="subject?.categories[course]"
+            :choices="countsChoices"
+            :model-value="countsAs"
+            @update:model-value="emit('countsAs', $event)"
+          />
 
           <div class="peek-links">
             <div class="peek-col">
