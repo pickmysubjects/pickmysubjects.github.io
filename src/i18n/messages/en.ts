@@ -364,6 +364,8 @@ export const en = {
     mcis: "WAM 65 in any bachelor's; up to 50 points of credit with a year of related work, up to 100 with an Information Systems degree and two years' work",
     mcfinance: "A bachelor's with a finance major, plus Corporate Finance, Investments and Derivative Securities (or equivalents)",
     mccs: "A computing bachelor's with WAM 75 and 25 points of maths or statistics; places depend on a research supervisor",
+    mcmgmtfin200: "Any bachelor's (not in finance; finance graduates go to the Master of Finance)",
+    mcmgmtfin150: "A business or commerce bachelor's, or business breadth or a minor: up to 50 points of credit",
   },
   rule: {
     diploma: "{title}: {rule}",

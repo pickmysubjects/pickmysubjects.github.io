@@ -358,6 +358,8 @@ export const vi: Messages = {
     mcis: "WAM 65 với bằng cử nhân bất kỳ; một năm làm việc liên quan được miễn tối đa 50 điểm, bằng Hệ thống thông tin cộng hai năm làm việc tối đa 100 điểm",
     mcfinance: "Cử nhân chuyên ngành tài chính, đã học Corporate Finance, Investments và Derivative Securities (hoặc tương đương)",
     mccs: "Cử nhân ngành máy tính WAM 75 và 25 điểm toán hoặc thống kê; số chỗ phụ thuộc vào người hướng dẫn nghiên cứu",
+    mcmgmtfin200: "Cử nhân bất kỳ (người học tài chính nên chọn Master of Finance)",
+    mcmgmtfin150: "Cử nhân kinh doanh, thương mại, hoặc có môn phụ kinh doanh: miễn tối đa 50 điểm",
   },
   rule: {
     diploma: "{title}: {rule}",

@@ -358,6 +358,8 @@ export const ko: Messages = {
     mcis: "전공 무관 학사 WAM 65. 관련 경력 1년이면 최대 50학점, 정보시스템 학위와 경력 2년이면 최대 100학점 인정",
     mcfinance: "금융 전공 학사, 그리고 Corporate Finance, Investments, Derivative Securities(또는 동등 과목) 이수",
     mccs: "컴퓨터 관련 학사 WAM 75, 수학 또는 통계 25학점. 정원은 연구 지도교수 여부에 따라 달라요",
+    mcmgmtfin200: "전공 무관 학사 (금융 전공자는 Master of Finance로)",
+    mcmgmtfin150: "경영·상경 학사, 또는 경영 부전공 등: 최대 50학점 인정",
   },
   rule: {
     diploma: "{title}: {rule}",

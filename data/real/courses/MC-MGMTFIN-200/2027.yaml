@@ -1,0 +1,48 @@
+# Master of Management (Finance), 200-point entry program, 2027 Handbook. Facts re-expressed in
+# our own words. Two entry programs (200/150 points); each kept as its own course, as for MC-IT.
+code: MC-MGMTFIN-200
+title: Master of Management (Finance) (200-point program)
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course, course-extra]
+# General electives (any of these lists). FNCE90087 is listed but no longer available.
+extra_subjects: [ACCT90002, ACCT90005, ACCT90006, ACCT90007, ACCT90008, ACCT90009, ACCT90010, ACCT90012, ACCT90013, ACCT90014, ACCT90015, ACCT90016, ACCT90026, ACCT90030, ACCT90031, BISY90009, BUSA90520, MULT90014, ECON90016, ECON90025, ECON90032, ECON90045, ECON90047, BUSA90529, IBUS90002, IBUS90008, MGMT90011, MGMT90012, MGMT90013, MGMT90014, MGMT90015, MGMT90016, MGMT90017, MGMT90018, MGMT90025, MGMT90026, MGMT90027, MGMT90030, MGMT90031, MGMT90032, MGMT90037, MGMT90038, MGMT90140, MGMT90141, MGMT90146, MGMT90148, MGMT90165, MGMT90176, MGMT90201, MGMT90208, MGMT90261, MKTG90026, MKTG90037, IBUS90003, MKTG90001, MKTG90002, MKTG90003, MKTG90004, MKTG90006, MKTG90007, MKTG90008, MKTG90009, MKTG90011, MKTG90017, MKTG90033, MKTG90040, MKTG90048, MKTG90049, BUSA90473, BUSA90485, BUSA90525, ENGR90039, LAWS90125]
+entry_note: mcmgmtfin200
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-mgmtfin-entry-2
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and entry program pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: foundation-core
+    kind: compulsory
+    subjects: [ACCT90004, ECOM90009, FNCE90060]
+    # "In the first semester" for full-time students; part-time ones (one or two subjects a
+    # semester) take them over their first year.
+    first_year: true
+    description: The three foundation core subjects, in the first semester (full-time)
+  - id: foundation-selectives
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ECON90015, MGMT90015, MGMT90018, MKTG90037] }
+    description: At least two foundation selectives
+  - id: discipline-core
+    kind: compulsory
+    subjects: [FNCE90011, FNCE90018, FNCE90056]
+    description: The three discipline core subjects
+  - id: finance-electives
+    kind: requirement
+    paths:
+      - - choose: { points: 50, from: [FNCE90016, FNCE90045, FNCE90046, FNCE90048, FNCE90049, FNCE90051, FNCE90057, FNCE90086] }
+    description: At least four finance electives
+  - id: capstone
+    kind: compulsory
+    # Taken in the final semester.
+    subjects: [FNCE90062]
+    year: 2
+    description: The capstone, FNCE90062, in the final semester

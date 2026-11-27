@@ -358,6 +358,8 @@ export const ja: Messages = {
     mcis: "分野を問わない学士で WAM 65。関連職務1年で最大50単位、情報システムの学位と2年の職務経験で最大100単位の単位認定",
     mcfinance: "金融専攻の学士で、Corporate Finance・Investments・Derivative Securities（または同等科目）を履修済み",
     mccs: "コンピュータ系の学士で WAM 75、数学か統計25単位。定員は研究指導教員の空きによります",
+    mcmgmtfin200: "分野を問わない学士（金融専攻の卒業生は Master of Finance へ）",
+    mcmgmtfin150: "ビジネス・商学の学士、またはビジネスの副専攻など：最大50単位の単位認定",
   },
   rule: {
     diploma: "{title}：{rule}",
