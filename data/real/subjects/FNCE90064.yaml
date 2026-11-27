@@ -1,0 +1,50 @@
+code: FNCE90064
+title: Emerging Markets Finance
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - admission: MC-FINANCE
+      note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTFIN Master of Management (Finance) MC-MGMTAFN Master of Management (Accounting and Finance)"
+    - admission: MC-FINENH
+      note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTFIN Master of Management (Finance) MC-MGMTAFN Master of Management (Accounting and Finance)"
+    - admission: MC-MGMTFIN
+      note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTFIN Master of Management (Finance) MC-MGMTAFN Master of Management (Accounting and Finance)"
+    - admission: MC-MGMTAFN
+      note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTFIN Master of Management (Finance) MC-MGMTAFN Master of Management (Accounting and Finance)"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - finance
+  - economics
+assessment:
+  - kind: project
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: participation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 3
+      to: 10
+      text: From Week 3 to Week 10
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90064
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

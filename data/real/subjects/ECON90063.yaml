@@ -1,0 +1,64 @@
+code: ECON90063
+title: Advanced Microeconomics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - any:
+        - admission: MC-COMACT
+          note: "Admission into or selection of one of the following: MC-COMACT Master of Commerce (Accounting) MC-COMFIN Master of Commerce (Finance) MC-APPECON Master of Applied Econometrics MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+        - admission: MC-COMFIN
+          note: "Admission into or selection of one of the following: MC-COMACT Master of Commerce (Accounting) MC-COMFIN Master of Commerce (Finance) MC-APPECON Master of Applied Econometrics MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+        - admission: MC-APPECON
+          note: "Admission into or selection of one of the following: MC-COMACT Master of Commerce (Accounting) MC-COMFIN Master of Commerce (Finance) MC-APPECON Master of Applied Econometrics MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+        - admission: MC-FINANCE
+          note: "Admission into or selection of one of the following: MC-COMACT Master of Commerce (Accounting) MC-COMFIN Master of Commerce (Finance) MC-APPECON Master of Applied Econometrics MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+        - admission: MC-FINENH
+          note: "Admission into or selection of one of the following: MC-COMACT Master of Commerce (Accounting) MC-COMFIN Master of Commerce (Finance) MC-APPECON Master of Applied Econometrics MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+    - ECON30010
+    - wam:
+        min: 80
+      note: Students in the MC-FINANCE Master of Finance or MC-FINENH Master of Finance (Enhanced), must have a WAM of 80 or higher.
+corequisites: none
+non_allowed:
+  - ECON30020
+  - ECON40001
+skills:
+  - maths
+topics:
+  - economics
+  - optimisation
+  - mathematics
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: test
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ90063
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

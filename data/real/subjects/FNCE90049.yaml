@@ -1,0 +1,66 @@
+code: FNCE90049
+title: Property Development and Investment
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-FIN
+          note: "Admission into one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+        - admission: MC-FINANCE
+          note: "Admission into one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+        - admission: MC-FINENH
+          note: "Admission into one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+    - all:
+        - any:
+            - admission: MC-MGMT
+              note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+            - admission: MC-MGMTACT
+              note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+            - admission: MC-MGMTAFN
+              note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+            - admission: MC-MGMTFIN
+              note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+            - admission: MC-MGMTHRE
+              note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+            - admission: MC-MGMTMKT
+              note: "Admission into one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing)"
+        - all:
+            - FNCE90018
+            - FNCE90056
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - property
+  - finance
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 4
+      to: 11
+      text: From Week 4 to Week 11
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90049
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

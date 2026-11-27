@@ -1,0 +1,37 @@
+code: FNCE90057
+title: Ethics In Finance
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  any:
+    - admission: MC-IB
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-FINANCE Master of Finance Admission into or selection of one of the following: MC-FINENH Master of Finance (Enhanced) Admission into or selection of one of the following: GD-FINANCE Graduate Diploma in Finance Postgraduate Diploma in Finance Admission into the MC-IB Master of International Business"
+    - FNCE90056
+corequisites: none
+non_allowed:
+  - FNCE30009
+skills:
+  - business
+topics:
+  - ethics
+  - finance
+assessment:
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90057
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

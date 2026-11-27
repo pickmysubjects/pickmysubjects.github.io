@@ -17,8 +17,12 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering"
         - admission: MC-SOFTENG
           note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering"
-    - admission: MC-IT
-      note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
+    # 2027 Handbook: this route also needs the Human-Computer Interaction specialisation, which
+    # the rule can't check yet, so it's left for the student to confirm.
+    - all:
+        - admission: MC-IT
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - manual: Selection of the Human-Computer Interaction specialisation (formal) in the MC-IT Master of Information Technology
 corequisites: none
 non_allowed:
   - INFO20004

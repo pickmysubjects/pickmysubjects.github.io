@@ -1,0 +1,55 @@
+code: FNCE90012
+title: Corporate Restructuring and Valuation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - all:
+        - ECON90033
+        - ECON90034
+        - FNCE90047
+    - any:
+        - ACCT90002
+        - ACCT90004
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
+  - business
+assessment:
+  - kind: test
+    weight: 50
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: project
+    weight: 10
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90012
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,45 @@
+code: FNCE90047
+title: Financial Markets and Instruments
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-FIN
+      note: "Admission into one of the following: MC-FIN Master of Finance GD-FIN Graduate Diploma in Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+    - admission: GD-FIN
+      note: "Admission into one of the following: MC-FIN Master of Finance GD-FIN Graduate Diploma in Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+    - admission: MC-FINANCE
+      note: "Admission into one of the following: MC-FIN Master of Finance GD-FIN Graduate Diploma in Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+    - admission: MC-FINENH
+      note: "Admission into one of the following: MC-FIN Master of Finance GD-FIN Graduate Diploma in Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
+assessment:
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
+  - kind: exam
+    weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90047
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

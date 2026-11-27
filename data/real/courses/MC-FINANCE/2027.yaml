@@ -1,0 +1,45 @@
+# Master of Finance, 2027 Handbook. Facts re-expressed in our own words.
+# 150 points (three semesters full-time), no specialisations: four compulsory subjects, at least
+# four core finance subjects, up to two electives, and a two-subject capstone.
+code: MC-FINANCE
+title: Master of Finance
+year: 2027
+total_points: 150
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course, course-extra]
+# Electives: at most two (25 points). FNCE90087 is listed but no longer available. Any other
+# subject the Program Director approves may also count; plans take the listed ones.
+extra_subjects: [FNCE90016, FNCE90046, FNCE90048, FNCE90049, FNCE90064, BUSA90473, BUSA90485, MGMT90146, ECON90010, BUSA90525, FNCE90086, FNCE90002, ECON90063]
+entry_note: mcfinance
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-finance/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 150
+    description: 150 points in total
+  - id: compulsory
+    kind: compulsory
+    subjects: [ECON90033, ECON90034, ACCT90002, FNCE90047]
+    year: 1
+    description: The four compulsory subjects (50 points)
+  - id: core
+    kind: requirement
+    paths:
+      - - choose: { points: 50, from: [FNCE90012, FNCE90084, FNCE90080, FNCE90083, FNCE90082, FNCE90057, FNCE90081] }
+    description: At least four core finance subjects
+  - id: capstone
+    kind: requirement
+    # The research pathway needs the Program Director's approval; FNCE90094 needs FNCE90081 first.
+    paths:
+      - - all: [FNCE90085, FNCE90013]
+      - - all: [FNCE90081, FNCE90094]
+    description: A two-subject capstone (industry project, or the research pathway)
+  - id: electives-cap
+    kind: points
+    category: course-extra
+    max: 25
+    description: No more than two elective subjects

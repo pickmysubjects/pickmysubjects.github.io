@@ -1,0 +1,64 @@
+code: ECON90033
+title: Quantitative Analysis of Finance I
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-FINANCE
+      note: "Admission into one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+    - admission: MC-FINENH
+      note: "Admission into one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+    - admission: MC-AEMTRCS
+      note: "Admission into one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+    - admission: MC-AECOENH
+      note: "Admission into one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - statistics
+topics:
+  - finance
+  - statistics
+  - modelling
+assessment:
+  - kind: participation
+    weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: quiz
+    weight: 5
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 14
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ90033
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

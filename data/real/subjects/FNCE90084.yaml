@@ -1,0 +1,60 @@
+code: FNCE90084
+title: Applied Machine Learning in Finance
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-FINANCE
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-FINANCE Master of Finance Admission into or selection of one of the following: MC-FINENH Master of Finance (Enhanced) Admission into or selection of one of the following: BH-COM Bachelor of Commerce (Degree with Honours)"
+    - admission: MC-FINENH
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-FINANCE Master of Finance Admission into or selection of one of the following: MC-FINENH Master of Finance (Enhanced) Admission into or selection of one of the following: BH-COM Bachelor of Commerce (Degree with Honours)"
+corequisites:
+  all:
+    - ACCT90002
+    - ECON90033
+    - ECON90034
+    - FNCE90047
+non_allowed:
+  - FNCE30012
+  - FNCE30014
+skills:
+  - data
+topics:
+  - machine-learning
+  - finance
+  - ai
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90084
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

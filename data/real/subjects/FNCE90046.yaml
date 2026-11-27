@@ -1,0 +1,56 @@
+code: FNCE90046
+title: Treasury Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-FINANCE
+          note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) GD-FINANCE Graduate Diploma in Finance"
+        - admission: MC-FINENH
+          note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) GD-FINANCE Graduate Diploma in Finance"
+        - admission: GD-FINANCE
+          note: "Admission into or selection of one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) GD-FINANCE Graduate Diploma in Finance"
+    - all:
+        - manual: Admission into the Master of Accounting or a Master of Management program
+        - all:
+            - FNCE90018
+            - FNCE90056
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
+assessment:
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
+  - kind: test
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90046
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,86 @@
+code: MGMT90146
+title: Strategic Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - admission: MC-MGMT
+          note: Admission into the 150pt Program course entry point in the MC-MGMT Master of Management
+        - points:
+            min: 62.5
+    - all:
+        - admission: MC-MGMT
+          note: Admission into the MC-MGMT Master of Management
+        - manual: Admission into the 200 point program
+        - points:
+            min: 112.5
+    - all:
+        - any:
+            - admission: MC-IB
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-MGMTMKT
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-FINANCE
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-FINENH
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-MGMTAFN
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-MGMTFIN
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-MGMTEIN
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-ENTRPSP
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+            - admission: MC-MGMTHRE
+              note: "Admission into or selection of one of the following: MC-IB Master of International Business MC-MGMTMKT Master of Management (Marketing) MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) 761EM Master of Engineering Management MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-ENTRPSP Master of Entrepreneurship MC-MGMTHRE Master of Management (Human Resources)"
+        - points:
+            min: 50
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - management
+  - business
+assessment:
+  - kind: test
+    weight: 5
+    timing:
+      kind: early
+      text: First half of the teaching period
+  - kind: assignment
+    weight: 5
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: assignment
+    weight: 5
+    group: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 35
+    group: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90146
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

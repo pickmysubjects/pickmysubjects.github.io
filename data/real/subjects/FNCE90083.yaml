@@ -1,0 +1,61 @@
+code: FNCE90083
+title: Data Analysis for Finance
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-FINANCE
+      note: "Admission into one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+    - admission: MC-FINENH
+      note: "Admission into one of the following: MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced)"
+corequisites:
+  all:
+    - ACCT90002
+    - ECON90033
+    - ECON90034
+    - FNCE90047
+non_allowed: []
+skills:
+  - programming
+  - statistics
+  - data
+topics:
+  - finance
+  - data-science
+  - machine-learning
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90083
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

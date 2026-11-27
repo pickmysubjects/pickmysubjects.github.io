@@ -1,0 +1,47 @@
+code: FNCE90081
+title: Applied Research Project
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - admission: MC-FINANCE
+      note: Admission into the MC-FINANCE Master of Finance, MC-FINENH Master of Finance (Enhanced)
+    - points:
+        min: 50
+    - permission: application
+      note: Students must submit an online application and participate in required selection procedures.
+    - manual: Students must have achieved a minimum weighted average mark for their finance masters subjects of 75%.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - data
+topics:
+  - finance
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90081
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

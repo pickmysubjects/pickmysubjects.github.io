@@ -1,0 +1,55 @@
+code: ECON90010
+title: Quantitative Analysis of Finance II
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - ECON90033
+    - ECOM90011
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - statistics
+  - programming
+topics:
+  - finance
+  - statistics
+  - modelling
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 14
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ90010
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,75 @@
+code: BUSA90525
+title: Business and Economics Internship
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMT
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-MGMTMKT
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-MGMTHRE
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-MGMTACT
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-MGMTAFN
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-MGMTFIN
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-IB
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-ECO
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-DMKTG
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-FINANCE
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-FINENH
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-ENTRPSP
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-MGMTEIN
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-MGMTSCM
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-AEMTRCS
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-AECOENH
+          note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTMKT Master of Management (Marketing) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTFIN Master of Management (Finance) MC-IB Master of International Business MC-ECO Master of Economics MC-DMKTG Master of Digital Marketing MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-ENTRPSP Master of Entrepreneurship MC-MGMTEIN Master of Management (Entrepreneurship and Innovation) MC-MGMTSCM Master of Management (Supply Chain Management) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+    - admission: MC-ACTSC
+      note: "Admission into or selection of one of the following: MC-ACTSC Master of Actuarial Science Important: Students admitted into this course requires additional approval from their Program Director. After submitting your application, you will receive an email asking you to provide a PDF of the approval email from your Program Director/ Course Coordinator. Notes: • Students must submit an application via the MBS website for review by the Subject Coordinator. • Students who self-source their internship must have that placement approved by the Subject Coordinator by submitting an application by the deadline listed on the MBS website. • For information on how to apply, please click here."
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - business
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 60
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: project
+    weight: 25
+weekly_contact_hours: 7.5
+pass_fail: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/busa90525
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

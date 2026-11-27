@@ -1,0 +1,75 @@
+code: FNCE90087
+title: Sustainable Investment
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-FIN
+          note: "Admission into or selection of one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTAFN Master of Management (Accounting and Finance) 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+        - admission: MC-FINANCE
+          note: "Admission into or selection of one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTAFN Master of Management (Accounting and Finance) 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+        - admission: MC-FINENH
+          note: "Admission into or selection of one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTAFN Master of Management (Accounting and Finance) 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+        - admission: MC-MGMTAFN
+          note: "Admission into or selection of one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTAFN Master of Management (Accounting and Finance) 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+        - admission: MC-MGMTFIN
+          note: "Admission into or selection of one of the following: MC-FIN Master of Finance MC-FINANCE Master of Finance MC-FINENH Master of Finance (Enhanced) MC-MGMTAFN Master of Management (Accounting and Finance) 150pt Program course entry point in the MC-MGMTFIN Master of Management (Finance)"
+    - all:
+        - any:
+            - admission: MC-MGMT
+              note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+            - admission: MC-MGMTACT
+              note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+            - admission: MC-MGMTFIN
+              note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+            - admission: MC-MGMTHRE
+              note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+            - admission: MC-MGMTMKT
+              note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+            - admission: MC-IB
+              note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+            - admission: MC-MGMTEIN
+              note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTACT Master of Management (Accounting) MC-MGMTFIN Master of Management (Finance) MC-MGMTHRE Master of Management (Human Resources) MC-MGMTMKT Master of Management (Marketing) GC-SUSTBUS Graduate Certificate in Sustainable Business MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+        - any:
+            - FNCE10002
+            - FNCE90060
+            - FNCE90065
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - finance
+  - environment
+  - ethics
+assessment:
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
+  - kind: test
+    weight: 25
+    timing:
+      kind: week
+      from: 5
+      to: 10
+      text: From Week 5 to Week 10
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce90087
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
