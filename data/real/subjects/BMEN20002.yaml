@@ -7,6 +7,8 @@ offerings:
     - semester-2
   "2027":
     - semester-2
+# 2027 Handbook: one of the biology subjects, or admission to MC-BIOMENG with one of them,
+# which may then be taken in the same semester (no corequisites).
 prerequisites:
   any:
     - any:
@@ -14,14 +16,18 @@ prerequisites:
         - BIOL10004
         - BIOL10008
         - BIOL10009
-    - admission: MC-BIOMENG
-      note: Admission into the MC-BIOMENG Master of Biomedical Engineering
-corequisites:
-  any:
-    - BIOL10002
-    - BIOL10004
-    - BIOL10008
-    - BIOL10009
+    - all:
+        - admission: MC-BIOMENG
+        - any:
+            - subject: BIOL10002
+              concurrent: true
+            - subject: BIOL10004
+              concurrent: true
+            - subject: BIOL10008
+              concurrent: true
+            - subject: BIOL10009
+              concurrent: true
+corequisites: none
 non_allowed:
   - ANAT20006
   - BIOM20002

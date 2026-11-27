@@ -5,11 +5,16 @@ points: 12.5
 offerings:
   "2027":
     - semester-1
-prerequisites: COMP90049
-corequisites:
-  all:
-    - ISYS90026
-    - COMP90049
+# 2027 Handbook: ISYS90026 (Information Systems students) or COMP90049 (IT, Computer Science,
+# Software Engineering students), either may be taken in the same semester (no corequisites).
+prerequisites:
+  any:
+    - subject: ISYS90026
+      concurrent: true
+    - subject: COMP90049
+      concurrent: true
+    - manual: The equivalent of COMP90049 Introduction to Machine Learning
+corequisites: none
 non_allowed: []
 skills:
   - writing

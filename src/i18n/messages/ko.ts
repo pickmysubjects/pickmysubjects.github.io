@@ -357,6 +357,7 @@ export const ko: Messages = {
     mcsofteng: "WAM 65, 수학 25학점과 프로그래밍 25학점. 멜버른대 Computing and Software Systems 전공 또는 컴퓨팅 관련 공학 학위와 WAM 65: 최대 100학점 인정",
     mcis: "전공 무관 학사 WAM 65. 관련 경력 1년이면 최대 50학점, 정보시스템 학위와 경력 2년이면 최대 100학점 인정",
     mcfinance: "금융 전공 학사, 그리고 Corporate Finance, Investments, Derivative Securities(또는 동등 과목) 이수",
+    mccs: "컴퓨터 관련 학사 WAM 75, 수학 또는 통계 25학점. 정원은 연구 지도교수 여부에 따라 달라요",
   },
   rule: {
     diploma: "{title}: {rule}",

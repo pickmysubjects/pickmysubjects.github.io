@@ -357,6 +357,7 @@ export const hi: Messages = {
     mcsofteng: "WAM 65, 25 पॉइंट गणित और 25 पॉइंट प्रोग्रामिंग; UniMelb का Computing and Software Systems मेजर या कंप्यूटिंग इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
     mcis: "किसी भी स्नातक डिग्री में WAM 65; एक साल के संबंधित काम से 50 पॉइंट तक, सूचना प्रणाली डिग्री और दो साल के काम से 100 पॉइंट तक क्रेडिट",
     mcfinance: "फ़ाइनेंस मेजर वाली स्नातक डिग्री, साथ में Corporate Finance, Investments और Derivative Securities (या समकक्ष)",
+    mccs: "कंप्यूटिंग स्नातक WAM 75 और 25 पॉइंट गणित या सांख्यिकी; सीटें रिसर्च सुपरवाइज़र पर निर्भर",
   },
   rule: {
     diploma: "{title}: {rule}",

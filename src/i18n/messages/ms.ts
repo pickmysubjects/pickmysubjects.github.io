@@ -357,6 +357,7 @@ export const ms: Messages = {
     mcsofteng: "WAM 65, 25 mata matematik dan 25 mata pengaturcaraan; major Computing and Software Systems UniMelb atau ijazah kejuruteraan pengkomputeran dengan WAM 65: kredit hingga 100 mata",
     mcis: "WAM 65 dalam mana-mana ijazah sarjana muda; kredit hingga 50 mata dengan setahun kerja berkaitan, hingga 100 dengan ijazah Sistem Maklumat dan dua tahun kerja",
     mcfinance: "Ijazah sarjana muda dengan major kewangan, serta Corporate Finance, Investments dan Derivative Securities (atau setara)",
+    mccs: "Ijazah sarjana muda pengkomputeran WAM 75 dan 25 mata matematik atau statistik; tempat bergantung pada penyelia penyelidikan",
   },
   rule: {
     diploma: "{title}: {rule}",

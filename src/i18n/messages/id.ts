@@ -357,6 +357,7 @@ export const id: Messages = {
     mcsofteng: "WAM 65, 25 poin matematika dan 25 poin pemrograman; jurusan Computing and Software Systems UniMelb atau gelar teknik komputasi dengan WAM 65: kredit hingga 100 poin",
     mcis: "WAM 65 dari gelar sarjana apa pun; kredit hingga 50 poin dengan setahun kerja terkait, hingga 100 dengan gelar Sistem Informasi dan dua tahun kerja",
     mcfinance: "Sarjana dengan jurusan keuangan, plus Corporate Finance, Investments, dan Derivative Securities (atau setara)",
+    mccs: "Sarjana bidang komputasi WAM 75 dan 25 poin matematika atau statistika; kuota bergantung pada pembimbing riset",
   },
   rule: {
     diploma: "{title}: {rule}",

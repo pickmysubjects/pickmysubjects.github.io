@@ -357,6 +357,7 @@ export const zhTW: Messages = {
     mcsofteng: "WAM 65，修過 25 學分數學和 25 學分程式設計；墨大 Computing and Software Systems 主修或資訊相關工程學位且 WAM 65：最多抵免 100 學分",
     mcis: "任何學士 WAM 65；有一年相關工作最多抵免 50 學分，資訊系統學士加兩年工作最多抵免 100 學分",
     mcfinance: "主修金融的學士，並修過 Corporate Finance、Investments 和 Derivative Securities（或同等課程）",
+    mccs: "資訊相關學士 WAM 75，並修過 25 學分數學或統計；名額取決於有沒有研究指導老師",
   },
   rule: {
     diploma: "{title}：{rule}",

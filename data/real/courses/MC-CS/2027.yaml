@@ -1,0 +1,42 @@
+# Master of Computer Science, 2027 Handbook. Facts re-expressed in our own words.
+# 200 points: a year of coursework, then a 100-point research project in four parts. Entry is
+# competitive (cognate degree, WAM 75) and depends on a supervisor being available.
+code: MC-CS
+title: Master of Computer Science
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mccs
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-cs/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: research-methods
+    kind: compulsory
+    # Taken in the semester just before the research project starts.
+    subjects: [COMP90044]
+    year: 1
+    description: COMP90044 Research Methods
+  - id: foundational
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [COMP90049, COMP90048, COMP90015, COMP90054, INFO90004, GEOM90008] }
+    description: 25 to 37.5 points of foundational computer science
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 50, from: [SWEN90010, COMP90077, MULT90063, COMP90084, SWEN90004, COMP90051, COMP90042, COMP90083, COMP90086, COMP90087, COMP90089, ELEN90095, COMP90073, COMP90074, SWEN90006, COMP90043, INFO90003, INFO90007, INFO90005, INFO90006, COMP90020, COMP90024, COMP90025, COMP90018, COMP90045, GEOM90006, GEOM90038, GEOM90007, COMP90050, COMP90014, COMP90016, ELEN90094, COMP90088] }
+    description: 50 to 62.5 points of Year 1 electives
+  - id: research-project
+    kind: compulsory
+    # Full-time: Parts 1 and 2 together, then Parts 3 and 4 together.
+    subjects: [COMP90078, COMP90079, COMP90080, COMP90081]
+    year: 2
+    description: The research project, Parts 1 to 4 (100 points)

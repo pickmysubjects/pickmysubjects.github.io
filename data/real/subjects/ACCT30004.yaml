@@ -9,15 +9,20 @@ offerings:
   "2027":
     - semester-1
     - semester-2
+# 2027 Handbook: ACCT30001 may also be taken in the same semester (no corequisites).
 prerequisites:
-  all:
-    - ACCT20001
-    - ACCT30001
-corequisites:
   any:
-    - ACCT30001
-    - ACCT20007
-    - ACCT10003
+    - all:
+        - ACCT20001
+        - subject: ACCT30001
+          concurrent: true
+    - all:
+        - any:
+            - ACCT20007
+            - ACCT10003
+        - subject: ACCT30001
+          concurrent: true
+corequisites: none
 non_allowed: []
 skills:
   - business

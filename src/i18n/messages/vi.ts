@@ -357,6 +357,7 @@ export const vi: Messages = {
     mcsofteng: "WAM 65, 25 điểm toán và 25 điểm lập trình; chuyên ngành Computing and Software Systems của UniMelb hoặc bằng kỹ thuật ngành máy tính với WAM 65: miễn tối đa 100 điểm",
     mcis: "WAM 65 với bằng cử nhân bất kỳ; một năm làm việc liên quan được miễn tối đa 50 điểm, bằng Hệ thống thông tin cộng hai năm làm việc tối đa 100 điểm",
     mcfinance: "Cử nhân chuyên ngành tài chính, đã học Corporate Finance, Investments và Derivative Securities (hoặc tương đương)",
+    mccs: "Cử nhân ngành máy tính WAM 75 và 25 điểm toán hoặc thống kê; số chỗ phụ thuộc vào người hướng dẫn nghiên cứu",
   },
   rule: {
     diploma: "{title}: {rule}",
