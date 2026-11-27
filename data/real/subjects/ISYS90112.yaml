@@ -1,0 +1,39 @@
+code: ISYS90112
+title: Business Process Analytics
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: ISYS90081
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - business
+topics:
+  - data-science
+  - management
+assessment:
+  - kind: report
+    weight: 15
+    group: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 35
+    group: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90112
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

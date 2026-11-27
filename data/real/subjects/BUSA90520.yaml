@@ -1,0 +1,71 @@
+code: BUSA90520
+title: Data Wrangling and Visualisation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-MGMTAFN
+          note: "Admission into one of: MC-MGMTAFN Master of Management (Accounting and Finance) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-AEMTRCS
+          note: "Admission into one of: MC-MGMTAFN Master of Management (Accounting and Finance) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+        - admission: MC-AECOENH
+          note: "Admission into one of: MC-MGMTAFN Master of Management (Accounting and Finance) MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced)"
+    - all:
+        - any:
+            - ECOM90009
+            - MGMT90141
+        - any:
+            - ACCT90004
+            - ACCT90041
+            - ECON90015
+            - FNCE90060
+    - manual: Completion of a Bachelor's Degree in Commerce (or related discipline i.e. Business, Accounting/Finance, Economics)
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - business
+topics:
+  - data-science
+  - business
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/busa90520
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

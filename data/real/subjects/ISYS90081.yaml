@@ -1,0 +1,43 @@
+code: ISYS90081
+title: Business Process Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: ISYS90049
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - data
+topics:
+  - management
+  - business
+assessment:
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: report
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90081
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

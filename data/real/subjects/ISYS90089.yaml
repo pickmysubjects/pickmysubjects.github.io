@@ -1,0 +1,43 @@
+code: ISYS90089
+title: Strategic Change Leadership
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: ISYS90050
+corequisites: none
+non_allowed:
+  - ISYS90040
+skills:
+  - business
+  - writing
+topics:
+  - management
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 35
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90089
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,48 @@
+code: BISY90009
+title: Managing Information Technology
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - data
+topics:
+  - management
+  - accounting
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bisy90009
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

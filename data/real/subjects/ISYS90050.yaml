@@ -1,0 +1,61 @@
+code: ISYS90050
+title: IT Project and Change Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - ISYS90026
+    - admission: MC-DINFENG
+      note: Admission into the Information Systems specialisation (formal) in the MC-DINFENG Master of Digital Infrastructure Engineering
+corequisites: none
+non_allowed:
+  - SWEN90016
+skills:
+  - business
+topics:
+  - management
+assessment:
+  - kind: quiz
+    weight: 5
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+  - kind: report
+    weight: 30
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: report
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: quiz
+    weight: 5
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90050
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

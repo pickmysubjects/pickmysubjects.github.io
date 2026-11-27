@@ -1,0 +1,60 @@
+code: ISYS90119
+title: Information Systems Capstone Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: ISYS90050
+corequisites:
+  all:
+    - ISYS90038
+    - ISYS90043
+non_allowed: []
+skills:
+  - business
+  - presentation
+topics:
+  - management
+  - business
+assessment:
+  - kind: project
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: project
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 15
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 1.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90119
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

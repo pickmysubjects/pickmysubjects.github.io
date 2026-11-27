@@ -1,0 +1,48 @@
+# Master of Information Systems, 2027 Handbook. Facts re-expressed in our own words.
+# 200 points, no specialisations: compulsory subjects, a capstone and 50 points of electives.
+code: MC-IS
+title: Master of Information Systems
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course, course-extra]
+# General electives: the listed ones (COMP9, SWEN9 and INFO9 subjects also count, with a few
+# exceptions; plans take the listed ones). At most 25 points of them.
+extra_subjects: [GEOM90007, BISY90009, MGMT90141, BUSA90520, MKTG90017, MGMT90280, MGMT90267]
+entry_note: mcis
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-is/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [ISYS90026, INFO90002, COMP90059, ISYS90049, ISYS90090, ISYS90045, ISYS90118]
+    year: 1
+    description: Year 1 compulsory subjects (87.5 points)
+  - id: year2
+    kind: compulsory
+    subjects: [ISYS90050, ISYS90043, ISYS90038]
+    year: 2
+    description: Year 2 compulsory subjects (37.5 points)
+  - id: capstone
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ENGR90033, INFO90010, ISYS90119, COMP90099] }
+      - - all: [ISYS90109, ISYS90110]
+    description: A 25-point capstone (a capstone subject, or the IS research project)
+  - id: mis-electives
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ISYS90089, ISYS90051, ISYS90097, ISYS90081, ISYS90112, ISYS90039, ISYS90035, ISYS90036, ISYS90069, ISYS90117, ISYS90120] }
+    description: At least 25 points of Master of Information Systems electives
+  - id: general-cap
+    kind: points
+    category: course-extra
+    max: 25
+    description: No more than 25 points of general electives

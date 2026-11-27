@@ -1,0 +1,55 @@
+code: MGMT90141
+title: Business Analysis and Decision Making
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - data
+topics:
+  - management
+  - business
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: presentation
+    weight: 5
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90141
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

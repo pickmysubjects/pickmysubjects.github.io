@@ -1,0 +1,64 @@
+code: ISYS90038
+title: IS Strategy and Governance
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - ISYS90050
+        - ISYS90045
+    - admission: MC-DINFENG
+      note: Admission into the Information Systems specialisation (formal) in the MC-DINFENG Master of Digital Infrastructure Engineering
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - management
+  - business
+assessment:
+  - kind: participation
+    weight: 10
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 0
+    hurdle: true
+  - kind: assignment
+    weight: 0
+    group: true
+    timing:
+      kind: weeks
+      weeks:
+        - 5
+        - 10
+        - 12
+      text: Weeks 5, 10 and 12
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 0
+    group: true
+    hurdle: true
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90038
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,52 @@
+code: MGMT90267
+title: Artificial Intelligence in Organisations
+level: 9
+points: 12.5
+offerings: unknown
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - statistics
+  - business
+topics:
+  - machine-learning
+  - ai
+  - management
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt90267
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

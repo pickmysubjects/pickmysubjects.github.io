@@ -1,0 +1,44 @@
+code: ISYS90051
+title: Digital Impacts on Business and Society
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: COMP90049
+corequisites:
+  all:
+    - ISYS90026
+    - COMP90049
+non_allowed: []
+skills:
+  - writing
+topics:
+  - society
+  - ethics
+  - law
+assessment:
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: exam
+    weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/isys90051
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
