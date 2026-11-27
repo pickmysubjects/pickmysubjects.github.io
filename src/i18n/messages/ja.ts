@@ -367,6 +367,7 @@ export const ja: Messages = {
     mcbiomeng: "任意の学士で WAM 65、Calculus 2・Linear Algebra 相当の数学と、生物または化学25単位、または Engineering Mathematics。メルボルン大学の Biomedical Engineering Systems 専攻、または医用工学の学位で WAM 65：最大100単位の単位認定",
     mcensysen: "4年制の工学学士で WAM 65、または環境科学・自然地理などの関連学士で WAM 65 と2年の実務経験。出願時に履歴書が必要",
     engmgmt: "4年制の工学学士で WAM 65、または関連分野の学士で WAM 65 かつ卒業後2年の関連職務経験。選考に履歴書が必要",
+    engstruct: "4年制の構造工学学位で WAM 65、または土木工学で WAM 65 かつ1年の実務経験か最終学年の多くが構造系科目。短い学位の場合はより長い実務経験が必要",
     mcis: "分野を問わない学士で WAM 65。関連職務1年で最大50単位、情報システムの学位と2年の職務経験で最大100単位の単位認定",
     mcfinance: "金融専攻の学士で、Corporate Finance・Investments・Derivative Securities（または同等科目）を履修済み",
     mccs: "コンピュータ系の学士で WAM 75、数学か統計25単位。定員は研究指導教員の空きによります",

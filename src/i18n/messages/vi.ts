@@ -367,6 +367,7 @@ export const vi: Messages = {
     mcbiomeng: "WAM 65 ở bằng cử nhân bất kỳ, toán tương đương Calculus 2 và Linear Algebra, cùng 25 điểm sinh hoặc hóa, hoặc Engineering Mathematics; chuyên ngành Biomedical Engineering Systems của UniMelb hoặc bằng kỹ thuật y sinh với WAM 65: miễn tối đa 100 điểm",
     mcensysen: "WAM 65 ở bằng kỹ thuật bốn năm, hoặc WAM 65 ở ngành liên quan như khoa học môi trường hay địa lý tự nhiên cùng hai năm kinh nghiệm liên quan; cần nộp CV",
     engmgmt: "Cử nhân Kỹ thuật 4 năm với WAM 65, hoặc cử nhân ngành liên quan với WAM 65 và 2 năm kinh nghiệm liên quan sau tốt nghiệp; cần nộp CV",
+    engstruct: "Bằng kỹ thuật kết cấu 4 năm với WAM 65; hoặc kỹ thuật xây dựng WAM 65 kèm một năm kinh nghiệm hoặc năm cuối chủ yếu học kết cấu; bằng ngắn hơn cần nhiều năm kinh nghiệm hơn",
     mcis: "WAM 65 với bằng cử nhân bất kỳ; một năm làm việc liên quan được miễn tối đa 50 điểm, bằng Hệ thống thông tin cộng hai năm làm việc tối đa 100 điểm",
     mcfinance: "Cử nhân chuyên ngành tài chính, đã học Corporate Finance, Investments và Derivative Securities (hoặc tương đương)",
     mccs: "Cử nhân ngành máy tính WAM 75 và 25 điểm toán hoặc thống kê; số chỗ phụ thuộc vào người hướng dẫn nghiên cứu",

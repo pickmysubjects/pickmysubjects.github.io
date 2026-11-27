@@ -367,6 +367,7 @@ export const zhCN: Messages = {
     mcbiomeng: "任意本科 WAM 65，修过相当于 Calculus 2、Linear Algebra 的数学，以及 25 学分生物或化学，或修过 Engineering Mathematics；墨大 Biomedical Engineering Systems 专业或生物医学工程学位且 WAM 65：最多减免 100 学分",
     mcensysen: "四年制工程本科 WAM 65，或环境科学、自然地理等相关本科 WAM 65 加两年相关工作经验；申请时需交简历",
     engmgmt: "四年制工程学士且 WAM 65，或相关专业学士且 WAM 65 并有毕业后两年相关工作经验；申请需交简历",
+    engstruct: "四年制结构工程学位且 WAM 65；或土木工程 WAM 65 并有一年工作经验或最后一年以结构课为主；学位较短者需更多年工作经验",
     mcis: "任何本科 WAM 65；有一年相关工作最多减免 50 学分，信息系统本科加两年工作最多减免 100 学分",
     mcfinance: "主修金融的本科，并修过 Corporate Finance、Investments 和 Derivative Securities（或同等课程）",
     mccs: "计算机相关本科 WAM 75，并修过 25 学分数学或统计；名额取决于有没有研究导师",

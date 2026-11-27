@@ -1,0 +1,41 @@
+# Master of Engineering Structures, 2027 Handbook. Facts re-expressed in our own words.
+# 100 points, no specialisations. An old-style course code, so it is flagged `graduate`.
+code: 746ST
+title: Master of Engineering Structures
+year: 2027
+total_points: 100
+standard_load: 50
+graduate: true
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: engstruct
+# Entry needs a four-year structural or civil engineering degree (Handbook entry requirements), so
+# the structural analysis its subjects build on counts as done: our reading, as the page names no
+# UniMelb subjects.
+assumed_done: [ENGR20003, CVEN30009, CVEN90049]
+handbook: https://handbook.unimelb.edu.au/2027/courses/746st/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 100
+    description: 100 points in total
+  - id: core
+    kind: compulsory
+    subjects: [CVEN90024, CVEN90035]
+    description: Both core subjects (25 points)
+  - id: structural
+    kind: requirement
+    paths:
+      - - choose: { points: 37.5, from: [CVEN90017, CVEN90026, CVEN90016, CVEN90018, CVEN90062] }
+    description: At least three Structural Engineering selectives (37.5 points)
+  # The other 37.5 points: more structural selectives or up to three Infrastructure Engineering
+  # electives. CVEN90043 and CVEN90056 are also listed but aren't offered in 2027; "one elective not
+  # on the list, with approval" is left for the student to arrange.
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 37.5, from: [CVEN90017, CVEN90026, CVEN90016, CVEN90018, CVEN90062, ENEN90031, ENEN90033, ENEN90027, ENGM90007, CVEN90045, CVEN90027, ENEN90011, ENEN90014, ENGM90006, CVEN90063, CVEN90067, CVEN90068, CVEN90070, CVEN90071] }
+    description: 37.5 more points of structural selectives or infrastructure electives

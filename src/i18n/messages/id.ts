@@ -367,6 +367,7 @@ export const id: Messages = {
     mcbiomeng: "WAM 65 di gelar sarjana apa pun, matematika setara Calculus 2 dan Linear Algebra, serta 25 poin biologi atau kimia, atau Engineering Mathematics; jurusan Biomedical Engineering Systems UniMelb atau gelar teknik biomedis dengan WAM 65: kredit hingga 100 poin",
     mcensysen: "WAM 65 di gelar teknik empat tahun, atau WAM 65 di bidang terkait seperti ilmu lingkungan atau geografi fisik plus dua tahun pengalaman kerja terkait; perlu menyerahkan CV",
     engmgmt: "Sarjana Teknik empat tahun dengan WAM 65, atau sarjana bidang terkait dengan WAM 65 dan dua tahun pengalaman relevan setelah lulus; perlu CV",
+    engstruct: "Gelar teknik struktur empat tahun dengan WAM 65; atau teknik sipil WAM 65 plus setahun pengalaman atau tahun terakhir banyak mata kuliah struktur; gelar lebih pendek butuh pengalaman lebih lama",
     mcis: "WAM 65 dari gelar sarjana apa pun; kredit hingga 50 poin dengan setahun kerja terkait, hingga 100 dengan gelar Sistem Informasi dan dua tahun kerja",
     mcfinance: "Sarjana dengan jurusan keuangan, plus Corporate Finance, Investments, dan Derivative Securities (atau setara)",
     mccs: "Sarjana bidang komputasi WAM 75 dan 25 poin matematika atau statistika; kuota bergantung pada pembimbing riset",

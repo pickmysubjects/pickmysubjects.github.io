@@ -367,6 +367,7 @@ export const ms: Messages = {
     mcbiomeng: "WAM 65 dalam mana-mana ijazah sarjana muda, matematik setara Calculus 2 dan Linear Algebra, serta 25 mata biologi atau kimia, atau Engineering Mathematics; major Biomedical Engineering Systems UniMelb atau ijazah kejuruteraan bioperubatan dengan WAM 65: kredit hingga 100 mata",
     mcensysen: "WAM 65 dalam ijazah kejuruteraan empat tahun, atau WAM 65 dalam ijazah berkaitan seperti sains alam sekitar atau geografi fizikal serta dua tahun pengalaman berkaitan; CV diperlukan",
     engmgmt: "Sarjana Muda Kejuruteraan empat tahun dengan WAM 65, atau ijazah berkaitan dengan WAM 65 dan dua tahun pengalaman berkaitan selepas tamat; CV diperlukan",
+    engstruct: "Ijazah kejuruteraan struktur empat tahun dengan WAM 65; atau kejuruteraan awam WAM 65 dengan setahun pengalaman atau tahun akhir banyak subjek struktur; ijazah lebih pendek perlu lebih banyak tahun pengalaman",
     mcis: "WAM 65 dalam mana-mana ijazah sarjana muda; kredit hingga 50 mata dengan setahun kerja berkaitan, hingga 100 dengan ijazah Sistem Maklumat dan dua tahun kerja",
     mcfinance: "Ijazah sarjana muda dengan major kewangan, serta Corporate Finance, Investments dan Derivative Securities (atau setara)",
     mccs: "Ijazah sarjana muda pengkomputeran WAM 75 dan 25 mata matematik atau statistik; tempat bergantung pada penyelia penyelidikan",

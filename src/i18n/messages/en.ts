@@ -373,6 +373,7 @@ export const en = {
     mcbiomeng: "WAM 65 in any bachelor's degree, maths like Calculus 2 and Linear Algebra, and 25 points of biology or chemistry, or Engineering Mathematics; a UniMelb Biomedical Engineering Systems major or a biomedical engineering degree with WAM 65: up to 100 points of credit",
     mcensysen: "WAM 65 in a four-year engineering degree, or WAM 65 in a related degree such as environmental science or physical geography plus two years of relevant work; a CV is part of the application",
     engmgmt: "A four-year Bachelor of Engineering with WAM 65, or a related bachelor's with WAM 65 and two years of relevant work since graduating; a CV is part of selection",
+    engstruct: "A four-year structural engineering degree with WAM 65; or civil engineering with WAM 65 plus a year of work or a structures-heavy final year; or more years of work after a shorter degree",
     mcis: "WAM 65 in any bachelor's; up to 50 points of credit with a year of related work, up to 100 with an Information Systems degree and two years' work",
     mcfinance: "A bachelor's with a finance major, plus Corporate Finance, Investments and Derivative Securities (or equivalents)",
     mccs: "A computing bachelor's with WAM 75 and 25 points of maths or statistics; places depend on a research supervisor",
