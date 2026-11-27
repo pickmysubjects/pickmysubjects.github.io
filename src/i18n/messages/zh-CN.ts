@@ -355,6 +355,7 @@ export const zhCN: Messages = {
     mcit100: '四年制计算机本科，WAM 65，另有该方向的高阶课程或两年相关工作：最多减免 100 学分',
     mcdatasc: 'WAM 65，修过一门编程课、Calculus 2 和 Linear Algebra（或同等课程）；你的背景决定能选哪些专业方向',
     mcsofteng: "WAM 65，修过 25 学分数学和 25 学分编程；墨大 Computing and Software Systems 专业或计算机相关工程学位且 WAM 65：最多减免 100 学分",
+    mceleceng: "WAM 65，修过相当于 Calculus 2、Linear Algebra 的数学和 Physics 1、2；墨大 Electrical Engineering Systems 专业或电气类工程学位且 WAM 65：最多减免 100 学分",
     mcis: "任何本科 WAM 65；有一年相关工作最多减免 50 学分，信息系统本科加两年工作最多减免 100 学分",
     mcfinance: "主修金融的本科，并修过 Corporate Finance、Investments 和 Derivative Securities（或同等课程）",
     mccs: "计算机相关本科 WAM 75，并修过 25 学分数学或统计；名额取决于有没有研究导师",

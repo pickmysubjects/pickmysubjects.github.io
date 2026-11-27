@@ -355,6 +355,7 @@ export const vi: Messages = {
     mcit100: 'Bằng máy tính bốn năm, WAM 65, cộng môn nâng cao trong ngành hoặc hai năm làm việc liên quan: miễn tối đa 100 điểm',
     mcdatasc: 'WAM 65, một môn lập trình, Calculus 2 và Linear Algebra (hoặc tương đương); nền tảng của bạn quyết định chuyên ngành hẹp nào được mở',
     mcsofteng: "WAM 65, 25 điểm toán và 25 điểm lập trình; chuyên ngành Computing and Software Systems của UniMelb hoặc bằng kỹ thuật ngành máy tính với WAM 65: miễn tối đa 100 điểm",
+    mceleceng: "WAM 65, toán tương đương Calculus 2 và Linear Algebra, cùng Physics 1 và 2; chuyên ngành Electrical Engineering Systems của UniMelb hoặc bằng kỹ thuật điện với WAM 65: miễn tối đa 100 điểm",
     mcis: "WAM 65 với bằng cử nhân bất kỳ; một năm làm việc liên quan được miễn tối đa 50 điểm, bằng Hệ thống thông tin cộng hai năm làm việc tối đa 100 điểm",
     mcfinance: "Cử nhân chuyên ngành tài chính, đã học Corporate Finance, Investments và Derivative Securities (hoặc tương đương)",
     mccs: "Cử nhân ngành máy tính WAM 75 và 25 điểm toán hoặc thống kê; số chỗ phụ thuộc vào người hướng dẫn nghiên cứu",

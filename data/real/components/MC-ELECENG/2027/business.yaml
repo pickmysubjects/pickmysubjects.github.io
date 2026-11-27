@@ -1,0 +1,13 @@
+id: mc-eleceng-business
+course: MC-ELECENG
+year: 2027
+kind: specialisation
+title: Business
+points: 75
+# 50 points of Year 3 core (must be in Year 3), plus 25 points of Group A electives.
+requirements:
+  - all: [ENGM90006, ENGM90012, ENGM90011, ENGM90013]
+    year: 3
+  - choose: { points: 25, from: [ELEN90026, ELEN90051, ELEN90052, ELEN90053, ELEN90059, ELEN90060, ELEN90061, ELEN90062, ELEN90064, ELEN90075, ELEN90077, ELEN90088, ELEN90089, ELEN90090, ELEN90091, ELEN90092, ELEN90093, ELEN90094, ELEN90011, ELEN90095, ELEN90096, ELEN90083, ELEN90099, ELEN90097, ELEN90098] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-eleceng-spec-5
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

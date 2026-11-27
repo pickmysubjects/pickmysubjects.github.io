@@ -355,6 +355,7 @@ export const id: Messages = {
     mcit100: 'Gelar komputasi empat tahun, WAM 65, ditambah studi lanjutan di bidang itu atau dua tahun kerja terkait: kredit hingga 100 poin',
     mcdatasc: 'WAM 65, satu mata kuliah pemrograman, Calculus 2 dan Linear Algebra (atau setara); latar belakangmu menentukan peminatan mana yang terbuka',
     mcsofteng: "WAM 65, 25 poin matematika dan 25 poin pemrograman; jurusan Computing and Software Systems UniMelb atau gelar teknik komputasi dengan WAM 65: kredit hingga 100 poin",
+    mceleceng: "WAM 65, matematika setara Calculus 2 dan Linear Algebra, serta Physics 1 dan 2; jurusan Electrical Engineering Systems UniMelb atau gelar teknik elektro dengan WAM 65: kredit hingga 100 poin",
     mcis: "WAM 65 dari gelar sarjana apa pun; kredit hingga 50 poin dengan setahun kerja terkait, hingga 100 dengan gelar Sistem Informasi dan dua tahun kerja",
     mcfinance: "Sarjana dengan jurusan keuangan, plus Corporate Finance, Investments, dan Derivative Securities (atau setara)",
     mccs: "Sarjana bidang komputasi WAM 75 dan 25 poin matematika atau statistika; kuota bergantung pada pembimbing riset",

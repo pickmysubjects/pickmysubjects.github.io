@@ -1,0 +1,13 @@
+id: mc-eleceng-autonomous-systems
+course: MC-ELECENG
+year: 2027
+kind: specialisation
+title: Autonomous Systems
+points: 75
+# 50 points of Year 3 core (must be in Year 3), plus 25 points of Group A or B electives.
+requirements:
+  - all: [ELEN90052, ELEN90090, ELEN90064, ELEN90095]
+    year: 3
+  - choose: { points: 25, from: [ELEN90026, ELEN90051, ELEN90053, ELEN90059, ELEN90060, ELEN90061, ELEN90062, ELEN90075, ELEN90077, ELEN90088, ELEN90089, ELEN90091, ELEN90092, ELEN90093, ELEN90094, ELEN90011, ELEN90096, ELEN90083, ELEN90099, ELEN90097, ELEN90098, MAST90014, COMP90015, MCEN90017, ENGR90036, BUSA90485, ENGR90026, ENGR90033, ENGR90034, MULT90063] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-eleceng-spec-2
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

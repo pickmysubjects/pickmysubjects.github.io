@@ -355,6 +355,7 @@ export const ko: Messages = {
     mcit100: '4년제 컴퓨팅 학위, WAM 65, 해당 분야 심화 과목 또는 2년 관련 경력: 최대 100학점 인정',
     mcdatasc: 'WAM 65, 프로그래밍 과목, Calculus 2, Linear Algebra(또는 동등 과목); 배경에 따라 고를 수 있는 세부 전공이 정해집니다',
     mcsofteng: "WAM 65, 수학 25학점과 프로그래밍 25학점. 멜버른대 Computing and Software Systems 전공 또는 컴퓨팅 관련 공학 학위와 WAM 65: 최대 100학점 인정",
+    mceleceng: "WAM 65, Calculus 2·Linear Algebra 수준의 수학과 Physics 1·2. 멜버른대 Electrical Engineering Systems 전공 또는 전기 관련 공학 학위와 WAM 65: 최대 100학점 인정",
     mcis: "전공 무관 학사 WAM 65. 관련 경력 1년이면 최대 50학점, 정보시스템 학위와 경력 2년이면 최대 100학점 인정",
     mcfinance: "금융 전공 학사, 그리고 Corporate Finance, Investments, Derivative Securities(또는 동등 과목) 이수",
     mccs: "컴퓨터 관련 학사 WAM 75, 수학 또는 통계 25학점. 정원은 연구 지도교수 여부에 따라 달라요",

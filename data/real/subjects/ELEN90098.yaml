@@ -1,0 +1,56 @@
+code: ELEN90098
+title: Reinforcement Learning for Engineering
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - ELEN90088
+    - ELEN90097
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - statistics
+  - programming
+topics:
+  - engineering
+  - ai
+  - machine-learning
+  - optimisation
+  - systems
+assessment:
+  - kind: test
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
+  - kind: project
+    weight: 30
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 30
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90098
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

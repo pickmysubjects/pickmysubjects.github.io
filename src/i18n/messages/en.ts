@@ -361,6 +361,7 @@ export const en = {
     mcit100: "A four-year computing degree, WAM 65, plus advanced study in the area or two years' related work: up to 100 points of credit",
     mcdatasc: 'WAM 65, a programming subject, Calculus 2 and Linear Algebra (or equivalents); your background decides which specialisations are open',
     mcsofteng: "WAM 65, 25 points of maths and 25 of programming; a UniMelb Computing and Software Systems major or a computing engineering degree with WAM 65: up to 100 points of credit",
+    mceleceng: "WAM 65, maths like Calculus 2 and Linear Algebra, and Physics 1 and 2; a UniMelb Electrical Engineering Systems major or an electrical engineering degree with WAM 65: up to 100 points of credit",
     mcis: "WAM 65 in any bachelor's; up to 50 points of credit with a year of related work, up to 100 with an Information Systems degree and two years' work",
     mcfinance: "A bachelor's with a finance major, plus Corporate Finance, Investments and Derivative Securities (or equivalents)",
     mccs: "A computing bachelor's with WAM 75 and 25 points of maths or statistics; places depend on a research supervisor",

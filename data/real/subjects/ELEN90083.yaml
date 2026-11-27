@@ -1,0 +1,42 @@
+code: ELEN90083
+title: Electrical Engineering Research Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  permission: coordinator
+  note: Enrolment in this subject requires approval by the subject coordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - writing
+  - presentation
+topics:
+  - engineering
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 8
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90083
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

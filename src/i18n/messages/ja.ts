@@ -355,6 +355,7 @@ export const ja: Messages = {
     mcit100: '4年制のコンピューティング学位、WAM 65、その分野の上級科目または2年の関連職務経験：最大100単位の単位認定',
     mcdatasc: 'WAM 65、プログラミング科目、Calculus 2、Linear Algebra（または同等科目）；経歴によって選べる専攻分野が決まります',
     mcsofteng: "WAM 65、数学25単位とプログラミング25単位。メルボルン大学の Computing and Software Systems 専攻、またはコンピューティング系の工学学位で WAM 65：最大100単位の単位認定",
+    mceleceng: "WAM 65、Calculus 2・Linear Algebra 相当の数学と Physics 1・2。メルボルン大学の Electrical Engineering Systems 専攻、または電気系の工学学位で WAM 65：最大100単位の単位認定",
     mcis: "分野を問わない学士で WAM 65。関連職務1年で最大50単位、情報システムの学位と2年の職務経験で最大100単位の単位認定",
     mcfinance: "金融専攻の学士で、Corporate Finance・Investments・Derivative Securities（または同等科目）を履修済み",
     mccs: "コンピュータ系の学士で WAM 75、数学か統計25単位。定員は研究指導教員の空きによります",
