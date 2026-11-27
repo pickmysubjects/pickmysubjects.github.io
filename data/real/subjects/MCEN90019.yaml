@@ -1,0 +1,40 @@
+code: MCEN90019
+title: Advanced Thermodynamics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: MCEN90015
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+topics:
+  - engineering
+  - chemistry
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: exam
+    weight: 60
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90019
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

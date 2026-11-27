@@ -1,0 +1,45 @@
+code: ENGR90024
+title: Computational Fluid Dynamics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - ENGR30002
+    - MCEN30018
+    - BMEN90036
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - programming
+topics:
+  - engineering
+  - physics
+  - modelling
+assessment:
+  - kind: assignment
+    weight: 60
+    hurdle: true
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 1
+      to: 10
+      text: From Week 1 to Week 10
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr90024
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

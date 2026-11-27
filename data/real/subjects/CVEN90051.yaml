@@ -1,0 +1,54 @@
+code: CVEN90051
+title: Civil Hydraulics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - ENGR30002
+    - ENGR30001
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - design
+topics:
+  - engineering
+  - environment
+  - physics
+assessment:
+  - kind: project
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 5
+      text: From Week 2 to Week 5
+  - kind: project
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 9
+      text: From Week 6 to Week 9
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90051
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

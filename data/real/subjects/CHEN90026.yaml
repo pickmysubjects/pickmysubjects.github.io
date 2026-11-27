@@ -1,0 +1,45 @@
+code: CHEN90026
+title: Chemical Engineering Minor Research Proj
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - admission: MC-CHEMENG
+          note: "Admission into or selection of one of the following: MC-CHEMENG Master of Chemical Engineering Chemical specialisation (formal) in the MC-ENG Master of Engineering Chemical with Business specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-CHEMENG Master of Chemical Engineering Chemical specialisation (formal) in the MC-ENG Master of Engineering Chemical with Business specialisation (formal) in the MC-ENG Master of Engineering"
+    - manual: Completion of a minimum of 125 credit points of study towards the 300 point degree. This is inclusive of any advanced standing (i.e. For example, 100 points of advanced standing would only require a student to have completed 25 points of credit before enrolling).
+corequisites: none
+non_allowed:
+  - BIEN90001
+  - CHEN90023
+skills:
+  - writing
+  - presentation
+  - statistics
+topics:
+  - engineering
+  - chemistry
+assessment:
+  - kind: report
+    weight: 75
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: participation
+    weight: 25
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90026
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,56 @@
+code: MCEN90055
+title: Manufacturing Processes and Technology
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - maths
+topics:
+  - engineering
+assessment:
+  - kind: assignment
+    weight: 0
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 6
+      text: From Week 3 to Week 6
+  - kind: test
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90055
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

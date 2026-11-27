@@ -1,0 +1,52 @@
+code: ENGM90007
+title: Project Management Practices
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - business
+topics:
+  - management
+  - engineering
+  - construction
+assessment:
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: test
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 3
+breadth_for: []
+recommended:
+  - CVEN90043
+  - CVEN90045
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engm90007
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

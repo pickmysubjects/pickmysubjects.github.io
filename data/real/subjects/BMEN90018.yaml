@@ -1,0 +1,59 @@
+code: BMEN90018
+title: Biomedical Engineering Capstone Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - all:
+        - BMEN90037
+        - BMEN90039
+    - manual: A minimum of four of level 9 Biomedical Engineering (BMEN) subjects
+    - manual: Completion of a minimum of 200 credit points of study, for Semester 1, 2 and Year Long availabilities.
+corequisites: none
+non_allowed:
+  - BMEN90031
+  - BMEN90032
+  - ENGR90037
+  - ENGR90038
+skills:
+  - writing
+  - presentation
+topics:
+  - engineering
+  - biology
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: project
+    weight: 5
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 60
+  - kind: project
+    weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90018
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,52 @@
+code: ELEN90077
+title: Grid Integration of Renewables
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - manual: Enrolment in a research higher degree (MPhil or PhD) in Engineering
+    - all:
+        - any:
+            - admission: MC-ELECENG
+              note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-ELECENG Master of Electrical Engineering Admission into or selection of one of the following: Electrical specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: Electrical with Business specialisation (formal) in the MC-ENG Master of Engineering"
+            - admission: MC-ENG
+              note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-ELECENG Master of Electrical Engineering Admission into or selection of one of the following: Electrical specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: Electrical with Business specialisation (formal) in the MC-ENG Master of Engineering"
+        - ELEN90060
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - systems
+topics:
+  - engineering
+  - environment
+  - systems
+assessment:
+  - kind: presentation
+    weight: 40
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+  - kind: test
+    weight: 30
+    hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: exam
+    weight: 30
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90077
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

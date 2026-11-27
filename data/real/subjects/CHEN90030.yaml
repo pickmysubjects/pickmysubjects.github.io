@@ -1,0 +1,41 @@
+code: CHEN90030
+title: Chemical Engineering Minor Thesis
+level: 9
+points: 25
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites: CHEN90023
+corequisites: none
+non_allowed:
+  - BIEN90003
+skills:
+  - writing
+  - presentation
+topics:
+  - engineering
+  - chemistry
+assessment:
+  - kind: report
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 25
+    timing:
+      kind: late
+      text: Late in the teaching period
+  - kind: participation
+    weight: 25
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90030
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,62 @@
+code: CHEN90032
+title: Process Simulation and Control
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - CHEN20011
+    - MAST20029
+corequisites: none
+non_allowed:
+  - CHEN30009
+skills:
+  - maths
+  - programming
+topics:
+  - engineering
+  - systems
+  - modelling
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
+  - kind: participation
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 6
+      text: From Week 3 to Week 6
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90032
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

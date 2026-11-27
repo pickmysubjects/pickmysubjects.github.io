@@ -1,0 +1,68 @@
+code: MCEN90032
+title: Sensor Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - all:
+            - any:
+                - ELEN30012
+                - GEOM20013
+                - MCEN30020
+            - any:
+                - MCEN30021
+                - ELEN30013
+                - GEOM30012
+        - all:
+            - MCEN30014
+            - MCEN30019
+    - admission: MC-DINFENG
+      note: "Admission into one of the following: GC-DIENGIN Graduate Certificate in Digital Engineering (Infrastructure), MC-DINFENG Master of Digital Infrastructure Engineering"
+corequisites: none
+non_allowed: []
+skills:
+  - systems
+  - data
+  - presentation
+topics:
+  - engineering
+  - systems
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 9
+      text: From Week 6 to Week 9
+  - kind: assignment
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90032
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

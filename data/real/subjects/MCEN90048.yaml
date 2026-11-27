@@ -1,0 +1,73 @@
+code: MCEN90048
+title: Artificial Intelligence for Engineers
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - MAST20029
+        - BMEN20003
+        - COMP10002
+        - COMP20005
+        - ENGR20005
+    - all:
+        - MAST20030
+        - any:
+            - MAST20009
+            - MAST20032
+        - any:
+            - BMEN20003
+            - COMP10002
+            - COMP20005
+            - ENGR20005
+corequisites: none
+non_allowed: []
+skills:
+  - programming
+  - algorithms
+  - data
+topics:
+  - ai
+  - machine-learning
+  - engineering
+assessment:
+  - kind: assignment
+    weight: 5
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 5
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: test
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90048
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

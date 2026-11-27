@@ -1,0 +1,50 @@
+code: ELEN90055
+title: Control Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - BMEN30006
+    - ELEN30012
+    - MCEN30020
+    - MCEN30016
+corequisites: none
+non_allowed:
+  - ELEN30001
+  - MCEN30008
+skills:
+  - maths
+  - programming
+  - lab
+topics:
+  - engineering
+  - systems
+assessment:
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90055
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

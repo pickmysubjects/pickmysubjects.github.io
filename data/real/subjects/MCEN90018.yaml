@@ -1,0 +1,32 @@
+code: MCEN90018
+title: Advanced Fluid Dynamics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: MCEN90008
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - data
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: exam
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+  - kind: report
+    weight: 20
+  - kind: assignment
+    weight: 30
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90018
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,47 @@
+code: ELEN90089
+title: Communication Design Clinic
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - ELEN90057
+    - ELEN90058
+    - ELEN90066
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - programming
+  - teamwork
+  - lab
+topics:
+  - engineering
+  - systems
+assessment:
+  - kind: test
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 9
+      text: From Week 6 to Week 9
+  - kind: project
+    weight: 50
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: report
+    weight: 30
+    group: true
+  - kind: project
+    weight: 10
+    group: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90089
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

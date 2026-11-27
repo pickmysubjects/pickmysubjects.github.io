@@ -1,0 +1,52 @@
+code: CHEN90011
+title: Wastewater and Environmental Remediation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-CHEMENG
+      note: "Admission into one of the following: MC-CHEMENG Master of Chemical Engineering, Business specialisation (formal) in the MC-CHEMENG Master of Chemical Engineering, Materials and Minerals specialisation (formal) in the MC-CHEMENG Master of Chemical Engineering, Sustainability and Environment specialisation (formal) in the MC-CHEMENG Master of Chemical Engineering"
+    - permission: coordinator
+      note: All other Master of Engineering students may seek approval from their Course Coordinator and the Subject Coordinator to take this subject.
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - design
+topics:
+  - environment
+  - engineering
+  - chemistry
+assessment:
+  - kind: test
+    weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90011
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

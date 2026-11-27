@@ -1,0 +1,44 @@
+code: BMEN90035
+title: Biosignal Processing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: BMEN30006
+corequisites: none
+non_allowed:
+  - ELEN90052
+  - ELEN90058
+skills:
+  - maths
+  - programming
+topics:
+  - engineering
+  - health
+assessment:
+  - kind: report
+    weight: 50
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90035
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

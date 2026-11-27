@@ -1,0 +1,54 @@
+code: CHEN90035
+title: Downstream Bioprocessing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites:
+  any:
+    - CHEN30016
+    - manual: (Prior to 2023)
+    - admission: MC-CHEMENG
+      note: Admission into the MC-CHEMENG Master of Chemical Engineering, Chemical specialisation (formal) in the MC-ENG Master of Engineering
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - programming
+topics:
+  - engineering
+  - biology
+  - chemistry
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 3
+      text: From Week 1 to Week 3
+  - kind: test
+    weight: 35
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: project
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: test
+    weight: 35
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90035
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

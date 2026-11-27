@@ -1,0 +1,50 @@
+code: ELEN90064
+title: Advanced Control Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - ELEN90055
+    - ELEN30001
+    - MCEN30008
+corequisites: none
+non_allowed:
+  - ELEN40007
+skills:
+  - maths
+  - programming
+  - lab
+topics:
+  - engineering
+  - systems
+  - optimisation
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: project
+    weight: 30
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: project
+    weight: 30
+    hurdle: true
+  - kind: presentation
+    weight: 20
+    hurdle: true
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90064
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,51 @@
+code: BMEN90027
+title: Systems and Synthetic Biology
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - MAST20029
+    - all:
+        - any:
+            - MAST20009
+            - MAST20032
+        - MAST20030
+    - manual: Equivalent Mathematics subject
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - programming
+topics:
+  - biology
+  - modelling
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90027
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

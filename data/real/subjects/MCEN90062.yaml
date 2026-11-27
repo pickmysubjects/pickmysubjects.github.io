@@ -1,0 +1,44 @@
+code: MCEN90062
+title: Materials Modelling and Characterisation
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - maths
+topics:
+  - engineering
+  - chemistry
+assessment:
+  - kind: exam
+    weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90062
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

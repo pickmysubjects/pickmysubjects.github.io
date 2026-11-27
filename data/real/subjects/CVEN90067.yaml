@@ -1,0 +1,40 @@
+code: CVEN90067
+title: Port Structural Design
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - engineering
+  - construction
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: afterTeaching
+      weeks: 6
+      text: 6 Weeks after the end of teaching
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: quiz
+    weight: 15
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90067
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,59 @@
+code: MCEN90052
+title: Advanced Materials
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - MCEN90014
+    - CHEN90043
+corequisites: none
+non_allowed: []
+skills:
+  - programming
+  - lab
+  - maths
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 9
+      text: From Week 4 to Week 9
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
+  - kind: project
+    weight: 10
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90052
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

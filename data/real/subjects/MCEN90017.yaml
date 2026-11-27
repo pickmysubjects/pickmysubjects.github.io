@@ -1,0 +1,35 @@
+code: MCEN90017
+title: Advanced Motion Control
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: ELEN90064
+corequisites: none
+non_allowed: []
+skills:
+  - systems
+  - maths
+  - design
+topics:
+  - engineering
+  - systems
+assessment:
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90017
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

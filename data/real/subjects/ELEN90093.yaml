@@ -1,0 +1,60 @@
+code: ELEN90093
+title: Microprocessor Design Clinic
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - all:
+        - COMP20005
+        - ELEN90066
+    - any:
+        - ELEN20006
+        - ELEN30014
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - programming
+  - lab
+topics:
+  - engineering
+  - systems
+  - software-engineering
+assessment:
+  - kind: test
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
+  - kind: report
+    weight: 25
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: project
+    weight: 30
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 25
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90093
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

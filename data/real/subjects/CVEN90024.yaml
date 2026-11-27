@@ -1,0 +1,44 @@
+code: CVEN90024
+title: High Rise Structures
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - manual: Admission into the 746ST Master of Engineering Structures
+    - CVEN30009
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - design
+topics:
+  - engineering
+  - construction
+  - architecture
+assessment:
+  - kind: assignment
+    weight: 4
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 26
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: exam
+    weight: 70
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4.5
+breadth_for: []
+recommended:
+  - CVEN90049
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90024
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

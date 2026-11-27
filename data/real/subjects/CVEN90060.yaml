@@ -1,0 +1,60 @@
+code: CVEN90060
+title: Integrated Infrastructure Design
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - CVEN90049
+    - CVEN90050
+    - CVEN90045
+corequisites: none
+non_allowed:
+  - CVEN90052
+skills:
+  - design
+  - teamwork
+  - presentation
+  - writing
+topics:
+  - engineering
+  - construction
+  - environment
+assessment:
+  - kind: report
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: report
+    weight: 35
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: report
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 15
+    group: true
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90060
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

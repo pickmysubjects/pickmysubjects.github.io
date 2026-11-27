@@ -1,0 +1,46 @@
+code: ELEN90058
+title: Signal Processing
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - BMEN30006
+    - ELEN30012
+corequisites: none
+non_allowed:
+  - ELEN30008
+skills:
+  - maths
+  - programming
+  - lab
+topics:
+  - engineering
+  - systems
+assessment:
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: test
+    weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90058
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

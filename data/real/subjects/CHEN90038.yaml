@@ -1,0 +1,46 @@
+code: CHEN90038
+title: Product Design and Analysis
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+  - writing
+topics:
+  - chemistry
+  - engineering
+  - design
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 1
+      to: 2
+      text: From Week 1 to Week 2
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+weekly_contact_hours: 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90038
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

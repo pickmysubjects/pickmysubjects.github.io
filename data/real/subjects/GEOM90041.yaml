@@ -1,0 +1,36 @@
+code: GEOM90041
+title: Cadastral Surveying
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: GEOM20015
+corequisites: ABPL90041
+non_allowed: []
+skills:
+  - fieldwork
+  - maths
+topics:
+  - geography
+  - law
+  - property
+assessment:
+  - kind: assignment
+    weight: 80
+    timing:
+      kind: week
+      from: 1
+      to: 9
+      text: From Week 1 to Week 9
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geom90041
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

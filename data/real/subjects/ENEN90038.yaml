@@ -1,0 +1,72 @@
+code: ENEN90038
+title: Engineering Hydrology
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ENVENG
+          note: "Admission into one of the following: MC-ENVENG Master of Environmental Engineering OR MC-ENSYSEN Master of Environmental Systems"
+        - admission: MC-ENSYSEN
+          note: "Admission into one of the following: MC-ENVENG Master of Environmental Engineering OR MC-ENSYSEN Master of Environmental Systems"
+    - ENEN20002
+    - all:
+        - any:
+            - MAST20009
+            - MAST20032
+        - MAST20030
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - statistics
+topics:
+  - environment
+  - earth-science
+  - engineering
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 5
+      text: From Week 1 to Week 5
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 9
+      text: From Week 6 to Week 9
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 8.5
+breadth_for: []
+recommended:
+  - MAST20029
+  - ENEN30003
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen90038
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

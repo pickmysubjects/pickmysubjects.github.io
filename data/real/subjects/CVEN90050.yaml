@@ -1,0 +1,43 @@
+code: CVEN90050
+title: Geotechnical Engineering
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: ENEN20002
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+topics:
+  - engineering
+  - earth-science
+  - construction
+assessment:
+  - kind: quiz
+    weight: 5
+  - kind: test
+    weight: 10
+  - kind: test
+    weight: 15
+    group: true
+  - kind: quiz
+    weight: 5
+  - kind: test
+    weight: 15
+    group: true
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4.5
+breadth_for: []
+recommended:
+  - CVEN90044
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90050
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,48 @@
+code: CVEN90045
+title: Engineering Project Implementation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - ENGM40001
+skills:
+  - business
+  - writing
+topics:
+  - engineering
+  - management
+  - construction
+assessment:
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+recommended:
+  - CVEN90043
+  - CVEN90044
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90045
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

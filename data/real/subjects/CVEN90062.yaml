@@ -1,0 +1,48 @@
+code: CVEN90062
+title: Building Information Modeling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - engineering
+  - construction
+  - architecture
+assessment:
+  - kind: project
+    weight: 30
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90062
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

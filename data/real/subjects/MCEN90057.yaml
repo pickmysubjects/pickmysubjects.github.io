@@ -1,0 +1,61 @@
+code: MCEN90057
+title: Manufacturing Automation and IT
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-INDENG
+      note: Admission into the MC-INDENG Master of Industrial Engineering
+    - all:
+        - any:
+            - admission: MC-MECHENG
+              note: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering Mechatronics specialisation (formal) in the MC-ENG Master of Engineering"
+            - admission: MC-MTRNENG
+              note: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering Mechatronics specialisation (formal) in the MC-ENG Master of Engineering"
+            - admission: MC-ENG
+              note: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering Mechatronics specialisation (formal) in the MC-ENG Master of Engineering"
+        - points:
+            min: 100
+corequisites: none
+non_allowed: []
+skills:
+  - systems
+  - data
+topics:
+  - engineering
+  - systems
+  - supply-chain
+assessment:
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      to: 10
+      text: From Week 5 to Week 10
+  - kind: report
+    weight: 20
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90057
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

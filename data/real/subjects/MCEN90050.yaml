@@ -1,0 +1,49 @@
+code: MCEN90050
+title: Human Centred Mechanical Design
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - teamwork
+  - presentation
+topics:
+  - design
+  - engineering
+  - health
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: report
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: report
+    weight: 50
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90050
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

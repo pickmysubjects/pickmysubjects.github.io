@@ -1,0 +1,48 @@
+code: CVEN90035
+title: Steel-Composites in Modern Construction
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - manual: Admission into the 746ST Master of Engineering Structures
+    - CVEN90049
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - design
+topics:
+  - engineering
+  - construction
+  - environment
+assessment:
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 1
+      to: 7
+      text: From Week 1 to Week 7
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90035
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

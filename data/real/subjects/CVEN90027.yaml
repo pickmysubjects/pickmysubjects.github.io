@@ -1,0 +1,48 @@
+code: CVEN90027
+title: Geotechnical Applications
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: CVEN90050
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - design
+  - writing
+topics:
+  - engineering
+  - earth-science
+  - construction
+assessment:
+  - kind: exam
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: report
+    weight: 15
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 15
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90027
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

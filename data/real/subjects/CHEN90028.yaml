@@ -1,0 +1,50 @@
+code: CHEN90028
+title: Chemical Engineering Internship
+level: 9
+points: 25
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - CHEN90023
+    - BIEN90001
+    - ENGR90027
+    - CHEN90022
+    - BIEN90002
+corequisites: none
+non_allowed:
+  - ENGR90033
+skills:
+  - writing
+  - presentation
+  - teamwork
+topics:
+  - engineering
+  - chemistry
+assessment:
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 33.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90028
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

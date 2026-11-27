@@ -1,0 +1,58 @@
+code: ENEN90032
+title: Environmental Analysis Tools
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ENVENG
+          note: "Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering MC-ENG Master of Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering MC-ENG Master of Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-ENSYSEN
+          note: "Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering MC-ENG Master of Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-DINFENG
+          note: "Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering MC-ENG Master of Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+    - all:
+        - MAST10005
+        - MAST10007
+    - MAST20029
+corequisites: none
+non_allowed: []
+skills:
+  - statistics
+  - programming
+  - data
+topics:
+  - environment
+  - statistics
+  - data-science
+assessment:
+  - kind: assignment
+    weight: 60
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 11
+      text: From Week 4 to Week 11
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen90032
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,49 @@
+code: CHEN90007
+title: Chemical Engineering Thermodynamics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: CHEN20011
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+topics:
+  - chemistry
+  - physics
+  - engineering
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: test
+    weight: 15
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: exam
+    weight: 65
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90007
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

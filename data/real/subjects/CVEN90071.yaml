@@ -1,0 +1,57 @@
+code: CVEN90071
+title: Offshore Wind Geotechnical Engineering
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: ENEN20002
+non_allowed: []
+skills:
+  - design
+  - presentation
+  - writing
+topics:
+  - engineering
+  - earth-science
+  - environment
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: report
+    weight: 10
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: report
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Music
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90071
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

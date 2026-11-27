@@ -1,0 +1,42 @@
+code: BMEN90030
+title: BioDesign Innovation
+level: 9
+points: 50
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  admission: MC-BIOMENG
+  note: Admission into the MC-BIOMENG Master of Biomedical Engineering A minimum of four of level 9 Engineering subjects completed. Students are required to have achieved a H2B average or better in their course. Enrolment in this subject requires approval of the subject coordinator. Students will be notified by the subject coordinator of the application process, which includes IP considerations, for this subject.
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - teamwork
+  - presentation
+  - lab
+topics:
+  - engineering
+  - health
+  - entrepreneurship
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 10
+  - kind: report
+    weight: 50
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90030
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

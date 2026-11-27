@@ -1,0 +1,43 @@
+code: BMEN90022
+title: Computational Biomechanics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - MCEN90038
+    - BMEN90038
+corequisites: none
+non_allowed:
+  - MCEN40006
+skills:
+  - maths
+  - programming
+topics:
+  - biology
+  - modelling
+  - engineering
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: project
+    weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: exam
+    weight: 55
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90022
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

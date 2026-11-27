@@ -1,0 +1,41 @@
+code: ENGR90028
+title: Introduction to Energy Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  admission: MC-ENGYSYS
+  note: Admission into the MC-ENGYSYS Master of Energy Systems Approval of the subject coordinator is required for any student not enrolled in the Master of Energy Systems degree.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - environment
+  - engineering
+  - history
+assessment:
+  - kind: participation
+    weight: 10
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr90028
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,63 @@
+code: ENEN90005
+title: Environmental Management ISO 14000
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - systems
+topics:
+  - environment
+  - management
+  - engineering
+assessment:
+  - kind: quiz
+    weight: 0
+    hurdle: true
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
+  - kind: quiz
+    weight: 20
+    hurdle: true
+  - kind: assignment
+    weight: 30
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 6
+      text: From Week 3 to Week 6
+  - kind: quiz
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 11
+      text: From Week 6 to Week 11
+  - kind: assignment
+    weight: 30
+    hurdle: true
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen90005
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

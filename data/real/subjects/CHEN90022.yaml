@@ -1,0 +1,52 @@
+code: CHEN90022
+title: Chemical Engineering Design Project
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - CHEN90007
+    - CHEN90012
+    - CHEN90013
+    - ENGR90051
+corequisites: none
+non_allowed:
+  - BIEN90002
+  - BIEN40002
+  - CHEN40009
+skills:
+  - design
+  - teamwork
+  - writing
+topics:
+  - engineering
+  - chemistry
+  - management
+assessment:
+  - kind: project
+    weight: 30
+    group: true
+  - kind: report
+    weight: 15
+    group: true
+  - kind: report
+    weight: 50
+    group: true
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 5
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90022
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

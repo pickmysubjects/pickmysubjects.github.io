@@ -1,0 +1,45 @@
+code: CVEN90048
+title: Transport Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - data
+  - statistics
+topics:
+  - engineering
+  - urban-planning
+  - modelling
+assessment:
+  - kind: report
+    weight: 15
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: project
+    weight: 35
+    group: true
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90048
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

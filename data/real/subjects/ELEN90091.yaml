@@ -1,0 +1,54 @@
+code: ELEN90091
+title: Semiconductor Devices
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: ELEN30011
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - lab
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: test
+    weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90091
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

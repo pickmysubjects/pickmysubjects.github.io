@@ -1,0 +1,39 @@
+code: ENEN90027
+title: Energy for Sustainable Development
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - writing
+topics:
+  - environment
+  - engineering
+assessment:
+  - kind: exam
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+  - kind: report
+    weight: 35
+    group: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: report
+    weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen90027
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

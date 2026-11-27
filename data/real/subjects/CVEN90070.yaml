@@ -1,0 +1,47 @@
+code: CVEN90070
+title: Port and Harbour Engineering
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - engineering
+  - construction
+  - business
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: quiz
+    weight: 15
+    timing:
+      kind: end
+      text: End of the teaching period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90070
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

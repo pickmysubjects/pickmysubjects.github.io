@@ -1,0 +1,53 @@
+code: ENEN90006
+title: Solid Wastes to Sustainable Resources
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - systems
+topics:
+  - environment
+  - engineering
+assessment:
+  - kind: participation
+    weight: 15
+    hurdle: true
+    timing:
+      kind: early
+      text: First half of the teaching period
+  - kind: report
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: project
+    weight: 25
+    group: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: project
+    weight: 40
+    group: true
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 0
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen90006
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

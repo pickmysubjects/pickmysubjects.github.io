@@ -1,0 +1,49 @@
+code: ELEN90074
+title: Fundamentals of Power Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - any:
+        - admission: MC-ELECENG
+          note: "Admission into or selection of one of the following: MC-ELECENG Master of Electrical Engineering Electrical specialisation (formal) in the MC-ENG Master of Engineering Electrical with Business specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-ELECENG Master of Electrical Engineering Electrical specialisation (formal) in the MC-ENG Master of Engineering Electrical with Business specialisation (formal) in the MC-ENG Master of Engineering"
+    - ELEN30011
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - lab
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: test
+    weight: 30
+    hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: quiz
+    weight: 30
+    timing:
+      kind: week
+      from: 5
+      to: 12
+      text: From Week 5 to Week 12
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90074
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

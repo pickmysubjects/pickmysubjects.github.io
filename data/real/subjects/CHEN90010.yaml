@@ -1,0 +1,51 @@
+code: CHEN90010
+title: Sustainable Minerals and Recycling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - manual: "Admission into Master of Chemical Engineering and Master of Chemical Engineering: Business; or Sustainability and Environmental; or Materials and Minerals programs"
+    - permission: coordinator
+      note: All other Master of Engineering students may seek approval from their Course Coordinator and the Subject Coordinator to take this subject.
+corequisites: none
+non_allowed:
+  - CHEN40011
+skills:
+  - design
+topics:
+  - engineering
+  - environment
+  - earth-science
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 70
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90010
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

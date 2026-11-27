@@ -1,0 +1,40 @@
+code: ENEN90033
+title: Solar Energy
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - teamwork
+topics:
+  - environment
+  - engineering
+  - physics
+assessment:
+  - kind: exam
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+  - kind: report
+    weight: 30
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: mid
+      text: Mid semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen90033
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

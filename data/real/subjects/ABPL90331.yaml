@@ -1,0 +1,56 @@
+code: ABPL90331
+title: Artificial Intelligence in Construction
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - all:
+        - any:
+            - admission: MC-ARCH
+              note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-CM
+              note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-PROP
+              note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-CMPROP
+              note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - points:
+            min: 50
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - ai
+  - construction
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: presentation
+    weight: 50
+    group: true
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90331
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

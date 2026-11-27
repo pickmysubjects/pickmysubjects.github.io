@@ -1,0 +1,57 @@
+code: BMEN90039
+title: Biomedical Eng Management & Regulations
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-MTI
+      note: Admission into the MC-MTI Master of Medical Technology Innovation
+    - BMEN30008
+corequisites: none
+non_allowed:
+  - BMEN90026
+skills:
+  - writing
+  - business
+topics:
+  - management
+  - health
+  - ethics
+  - law
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: report
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90039
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

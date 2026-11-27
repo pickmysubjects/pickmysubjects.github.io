@@ -1,0 +1,35 @@
+code: CHEN90020
+title: Chemical Engineering Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: CHEN20010
+corequisites: CHEN20011
+non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - management
+  - engineering
+  - environment
+assessment:
+  - kind: quiz
+    weight: 50
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90020
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

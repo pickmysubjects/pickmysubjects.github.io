@@ -1,0 +1,66 @@
+code: ELEN90061
+title: Communication Networks
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: ELEN90054
+corequisites: none
+non_allowed:
+  - ELEN40005
+skills:
+  - maths
+  - programming
+  - teamwork
+  - lab
+topics:
+  - engineering
+  - systems
+assessment:
+  - kind: test
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
+  - kind: test
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
+  - kind: project
+    weight: 25
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: report
+    weight: 25
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: project
+    weight: 10
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 10
+    hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90061
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

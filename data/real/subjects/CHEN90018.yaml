@@ -1,0 +1,61 @@
+code: CHEN90018
+title: Particle Technology
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - ENGR30002
+        - any:
+            - MAST20009
+            - MAST20029
+            - MAST20032
+    - any:
+        - admission: MC-CHEMENG
+          note: "Admission into or selection of one of the following: MC-CHEMENG Master of Chemical Engineering Chemical specialisation (formal) in the MC-ENG Master of Engineering Biochemical specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-CHEMENG Master of Chemical Engineering Chemical specialisation (formal) in the MC-ENG Master of Engineering Biochemical specialisation (formal) in the MC-ENG Master of Engineering"
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - design
+topics:
+  - engineering
+  - physics
+  - modelling
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90018
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

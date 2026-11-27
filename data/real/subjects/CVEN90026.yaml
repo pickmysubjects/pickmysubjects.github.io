@@ -1,0 +1,41 @@
+code: CVEN90026
+title: Extreme Loading & Structural Resilience
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+topics:
+  - engineering
+  - modelling
+  - physics
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 35
+    timing:
+      kind: end
+      text: End of semester
+  - kind: exam
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 4
+breadth_for: []
+recommended:
+  - CVEN90049
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90026
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

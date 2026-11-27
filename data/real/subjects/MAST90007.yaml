@@ -1,0 +1,44 @@
+code: MAST90007
+title: Statistics for Research Workers
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  school:
+    subject: level
+  note: It is expected that participants will have studied mathematics at VCE level, or equivalent. Students must be enrolled in a Masters-Level program or above. This subject will involve mathematical, statistical and computing skills.
+corequisites: none
+non_allowed:
+  - MAST20005
+  - MAST90044
+  - MAST90058
+  - MAST90082
+  - MAST10010
+  - MAST10011
+skills:
+  - statistics
+  - data
+topics:
+  - statistics
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: exam
+    weight: 50
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90007
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

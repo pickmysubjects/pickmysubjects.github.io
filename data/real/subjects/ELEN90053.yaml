@@ -1,0 +1,63 @@
+code: ELEN90053
+title: Electronic System Design
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - ELEN90056
+    - ELEN30007
+corequisites: none
+non_allowed:
+  - ELEN40013
+skills:
+  - design
+  - lab
+  - maths
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: exam
+    weight: 45
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: project
+    weight: 8
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: project
+    weight: 5
+    group: true
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
+  - kind: presentation
+    weight: 22
+    hurdle: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90053
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

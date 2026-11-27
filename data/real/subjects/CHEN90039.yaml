@@ -1,0 +1,52 @@
+code: CHEN90039
+title: Pharmaceutical & Biochemical Production
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - CHEN90031
+    - BMEN90036
+    - BMEN30007
+corequisites: none
+non_allowed:
+  - BIEN90004
+  - CHEN90016
+skills:
+  - design
+  - business
+topics:
+  - chemistry
+  - biology
+  - engineering
+  - health
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 5.5
+breadth_for: []
+recommended:
+  - BIOL10002
+  - BIOL10004
+  - CHEM10006
+  - CHEM10003
+  - MAST10006
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90039
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,45 @@
+code: ELEN90059
+title: Lightwave Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - ELEN30011
+    - manual: Admission into the 364AA Master of Telecommunications Engineering
+corequisites: none
+non_allowed:
+  - ELEN40009
+skills:
+  - maths
+  - lab
+  - design
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: test
+    weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 30
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 5.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90059
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

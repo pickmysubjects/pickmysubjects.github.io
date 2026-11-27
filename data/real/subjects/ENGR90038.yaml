@@ -1,0 +1,41 @@
+code: ENGR90038
+title: Engineering Capstone Project Part 2
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - ENGR90037
+    - manual: The student needs to be within the last 112.5 points of their Master of Engineering candidature to enrol in this Capstone subject.
+corequisites: none
+non_allowed:
+  - BMEN90018
+  - CVEN90047
+  - MCEN90022
+  - MCEN90040
+  - MCEN90042
+  - MCEN90043
+  - ELEN40001
+  - ELEN40012
+  - ELEN90067
+  - ELEN90070
+  - ELEN90081
+  - ELEN90082
+  - CVEN90064
+  - CVEN90065
+skills:
+  - teamwork
+  - writing
+  - presentation
+topics:
+  - engineering
+  - management
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr90038
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,68 @@
+code: ENEN90031
+title: Quantitative Environmental Modelling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ENVENG
+          note: "Admission into one of the following: Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering Admission into or selection of one of the following: Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENSYSEN
+          note: "Admission into one of the following: Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering Admission into or selection of one of the following: Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-DINFENG
+          note: "Admission into one of the following: Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering Admission into or selection of one of the following: Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into one of the following: Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering Admission into or selection of one of the following: Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+    - all:
+        - MAST10005
+        - MAST10007
+corequisites: none
+non_allowed: []
+skills:
+  - programming
+  - maths
+  - writing
+topics:
+  - environment
+  - modelling
+  - engineering
+assessment:
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: report
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen90031
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

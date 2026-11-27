@@ -1,0 +1,50 @@
+code: CHEN90040
+title: Sustainable Food Processing
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: CHEN90042
+corequisites: none
+non_allowed:
+  - FOOD90029
+skills:
+  - design
+  - lab
+  - statistics
+topics:
+  - chemistry
+  - engineering
+  - environment
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: test
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen90040
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

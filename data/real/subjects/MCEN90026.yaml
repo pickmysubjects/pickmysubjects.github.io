@@ -1,0 +1,49 @@
+code: MCEN90026
+title: Solid Mechanics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - MCEN30017
+        - MAST20029
+    - all:
+        - MCEN30017
+        - any:
+            - MAST20009
+            - MAST20032
+corequisites: MAST20030
+non_allowed: []
+skills:
+  - maths
+  - design
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: test
+    weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: exam
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+  - kind: project
+    weight: 35
+    timing:
+      kind: week
+      from: 7
+      to: 11
+      text: From Week 7 to Week 11
+weekly_contact_hours: 5.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90026
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

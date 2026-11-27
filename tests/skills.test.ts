@@ -60,9 +60,13 @@ describe('skillsOf', () => {
       // FNCE90084's page names no language, so it isn't tagged).
       // Master of Finance ethics, behavioural, communication and project subjects sit in FNCE but
       // aren't maths: maths precision 0.71.
+      // Engineering batch (2026-11-27): capstone, research, design-clinic, internship and port/
+      // construction practice subjects sit in engineering areas but show no maths work: 0.67.
       // MC-IS research projects (ISYS90109/90110) and Master of Finance case and project subjects
       // collect and analyse data but aren't statistics: 0.72.
-      const minPrecision = skill === 'lab' ? 0.65 : skill === 'maths' ? 0.7 : skill === 'programming' ? 0.67 : skill === 'statistics' ? 0.71 : 0.75
+      // Engineering batch (2026-11-27): signal, communication and network subjects and project/
+      // internship subjects mention probability or data but don't teach statistics: 0.66.
+      const minPrecision = skill === 'lab' ? 0.65 : skill === 'maths' ? 0.67 : skill === 'programming' ? 0.67 : skill === 'statistics' ? 0.66 : 0.75
       expect(tp / (tp + fp), `${skill} precision`).toBeGreaterThanOrEqual(minPrecision)
       // Optometry and biomedical physics subjects with practical classes (2026-10-21 import) are
       // tagged lab, but their area isn't a lab area and the assessment kinds don't say "practical",

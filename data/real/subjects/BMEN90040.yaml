@@ -1,0 +1,69 @@
+code: BMEN90040
+title: Process Eng for Biomedical Technologies
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - BIOL10002
+    - BIOL10008
+    - BIOL10004
+corequisites: none
+non_allowed:
+  - CHEN20009
+  - BMEN30007
+skills:
+  - maths
+topics:
+  - engineering
+  - biology
+  - chemistry
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 7
+      text: From Week 2 to Week 7
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      to: 12
+      text: From Week 5 to Week 12
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90040
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

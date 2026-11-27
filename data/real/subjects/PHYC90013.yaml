@@ -1,0 +1,34 @@
+code: PHYC90013
+title: Condensed Matter Physics 4
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - PHYC30018
+    - PHYC30017
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+topics:
+  - physics
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: exam
+    weight: 80
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc90013
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,53 @@
+code: BMEN90029
+title: Mechanics of Living Tissues
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - BMEN90038
+    - MAST30030
+    - MCEN30017
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - writing
+topics:
+  - biology
+  - modelling
+  - engineering
+assessment:
+  - kind: test
+    weight: 15
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: exam
+    weight: 55
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 6.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90029
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

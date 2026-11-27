@@ -1,0 +1,49 @@
+code: ABPL90041
+title: Property Law (PG)
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-PROP
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property 702PA Graduate Diploma in Property Valuation MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-SPATENG
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property 702PA Graduate Diploma in Property Valuation MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-DINFENG
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property 702PA Graduate Diploma in Property Valuation MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+    - permission: coordinator
+      note: Approval from the subject coordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - law
+  - property
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90041
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,84 @@
+code: MCEN90060
+title: Sustainable and Life Cycle Engineering
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - admission: MC-INDENG
+          note: Admission into the MC-INDENG Master of Industrial Engineering
+        - points:
+            min: 100
+    - all:
+        - any:
+            - admission: MC-BIOMENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-CHEMENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-CIVENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-DINFENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-ELECENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-ENVENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-MECHENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-MTRNENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+            - admission: MC-SOFTENG
+              note: "Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-DINFENG Master of Digital Infrastructure Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-SOFTENG Master of Software Engineering"
+        - points:
+            min: 150
+corequisites: none
+non_allowed: []
+skills:
+  - systems
+  - writing
+topics:
+  - environment
+  - engineering
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 6
+      text: From Week 3 to Week 6
+  - kind: test
+    weight: 20
+    timing:
+      kind: week
+      from: 9
+      to: 10
+      text: From Week 9 to Week 10
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      to: 11
+      text: From Week 7 to Week 11
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90060
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

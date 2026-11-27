@@ -1,0 +1,52 @@
+code: MCEN90059
+title: Probability, Reliability and Quality
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  manual: Admission Admission into any of the Master of Engineering courses, Master of Engineering Management, Master of Energy Systems, or approval of the subject coordinator for any student not enrolled in the engineering master level program.
+corequisites: none
+non_allowed: []
+skills:
+  - statistics
+  - maths
+topics:
+  - statistics
+  - probability
+  - engineering
+assessment:
+  - kind: test
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90059
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

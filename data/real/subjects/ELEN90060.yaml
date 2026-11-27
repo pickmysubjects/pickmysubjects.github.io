@@ -1,0 +1,41 @@
+code: ELEN90060
+title: Power System Analysis
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: ELEN90074
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - programming
+topics:
+  - engineering
+  - systems
+  - physics
+assessment:
+  - kind: exam
+    weight: 30
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: test
+    weight: 25
+    hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 45
+    group: true
+weekly_contact_hours: 3
+breadth_for: []
+recommended:
+  - ELEN90055
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90060
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

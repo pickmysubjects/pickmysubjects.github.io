@@ -1,0 +1,47 @@
+code: ELEN90092
+title: "Low-carbon Grids: Operation & Economics"
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - ELEN90074
+    - ELEN90060
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - systems
+  - lab
+topics:
+  - engineering
+  - economics
+  - optimisation
+assessment:
+  - kind: test
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
+  - kind: report
+    weight: 50
+    group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: exam
+    weight: 35
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 0.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90092
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

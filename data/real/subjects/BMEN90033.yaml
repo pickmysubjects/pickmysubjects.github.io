@@ -1,0 +1,57 @@
+code: BMEN90033
+title: Bioinstrumentation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - BMEN30008
+    - BMEN30006
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - design
+topics:
+  - engineering
+  - health
+assessment:
+  - kind: project
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 4
+      text: From Week 2 to Week 4
+  - kind: project
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
+  - kind: project
+    weight: 30
+    hurdle: true
+    timing:
+      kind: week
+      from: 8
+      to: 11
+      text: From Week 8 to Week 11
+  - kind: exam
+    weight: 45
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90033
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

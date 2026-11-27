@@ -1,0 +1,49 @@
+code: BMEN90037
+title: Bioengineering Data Analytics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: MAST20029
+corequisites:
+  any:
+    - BMEN20003
+    - COMP20005
+    - BMEN20001
+non_allowed:
+  - BMEN90026
+skills:
+  - statistics
+  - data
+  - programming
+topics:
+  - statistics
+  - data-science
+  - probability
+assessment:
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90037
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

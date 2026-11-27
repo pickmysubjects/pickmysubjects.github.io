@@ -1,0 +1,56 @@
+code: ENGR90041
+title: Engineering Research Project Part 1
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - points:
+        min: 75
+        levels:
+          - 9
+    - manual: An average of H2A or above over all the Level 9 subjects. The Engineering Research Project is intended to be taken in the final year of the candidature.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - engineering
+  - ethics
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 4
+      text: From Week 2 to Week 4
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: report
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 25
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr90041
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

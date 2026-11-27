@@ -1,0 +1,41 @@
+code: CVEN90061
+title: Freight Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - maths
+topics:
+  - engineering
+  - supply-chain
+  - economics
+  - environment
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90061
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

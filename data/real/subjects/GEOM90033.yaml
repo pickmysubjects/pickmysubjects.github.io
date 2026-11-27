@@ -1,0 +1,50 @@
+code: GEOM90033
+title: Positioning Principles and Technologies
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: GEOM20015
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - fieldwork
+  - data
+topics:
+  - geography
+  - engineering
+  - earth-science
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: project
+    weight: 50
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: project
+    weight: 20
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geom90033
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

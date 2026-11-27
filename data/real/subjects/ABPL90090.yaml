@@ -1,0 +1,52 @@
+code: ABPL90090
+title: Public Transport Network Planning
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - manual: Admission into a course at the Melbourne School of Design
+    - admission: MC-CIVENG
+      note: Selection of the Transport specialisation (formal) in the MC-CIVENG Master of Civil Engineering
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed:
+  - ABPL30017
+skills:
+  - writing
+  - fieldwork
+topics:
+  - urban-planning
+  - environment
+  - society
+assessment:
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
+  - kind: report
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: test
+    weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90090
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

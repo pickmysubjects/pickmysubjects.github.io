@@ -1,0 +1,33 @@
+code: PHYC90006
+title: Quantum and Advanced Optics
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - PHYC30018
+    - PHYC20015
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - programming
+topics:
+  - physics
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: exam
+    weight: 80
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc90006
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

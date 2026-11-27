@@ -1,0 +1,55 @@
+code: MCEN90014
+title: Materials Engineering
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - CHEN90043
+    - MCEN30017
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - maths
+topics:
+  - engineering
+  - chemistry
+assessment:
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: report
+    weight: 20
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 6
+      text: From Week 3 to Week 6
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen90014
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

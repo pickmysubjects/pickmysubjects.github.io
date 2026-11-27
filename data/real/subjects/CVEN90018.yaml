@@ -1,0 +1,45 @@
+code: CVEN90018
+title: Structural Dynamics in Practice
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - admission: MC-CIVENG
+      note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Structural specialisation (formal) in the MC-ENG Master of Engineering 746ST Master of Engineering Structures"
+    - admission: MC-ENG
+      note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Structural specialisation (formal) in the MC-ENG Master of Engineering 746ST Master of Engineering Structures"
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - data
+topics:
+  - engineering
+  - modelling
+  - physics
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 35
+    timing:
+      kind: end
+      text: End of semester
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+recommended:
+  - CVEN90049
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90018
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

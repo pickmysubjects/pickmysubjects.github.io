@@ -1,0 +1,41 @@
+code: ELEN90062
+title: High Speed Electronics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: ELEN90056
+corequisites: none
+non_allowed:
+  - ELEN40009
+  - ELEN40010
+skills:
+  - maths
+  - lab
+topics:
+  - engineering
+  - physics
+assessment:
+  - kind: exam
+    weight: 70
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: participation
+    weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: test
+    weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/elen90062
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
