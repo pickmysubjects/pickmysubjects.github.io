@@ -1,0 +1,11 @@
+id: mc-civeng-energy
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Energy
+points: 50
+# 50 points of Year 3 specialisation selectives (Year 3 is the recommended order, not a must).
+requirements:
+  - choose: { points: 50, from: [ENEN90011, ENEN90014, ENEN90027, ENEN90033, CVEN90071] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-03
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

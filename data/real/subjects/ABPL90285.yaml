@@ -1,0 +1,43 @@
+code: ABPL90285
+title: Master of Architecture Studio B
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-2
+prerequisites: ABPL90284
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - design
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 1
+      to: 4
+      text: From Week 1 to Week 4
+  - kind: presentation
+    weight: 25
+    timing:
+      kind: week
+      from: 4
+      to: 7
+      text: From Week 4 to Week 7
+  - kind: presentation
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90285
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

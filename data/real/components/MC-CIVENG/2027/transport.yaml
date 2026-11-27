@@ -1,0 +1,12 @@
+id: mc-civeng-transport
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Transport
+points: 50
+# One Year 2 core subject and three Year 3 core subjects (recommended order; the Handbook's
+# "must be in Year 3" note sits under the compulsory subjects, not these).
+requirements:
+  - all: [ABPL90090, CVEN90061, GEOM90008, CVEN90063]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-04
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

@@ -1,0 +1,49 @@
+code: ABPL90439
+title: Design Studio E
+level: 9
+points: 25
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites: ABPL90437
+corequisites: none
+non_allowed:
+  - ABPL90115
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - construction
+assessment:
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 0
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: presentation
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: teaching
+      text: During the teaching period
+weekly_contact_hours: 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90439
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

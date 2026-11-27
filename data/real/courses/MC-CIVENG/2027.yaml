@@ -1,0 +1,57 @@
+# Master of Civil Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Three years, 300 points. With or without a specialisation; both ways are options (one
+# required). Every way shares Year 1, the same ten civil core subjects and the capstone; the
+# specialisation (or the electives without one) fills the other 50 points. Engineering Practice
+# hurdle: not a subject.
+code: MC-CIVENG
+title: Master of Civil Engineering
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcciveng
+# Entry needs maths equivalent to Calculus 2 and Linear Algebra (Handbook entry requirements).
+# The science prerequisite can be physics, chemistry, biology or computer science, so no single
+# subject is assumed for it.
+assumed_done: [MAST10006, MAST10007]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-civeng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    # The Handbook lists 100 points, but one of the eight (CVEN30010 Geotechnical Modelling and
+    # Design) is marked "No longer available" for 2027 with no replacement named, so it is left out.
+    subjects: [ENGR20003, ENGR30002, MAST20029, CVEN30008, ENEN20002, CVEN20001, CVEN30009]
+    # Recommended order; a student with credit may skip or move them, so never flagged late.
+    year: 1
+    description: Year 1 compulsory subjects (87.5 points)
+  # The specialisation pages move some of these between Year 2 and Year 3 (e.g. Transport takes
+  # CVEN90058 in Year 2, Water Resources CVEN90049 in Year 3); the years here follow the
+  # no-specialisation layout and are only the recommended order.
+  - id: year2
+    kind: compulsory
+    subjects: [CVEN90075, CVEN90044, CVEN90049, CVEN90050, CVEN90045, CVEN90051, ENGR90051]
+    year: 2
+    description: Year 2 compulsory subjects (87.5 points)
+  - id: year3
+    kind: compulsory
+    subjects: [CVEN90060, CVEN90058, CVEN90048]
+    year: 3
+    description: Year 3 compulsory subjects (37.5 points)
+  - id: capstone
+    kind: compulsory
+    subjects: [ENGR90037, ENGR90038]
+    year: 3
+    description: Year 3 capstone project (25 points)
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: A specialisation, or the degree without one

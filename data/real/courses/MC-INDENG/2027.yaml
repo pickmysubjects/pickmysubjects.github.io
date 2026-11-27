@@ -1,0 +1,39 @@
+# Master of Industrial Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Two years, 200 points: 175 core and 25 elective. No specialisations.
+# Engineering Practice hurdle: not a subject.
+code: MC-INDENG
+title: Master of Industrial Engineering
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcindeng
+# Entry needs an engineering-systems bachelor's or a four-year engineering degree; the entry page
+# names no specific prerequisite subjects, so nothing is assumed.
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-indeng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [MCEN90054, MCEN90055, MCEN90058, MCEN90053, MCEN90059, MCEN90057, ENGR90051, MGMT90026]
+    # Recommended order; a student with credit may skip or move them, so never flagged late.
+    year: 1
+    description: Year 1 core subjects (100 points)
+  - id: year2
+    kind: compulsory
+    subjects: [ENGR90037, ENGR90038, MAST90014, MCEN90060, MCEN90056, ENGM90011]
+    year: 2
+    description: Year 2 core subjects (75 points)
+  # ENGM90014 is marked "No longer available" in the Handbook, so it is left out.
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ENGM90006, ENGM90012, ENGM90013, ENGM90015, ENGR90033, ENGR90043] }
+    description: 25 points of electives

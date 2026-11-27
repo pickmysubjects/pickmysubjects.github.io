@@ -6,16 +6,20 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
+  # MCEN30017 with MAST20029, or MCEN30017 with MAST20030 (may be taken at the same time) and
+  # vector calculus.
   any:
     - all:
         - MCEN30017
         - MAST20029
     - all:
         - MCEN30017
+        - subject: MAST20030
+          concurrent: true
         - any:
             - MAST20009
             - MAST20032
-corequisites: MAST20030
+corequisites: none
 non_allowed: []
 skills:
   - maths

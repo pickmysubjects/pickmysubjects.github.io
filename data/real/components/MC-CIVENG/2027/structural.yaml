@@ -1,0 +1,12 @@
+id: mc-civeng-structural
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Structural
+points: 50
+# 50 points of Year 3 specialisation selectives (must be in Year 3).
+requirements:
+  - choose: { points: 50, from: [CVEN90035, CVEN90017, CVEN90018, CVEN90024, CVEN90026, CVEN90016] }
+    year: 3
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-02
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

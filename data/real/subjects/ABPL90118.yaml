@@ -1,0 +1,81 @@
+code: ABPL90118
+title: Applied Architectural Technology
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into or selection of one of the following: MC-ARCH2Y Master of Architecture 200pt Program course entry point in the MC-ARCH Master of Architecture"
+    - all:
+        - any:
+            - admission: MC-ARCHENG
+              note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property MC-ARCH3Y Master of Architecture 300pt Program course entry point in the MC-ARCH Master of Architecture"
+            - admission: MC-ARCHUCH
+              note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property MC-ARCH3Y Master of Architecture 300pt Program course entry point in the MC-ARCH Master of Architecture"
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property MC-ARCH3Y Master of Architecture 300pt Program course entry point in the MC-ARCH Master of Architecture"
+            - admission: MC-ARCPROP
+              note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property MC-ARCH3Y Master of Architecture 300pt Program course entry point in the MC-ARCH Master of Architecture"
+            - admission: MC-ARCH
+              note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property MC-ARCH3Y Master of Architecture 300pt Program course entry point in the MC-ARCH Master of Architecture"
+        - all:
+            - ABPL90286
+            - ABPL90287
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+  - exams
+topics:
+  - architecture
+  - construction
+assessment:
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: project
+    weight: 30
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: quiz
+    weight: 15
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: project
+    weight: 15
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 26
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90118
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

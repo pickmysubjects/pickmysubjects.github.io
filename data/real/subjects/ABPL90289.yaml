@@ -1,0 +1,41 @@
+code: ABPL90289
+title: Architectural Cultures 2:After Modernism
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHENG
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHCM
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCLARC
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCPROP
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHUP
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHUD
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHUCH
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-ARCH Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - architecture
+  - history
+weekly_contact_hours: 4
+breadth_for: []
+recommended:
+  - ABPL90288
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90289
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

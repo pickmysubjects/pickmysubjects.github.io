@@ -1,0 +1,67 @@
+code: CVEN90075
+title: Transport Infrastructure Design
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - ENEN20002
+    - CVEN20001
+    - CVEN30009
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+  - teamwork
+topics:
+  - engineering
+  - construction
+assessment:
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90075
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

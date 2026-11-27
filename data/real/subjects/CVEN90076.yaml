@@ -1,0 +1,61 @@
+code: CVEN90076
+title: Computational/ML Methods in Civil Eng.
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - COMP90051
+  - COMP90059
+  - COMP90049
+skills:
+  - programming
+  - data
+  - statistics
+  - maths
+topics:
+  - engineering
+  - machine-learning
+  - programming
+assessment:
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: week
+      from: 2
+      to: 6
+      text: From Week 2 to Week 6
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 7
+      text: From Week 4 to Week 7
+  - kind: project
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 5
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90076
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

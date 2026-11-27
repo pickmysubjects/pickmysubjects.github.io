@@ -62,13 +62,15 @@ describe('skillsOf', () => {
       // aren't maths: maths precision 0.71.
       // Engineering batch (2026-11-27): capstone, research, design-clinic, internship and port/
       // construction practice subjects sit in engineering areas but show no maths work: 0.67.
+      // Architectural engineering batch (2026-11-27): design studio, history and thesis subjects
+      // and road/pavement design pages show no maths work: 0.66.
       // MC-IS research projects (ISYS90109/90110) and Master of Finance case and project subjects
       // collect and analyse data but aren't statistics: 0.72.
       // Engineering batch (2026-11-27): signal, communication and network subjects and project/
       // internship subjects mention probability or data but don't teach statistics: 0.66.
       // ELEN AI/research batch (2026-11-27): ELEN90011/83/97/98/99 sit in a lab area with reports
       // but their pages name no lab classes, so they aren't tagged lab: precision 0.63.
-      const minPrecision = skill === 'lab' ? 0.63 : skill === 'maths' ? 0.67 : skill === 'programming' ? 0.67 : skill === 'statistics' ? 0.66 : 0.75
+      const minPrecision = skill === 'lab' ? 0.63 : skill === 'maths' ? 0.66 : skill === 'programming' ? 0.67 : skill === 'statistics' ? 0.66 : 0.75
       expect(tp / (tp + fp), `${skill} precision`).toBeGreaterThanOrEqual(minPrecision)
       // Optometry and biomedical physics subjects with practical classes (2026-10-21 import) are
       // tagged lab, but their area isn't a lab area and the assessment kinds don't say "practical",

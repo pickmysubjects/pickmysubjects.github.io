@@ -1,0 +1,58 @@
+code: GEOL90005
+title: Hydrogeology/Environmental Geochemistry
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - all:
+        - GEOL90022
+        - GEOL90023
+        - GEOL90054
+    - GEOL30003
+    - ENEN90038
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - lab
+  - writing
+topics:
+  - earth-science
+  - chemistry
+  - environment
+assessment:
+  - kind: presentation
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: report
+    weight: 35
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: test
+    weight: 15
+  - kind: report
+    weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geol90005
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

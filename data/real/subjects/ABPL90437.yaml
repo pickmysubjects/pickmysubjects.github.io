@@ -1,0 +1,61 @@
+code: ABPL90437
+title: Design Studio C
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: Admission into the 200pt Program course entry point in the MC-ARCH Master of Architecture
+    - all:
+        - ABPL90284
+        - ABPL90285
+        - ABPL90286
+        - ABPL90287
+        - ABPL90288
+        - ABPL90289
+corequisites: none
+non_allowed:
+  - ABPL90142
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - design
+  - indigenous-studies
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 15
+    hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: presentation
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 13
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90437
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

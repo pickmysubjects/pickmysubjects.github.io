@@ -1,0 +1,12 @@
+id: mc-civeng-project-management
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Project Management
+points: 50
+# One Year 2 core and three Year 3 core subjects (recommended order; the "must be in Year 3"
+# note sits under the compulsory subjects).
+requirements:
+  - all: [ENGM90007, ENGR90026, ENGM90006, ENGM90012]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-07
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

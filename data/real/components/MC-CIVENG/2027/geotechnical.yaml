@@ -1,0 +1,14 @@
+id: mc-civeng-geotechnical
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Geotechnical
+points: 50
+# Year 2 core CVEN90027, Year 3 core CVEN90071 and CVEN90076, and 12.5 points of Year 3 selectives
+# (the Handbook's "must be in Year 3" note follows the selectives).
+requirements:
+  - all: [CVEN90027, CVEN90071, CVEN90076]
+  - choose: { points: 12.5, from: [CVEN90062, CVEN90066, CVEN90026] }
+    year: 3
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-05
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

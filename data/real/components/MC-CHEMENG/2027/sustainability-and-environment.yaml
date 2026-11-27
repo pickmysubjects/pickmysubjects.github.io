@@ -1,0 +1,16 @@
+id: mc-chemeng-sustainability-and-environment
+course: MC-CHEMENG
+year: 2027
+kind: specialisation
+title: Sustainability and Environment
+points: 62.5
+# CHEN90031 is a Year 2 compulsory subject in every way through the degree except Business
+# (whose page lists the other five Year 2 compulsory subjects only), so it lives here.
+# 37.5 points of core specialisation subjects, plus at least 12.5 points of Chemical Engineering
+# electives (225 + 37.5 + 25 selectives + 12.5 = 300). Core subjects are not counted again as electives.
+requirements:
+  - all: [CHEN90031]
+  - all: [CHEN90011, CHEN90041, CHEN90018]
+  - choose: { points: 12.5, from: [CHEN90010, CHEN90027, ENGR90024, CHEN90028, CHEN90023, CHEN90040, CHEN90043, CHEN90038, CHEN90039, CHEN90035, CHEN90026, ENGR90034] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-chemeng-spec-03
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

@@ -1,0 +1,16 @@
+id: mc-chemeng-business
+course: MC-CHEMENG
+year: 2027
+kind: specialisation
+title: Business
+points: 62.5
+# Business replaces the Year 2 compulsory CHEN90031: the course page gives 212.5 compulsory
+# points for it, and the specialisation page lists only the other five Year 2 compulsory
+# subjects. So 37.5 points of core Business subjects plus at least 25 points of Chemical
+# Engineering electives (212.5 + 37.5 + 25 selectives + 25 = 300). CHEN90031 is on the
+# Handbook elective list, so here it may count as an elective.
+requirements:
+  - all: [ENGM90013, ENGM90006, ENGM90012]
+  - choose: { points: 25, from: [CHEN90010, CHEN90011, CHEN90018, CHEN90027, ENGR90024, CHEN90028, CHEN90023, CHEN90040, CHEN90041, CHEN90043, CHEN90038, CHEN90039, CHEN90035, CHEN90026, ENGR90034, CHEN90031] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-chemeng-spec-01
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

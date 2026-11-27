@@ -6,12 +6,19 @@ offerings:
   "2027":
     - semester-1
 prerequisites:
-  any:
-    - MAST20029
+  # MCEN30018 (or ENGR30001 before 2013), and either MAST20029, or vector calculus with MAST20030
+  # (which may be taken at the same time).
+  all:
+    - MCEN30018
     - any:
-        - MAST20009
-        - MAST20032
-corequisites: MAST20030
+        - MAST20029
+        - all:
+            - any:
+                - MAST20009
+                - MAST20032
+            - subject: MAST20030
+              concurrent: true
+corequisites: none
 non_allowed:
   - MCEN30004
   - MCEN30005

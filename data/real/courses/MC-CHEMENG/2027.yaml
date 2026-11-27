@@ -1,0 +1,51 @@
+# Master of Chemical Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Three years, 300 points. Engineering Practice hurdle: not a subject.
+# With or without a specialisation; both ways are options (one required), each with its own
+# elective rules. Business drops the Year 2 compulsory CHEN90031 (212.5 compulsory points), so
+# CHEN90031 sits in the other three components rather than here.
+code: MC-CHEMENG
+title: Master of Chemical Engineering
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcchemeng
+# Entry needs maths equivalent to Calculus 2 and Linear Algebra and chemistry equivalent to
+# Chemistry 1 and 2 (Handbook entry requirements), so their prerequisites count as met.
+assumed_done: [MAST10006, MAST10007, CHEM10003, CHEM10004]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-chemeng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [CHEN20012, CHEN30016, MAST20029, ENGR30002, CHEN20010, CHEN20011, CHEN30015, ENGR90051]
+    # Recommended order; a student with credit may skip or move them, so never flagged late.
+    year: 1
+    description: Year 1 compulsory subjects (100 points)
+  - id: year2
+    kind: compulsory
+    subjects: [CHEN90042, CHEN90007, CHEN30001, CHEN90012, CHEN90020]
+    year: 2
+    description: Year 2 compulsory subjects (62.5 points; CHEN90031 is in the specialisation rules)
+  - id: year3
+    kind: compulsory
+    subjects: [CHEN90013, CHEN90032, CHEN90022]
+    year: 3
+    description: Year 3 compulsory subjects (50 points)
+  - id: selective
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [CHEN90028, CHEN90023] }
+    description: 25 points of Year 3 Chemical Engineering selectives
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: A specialisation, or the degree without one

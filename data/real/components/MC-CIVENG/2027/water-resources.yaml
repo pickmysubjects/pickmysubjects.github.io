@@ -1,0 +1,11 @@
+id: mc-civeng-water-resources
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Water Resources
+points: 50
+# Two Year 2 core and two Year 3 core subjects (recommended order).
+requirements:
+  - all: [EVSC90025, CVEN90066, ENEN90038, ENEN90029]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-06
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

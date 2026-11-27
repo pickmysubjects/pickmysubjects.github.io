@@ -1,0 +1,15 @@
+id: mc-enveng-water-systems
+course: MC-ENVENG
+year: 2027
+kind: specialisation
+title: Water Systems
+points: 62.5
+# At least 50 points of Year 3 Water Systems electives (must be in Year 3), plus 12.5 points of
+# Environmental Engineering electives or a fifth Water Systems elective.
+# LAWS70185 is marked "Not available in 2027" but kept: it may run again later.
+requirements:
+  - choose: { points: 50, from: [EVSC90025, ENEN90029, ENGR90024, GEOL90005, GEOG90003, LAWS70185] }
+    year: 3
+  - choose: { points: 12.5, from: [EVSC90025, ENEN90029, ENGR90024, GEOL90005, GEOG90003, LAWS70185, ENEN90006, ENEN90011, ENEN90014, ENEN90027, ENEN90033, GEOM90005, GEOM90007, GEOM90008, GEOM90038, AGRI30045, ENGR90036, ENGM90006, ENGM90007, CVEN90066, CVEN90068, CVEN90069, ENGR90033, ELEN90088, CVEN90070, ENGR90044, ENGR90034, CVEN90071] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-enveng-spec-03
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

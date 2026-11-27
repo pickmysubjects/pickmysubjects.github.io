@@ -1,0 +1,44 @@
+code: ABPL90286
+title: Construction Methods
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCHENG
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCHCM
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCPROP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCPROP Master of Architecture/Master of Property"
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - design
+topics:
+  - architecture
+  - construction
+assessment:
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+weekly_contact_hours: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90286
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

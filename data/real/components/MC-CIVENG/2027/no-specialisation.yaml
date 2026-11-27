@@ -1,0 +1,12 @@
+id: mc-civeng-no-specialisation
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: No specialisation
+points: 50
+# 50 points of Civil Engineering electives (12.5 in Year 2, 37.5 in Year 3, recommended order) from the
+# specialisation packages and other electives. CVEN90073 is listed but not in our subject data, so left out.
+requirements:
+  - choose: { points: 50, from: [CVEN90016, CVEN90017, CVEN90018, CVEN90024, CVEN90026, CVEN90035, CVEN90062, ENEN90014, ENGR90033, CVEN90071, CVEN90027, CVEN90066, CVEN90076, CVEN90063, CVEN90061, ABPL90090, GEOM90008, EVSC90025, ENEN90029, ENEN90038, ENGR90026, ENGM90006, ENGM90012, ENGM90007, ENEN90027, ENEN90033, ENEN90011, CVEN90070, GEOM90005, GEOM90033, GEOM90038, ENGR90044, ENGR90034] }
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-civeng/course-structure
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

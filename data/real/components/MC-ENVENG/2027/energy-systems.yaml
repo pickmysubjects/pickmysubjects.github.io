@@ -1,0 +1,14 @@
+id: mc-enveng-energy-systems
+course: MC-ENVENG
+year: 2027
+kind: specialisation
+title: Energy Systems
+points: 62.5
+# At least 50 points of Year 3 Energy Systems electives (must be in Year 3), plus 12.5 points of
+# Environmental Engineering electives or a fifth Energy Systems elective.
+requirements:
+  - choose: { points: 50, from: [ENEN90033, ENEN90027, ENEN90011, ENEN90014, ENEN90006] }
+    year: 3
+  - choose: { points: 12.5, from: [ENEN90033, ENEN90027, ENEN90011, ENEN90014, ENEN90006, EVSC90025, ENEN90029, GEOM90005, GEOM90007, GEOM90008, GEOM90038, AGRI30045, ENGR90036, ENGM90006, ENGM90007, CVEN90066, CVEN90068, CVEN90069, ENGR90033, ELEN90088, CVEN90070, ENGR90044, ENGR90034, CVEN90071, ENGR90024, GEOL90005] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-enveng-spec-02
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

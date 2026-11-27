@@ -1,0 +1,25 @@
+code: LAWS70185
+title: Water Law & Natural Resources Management
+level: 7
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - law
+  - environment
+assessment:
+  - kind: presentation
+    weight: 25
+  - kind: assignment
+    weight: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/laws70185
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

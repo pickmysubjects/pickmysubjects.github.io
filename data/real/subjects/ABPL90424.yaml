@@ -1,0 +1,67 @@
+code: ABPL90424
+title: Introduction to High-Performance Design
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCH Master of Architecture Admission into or selection of one of the following: MC-ARCLARC Master of Architecture/Master of Landscape Architecture Admission into or selection of one of the following: MC-ARCPROP Master of Architecture/Master of Property Admission into or selection of one of the following: MC-ARCHUP Master of Architecture/Master of Urban Planning Admission into or selection of one of the following: MC-ARCHUD Master of Architecture/Master of Urban Design Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering"
+    - admission: MC-ARCLARC
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCH Master of Architecture Admission into or selection of one of the following: MC-ARCLARC Master of Architecture/Master of Landscape Architecture Admission into or selection of one of the following: MC-ARCPROP Master of Architecture/Master of Property Admission into or selection of one of the following: MC-ARCHUP Master of Architecture/Master of Urban Planning Admission into or selection of one of the following: MC-ARCHUD Master of Architecture/Master of Urban Design Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering"
+    - admission: MC-ARCPROP
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCH Master of Architecture Admission into or selection of one of the following: MC-ARCLARC Master of Architecture/Master of Landscape Architecture Admission into or selection of one of the following: MC-ARCPROP Master of Architecture/Master of Property Admission into or selection of one of the following: MC-ARCHUP Master of Architecture/Master of Urban Planning Admission into or selection of one of the following: MC-ARCHUD Master of Architecture/Master of Urban Design Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering"
+    - admission: MC-ARCHUP
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCH Master of Architecture Admission into or selection of one of the following: MC-ARCLARC Master of Architecture/Master of Landscape Architecture Admission into or selection of one of the following: MC-ARCPROP Master of Architecture/Master of Property Admission into or selection of one of the following: MC-ARCHUP Master of Architecture/Master of Urban Planning Admission into or selection of one of the following: MC-ARCHUD Master of Architecture/Master of Urban Design Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering"
+    - admission: MC-ARCHUD
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCH Master of Architecture Admission into or selection of one of the following: MC-ARCLARC Master of Architecture/Master of Landscape Architecture Admission into or selection of one of the following: MC-ARCPROP Master of Architecture/Master of Property Admission into or selection of one of the following: MC-ARCHUP Master of Architecture/Master of Urban Planning Admission into or selection of one of the following: MC-ARCHUD Master of Architecture/Master of Urban Design Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering"
+    - admission: MC-ARCHUCH
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCH Master of Architecture Admission into or selection of one of the following: MC-ARCLARC Master of Architecture/Master of Landscape Architecture Admission into or selection of one of the following: MC-ARCPROP Master of Architecture/Master of Property Admission into or selection of one of the following: MC-ARCHUP Master of Architecture/Master of Urban Planning Admission into or selection of one of the following: MC-ARCHUD Master of Architecture/Master of Urban Design Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering"
+    - admission: MC-ARCHENG
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCH Master of Architecture Admission into or selection of one of the following: MC-ARCLARC Master of Architecture/Master of Landscape Architecture Admission into or selection of one of the following: MC-ARCPROP Master of Architecture/Master of Property Admission into or selection of one of the following: MC-ARCHUP Master of Architecture/Master of Urban Planning Admission into or selection of one of the following: MC-ARCHUD Master of Architecture/Master of Urban Design Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering"
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - architecture
+  - environment
+assessment:
+  - kind: quiz
+    weight: 25
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: assignment
+    weight: 25
+    group: true
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90424
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

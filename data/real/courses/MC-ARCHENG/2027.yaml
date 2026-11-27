@@ -1,0 +1,51 @@
+# Master of Architectural Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# 450 points (54 months full time): 100-point Architecture Pathway Core (engineering subjects),
+# 100-point Engineering Pathway Core (architecture subjects), 25-point capstone and 225 points of
+# shared core. No specialisations, no electives.
+# Credit: students from an architecture or civil engineering major usually get 100 points of
+# advanced standing and skip one pathway; without credit both pathways are taken, so both are
+# compulsory here and a student with credit drops the one they were credited for.
+code: MC-ARCHENG
+title: Master of Architectural Engineering
+year: 2027
+# The Handbook says 450, but CVEN30010 is no longer available and names no replacement, so the
+# listed subjects add up to 437.5. Counted as 437.5 until the Handbook fills the gap.
+total_points: 437.5
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcarcheng
+# Entry needs maths equivalent to Calculus 2 and Linear Algebra, so their prerequisites count as
+# met. The two undergraduate science subjects and the architectural history subject have no
+# named UniMelb equivalents, so they are not assumed.
+assumed_done: [MAST10006, MAST10007]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-archeng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 437.5
+    description: 437.5 points in total (450 in the Handbook; see note above)
+  # Listed under "First Year Core subjects"; recommended order, never flagged late.
+  # CVEN30010 is marked "No longer available" in the Handbook, so it is left out (the list
+  # now adds up to 87.5 points, not the 100 the Handbook states).
+  - id: architecture-pathway
+    kind: compulsory
+    subjects: [CVEN20001, ENGR30002, MAST20029, ENEN20002, ENGR20003, CVEN30009, ENGR90051]
+    year: 1
+    description: Architecture Pathway Core (engineering subjects)
+  - id: engineering-pathway
+    kind: compulsory
+    subjects: [ABPL90284, ABPL90285, ABPL90286, ABPL90287, ABPL90288, ABPL90289]
+    year: 1
+    description: Engineering Pathway Core (architecture subjects, 100 points)
+  - id: capstone
+    kind: compulsory
+    subjects: [ABPL90390]
+    description: Capstone thesis (25 points)
+  - id: core
+    kind: compulsory
+    subjects: [CVEN90044, CVEN90050, CVEN90045, CVEN90051, CVEN90049, CVEN90058, CVEN90060, ABPL90437, ABPL90438, ABPL90439, ABPL90117, ABPL90118, ABPL90140, ABPL90424, CVEN90075]
+    description: Core subjects (225 points)

@@ -1,0 +1,12 @@
+id: mc-civeng-ocean-engineering
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Ocean Engineering
+points: 50
+# Four Year 3 core subjects (recommended order; the "must be in Year 3" note sits under the
+# compulsory subjects).
+requirements:
+  - all: [CVEN90066, CVEN90070, CVEN90071, GEOM90005]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-08
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

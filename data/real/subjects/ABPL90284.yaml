@@ -1,0 +1,51 @@
+code: ABPL90284
+title: Master of Architecture Studio A
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCHENG
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCHCM
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCLARC
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCHUCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCHUD
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCHUP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+    - admission: MC-ARCPROP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-ARCH3Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property"
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - design
+assessment:
+  - kind: presentation
+    weight: 90
+    hurdle: true
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90284
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,12 @@
+id: mc-civeng-business
+course: MC-CIVENG
+year: 2027
+kind: specialisation
+title: Business
+points: 50
+# Four Year 3 core subjects (must be in Year 3).
+requirements:
+  - all: [ENGM90011, ENGM90013, ENGM90006, ENGM90012]
+    year: 3
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-civeng-spec-01
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

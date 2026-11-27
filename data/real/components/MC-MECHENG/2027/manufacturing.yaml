@@ -1,0 +1,13 @@
+id: mc-mecheng-manufacturing
+course: MC-MECHENG
+year: 2027
+kind: specialisation
+title: Manufacturing
+points: 75
+# 50 points of Year 3 core (must be in Year 3), plus at least 25 points of Group A electives.
+requirements:
+  - all: [MCEN90055, MCEN90058, MCEN90057, MCEN90059]
+    year: 3
+  - choose: { points: 25, from: [MCEN90029, MCEN90018, ELEN90064, MCEN90052, MCEN90041, ENGR90043, MCEN90019] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-mecheng-spec-01
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

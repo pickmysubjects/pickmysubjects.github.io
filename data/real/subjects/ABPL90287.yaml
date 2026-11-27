@@ -1,0 +1,55 @@
+code: ABPL90287
+title: Design and Construction
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - ABPL90286
+    - ABPL90284
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - construction
+  - environment
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: week
+      from: 8
+      to: 9
+      text: From Week 8 to Week 9
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
+  - kind: quiz
+    weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90287
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

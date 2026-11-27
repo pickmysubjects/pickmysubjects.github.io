@@ -1,0 +1,51 @@
+# Master of Environmental Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Three years, 300 points. Engineering Practice hurdle: not a subject.
+# With or without a specialisation; both ways are options (one required), each with its own
+# elective rules. All share the compulsory subjects and the Year 3 selective.
+code: MC-ENVENG
+title: Master of Environmental Engineering
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcenveng
+# Entry needs maths equivalent to Calculus 2 and Linear Algebra, plus two first-year subjects in
+# one of physics, biology, chemistry, geosciences or geography. Only the maths is named by code,
+# so only it counts as met; the science could be any of five areas.
+assumed_done: [MAST10006, MAST10007]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-enveng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [CVEN20001, MAST20029, ENEN20002, ENEN30001, MAST20031, ENEN30002, ENGR30002, ENGR90051]
+    # Recommended order; a student with credit may skip or move them, so never flagged late.
+    year: 1
+    description: Year 1 compulsory subjects (100 points)
+  - id: year2
+    kind: compulsory
+    subjects: [CVEN90051, ENEN90031, GEOM90006, ENEN90028, ENEN90032, ENEN90038, ENEN30003, ENEN90040]
+    year: 2
+    description: Year 2 compulsory subjects (100 points)
+  - id: capstone
+    kind: compulsory
+    subjects: [ENGR90037, ENGR90038]
+    year: 3
+    description: Year 3 capstone project (25 points)
+  - id: selective
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [ENEN90005, CVEN90045] }
+    description: 12.5 points of Year 3 Environmental Engineering selectives
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: A specialisation, or the degree without one
