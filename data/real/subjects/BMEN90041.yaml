@@ -1,0 +1,57 @@
+code: BMEN90041
+title: Biomedical Eng Summer Research Project
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites:
+  all:
+    - wam:
+        min: 75
+      note: "The Summer Research Project is intended to be taken where possible in the final year of the candidature, but early enough so that students can use this to help them decide whether they wish to apply for PhD study. This subject has the prerequisites of: • Having completed at least 100 points of the Masters degree at time of enrolment • Having an average WAM of 75 or above for Masters. • Having secured the explicit approval and agreement of an Academic Supervisor for this subject"
+    - permission: application
+      note: "The Summer Research Project is intended to be taken where possible in the final year of the candidature, but early enough so that students can use this to help them decide whether they wish to apply for PhD study. This subject has the prerequisites of: • Having completed at least 100 points of the Masters degree at time of enrolment • Having an average WAM of 75 or above for Masters. • Having secured the explicit approval and agreement of an Academic Supervisor for this subject"
+corequisites:
+  manual: N/A
+non_allowed: []
+skills:
+  - data
+  - writing
+  - presentation
+topics:
+  - engineering
+  - health
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: participation
+    weight: 15
+    timing:
+      kind: week
+      from: 1
+      to: 8
+      text: From Week 1 to Week 8
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 60
+    hurdle: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen90041
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

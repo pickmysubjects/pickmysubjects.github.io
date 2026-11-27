@@ -1,0 +1,76 @@
+# Master of Biomedical Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Three years, 300 points. With the Business specialisation or without one; both ways are
+# options (one required). Engineering Practice hurdle (STEP, ENGR90033 or an approved
+# internship): not a subject rule.
+code: MC-BIOMENG
+title: Master of Biomedical Engineering
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcbiomeng
+# Entry needs maths equivalent to Calculus 2 and Linear Algebra (named on the entry page), so
+# those count as met. The second prerequisite can be biology, chemistry or Engineering
+# Mathematics, so no single subject is assumed for it; the Year 1 selectives cover all three.
+assumed_done: [MAST10006, MAST10007]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-biomeng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [BMEN20002, BMEN20003, BMEN30010, BMEN30006, BMEN30009, BMEN30008]
+    # Recommended order; a student with credit may skip or move them, so never flagged late.
+    # Mid-year starters take BMEN30008 in their third semester (Handbook note).
+    year: 1
+    description: Year 1 compulsory subjects (75 points)
+  # The page asks students to have the equivalent of all three selectives across their bachelor's
+  # and this degree, so the two not taken here should already be done. Mid-year starters are told
+  # to take BIOL10010 instead (by enrolment form), which we do not model.
+  - id: year1-selective
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [CHEM10003, MAST20029, BIOL10008] }
+    description: Year 1 selectives (25 points)
+  - id: year2
+    kind: compulsory
+    # Students who started before 2025 may follow their entry year's structure instead.
+    # The Handbook counts 150 compulsory points with Business against 162.5 without, but lists the
+    # same seven Year 2 subjects for both and does not say which one Business drops. We keep all
+    # seven for both ways; the Business way then has one Bioengineering elective fewer, so the
+    # total stays 300.
+    subjects: [BMEN90038, BMEN90037, BMEN90033, BMEN90039, BMEN90036, BMEN90035, ENGR90051]
+    year: 2
+    description: Year 2 compulsory subjects (87.5 points)
+  # BMEN90018 alone, or BMEN90031 then BMEN90032 in two semesters in a row (Semester 2, then
+  # Semester 1). BMEN90030 BioDesign Innovation (50 points) can replace the capstone plus 25
+  # elective points, but only with the coordinator's permission, so it is not offered here.
+  - id: capstone
+    kind: requirement
+    paths:
+      - - all: [BMEN90018]
+      - - all: [BMEN90031, BMEN90032]
+    description: Year 3 capstone project (25 points)
+  - id: bioeng-electives
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [BMEN90021, BMEN90002, BMEN90040, BMEN90011, BMEN90029, BMEN90022, BMEN90027, COMP90016, COMP90014, CHEN90039] }
+    description: 12.5 points of Bioengineering electives
+  # Any graduate subject counts (third-year subjects on application); these are the recommended
+  # ones. SCIE90017 is recommended but not in our subject data, so left out.
+  - id: approved-electives
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ENGR90033, ENGR90024, MCEN90048, COMP90007, COMP90038, COMP90041, ELEN90054, ELEN90055, MAST90007, MKTG90022, SCIE90011, SKIL90004, CHEN90038, BMEN90041, ENGR90026, ENGR90034] }
+    description: 25 points of approved electives
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: The Business specialisation, or the degree without one (50 points of Bioengineering electives)

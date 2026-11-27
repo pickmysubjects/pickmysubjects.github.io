@@ -1,0 +1,38 @@
+# Master of Environmental Systems Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# One year, 100 points: four core subjects, three selectives from one focus area, and one more
+# elective. No formal specialisations; the focus area is modelled as a required component.
+code: MC-ENSYSEN
+title: Master of Environmental Systems Engineering
+year: 2027
+total_points: 100
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcensysen
+# Entry names no prerequisite subjects (an engineering degree, or a related degree plus two
+# years of work), so nothing is assumed done.
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-ensysen/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 100
+    description: 100 points in total
+  - id: core
+    kind: compulsory
+    subjects: [ENEN90031, ENEN90028, ENEN90032, ENEN90040]
+    description: Core subjects (50 points)
+  # Suggested approved electives. The page also mentions CVEN90064/CVEN90065 (a two-part research
+  # project); neither is in our 2027 subject data, so both are left out.
+  - id: elective
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [GEOM90006, CVEN90027, CVEN90061, CVEN90063, ENGM90006, EVSC90025, CVEN90066, CVEN90068, CVEN90069, CVEN90070, ENEN90038, ELEN90088, ENGR90044] }
+    description: One elective (12.5 points)
+  - id: focus
+    kind: specialisation
+    max: 1
+    required: true
+    description: One focus area (Waste Management, Energy or Water Resources)

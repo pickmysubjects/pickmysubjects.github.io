@@ -1,0 +1,58 @@
+code: CVEN90047
+title: IE Research Project 2
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: This is a Capstone subject and may only be taken in the final year (112.5 points) of study. The subject is only available to students with approval from the subject coordinator.
+corequisites: none
+non_allowed:
+  - ENGR90037
+  - CVEN90064
+  - CVEN90065
+  - ENGR90038
+  - CVEN90056
+skills:
+  - data
+  - writing
+  - presentation
+topics:
+  - engineering
+  - modelling
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
+  - kind: assignment
+    weight: 50
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 1.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven90047
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

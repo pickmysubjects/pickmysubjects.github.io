@@ -1,0 +1,12 @@
+id: mc-biomeng-no-specialisation
+course: MC-BIOMENG
+year: 2027
+kind: specialisation
+title: No specialisation
+points: 50
+# Without a specialisation the degree needs 62.5 points of Bioengineering electives; 12.5 come
+# from the course's own Bioengineering elective rule, the other 50 from here.
+requirements:
+  - choose: { points: 50, from: [BMEN90021, BMEN90002, BMEN90040, BMEN90011, BMEN90029, BMEN90022, BMEN90027, COMP90016, COMP90014, CHEN90039] }
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-biomeng/course-structure
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

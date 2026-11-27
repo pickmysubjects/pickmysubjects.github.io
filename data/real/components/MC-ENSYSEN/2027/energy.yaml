@@ -1,0 +1,12 @@
+id: mc-ensysen-energy
+course: MC-ENSYSEN
+year: 2027
+kind: specialisation
+title: Energy
+points: 37.5
+# Three selectives from this focus area (an informal focus, not a formal specialisation).
+# CVEN90047 is a research subject and needs the course coordinator's approval.
+requirements:
+  - choose: { points: 37.5, from: [CVEN90047, ENEN90027, ENEN90033, ENEN90011, ENEN90014] }
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-ensysen/course-structure
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

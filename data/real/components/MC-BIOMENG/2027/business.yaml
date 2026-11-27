@@ -1,0 +1,13 @@
+id: mc-biomeng-business
+course: MC-BIOMENG
+year: 2027
+kind: specialisation
+title: Business
+points: 50
+# The four core specialisation subjects: ENGM90006 listed for Year 2, the other three for Year 3.
+# The page's 62.5 points also count 12.5 of Bioengineering electives, which the course's own
+# Bioengineering elective rule covers here. The years are listed but not said to be required.
+requirements:
+  - all: [ENGM90006, ENGM90011, ENGM90012, ENGM90013]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-biomeng-spec-01
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

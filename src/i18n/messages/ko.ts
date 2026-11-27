@@ -364,6 +364,8 @@ export const ko: Messages = {
     mcenveng: "WAM 65, Calculus 2·Linear Algebra 수준의 수학, 물리·생물·화학·지구과학·지리 중 1학년 과목 2개. 멜버른대 Environmental Engineering Systems 전공 또는 환경·토목 공학 학위와 WAM 65: 최대 100학점 인정",
     mcchemeng: "WAM 65, Calculus 2·Linear Algebra 수준의 수학과 Chemistry 1·2. 멜버른대 Chemical Engineering Systems 전공 또는 화공·생화공 학위와 WAM 65: 최대 100학점 인정",
     mcdinfeng: "WAM 65, 대학 수학 25학점과 물리·지리·화학·생물·컴퓨터 중 25학점. 멜버른대 Digital Infrastructure 또는 Spatial Engineering Systems 전공, 또는 측량·컴퓨터·도시계획·지리 분야 공학 학위와 WAM 65: 최대 100학점 인정",
+    mcbiomeng: "아무 학사 WAM 65, Calculus 2·Linear Algebra 수준의 수학, 그리고 생물 또는 화학 25학점이나 Engineering Mathematics. 멜버른대 Biomedical Engineering Systems 전공 또는 의공학 학위와 WAM 65: 최대 100학점 인정",
+    mcensysen: "4년제 공학 학사 WAM 65, 또는 환경과학·자연지리 등 관련 학사 WAM 65와 2년의 관련 경력. 지원 시 이력서 제출",
     mcis: "전공 무관 학사 WAM 65. 관련 경력 1년이면 최대 50학점, 정보시스템 학위와 경력 2년이면 최대 100학점 인정",
     mcfinance: "금융 전공 학사, 그리고 Corporate Finance, Investments, Derivative Securities(또는 동등 과목) 이수",
     mccs: "컴퓨터 관련 학사 WAM 75, 수학 또는 통계 25학점. 정원은 연구 지도교수 여부에 따라 달라요",
