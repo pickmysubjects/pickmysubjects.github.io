@@ -2959,6 +2959,7 @@ export const hi: Messages = {
     "fitAdd": "मेरा रिकॉर्ड भरें",
     "sortBy": "क्रम",
     "savedOrder": "सहेजने का क्रम",
+    "row": { "learn": "क्या सीखते हैं", "outcomes": "पूरा करने के बाद क्या कर सकते हैं", "topics": "विषय", "topicsNote": "हाइलाइट: यहाँ हर विषय में नहीं है" },
     "col": {"fit": "आपके लिए कितना सही", 
       "subject": "विषय",
       "points": "पॉइंट",

@@ -2959,6 +2959,7 @@ export const ja: Messages = {
     "fitAdd": "マイ記録に入力",
     "sortBy": "並べ替え",
     "savedOrder": "保存した順",
+    "row": { "learn": "学ぶこと", "outcomes": "修了後にできること", "topics": "トピック", "topicsNote": "強調：すべての科目にあるわけではない" },
     "col": {"fit": "あなたに合う度", 
       "subject": "科目",
       "points": "ポイント",

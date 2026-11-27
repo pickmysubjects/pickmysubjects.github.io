@@ -2959,6 +2959,7 @@ export const zhTW: Messages = {
     "fitAdd": "去填「我的記錄」",
     "sortBy": "排序",
     "savedOrder": "收藏順序",
+    "row": { "learn": "學什麼", "outcomes": "學完能做什麼", "topics": "主題", "topicsNote": "標亮的：不是每門都有" },
     "col": {"fit": "適合你", 
       "subject": "課程",
       "points": "學分",

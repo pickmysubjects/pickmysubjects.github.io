@@ -2959,6 +2959,7 @@ export const zhCN: Messages = {
     "fitAdd": "去填「我的记录」",
     "sortBy": "排序",
     "savedOrder": "收藏顺序",
+    "row": { "learn": "学什么", "outcomes": "学完能做什么", "topics": "主题", "topicsNote": "高亮的：不是每门都有" },
     "col": {"fit": "适合你", 
       "subject": "课程",
       "points": "学分",

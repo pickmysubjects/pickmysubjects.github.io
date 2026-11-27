@@ -2959,6 +2959,7 @@ export const ko: Messages = {
     "fitAdd": "내 기록 채우기",
     "sortBy": "정렬",
     "savedOrder": "저장한 순서",
+    "row": { "learn": "무엇을 배우나", "outcomes": "배운 뒤 할 수 있는 것", "topics": "주제", "topicsNote": "강조: 모든 과목에 있는 건 아님" },
     "col": {"fit": "나와 맞는 정도", 
       "subject": "과목",
       "points": "학점",

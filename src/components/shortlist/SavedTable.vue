@@ -13,15 +13,17 @@ import { prereqGist } from '@/i18n/gist'
 import { reasonText } from '@/i18n/format'
 import { fitHeadlineText, whyText } from '@/i18n/fitText'
 import { whyNotFit } from '@/engine'
-import { useDataset } from '@/composables/useDataset'
+import { useAbout, useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
-import { localTitle } from '@/i18n/localized'
+import { localTitle, pickLocalized } from '@/i18n/localized'
 
 /**
- * The saved subjects as one table: a row per subject, a column per fact, every answer the one its
- * own page gives. A column header sorts; "Only differences" hides the columns where every row
- * says the same. Phones get a card per subject with the same facts as a two-column list.
- * `highlight`: subjects from an old ?compare= link, shown first and marked.
+ * The saved subjects side by side: a column per subject, a row per question, every answer the one
+ * its own page gives. First what each teaches (what you learn, what you can do after, its topics:
+ * similar subjects often teach different things), then the facts. "Only differences" hides the
+ * fact rows where every subject says the same. Phones get the same columns, the row names pinned
+ * on the left and the subjects swiped sideways. `highlight`: subjects from an old ?compare= link,
+ * shown first and marked.
  */
 // droppable: rows added only to compare (not saved): they get an × to take them out again.
 const props = defineProps<{ codes: string[]; highlight: string[]; droppable?: string[] }>()
@@ -155,6 +157,20 @@ const fitList = computed(() => {
 })
 const best = computed(() => (fitList.value[0]?.cell.rank ?? 999) < 0 ? fitList.value[0] : null)
 
+// What each one teaches: its own about text, and its topics with the ones not every subject here
+// shares picked out (that's where similar-looking subjects part ways).
+const about = useAbout(computed(() => columns.value.map((c) => c.subject.code)))
+const learnOf = (code: string) => {
+  const a = about(code)
+  return a ? pickLocalized(a.learn, locale.value) : ''
+}
+const outcomesOf = (code: string) => (about(code)?.outcomes ?? []).map((o) => pickLocalized(o, locale.value))
+const topicsOf = (c: CompareColumn) => c.subject.topics
+const sharedTopics = computed(() => {
+  const lists = columns.value.map((c) => topicsOf(c))
+  return new Set(lists.length > 1 ? (lists[0] ?? []).filter((x) => lists.every((l) => l.includes(x))) : [])
+})
+
 const onlyDiff = shallowRef(false)
 // A column every subject answers the same way says nothing about which to pick.
 const same = computed(() => new Set(KEYS.value.filter((k) => rows.value.length > 1 && rows.value.every((r) => r.cells[k].text === rows.value[0]!.cells[k].text && r.cells[k].sub === rows.value[0]!.cells[k].sub))))
@@ -193,7 +209,7 @@ watch(shown, (keys) => {
         <input v-model="onlyDiff" type="checkbox" />
         <span>{{ t('shortlist.onlyDiff') }}</span>
       </label>
-      <label v-if="phone && rows.length > 2" class="sort">
+      <label v-if="rows.length > 2" class="sort">
         <span>{{ t('shortlist.sortBy') }}</span>
         <select class="input" :value="sortKey" @change="onSortSelect">
           <option value="">{{ t('shortlist.savedOrder') }}</option>
@@ -203,61 +219,57 @@ watch(shown, (keys) => {
       </label>
     </div>
 
-    <ul v-if="phone" class="cards">
-      <li v-for="r in sorted" :key="r.c.subject.code" class="card" :class="{ marked: r.marked }">
-        <span class="code">{{ r.c.subject.code }}</span>
-        <a class="title" :href="link(`subject/${r.c.subject.code}`)">{{ r.title }}</a>
-        <dl class="spec">
-          <div v-for="k in shown" :key="k" class="spec-row">
-            <dt>{{ t(`shortlist.col.${k}`) }}</dt>
-            <dd :class="r.cells[k].tone && `tone-${r.cells[k].tone}`">
-              {{ r.cells[k].text }}<span v-if="r.cells[k].sub" class="sub">{{ r.cells[k].sub }}</span>
-            </dd>
-          </div>
-        </dl>
-        <div class="acts">
-          <QuickAdd :subject="r.c.subject" text />
-          <button v-if="r.saved" type="button" class="text-btn" :aria-label="t('shortlist.removeLabel', { code: r.c.subject.code })" @click="shortlist.remove(r.c.subject.code)">{{ t('shortlist.remove') }}</button>
-          <ShortlistToggle v-else :code="r.c.subject.code" compact />
-                <button v-if="!r.saved && droppable?.includes(r.c.subject.code)" type="button" class="drop-btn" :aria-label="t('shortlist.dropLabel', { code: r.c.subject.code })" :title="t('shortlist.dropLabel', { code: r.c.subject.code })" @click="emit('drop', r.c.subject.code)"><X :size="18" aria-hidden="true" /></button>
-        </div>
-      </li>
-    </ul>
-
-    <div v-else class="scroll" tabindex="0" role="region" :aria-label="t('shortlist.title')">
-      <table class="table">
+    <div class="scroll" tabindex="0" role="region" :aria-label="t('shortlist.title')">
+      <table class="table" :style="{ '--cols': sorted.length }">
         <thead>
           <tr>
-            <th scope="col" class="col-subject" :aria-sort="ariaSort('subject')">
-              <button type="button" class="sort-btn" @click="sortBy('subject')">
-                {{ t('shortlist.col.subject') }}<span class="arrow" aria-hidden="true">{{ sortKey === 'subject' ? (sortDir === 1 ? '↑' : '↓') : '' }}</span>
-              </button>
-            </th>
-            <th v-for="k in shown" :key="k" scope="col" :class="{ 'col-fit': k === 'fit' }" :aria-sort="ariaSort(k)">
-              <button type="button" class="sort-btn" @click="sortBy(k)">
-                {{ t(`shortlist.col.${k}`) }}<span class="arrow" aria-hidden="true">{{ sortKey === k ? (sortDir === 1 ? '↑' : '↓') : '' }}</span>
-              </button>
-            </th>
-            <th scope="col"><span class="visually-hidden">{{ t('record.colActions') }}</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="r in sorted" :key="r.c.subject.code" :class="{ marked: r.marked }">
-            <th scope="row" class="col-subject">
+            <th scope="col" class="corner"><span class="visually-hidden">{{ t('shortlist.col.subject') }}</span></th>
+            <th v-for="r in sorted" :key="r.c.subject.code" scope="col" class="subj" :class="{ marked: r.marked }">
               <span class="code">{{ r.c.subject.code }}</span>
               <a class="title" :href="link(`subject/${r.c.subject.code}`)">{{ r.title }}</a>
-            </th>
-            <td v-for="k in shown" :key="k" :class="[r.cells[k].tone && `tone-${r.cells[k].tone}`, { 'col-fit': k === 'fit' }]">
-              <span class="val">{{ r.cells[k].text }}</span>
-              <span v-if="r.cells[k].sub" class="sub">{{ r.cells[k].sub }}</span>
-            </td>
-            <td class="acts-cell">
               <div class="acts">
                 <QuickAdd :subject="r.c.subject" text />
                 <button v-if="r.saved" type="button" class="text-btn" :aria-label="t('shortlist.removeLabel', { code: r.c.subject.code })" @click="shortlist.remove(r.c.subject.code)">{{ t('shortlist.remove') }}</button>
                 <ShortlistToggle v-else :code="r.c.subject.code" compact />
                 <button v-if="!r.saved && droppable?.includes(r.c.subject.code)" type="button" class="drop-btn" :aria-label="t('shortlist.dropLabel', { code: r.c.subject.code })" :title="t('shortlist.dropLabel', { code: r.c.subject.code })" @click="emit('drop', r.c.subject.code)"><X :size="18" aria-hidden="true" /></button>
               </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-learn">
+            <th scope="row">{{ t('shortlist.row.learn') }}</th>
+            <td v-for="r in sorted" :key="r.c.subject.code" class="text">{{ learnOf(r.c.subject.code) || '—' }}</td>
+          </tr>
+          <tr class="row-learn">
+            <th scope="row">{{ t('shortlist.row.outcomes') }}</th>
+            <td v-for="r in sorted" :key="r.c.subject.code" class="text">
+              <ul v-if="outcomesOf(r.c.subject.code).length" class="outcomes">
+                <li v-for="(o, j) in outcomesOf(r.c.subject.code)" :key="j">{{ o }}</li>
+              </ul>
+              <template v-else>—</template>
+            </td>
+          </tr>
+          <tr class="row-learn">
+            <th scope="row">
+              {{ t('shortlist.row.topics') }}
+              <span v-if="sorted.length > 1" class="row-note">{{ t('shortlist.row.topicsNote') }}</span>
+            </th>
+            <td v-for="r in sorted" :key="r.c.subject.code">
+              <ul class="topics">
+                <li v-for="x in topicsOf(r.c)" :key="x" class="topic" :class="{ own: sorted.length > 1 && !sharedTopics.has(x) }">{{ t(`topic.${x}`) }}</li>
+              </ul>
+            </td>
+          </tr>
+          <tr v-for="k in shown" :key="k">
+            <th scope="row" :aria-sort="ariaSort(k)">
+              <button type="button" class="sort-btn" :title="t('shortlist.sortBy')" @click="sortBy(k)">
+                {{ t(`shortlist.col.${k}`) }}<span class="arrow" aria-hidden="true">{{ sortKey === k ? (sortDir === 1 ? '→' : '←') : '' }}</span>
+              </button>
+            </th>
+            <td v-for="r in sorted" :key="r.c.subject.code" :class="[r.cells[k].tone && `tone-${r.cells[k].tone}`, { marked: r.marked }]">
+              <span class="val">{{ r.cells[k].text }}</span>
+              <span v-if="r.cells[k].sub" class="sub">{{ r.cells[k].sub }}</span>
             </td>
           </tr>
         </tbody>
@@ -375,7 +387,7 @@ watch(shown, (keys) => {
   max-width: 60vw;
 }
 
-/* Wide tables scroll sideways inside their own box, never the page. */
+/* Wide comparisons scroll sideways inside their own box, never the page. */
 .scroll {
   max-width: 100%;
   overflow-x: auto;
@@ -387,39 +399,98 @@ watch(shown, (keys) => {
   outline-offset: -2px;
 }
 
+/* A column per subject, the row names pinned on the left: two subjects fit a phone, more swipe. */
 .table {
   width: 100%;
-  border-collapse: collapse;
+  min-width: calc(8.5rem + var(--cols) * 13rem);
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
   font-size: 0.9375rem;
 }
 
-th,
-/* "Fits you" keeps its band on one line ("Great fit"), its percentage under it. */
-.col-fit {
-  min-width: 9em;
-}
-
-.col-fit .val {
-  white-space: nowrap;
-}
-
-td {
-  padding: 12px 10px;
+.table th,
+.table td {
+  padding: 12px 12px;
   text-align: left;
-  vertical-align: middle;
+  vertical-align: top;
   border-bottom: 1px solid var(--line);
 }
 
-thead th {
-  padding: 4px 6px;
-  vertical-align: bottom;
+tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 8.5rem;
   font-size: var(--fs-small);
   font-weight: var(--fw-semibold);
   color: var(--ink-soft);
+  background: var(--surface);
+}
+
+.corner {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 8.5rem;
+  background: var(--surface);
+}
+
+.subj {
+  font-weight: inherit;
 }
 
 tbody tr:last-child > * {
   border-bottom: 0;
+}
+
+.row-learn td,
+.row-learn th {
+  background-clip: padding-box;
+}
+
+.row-note {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-regular);
+}
+
+.text {
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.outcomes {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 1.1em;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topic {
+  padding: 2px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+/* A topic not every subject here covers: where they differ. */
+.topic.own {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: var(--fw-semibold);
 }
 
 .sort-btn {
@@ -427,11 +498,9 @@ tbody tr:last-child > * {
   align-items: center;
   gap: 4px;
   text-align: left;
-  text-wrap: balance;
-  min-height: 44px;
-  padding: 0 8px;
+  min-height: 32px;
+  padding: 0;
   border: 0;
-  border-radius: 8px;
   background: none;
   font: inherit;
   color: inherit;
@@ -445,26 +514,16 @@ tbody tr:last-child > * {
 
 .sort-btn:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: -2px;
+  outline-offset: 2px;
 }
 
 th[aria-sort] .sort-btn {
   color: var(--accent);
 }
 
-/* Room for the arrow either way, so a sorted header never changes width. */
 .arrow {
   display: inline-block;
   width: 1ch;
-}
-
-.col-subject {
-  width: 26%;
-  min-width: 160px;
-}
-
-tbody .col-subject {
-  font-weight: inherit;
 }
 
 .code {
@@ -518,30 +577,20 @@ tbody .col-subject {
   border-color: var(--warn);
 }
 
-tr.marked > *,
-.card.marked {
+.marked {
   background: color-mix(in srgb, var(--accent-soft) 70%, transparent);
-}
-
-.acts-cell {
-  width: 1%;
-  min-width: 8em;
-}
-
-.acts-cell :deep(.qa) {
-  white-space: nowrap;
-}
-
-/* Add and save side by side, as on the subject cards: "+ Add to plan" and the heart. */
-.acts-cell .acts {
-  gap: 4px;
 }
 
 .acts {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 4px 12px;
+  gap: 4px 8px;
+  margin-top: 8px;
+}
+
+.acts :deep(.qa) {
+  white-space: nowrap;
 }
 
 .text-btn {
@@ -592,56 +641,25 @@ tr.marked > *,
   }
 }
 
-/* Phones: a card per subject, its facts as a two-column list. */
-.cards {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+@media (max-width: 720px) {
+  .table {
+    min-width: calc(5.25rem + var(--cols) * 8.75rem);
+    font-size: 0.875rem;
+  }
 
-.card {
-  display: grid;
-  gap: 2px;
-  padding: var(--space-4);
-  border-bottom: 1px solid var(--line);
-}
+  tbody th,
+  .corner {
+    width: 5.25rem;
+  }
 
-.card:last-child {
-  border-bottom: 0;
-}
+  /* Two subjects side by side on a phone: the actions stack under each title. */
+  .acts {
+    gap: 2px 4px;
+  }
 
-.spec {
-  display: grid;
-  margin: var(--space-3) 0 var(--space-2);
-}
-
-.spec-row {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  gap: var(--space-3);
-  padding: 6px 0;
-  border-top: 1px solid var(--line);
-  font-size: 0.875rem;
-}
-
-.spec dt {
-  color: var(--ink-soft);
-}
-
-.spec dd {
-  margin: 0;
-  font-weight: 550;
-  overflow-wrap: anywhere;
-}
-
-.spec dd.tone-good,
-.spec dd.tone-warn {
-  padding-left: 8px;
-  border-left: 3px solid var(--good);
-}
-
-.spec dd.tone-warn {
-  border-color: var(--warn);
+  .table th,
+  .table td {
+    padding: 10px 8px;
+  }
 }
 </style>

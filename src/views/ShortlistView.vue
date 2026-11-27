@@ -4,7 +4,6 @@ import { computed, shallowRef } from 'vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import SavedTable from '@/components/shortlist/SavedTable.vue'
-import PairLearn from '@/components/shortlist/PairLearn.vue'
 import { compareFromQuery, useShortlist } from '@/composables/useShortlist'
 import { go, link, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -74,7 +73,6 @@ function dropCompare(code: string): void {
       <SavedTable v-if="codes.length" :codes="codes" :highlight="asked" :droppable="droppable" @drop="dropCompare" />
     </section>
 
-    <PairLearn v-if="pair" :a="pair[0]" :b="pair[1]" />
   </div>
 </template>
 

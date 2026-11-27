@@ -2959,6 +2959,7 @@ export const vi: Messages = {
     "fitAdd": "Điền Hồ sơ của tôi",
     "sortBy": "Sắp xếp theo",
     "savedOrder": "Thứ tự đã lưu",
+    "row": { "learn": "Học gì", "outcomes": "Học xong làm được gì", "topics": "Chủ đề", "topicsNote": "Tô đậm: không phải môn nào cũng có" },
     "col": {"fit": "Hợp với bạn", 
       "subject": "Môn học",
       "points": "Tín chỉ",

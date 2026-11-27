@@ -2959,6 +2959,7 @@ export const ms: Messages = {
     "fitAdd": "Isi Rekod saya",
     "sortBy": "Isih ikut",
     "savedOrder": "Urutan disimpan",
+    "row": { "learn": "Apa yang dipelajari", "outcomes": "Apa boleh dibuat selepas itu", "topics": "Topik", "topicsNote": "Diserlahkan: bukan semua subjek di sini merangkuminya" },
     "col": {"fit": "Sesuai untuk anda", 
       "subject": "Subjek",
       "points": "Mata",

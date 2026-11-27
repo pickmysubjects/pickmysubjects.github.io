@@ -2965,6 +2965,7 @@ export const en = {
     "fitAdd": "Fill in My record",
     "sortBy": "Sort by",
     "savedOrder": "Order saved",
+    "row": { "learn": "What you learn", "outcomes": "What you can do after", "topics": "Topics", "topicsNote": "Highlighted: not every subject here covers it" },
     "col": {"fit": "Fits you", 
       "subject": "Subject",
       "points": "Points",

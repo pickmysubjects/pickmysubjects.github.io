@@ -114,3 +114,9 @@ export function useOutcomes(codes: Readonly<Ref<readonly string[]>>) {
   watch(codes, (cs) => void cs.forEach((c) => void loadArea(detailArea(c))), { immediate: true })
   return (code: string) => areas.get(detailArea(code))?.[code]?.about?.outcomes ?? []
 }
+
+/** Each subject's "what you learn" and outcomes, loading their areas as `codes` change; undefined until loaded. */
+export function useAbout(codes: Readonly<Ref<readonly string[]>>) {
+  watch(codes, (cs) => void cs.forEach((c) => void loadArea(detailArea(c))), { immediate: true })
+  return (code: string) => areas.get(detailArea(code))?.[code]?.about
+}
