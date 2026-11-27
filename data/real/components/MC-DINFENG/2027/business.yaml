@@ -1,0 +1,12 @@
+id: mc-dinfeng-business
+course: MC-DINFENG
+year: 2027
+kind: specialisation
+title: Business
+points: 50
+# All four Year 3 compulsory subjects (50 points).
+# The page lists these as Year 3 subjects but does not say they must be taken in Year 3.
+requirements:
+  - all: [ENGM90006, ENGM90011, ENGM90012, ENGM90013]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-dinfeng-spec-9
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

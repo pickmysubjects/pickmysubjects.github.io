@@ -1,0 +1,43 @@
+code: ABPL90290
+title: Fundamentals of Built Environment Law
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - BLAW10001
+skills:
+  - exams
+  - writing
+topics:
+  - law
+  - construction
+  - property
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90290
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

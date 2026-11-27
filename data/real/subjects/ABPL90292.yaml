@@ -1,0 +1,43 @@
+code: ABPL90292
+title: Construction of Buildings
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - ABPL20042
+  - ABPL20033
+skills:
+  - exams
+  - design
+topics:
+  - construction
+  - architecture
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90292
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

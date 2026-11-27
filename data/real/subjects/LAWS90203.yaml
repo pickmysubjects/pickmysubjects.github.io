@@ -1,0 +1,30 @@
+code: LAWS90203
+title: "Science & AI: Legal & Ethical Challenges"
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - law
+  - ai
+  - ethics
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: quiz
+    weight: 10
+  - kind: report
+    weight: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/laws90203
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -363,6 +363,7 @@ export const zhTW: Messages = {
     mcciveng: "WAM 65，修過相當於 Calculus 2、Linear Algebra 的數學，以及 25 學分物理、化學、生物或資訊；墨大 Civil Engineering Systems 主修或土木、結構工程學位且 WAM 65：最多抵免 100 學分",
     mcenveng: "WAM 65，修過相當於 Calculus 2、Linear Algebra 的數學，以及兩門大一的物理、生物、化學、地球科學或地理課；墨大 Environmental Engineering Systems 主修或環境、土木工程學位且 WAM 65：最多抵免 100 學分",
     mcchemeng: "WAM 65，修過相當於 Calculus 2、Linear Algebra 的數學和 Chemistry 1、2；墨大 Chemical Engineering Systems 主修或化工、生化工程學位且 WAM 65：最多抵免 100 學分",
+    mcdinfeng: "WAM 65，修過至少 25 學分任意大學數學，以及 25 學分物理、地理、化學、生物或資訊；墨大 Digital Infrastructure 或 Spatial Engineering Systems 主修，或測繪、資訊、都市計畫、地理方向的工程學位且 WAM 65：最多抵免 100 學分",
     mcis: "任何學士 WAM 65；有一年相關工作最多抵免 50 學分，資訊系統學士加兩年工作最多抵免 100 學分",
     mcfinance: "主修金融的學士，並修過 Corporate Finance、Investments 和 Derivative Securities（或同等課程）",
     mccs: "資訊相關學士 WAM 75，並修過 25 學分數學或統計；名額取決於有沒有研究指導老師",

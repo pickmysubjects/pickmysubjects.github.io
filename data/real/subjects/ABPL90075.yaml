@@ -1,0 +1,37 @@
+code: ABPL90075
+title: Landscape and Urban Heritage
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - design
+  - teamwork
+topics:
+  - history
+  - environment
+assessment:
+  - kind: assignment
+    weight: 50
+    group: true
+    hurdle: true
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90075
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

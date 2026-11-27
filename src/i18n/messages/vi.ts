@@ -363,6 +363,7 @@ export const vi: Messages = {
     mcciveng: "WAM 65, toán tương đương Calculus 2 và Linear Algebra, và 25 điểm vật lý, hóa, sinh hoặc khoa học máy tính; chuyên ngành Civil Engineering Systems của UniMelb hoặc bằng kỹ thuật xây dựng/kết cấu với WAM 65: miễn tối đa 100 điểm",
     mcenveng: "WAM 65, toán tương đương Calculus 2 và Linear Algebra, và hai môn năm nhất về vật lý, sinh, hóa, khoa học trái đất hoặc địa lý; chuyên ngành Environmental Engineering Systems của UniMelb hoặc bằng kỹ thuật môi trường/xây dựng với WAM 65: miễn tối đa 100 điểm",
     mcchemeng: "WAM 65, toán tương đương Calculus 2 và Linear Algebra, cùng Chemistry 1 và 2; chuyên ngành Chemical Engineering Systems của UniMelb hoặc bằng kỹ thuật hóa/hóa sinh với WAM 65: miễn tối đa 100 điểm",
+    mcdinfeng: "WAM 65, 25 điểm toán bậc đại học bất kỳ và 25 điểm vật lý, địa lý, hóa, sinh hoặc khoa học máy tính; chuyên ngành Digital Infrastructure hoặc Spatial Engineering Systems của UniMelb, hoặc bằng kỹ thuật ngành trắc địa, máy tính, quy hoạch đô thị hay địa lý với WAM 65: miễn tối đa 100 điểm",
     mcis: "WAM 65 với bằng cử nhân bất kỳ; một năm làm việc liên quan được miễn tối đa 50 điểm, bằng Hệ thống thông tin cộng hai năm làm việc tối đa 100 điểm",
     mcfinance: "Cử nhân chuyên ngành tài chính, đã học Corporate Finance, Investments và Derivative Securities (hoặc tương đương)",
     mccs: "Cử nhân ngành máy tính WAM 75 và 25 điểm toán hoặc thống kê; số chỗ phụ thuộc vào người hướng dẫn nghiên cứu",

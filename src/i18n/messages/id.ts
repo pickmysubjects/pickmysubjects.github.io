@@ -363,6 +363,7 @@ export const id: Messages = {
     mcciveng: "WAM 65, matematika setara Calculus 2 dan Linear Algebra, dan 25 poin fisika, kimia, biologi atau ilmu komputer; jurusan Civil Engineering Systems UniMelb atau gelar teknik sipil atau struktur dengan WAM 65: kredit hingga 100 poin",
     mcenveng: "WAM 65, matematika setara Calculus 2 dan Linear Algebra, dan dua mata kuliah tahun pertama fisika, biologi, kimia, ilmu kebumian atau geografi; jurusan Environmental Engineering Systems UniMelb atau gelar teknik lingkungan atau sipil dengan WAM 65: kredit hingga 100 poin",
     mcchemeng: "WAM 65, matematika setara Calculus 2 dan Linear Algebra, serta Chemistry 1 dan 2; jurusan Chemical Engineering Systems UniMelb atau gelar teknik kimia atau biokimia dengan WAM 65: kredit hingga 100 poin",
+    mcdinfeng: "WAM 65, 25 poin matematika tingkat universitas dan 25 poin fisika, geografi, kimia, biologi atau ilmu komputer; jurusan Digital Infrastructure atau Spatial Engineering Systems UniMelb, atau gelar teknik di bidang geomatika, ilmu komputer, perencanaan kota atau geografi dengan WAM 65: kredit hingga 100 poin",
     mcis: "WAM 65 dari gelar sarjana apa pun; kredit hingga 50 poin dengan setahun kerja terkait, hingga 100 dengan gelar Sistem Informasi dan dua tahun kerja",
     mcfinance: "Sarjana dengan jurusan keuangan, plus Corporate Finance, Investments, dan Derivative Securities (atau setara)",
     mccs: "Sarjana bidang komputasi WAM 75 dan 25 poin matematika atau statistika; kuota bergantung pada pembimbing riset",

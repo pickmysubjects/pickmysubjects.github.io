@@ -1,0 +1,62 @@
+# Master of Digital Infrastructure Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Three years, 300 points. With or without a specialisation; both ways are options (one
+# required). Engineering Practice hurdle (STEP, ENGR90033 or an approved internship): not a subject rule.
+code: MC-DINFENG
+title: Master of Digital Infrastructure Engineering
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcdinfeng
+# Entry asks for 25 points of any tertiary maths and 25 points of physics, geography, chemistry,
+# biology or computer science. It names no UniMelb equivalents; we read the 25 maths points as
+# Calculus 1 and Linear Algebra, which the course's own Year 1 subjects (CVEN30008, COMP20005,
+# ENGR20005) expect, so those two count as met.
+assumed_done: [MAST10005, MAST10007]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-dinfeng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [CVEN20001, CVEN30008, GEOM20013, GEOM20015, GEOM30009, GEOM30012, GEOM30014]
+    # Recommended order; a student with credit may skip or move them, so never flagged late.
+    year: 1
+    description: Year 1 compulsory subjects (87.5 points)
+  - id: year1-selective
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [COMP20005, ENGR20005] }
+    description: One Year 1 selective (12.5 points)
+  - id: year2
+    kind: compulsory
+    subjects: [CVEN90062, GEOM90005, GEOM90006, GEOM90007, GEOM90008, GEOM90033, GEOM90038]
+    year: 2
+    description: Year 2 compulsory subjects (87.5 points)
+  - id: year2-selective
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [COMP90087, LAWS90203] }
+    description: One Year 2 selective (12.5 points)
+  - id: year3
+    kind: compulsory
+    # Students who started before 2025 may follow their entry year's structure instead.
+    subjects: [CVEN90045, ENGR90051]
+    year: 3
+    description: Year 3 compulsory subjects (25 points)
+  - id: capstone
+    kind: compulsory
+    subjects: [ENGR90037, ENGR90038]
+    year: 3
+    description: Year 3 capstone project (25 points)
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: A specialisation, or the degree without one (50 points of electives)

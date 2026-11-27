@@ -1,0 +1,12 @@
+id: mc-dinfeng-information-technology
+course: MC-DINFENG
+year: 2027
+kind: specialisation
+title: Information Technology
+points: 50
+# 50 points of Year 3 selectives.
+# The page lists these as Year 3 subjects but does not say they must be taken in Year 3.
+requirements:
+  - choose: { points: 50, from: [COMP90007, COMP90015, COMP90038, COMP90074, COMP90024] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-dinfeng-spec-7
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

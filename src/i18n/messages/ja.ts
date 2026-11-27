@@ -363,6 +363,7 @@ export const ja: Messages = {
     mcciveng: "WAM 65、Calculus 2・Linear Algebra 相当の数学、物理・化学・生物・情報のいずれか25単位。メルボルン大学の Civil Engineering Systems 専攻、または土木・構造系の工学学位で WAM 65：最大100単位の単位認定",
     mcenveng: "WAM 65、Calculus 2・Linear Algebra 相当の数学、物理・生物・化学・地球科学・地理のいずれか1年次科目2つ。メルボルン大学の Environmental Engineering Systems 専攻、または環境・土木系の工学学位で WAM 65：最大100単位の単位認定",
     mcchemeng: "WAM 65、Calculus 2・Linear Algebra 相当の数学と Chemistry 1・2。メルボルン大学の Chemical Engineering Systems 専攻、または化学・生化学系の工学学位で WAM 65：最大100単位の単位認定",
+    mcdinfeng: "WAM 65、大学レベルの数学25単位と、物理・地理・化学・生物・情報のいずれか25単位。メルボルン大学の Digital Infrastructure または Spatial Engineering Systems 専攻、または測量・情報・都市計画・地理系の工学学位で WAM 65：最大100単位の単位認定",
     mcis: "分野を問わない学士で WAM 65。関連職務1年で最大50単位、情報システムの学位と2年の職務経験で最大100単位の単位認定",
     mcfinance: "金融専攻の学士で、Corporate Finance・Investments・Derivative Securities（または同等科目）を履修済み",
     mccs: "コンピュータ系の学士で WAM 75、数学か統計25単位。定員は研究指導教員の空きによります",

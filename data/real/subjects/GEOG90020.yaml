@@ -1,0 +1,40 @@
+code: GEOG90020
+title: Participatory Risk Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - writing
+topics:
+  - geography
+  - society
+  - management
+assessment:
+  - kind: quiz
+    weight: 30
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: report
+    weight: 30
+    timing:
+      kind: early
+      text: First half of the teaching period
+  - kind: report
+    weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geog90020
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

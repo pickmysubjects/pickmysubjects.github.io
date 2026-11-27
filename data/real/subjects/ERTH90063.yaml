@@ -1,0 +1,47 @@
+code: ERTH90063
+title: Seminar in Archaeological Science
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+topics:
+  - earth-science
+  - history
+  - indigenous-studies
+assessment:
+  - kind: report
+    weight: 25
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 25
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: presentation
+    weight: 30
+    hurdle: true
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/erth90063
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

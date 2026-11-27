@@ -1,0 +1,37 @@
+code: EVSC90033
+title: Air Quality Monitoring
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  manual: Undergraduate degree in science, technology, engineering, mathematics or equivalent professional experience.
+corequisites: none
+non_allowed: []
+skills:
+  - programming
+  - data
+  - fieldwork
+  - lab
+topics:
+  - environment
+  - health
+assessment:
+  - kind: test
+    weight: 20
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: report
+    weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/evsc90033
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

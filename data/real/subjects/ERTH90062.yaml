@@ -1,0 +1,39 @@
+code: ERTH90062
+title: Introduction to Archaeological Science
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - earth-science
+  - history
+  - indigenous-studies
+assessment:
+  - kind: report
+    weight: 40
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: report
+    weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/erth90062
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

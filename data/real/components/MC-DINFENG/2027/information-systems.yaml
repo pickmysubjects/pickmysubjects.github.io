@@ -1,0 +1,12 @@
+id: mc-dinfeng-information-systems
+course: MC-DINFENG
+year: 2027
+kind: specialisation
+title: Information Systems
+points: 50
+# All four Year 3 core subjects (50 points).
+# The page lists these as Year 3 subjects but does not say they must be taken in Year 3.
+requirements:
+  - all: [ISYS90026, ISYS90038, ISYS90050, ISYS90090]
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-dinfeng-spec-10
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

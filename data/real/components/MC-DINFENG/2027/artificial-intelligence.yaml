@@ -1,0 +1,13 @@
+id: mc-dinfeng-artificial-intelligence
+course: MC-DINFENG
+year: 2027
+kind: specialisation
+title: Artificial Intelligence
+points: 50
+# 37.5 points of compulsory subjects, plus 12.5 points of selectives.
+# The page lists these as Year 3 subjects but does not say they must be taken in Year 3.
+requirements:
+  - all: [COMP90038, COMP90049, COMP90051]
+  - choose: { points: 12.5, from: [COMP90054, COMP90086] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-dinfeng-spec-4
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

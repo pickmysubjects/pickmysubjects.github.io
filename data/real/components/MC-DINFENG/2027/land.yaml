@@ -1,0 +1,13 @@
+id: mc-dinfeng-land
+course: MC-DINFENG
+year: 2027
+kind: specialisation
+title: Land
+points: 50
+# 37.5 points of Year 3 compulsory subjects, plus 12.5 points of Year 3 selectives. The Land option is the one accredited by the Surveyors Registration Board Victoria.
+# The page lists these as Year 3 subjects but does not say they must be taken in Year 3.
+requirements:
+  - all: [ABPL90041, GEOM90041, GEOM90045]
+  - choose: { points: 12.5, from: [ABPL90130, GEOG90019, ABPL90290] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-dinfeng-spec-1
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

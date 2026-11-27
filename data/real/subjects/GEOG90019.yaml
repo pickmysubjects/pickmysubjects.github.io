@@ -1,0 +1,28 @@
+code: GEOG90019
+title: Indigenous Land Management
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - writing
+topics:
+  - indigenous-studies
+  - environment
+  - geography
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 15
+  - kind: report
+    weight: 60
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geog90019
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,74 @@
+code: ABPL90433
+title: Building Information Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - any:
+            - admission: MC-CM
+              note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 200pt Program course entry point in the MC-ARCH Master of Architecture 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management"
+            - admission: MC-ARCH
+              note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 200pt Program course entry point in the MC-ARCH Master of Architecture 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management"
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 200pt Program course entry point in the MC-ARCH Master of Architecture 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management"
+        - any:
+            - admission: MC-ARCHM
+              note: Admission into the 400 point program for MC-ARCHM or MC-CMPROP for students with an undergraduate major or degree in Construction
+            - admission: MC-CMPROP
+              note: Admission into the 400 point program for MC-ARCHM or MC-CMPROP for students with an undergraduate major or degree in Construction
+    - all:
+        - admission: MC-CM
+          note: Admission into the 300pt Program course entry point in the MC-CM Master of Construction Management
+        - all:
+            - ABPL90292
+            - ABPL90313
+    - all:
+        - admission: MC-ARCH
+          note: Admission into the 300pt Program course entry point in the MC-ARCH Master of Architecture
+        - all:
+            - ABPL90286
+            - ABPL90287
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed:
+  - CONS30002
+skills:
+  - teamwork
+  - presentation
+  - exams
+topics:
+  - construction
+  - management
+assessment:
+  - kind: presentation
+    weight: 40
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90433
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

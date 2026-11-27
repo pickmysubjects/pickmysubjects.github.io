@@ -1,0 +1,41 @@
+code: ABPL90153
+title: Complex Building Energy Modelling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites: ABPL90086
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+  - writing
+topics:
+  - architecture
+  - modelling
+  - environment
+assessment:
+  - kind: presentation
+    weight: 20
+    hurdle: true
+  - kind: report
+    weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 3
+      text: 3 Weeks after the end of teaching
+  - kind: assignment
+    weight: 30
+    hurdle: true
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90153
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,41 @@
+code: ABPL90355
+title: Issues and Techniques in Global Heritage
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - history
+  - architecture
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
+  - kind: report
+    weight: 70
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90355
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

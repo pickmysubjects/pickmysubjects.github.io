@@ -1,0 +1,12 @@
+id: mc-dinfeng-communication-infrastructure
+course: MC-DINFENG
+year: 2027
+kind: specialisation
+title: Communication Infrastructure
+points: 50
+# 50 points of Year 3 selectives.
+# The page lists these as Year 3 subjects but does not say they must be taken in Year 3.
+requirements:
+  - choose: { points: 50, from: [ELEN90054, ELEN90057, ELEN90061, ELEN90088, MCEN90032, ENGR90033] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-dinfeng-spec-6
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

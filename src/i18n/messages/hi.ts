@@ -363,6 +363,7 @@ export const hi: Messages = {
     mcciveng: "WAM 65, Calculus 2 और Linear Algebra जैसा गणित, और 25 पॉइंट फिज़िक्स, केमिस्ट्री, बायोलॉजी या कंप्यूटर साइंस; UniMelb का Civil Engineering Systems मेजर या सिविल/स्ट्रक्चरल इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
     mcenveng: "WAM 65, Calculus 2 और Linear Algebra जैसा गणित, और फिज़िक्स, बायोलॉजी, केमिस्ट्री, जियोसाइंस या भूगोल के दो फर्स्ट-ईयर विषय; UniMelb का Environmental Engineering Systems मेजर या एनवायरनमेंटल/सिविल इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
     mcchemeng: "WAM 65, Calculus 2 और Linear Algebra जैसा गणित, और Chemistry 1 व 2; UniMelb का Chemical Engineering Systems मेजर या केमिकल/बायोकेमिकल इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
+    mcdinfeng: "WAM 65, किसी भी विश्वविद्यालय स्तर के गणित के 25 पॉइंट और भौतिकी, भूगोल, रसायन, जीव विज्ञान या कंप्यूटर साइंस के 25 पॉइंट; UniMelb का Digital Infrastructure या Spatial Engineering Systems मेजर, या जियोमैटिक्स, कंप्यूटर साइंस, शहरी नियोजन या भूगोल में इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
     mcis: "किसी भी स्नातक डिग्री में WAM 65; एक साल के संबंधित काम से 50 पॉइंट तक, सूचना प्रणाली डिग्री और दो साल के काम से 100 पॉइंट तक क्रेडिट",
     mcfinance: "फ़ाइनेंस मेजर वाली स्नातक डिग्री, साथ में Corporate Finance, Investments और Derivative Securities (या समकक्ष)",
     mccs: "कंप्यूटिंग स्नातक WAM 75 और 25 पॉइंट गणित या सांख्यिकी; सीटें रिसर्च सुपरवाइज़र पर निर्भर",

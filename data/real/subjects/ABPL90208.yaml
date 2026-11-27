@@ -1,0 +1,51 @@
+code: ABPL90208
+title: Construction Measurement and Estimating
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-CM
+          note: "Admission into one of the following: Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into one of the following: Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into one of the following: Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+    - ABPL90312
+    - permission: coordinator
+      note: Approval from the Course coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - exams
+topics:
+  - construction
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 45
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 35
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90208
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

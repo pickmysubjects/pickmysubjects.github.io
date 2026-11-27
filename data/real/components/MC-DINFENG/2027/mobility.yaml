@@ -1,0 +1,12 @@
+id: mc-dinfeng-mobility
+course: MC-DINFENG
+year: 2027
+kind: specialisation
+title: Mobility
+points: 50
+# 50 points of Year 3 selectives.
+# The page lists these as Year 3 subjects but does not say they must be taken in Year 3.
+requirements:
+  - choose: { points: 50, from: [ABPL90090, CVEN90048, CVEN90061, CVEN90063, MCEN90028, CVEN90075, ENGR90033] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-dinfeng-spec-3
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

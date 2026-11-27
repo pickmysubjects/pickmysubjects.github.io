@@ -363,6 +363,7 @@ export const zhCN: Messages = {
     mcciveng: "WAM 65，修过相当于 Calculus 2、Linear Algebra 的数学，以及 25 学分物理、化学、生物或计算机；墨大 Civil Engineering Systems 专业或土木、结构工程学位且 WAM 65：最多减免 100 学分",
     mcenveng: "WAM 65，修过相当于 Calculus 2、Linear Algebra 的数学，以及两门大一的物理、生物、化学、地球科学或地理课；墨大 Environmental Engineering Systems 专业或环境、土木工程学位且 WAM 65：最多减免 100 学分",
     mcchemeng: "WAM 65，修过相当于 Calculus 2、Linear Algebra 的数学和 Chemistry 1、2；墨大 Chemical Engineering Systems 专业或化工、生化工程学位且 WAM 65：最多减免 100 学分",
+    mcdinfeng: "WAM 65，修过至少 25 学分任意大学数学，以及 25 学分物理、地理、化学、生物或计算机；墨大 Digital Infrastructure 或 Spatial Engineering Systems 专业，或测绘、计算机、城市规划、地理方向的工程学位且 WAM 65：最多减免 100 学分",
     mcis: "任何本科 WAM 65；有一年相关工作最多减免 50 学分，信息系统本科加两年工作最多减免 100 学分",
     mcfinance: "主修金融的本科，并修过 Corporate Finance、Investments 和 Derivative Securities（或同等课程）",
     mccs: "计算机相关本科 WAM 75，并修过 25 学分数学或统计；名额取决于有没有研究导师",

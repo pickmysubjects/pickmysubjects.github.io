@@ -1,0 +1,34 @@
+code: PLAN90003
+title: City Leadership
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - writing
+topics:
+  - urban-planning
+  - politics
+  - management
+assessment:
+  - kind: assignment
+    weight: 40
+    group: true
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: assignment
+    weight: 60
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/plan90003
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

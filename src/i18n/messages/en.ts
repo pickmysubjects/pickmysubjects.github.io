@@ -369,6 +369,7 @@ export const en = {
     mcciveng: "WAM 65, maths like Calculus 2 and Linear Algebra, and 25 points of physics, chemistry, biology or computer science; a UniMelb Civil Engineering Systems major or a civil or structural engineering degree with WAM 65: up to 100 points of credit",
     mcenveng: "WAM 65, maths like Calculus 2 and Linear Algebra, and two first-year subjects in physics, biology, chemistry, geosciences or geography; a UniMelb Environmental Engineering Systems major or an environmental or civil engineering degree with WAM 65: up to 100 points of credit",
     mcchemeng: "WAM 65, maths like Calculus 2 and Linear Algebra, and Chemistry 1 and 2; a UniMelb Chemical Engineering Systems major or a chemical or biochemical engineering degree with WAM 65: up to 100 points of credit",
+    mcdinfeng: "WAM 65, 25 points of any tertiary maths and 25 points of physics, geography, chemistry, biology or computer science; a UniMelb Digital Infrastructure or Spatial Engineering Systems major, or an engineering degree in geomatics, computer science, urban planning or geography, with WAM 65: up to 100 points of credit",
     mcis: "WAM 65 in any bachelor's; up to 50 points of credit with a year of related work, up to 100 with an Information Systems degree and two years' work",
     mcfinance: "A bachelor's with a finance major, plus Corporate Finance, Investments and Derivative Securities (or equivalents)",
     mccs: "A computing bachelor's with WAM 75 and 25 points of maths or statistics; places depend on a research supervisor",
