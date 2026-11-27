@@ -1,0 +1,66 @@
+code: ENGM90016
+title: Engineering Management Capstone
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: Students must have completed total of 50 points of subjects from the specialisation and business electives.
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - teamwork
+  - presentation
+topics:
+  - management
+  - engineering
+  - finance
+assessment:
+  - kind: assignment
+    weight: 0
+    hurdle: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: presentation
+    weight: 25
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: report
+    weight: 5
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: project
+    weight: 0
+    group: true
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: presentation
+    weight: 40
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engm90016
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

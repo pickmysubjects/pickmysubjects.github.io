@@ -1,0 +1,53 @@
+code: ENGM90021
+title: Engineering Management Internship
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  permission: application
+  note: "There is an application process for this subject: Students are required to source and secure their own internship, subject to subject coordinator approval. Approval from the subject coordinator is required to enrol in this subject, following review of the student's internship application form. An application for a student-sourced internship must be made well in advance of both the commencement of the teaching period and of the internship. For specific dates, please refer to the Internships website, which can be found in the section on “Further information”. Students are likely to find the internship subject to be significantly more challenging than most other subjects due to the very high workload requirements of being on an industry internship, and the need to adapt to an industry environment. As such, students completing the internship subject as part of a full study load will need to manage their time very carefully. Please do note that 'At Risk' students are not eligible to enrol in this subject."
+corequisites: none
+non_allowed:
+  - ENGR90033
+skills:
+  - business
+  - writing
+  - presentation
+topics:
+  - management
+  - engineering
+  - business
+assessment:
+  - kind: assignment
+    weight: 0
+    hurdle: true
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
+  - kind: report
+    weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engm90021
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
