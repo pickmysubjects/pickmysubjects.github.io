@@ -106,6 +106,22 @@ function softengCredit(b: Background, rec?: UniMelbRecord): EntryAdvice | null {
 }
 
 /**
+ * Engineering master's that give up to 100 points of credit for a UniMelb bachelor's with this
+ * major and WAM 65 (each course's Handbook "Advanced standing" text). A cognate engineering degree
+ * from elsewhere can too, but which ones count isn't something the setup asks, so only UniMelb.
+ */
+const ENGINEERING_CREDIT: [string, RegExp][] = [
+  ['MC-ELECENG', /^electrical engineering systems$/i],
+  ['MC-MTRNENG', /^mechatronics engineering systems$/i],
+  ['MC-MECHENG', /^mechanical engineering systems$/i],
+  ['MC-CIVENG', /^civil engineering systems$/i],
+  ['MC-ENVENG', /^environmental engineering systems$/i],
+  ['MC-CHEMENG', /^chemical engineering systems$/i],
+  ['MC-BIOMENG', /^biomedical engineering systems$/i],
+  ['MC-DINFENG', /^(digital infrastructure|spatial) engineering systems$/i],
+]
+
+/**
  * For each master's course family the site plans, what the background points to. A family not
  * known here (rules not written yet) gets nothing.
  */
@@ -116,6 +132,11 @@ export function entryAdvice(data: Dataset, b: Background, rec?: UniMelbRecord): 
   if (has('MC-DATASC')) out.push(dataStream(data, b, rec))
   const se = has('MC-SOFTENG') ? softengCredit(b, rec) : null
   if (se) out.push(se)
+  if (b.where === 'unimelb' && rec?.wam !== undefined && rec.wam >= 65) {
+    for (const [course, major] of ENGINEERING_CREDIT) {
+      if (has(course) && rec.majors.some((m) => major.test(m))) out.push({ course, reason: 'seCredit', info: true })
+    }
+  }
   // MC-IS: up to 50 points of credit for any bachelor's with WAM 65 and a year of related work
   // (Handbook "Advanced standing"; the 100-point case needs an IS degree, not asked here).
   if (has('MC-IS') && b.where === 'other' && b.wam65 && b.work) out.push({ course: 'MC-IS', reason: 'isCredit', info: true })

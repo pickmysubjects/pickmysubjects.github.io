@@ -56,3 +56,17 @@ describe('entry advice for coursework masters', () => {
     expect(fin(entryAdvice(data, { where: 'unimelb' }, { passed: [], majors: ['Psychology'] }))?.reason).toBe('finNoMajor')
   })
 })
+
+describe('engineering credit from a UniMelb major', async () => {
+  const { entryAdvice } = await import('../src/engine/entryAdvice')
+  const { realData } = await import('./realData')
+  const data = realData()
+  it('points an Electrical Engineering Systems major with WAM 65 to MC-ELECENG credit, and only then', () => {
+    const rec = (wam: number, majors: string[]) => ({ passed: [], wam, majors })
+    const credit = (r: ReturnType<typeof rec>) => entryAdvice(data, { where: 'unimelb' }, r).filter((a) => a.reason === 'seCredit').map((a) => a.course)
+    expect(credit(rec(70, ['Electrical Engineering Systems']))).toContain('MC-ELECENG')
+    expect(credit(rec(70, ['Electrical Engineering Systems']))).not.toContain('MC-CIVENG')
+    expect(credit(rec(60, ['Electrical Engineering Systems']))).not.toContain('MC-ELECENG')
+    expect(credit(rec(80, ['Spatial Engineering Systems']))).toContain('MC-DINFENG')
+  })
+})
