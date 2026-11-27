@@ -1,0 +1,51 @@
+code: ECOM90008
+title: Microeconometrics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - ECOM40006
+    - ECOM90013
+corequisites: none
+non_allowed:
+  - ECOM40001
+skills:
+  - statistics
+  - data
+topics:
+  - economics
+  - statistics
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: test
+    weight: 30
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: project
+    weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90008
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

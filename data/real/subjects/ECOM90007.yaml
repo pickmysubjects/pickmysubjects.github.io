@@ -1,0 +1,63 @@
+code: ECOM90007
+title: Macroeconometrics
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - ECOM30002
+    - ECOM90002
+corequisites: none
+non_allowed:
+  - ECOM40003
+skills:
+  - statistics
+  - programming
+  - data
+topics:
+  - economics
+  - statistics
+  - modelling
+assessment:
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: project
+    weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90007
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,72 @@
+code: ECOM90002
+title: Econometrics 2
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - ECOM20001
+        - ECOM30001
+        - ECOM90001
+        - MAST20005
+    - all:
+        - ECON20003
+        - any:
+            - ECON20001
+            - ECON20002
+            - FNCE10002
+            - ECON90047
+            - ECON90045
+    - admission: MC-COMFIN
+      note: Admission into the MC-COMFIN Master of Commerce (Finance)
+    - admission: MC-COMACT
+      note: Admission into the MC-COMACT Master of Commerce (Accounting)
+corequisites: none
+non_allowed:
+  - ECOM30002
+skills:
+  - statistics
+  - data
+  - writing
+topics:
+  - economics
+  - statistics
+assessment:
+  - kind: project
+    weight: 5
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: project
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: project
+    weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90002
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

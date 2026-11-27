@@ -1,0 +1,42 @@
+code: ECOM90020
+title: Computational Economics and Business
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: ECOM90001
+corequisites: none
+non_allowed:
+  - ECON30025
+skills:
+  - data
+  - statistics
+topics:
+  - economics
+  - business
+  - optimisation
+assessment:
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90020
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

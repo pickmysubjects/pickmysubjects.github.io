@@ -1,0 +1,31 @@
+code: ECOM90017
+title: Econometrics of Markets and Competition
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - ECON40001
+        - ECON90063
+    - any:
+        - ECOM40006
+        - ECOM90013
+corequisites: none
+non_allowed:
+  - ECON40007
+skills:
+  - statistics
+  - maths
+  - programming
+topics:
+  - economics
+  - statistics
+  - modelling
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90017
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

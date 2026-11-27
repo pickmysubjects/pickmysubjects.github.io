@@ -1,0 +1,58 @@
+# Master of Applied Econometrics, 2027 Handbook. Facts re-expressed in our own words.
+# 16 subjects (200 points): nine core, two capstones and five electives. No entry programs.
+# Entry: a degree with a strong analytical and maths side and a first-year statistics subject
+# (no UniMelb subject named, so nothing assumed done). Honours/postgraduate economics graduates
+# with a WAM of 65 may get up to 100 points of credit.
+code: MC-APPECON
+title: Master of Applied Econometrics
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcappecon
+# The core picks go "depending upon prior economics background", and in 2027 every one of them needs
+# intermediate micro and macro (ECON20001, ECON20002) or isn't offered. Our reading: students come with
+# that background, so those prerequisites count as met. The entry page itself names no subjects.
+assumed_done: [ECON20001, ECON20002]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-appecon/course-structure
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: core
+    kind: compulsory
+    subjects: [ECOM90024, ECON30020, ECOM90001, ECOM90002, ECOM90003, ECOM90004, ECOM90013]
+    description: The seven named core subjects
+  - id: core-economics-a
+    kind: requirement
+    # Which one depends on the student's prior economics background.
+    paths:
+      - - choose: { points: 12.5, from: [ECON30010, ECON90063, ECON90047] }
+    description: One of ECON30010, ECON90063 or ECON90047
+  - id: core-economics-b
+    kind: requirement
+    # ECON30009 or ECON90045 by prior background; a student who has already taken one of them
+    # takes one of ECON30002, ECON30005, ECON30011, ECON30019 or ECON30022 instead.
+    paths:
+      - - choose: { points: 12.5, from: [ECON30009, ECON90045, ECON30002, ECON30005, ECON30011, ECON30019, ECON30022] }
+    description: ECON30009 or ECON90045 (or a listed replacement if already taken)
+  - id: capstones
+    kind: compulsory
+    subjects: [ECOM90022, ECOM90021]
+    description: The two capstone subjects
+  - id: electives-a
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ECOM90007, ECOM90020, ECOM90023, ECON90075] }
+    description: Two electives from the first list
+  - id: electives-b
+    kind: requirement
+    # BUSA90525 may also be taken as an elective, with Program Director approval (not planned).
+    paths:
+      - - choose: { points: 37.5, from: [ECOM90008, ECOM90010, ECOM90011, ECOM90012, ECOM90017] }
+    description: Three electives from the second list

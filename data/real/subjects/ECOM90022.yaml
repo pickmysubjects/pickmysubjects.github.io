@@ -1,0 +1,58 @@
+code: ECOM90022
+title: Research Methods
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - admission: MC-APPECON
+      note: Admission into the MC-APPECON Master of Applied Econometrics
+    - points:
+        min: 100
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - economics
+  - statistics
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: report
+    weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: report
+    weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90022
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

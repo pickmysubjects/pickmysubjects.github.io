@@ -31,3 +31,11 @@ describe('admission lists with old-style course codes', async () => {
     expect(structuredFromText('Admission into the 841AC Bachelor of Oral Health')).toBeNull()
   })
 })
+
+describe('renamed course codes', async () => {
+  const { admits } = await import('../src/engine/expr')
+  it('reads "admission to MC-AEMTRCS" (the old code on subject pages) as MC-APPECON', () => {
+    expect(admits('MC-APPECON', 'MC-AEMTRCS')).toBe(true)
+    expect(admits('MC-IT-200', 'MC-AEMTRCS')).toBe(false)
+  })
+})

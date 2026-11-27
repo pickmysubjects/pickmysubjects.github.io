@@ -644,7 +644,7 @@ export const courseFileSchema = z
     // so they are kept once, under that course.
     based_on: z.string().min(1).optional(),
     // Who can enrol, when that limits the course (an i18n key under entry.*): shown under it.
-    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc', 'mcsofteng', 'mceleceng', 'mcmtrneng', 'mcmecheng', 'mcindeng', 'mcarcheng', 'mcciveng', 'mcenveng', 'mcchemeng', 'mcdinfeng', 'mcbiomeng', 'mcensysen', 'engmgmt', 'engstruct', 'mcscicmp', 'mcscibit', 'mcscibif200', 'mcscibif150', 'mcis', 'mcfinance', 'mccs', 'mcmgmtfin200', 'mcmgmtfin150', 'mcmgmt200', 'mcmgmt150', 'mcmgmtact200', 'mcmgmtact150', 'mcmgmtmkt200', 'mcmgmtmkt150', 'mcib200', 'mcib150']).optional(),
+    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc', 'mcsofteng', 'mceleceng', 'mcmtrneng', 'mcmecheng', 'mcindeng', 'mcarcheng', 'mcciveng', 'mcenveng', 'mcchemeng', 'mcdinfeng', 'mcbiomeng', 'mcensysen', 'engmgmt', 'engstruct', 'mcscicmp', 'mcscibit', 'mcscibif200', 'mcscibif150', 'mcis', 'mcfinance', 'mccs', 'mcmgmtfin200', 'mcmgmtfin150', 'mcmgmt200', 'mcmgmt150', 'mcmgmtact200', 'mcmgmtact150', 'mcmgmtmkt200', 'mcmgmtmkt150', 'mcib200', 'mcib150', 'mcappecon']).optional(),
     // The periods a new student can start the course in, when it doesn't take every intake.
     entry_periods: z.array(z.enum(PERIODS)).min(1).optional(),
     rules: z.array(courseRule),

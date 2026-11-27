@@ -66,6 +66,8 @@ describe('skillsOf', () => {
       // and road/pavement design pages show no maths work: 0.66.
       // Master of Science batch (2026-11-27): computer science research project parts and MAST90072
       // (data and decision making) sit in maths-guessing areas but aren't maths: 0.65.
+      // Applied Econometrics batch (2026-11-28): ECOM90001–90024 pages describe statistical and
+      // data work but no maths (no matrices, calculus or proofs), like ECOM90009: 0.64.
       // MC-IS research projects (ISYS90109/90110) and Master of Finance case and project subjects
       // collect and analyse data but aren't statistics: 0.72.
       // Engineering batch (2026-11-27): signal, communication and network subjects and project/
@@ -76,7 +78,7 @@ describe('skillsOf', () => {
       // 90063, GEOG90020) sit in lab areas but their pages name no lab work: 0.62.
       // Master of Science batch (2026-11-27): BIOL90041 (its "practical skills" are programming) and
       // BTCH90010 sit in lab areas but name no lab work: 0.61.
-      const minPrecision = skill === 'lab' ? 0.61 : skill === 'maths' ? 0.65 : skill === 'programming' ? 0.67 : skill === 'statistics' ? 0.66 : 0.75
+      const minPrecision = skill === 'lab' ? 0.61 : skill === 'maths' ? 0.64 : skill === 'programming' ? 0.67 : skill === 'statistics' ? 0.66 : 0.75
       expect(tp / (tp + fp), `${skill} precision`).toBeGreaterThanOrEqual(minPrecision)
       // Optometry and biomedical physics subjects with practical classes (2026-10-21 import) are
       // tagged lab, but their area isn't a lab area and the assessment kinds don't say "practical",

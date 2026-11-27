@@ -1,0 +1,64 @@
+code: ECOM90001
+title: Basic Econometrics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-AEMTRCS
+      note: "Admission into one of: MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-COMDRFS Master of Commerce (Decision, Risk and Financial Sciences)"
+    - admission: MC-AECOENH
+      note: "Admission into one of: MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-COMDRFS Master of Commerce (Decision, Risk and Financial Sciences)"
+    - admission: MC-COMDRFS
+      note: "Admission into one of: MC-AEMTRCS Master of Applied Econometrics MC-AECOENH Master of Applied Econometrics (Enhanced) MC-COMDRFS Master of Commerce (Decision, Risk and Financial Sciences)"
+corequisites: none
+non_allowed:
+  - ECOM30001
+  - ECOM20001
+skills:
+  - statistics
+  - data
+  - writing
+topics:
+  - economics
+  - statistics
+assessment:
+  - kind: report
+    weight: 5
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: test
+    weight: 10
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90001
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

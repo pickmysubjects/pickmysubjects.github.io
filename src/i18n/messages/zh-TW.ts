@@ -380,6 +380,7 @@ export const zhTW: Messages = {
     mcmgmtmkt150: "商科學士，或修過商科輔修/選修：最多抵免 50 學分",
     mcib200: "任何科系的學士",
     mcib150: "商科學士：最多抵免 50 學分",
+    mcappecon: "需有數理分析較強的學位，並修過一年級統計；經濟學榮譽學位或相關碩士且平均 65 以上：最多抵免 100 學分",
     mcis: "任何學士 WAM 65；有一年相關工作最多抵免 50 學分，資訊系統學士加兩年工作最多抵免 100 學分",
     mcfinance: "主修金融的學士，並修過 Corporate Finance、Investments 和 Derivative Securities（或同等課程）",
     mccs: "資訊相關學士 WAM 75，並修過 25 學分數學或統計；名額取決於有沒有研究指導老師",

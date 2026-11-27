@@ -1,0 +1,41 @@
+code: ECOM90012
+title: Modelling the Australian Macroeconomy
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - ECON40002
+    - any:
+        - ECOM40006
+        - ECOM90013
+corequisites: none
+non_allowed:
+  - ECOM40005
+skills:
+  - statistics
+  - maths
+topics:
+  - economics
+  - modelling
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: project
+    weight: 60
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90012
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

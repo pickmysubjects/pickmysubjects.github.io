@@ -1,0 +1,54 @@
+code: ECOM90023
+title: Treatment Effects and Program Evaluation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - ECOM30001
+    - ECOM90002
+    - ECOM30002
+    - ECOM90001
+corequisites: none
+non_allowed: []
+skills:
+  - statistics
+  - data
+topics:
+  - economics
+  - statistics
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90023
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

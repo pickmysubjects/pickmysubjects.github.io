@@ -380,6 +380,7 @@ export const zhCN: Messages = {
     mcmgmtmkt150: "商科本科，或修过商科辅修/选修：最多减免 50 学分",
     mcib200: "任何专业的本科",
     mcib150: "商科本科：最多减免 50 学分",
+    mcappecon: "需有数理分析较强的学位，并修过一年级统计；经济学荣誉学位或相关硕士且均分 65 以上：最多减免 100 学分",
     mcis: "任何本科 WAM 65；有一年相关工作最多减免 50 学分，信息系统本科加两年工作最多减免 100 学分",
     mcfinance: "主修金融的本科，并修过 Corporate Finance、Investments 和 Derivative Securities（或同等课程）",
     mccs: "计算机相关本科 WAM 75，并修过 25 学分数学或统计；名额取决于有没有研究导师",

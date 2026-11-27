@@ -1,0 +1,45 @@
+code: ECOM90003
+title: Applied Microeconometric Modelling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - ECOM90001
+    - ECOM90002
+    - ECOM30002
+    - ECOM30001
+corequisites: none
+non_allowed:
+  - ECOM30003
+skills:
+  - statistics
+  - data
+topics:
+  - economics
+  - statistics
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: early
+      text: Early in the teaching period
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90003
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

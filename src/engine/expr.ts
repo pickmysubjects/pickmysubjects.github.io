@@ -101,7 +101,11 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
  * course). When the Handbook's note names particular entry programs ("100pt Program course entry
  * point in the MC-IT"), only those do: a 200-point student isn't admitted that way.
  */
+// Course codes the 2027 Handbook still uses in subject prerequisites for a course since renamed.
+const RENAMED_COURSES: Record<string, string> = { 'MC-AEMTRCS': 'MC-APPECON' }
+
 export function admits(admitted: string, code: string, note?: string): boolean {
+  code = RENAMED_COURSES[code] ?? code
   if (admitted === code) return true
   const program = admitted.startsWith(code + '-') ? admitted.slice(code.length + 1) : ''
   if (!/^\d+$/.test(program)) return false

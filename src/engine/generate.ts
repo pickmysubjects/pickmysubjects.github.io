@@ -155,6 +155,19 @@ function generateFrom(raw: GenerateInput): GenerateResult {
     }
     const late = result.plan.terms.slice(base).flatMap((t) => t.subjects)
     const chosen = new Set(result.notes.filter((n) => n.key === 'chose').map((n) => String(n.params.code)))
+    // When no way fits the usual length, the shortest complete one found is still kept: one
+    // semester over beats two (MC-APPECON 2027: its electives all run in Semester 2).
+    let best = result
+    const keep = (p: GenerateResult): void => {
+      if (shortfall(p) === 0 && semesters(p) < semesters(best)) best = p
+    }
+    // The same choices given a semester or more of room, short of the best length so far.
+    const withRoom = (avoid: string[]): void => {
+      for (let n = base + 1; n < semesters(best); n++) {
+        const roomy = buildPlan({ ...input, avoid: [...(input.avoid ?? []), ...avoid], maxTerms: n })
+        if (shortfall(roomy) === 0) return keep(roomy)
+      }
+    }
     // Lightest first: the other path alone, then also the options that landed late.
     for (const lateToo of [false, true]) for (const pathAvoid of pathTries) {
       if (!lateToo && !pathAvoid.length) continue
@@ -162,6 +175,7 @@ function generateFrom(raw: GenerateInput): GenerateResult {
       for (let round = 0; round < 4; round++) {
         const shorter = buildPlan({ ...input, avoid: [...(input.avoid ?? []), ...avoid] })
         if (shortfall(shorter) === 0 && semesters(shorter) <= base) return finishEarlier(input, shorter, shortfall)
+        withRoom(avoid)
         const stuck = shorter.unplaced.map((u) => u.code).filter((c) => !avoid.includes(c))
         if (!stuck.length) break
         const picked = new Set(shorter.notes.filter((n) => n.key === 'chose').map((n) => String(n.params.code)))
@@ -180,6 +194,19 @@ function generateFrom(raw: GenerateInput): GenerateResult {
         if (!next.length) break
         avoid.push(...next)
       }
+    }
+    // A chosen option that didn't land late can still hold up a chain (a Semester 1 option taken
+    // after its prerequisite leaves too few points for a capstone that needs 100): leaving each
+    // out once in turn.
+    for (const c of chosen) {
+      const other = buildPlan({ ...input, avoid: [...(input.avoid ?? []), c] })
+      if (shortfall(other) === 0 && semesters(other) <= base) return finishEarlier(input, other, shortfall)
+      withRoom([c])
+    }
+    if (best !== result) {
+      const extra = semesters(best) - base
+      if (extra > 0 && !best.notes.some((n) => n.key === 'extraTerms')) best.notes.push(note('extraTerms', { n: extra }, `Planned ${extra} extra semester(s) so every required subject fits.`))
+      return finishEarlier(input, best, shortfall)
     }
   }
   // A longer plan whose last semester holds only a subject or two: summer/winter may still save it.

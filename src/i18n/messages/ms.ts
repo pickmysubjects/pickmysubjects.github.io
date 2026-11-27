@@ -380,6 +380,7 @@ export const ms: Messages = {
     mcmgmtmkt150: "Ijazah perniagaan atau perdagangan, atau minor perniagaan: kredit hingga 50 mata",
     mcib200: "Mana-mana ijazah sarjana muda",
     mcib150: "Ijazah perniagaan atau perdagangan: kredit hingga 50 mata",
+    mcappecon: "Ijazah yang kuat dalam matematik dan analisis, termasuk statistik tahun pertama; kepujian ekonomi atau sarjana berkaitan dengan WAM 65: kredit hingga 100 mata",
     mcis: "WAM 65 dalam mana-mana ijazah sarjana muda; kredit hingga 50 mata dengan setahun kerja berkaitan, hingga 100 dengan ijazah Sistem Maklumat dan dua tahun kerja",
     mcfinance: "Ijazah sarjana muda dengan major kewangan, serta Corporate Finance, Investments dan Derivative Securities (atau setara)",
     mccs: "Ijazah sarjana muda pengkomputeran WAM 75 dan 25 mata matematik atau statistik; tempat bergantung pada penyelia penyelidikan",

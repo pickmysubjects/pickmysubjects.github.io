@@ -1,0 +1,60 @@
+code: ECOM90004
+title: Time Series Analysis and Forecasting
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - ECOM90001
+        - ECOM90002
+    - admission: MC-COMACTS
+      note: Admission into the MC-COMACTS Master of Commerce (Actuarial Science)
+corequisites: none
+non_allowed:
+  - ECOM30004
+skills:
+  - statistics
+  - data
+topics:
+  - economics
+  - statistics
+  - finance
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom90004
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

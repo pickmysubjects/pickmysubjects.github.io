@@ -1,0 +1,69 @@
+code: ECON90075
+title: Economic Analysis and Policy
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - ECON90045
+    - ECON40001
+    - ECON20002
+    - ECON20002
+corequisites: none
+non_allowed:
+  - ECON30013
+skills:
+  - writing
+  - data
+topics:
+  - economics
+  - politics
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: project
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: End of semester examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ90075
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

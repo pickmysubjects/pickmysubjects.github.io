@@ -380,6 +380,7 @@ export const id: Messages = {
     mcmgmtmkt150: "Sarjana bisnis atau perdagangan, atau minor bisnis: kredit hingga 50 poin",
     mcib200: "Sarjana bidang apa pun",
     mcib150: "Sarjana bisnis atau perdagangan: kredit hingga 50 poin",
+    mcappecon: "Gelar dengan matematika dan analisis yang kuat, termasuk statistik tahun pertama; honours ekonomi atau magister terkait dengan WAM 65: kredit hingga 100 poin",
     mcis: "WAM 65 dari gelar sarjana apa pun; kredit hingga 50 poin dengan setahun kerja terkait, hingga 100 dengan gelar Sistem Informasi dan dua tahun kerja",
     mcfinance: "Sarjana dengan jurusan keuangan, plus Corporate Finance, Investments, dan Derivative Securities (atau setara)",
     mccs: "Sarjana bidang komputasi WAM 75 dan 25 poin matematika atau statistika; kuota bergantung pada pembimbing riset",
