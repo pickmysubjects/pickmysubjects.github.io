@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useStudyLevel } from '@/composables/useStudyLevel'
 import { onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
 import { useI18n } from '@/i18n'
 
@@ -20,6 +22,9 @@ onMounted(() => {
   io.observe(el)
 })
 onBeforeUnmount(() => io?.disconnect())
+// Floating codes from the visitor's own side: first-year subjects, or master's ones.
+const { isMaster } = useStudyLevel()
+const codes = computed(() => (isMaster.value ? ['COMP90049', 'MAST90104', 'ISYS90026'] : ['COMP10001', 'MAST10006', 'PSYC10003']))
 </script>
 
 <template>
@@ -43,9 +48,9 @@ onBeforeUnmount(() => io?.disconnect())
       <svg class="wk wo" viewBox="-14 -58 28 62" style="--d:-9.38s;--k:#c48b62;--h:#2b1d17;--t:#f5bcd6;--td:#e7a2c2;--p:#5a5f78;--b:#7aa58a;--g:#1b1a1e;--hl:#cfb53b;--hs:transparent;--s:0.25s"><title>Bachelor of Agriculture</title><use href="#hcsh"/><g class="bob"><g class="lg"><use href="#hcf1"/></g><g class="lg lb"><use href="#hcf2"/></g><g class="arm"><use href="#hcs1"/></g><g class="arm lb"><use href="#hcs2"/></g><use href="#hcgb"/><use href="#hchfbun"/><g class="cap"><use href="#hccp"/></g></g></svg>
       <svg class="wk wo" viewBox="-14 -58 28 62" style="--d:-11.25s;--k:#ad7752;--h:#3b2a20;--t:#bfe3d5;--td:#a2cfbd;--p:#cbbb98;--b:#c2227a;--g:#232127;--hl:#2e4a8b;--hs:transparent;--s:0.78s"><title>Bachelor of Arts</title><use href="#hcsh"/><g class="bob"><g class="lg"><use href="#hcf1"/></g><g class="lg lb"><use href="#hcf2"/></g><g class="arm"><use href="#hcs1"/></g><g class="arm lb"><use href="#hcs2"/></g><use href="#hcgb"/><use href="#hchfshort"/><g class="cap"><use href="#hccp"/></g></g></svg>
       <svg class="wk wo" viewBox="-14 -58 28 62" style="--d:-13.12s;--k:#f0c8a2;--h:#6b4630;--t:#f7c59f;--td:#e8ad84;--p:#6d7aa6;--b:#8f7bf5;--g:#1d1c20;--hl:#6b6b2e;--hs:transparent;--s:0.51s"><title>Bachelor of Science</title><use href="#hcsh"/><g class="bob"><g class="lg"><use href="#hcf1"/></g><g class="lg lb"><use href="#hcf2"/></g><g class="arm"><use href="#hcs1"/></g><g class="arm lb"><use href="#hcs2"/></g><use href="#hcgb"/><use href="#hchflong"/><g class="cap"><use href="#hccp"/></g></g></svg>
-      <span class="hc-chip" style="left:28.55%;top:40%;--c:#c2227a;animation-delay:0s"><i></i>COMP10001</span>
-      <span class="hc-chip" style="left:16.98%;top:46.39%;--c:#8f7bf5;animation-delay:-1.6s"><i></i>MAST10006</span>
-      <span class="hc-chip" style="left:27.11%;top:53.11%;--c:#7aa58a;animation-delay:-3.1s"><i></i>PSYC10003</span>
+      <span class="hc-chip" style="left:28.55%;top:40%;--c:#c2227a;animation-delay:0s"><i></i>{{ codes[0] }}</span>
+      <span class="hc-chip" style="left:16.98%;top:46.39%;--c:#8f7bf5;animation-delay:-1.6s"><i></i>{{ codes[1] }}</span>
+      <span class="hc-chip" style="left:27.11%;top:53.11%;--c:#7aa58a;animation-delay:-3.1s"><i></i>{{ codes[2] }}</span>
     </div>
   </div>
 </template>
