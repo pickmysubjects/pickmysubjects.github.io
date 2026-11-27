@@ -3,6 +3,7 @@ import type { ComponentReq, Course, Dataset, Subject } from '@/engine'
 import { degreeCourses } from '@/engine/courseRules'
 import { usePersisted } from './usePersisted'
 import { MASTER_PLANNING } from '@/release'
+import { isGraduateCode } from '@/engine/graduateCourses'
 
 /**
  * Bachelor's or master's: which side of the site a student is on. Kept apart so an undergraduate
@@ -37,9 +38,9 @@ export function useStudyLevel() {
   return { level, isMaster: computed(() => level.value === 'master'), planningOpen: computed(() => level.value !== 'master' || MASTER_PLANNING) }
 }
 
-/** A coursework master's course (MC-IT-200, MC-DATASC): Handbook codes start with MC-. */
+/** A coursework master's course (MC-IT-200, MC-DATASC, or an old-style code flagged `graduate`). */
 export function isMasterCourse(code: string | undefined): boolean {
-  return !!code && code.startsWith('MC-')
+  return isGraduateCode(code)
 }
 
 /** Every subject a master's course's specialisations name, at any level. */

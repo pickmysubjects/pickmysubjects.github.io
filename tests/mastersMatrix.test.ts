@@ -7,8 +7,9 @@ import { realData } from './realData'
 describe("master's plans across every specialisation, start and load", async () => {
   const { generatePlan } = await import('../src/engine/generate')
   const { checkCourse } = await import('../src/engine/courseRules')
+  const { isGraduateCode } = await import('../src/engine/graduateCourses')
   const data = realData()
-  const masters = data.courses.filter((c) => c.code.startsWith('MC-'))
+  const masters = data.courses.filter((c) => isGraduateCode(c.code))
   const profile = { results: [], skills: {}, interests: [], goal: 'balanced' } as never
   for (const course of masters) {
     // A course with no specialisations (MC-IS) is planned without one.

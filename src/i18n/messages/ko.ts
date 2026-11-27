@@ -176,7 +176,7 @@ export const ko: Messages = {
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
   termFull: '{year}년 {period}',
   countsAs: { change: "바꾸기", handbookIs: "Handbook: {cat}", tapToChange: "눌러서 바꾸기", title: "인정 구분", handbook: "Handbook대로", help: "학부 승인을 받았을 때만 쓰고, 서면 승인을 보관하세요.", changed: "{n}과목의 인정 구분을 바꿨어요.", undo: "모두 되돌리기", changedShort: "직접 변경", cardLabel: "{category}(으)로 인정 (직접 변경)" },
-  category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', music: '음악', 'fine-arts': '예술', agriculture: '농업', 'oral-health': '구강보건', breadth: '교양(Breadth)', core: '필수', course: '과정 과목' },
+  category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', music: '음악', 'fine-arts': '예술', agriculture: '농업', 'oral-health': '구강보건', breadth: '교양(Breadth)', core: '필수', course: '과정 과목', 'course-extra': '과정 외 선택 과목' },
   plan: {
     saveImage: "이미지로 저장",
     pastTag: "이수함",
@@ -366,6 +366,7 @@ export const ko: Messages = {
     mcdinfeng: "WAM 65, 대학 수학 25학점과 물리·지리·화학·생물·컴퓨터 중 25학점. 멜버른대 Digital Infrastructure 또는 Spatial Engineering Systems 전공, 또는 측량·컴퓨터·도시계획·지리 분야 공학 학위와 WAM 65: 최대 100학점 인정",
     mcbiomeng: "아무 학사 WAM 65, Calculus 2·Linear Algebra 수준의 수학, 그리고 생물 또는 화학 25학점이나 Engineering Mathematics. 멜버른대 Biomedical Engineering Systems 전공 또는 의공학 학위와 WAM 65: 최대 100학점 인정",
     mcensysen: "4년제 공학 학사 WAM 65, 또는 환경과학·자연지리 등 관련 학사 WAM 65와 2년의 관련 경력. 지원 시 이력서 제출",
+    engmgmt: "4년제 공학 학사 WAM 65, 또는 관련 학사 WAM 65와 졸업 후 2년 관련 경력. 선발 시 이력서 제출",
     mcis: "전공 무관 학사 WAM 65. 관련 경력 1년이면 최대 50학점, 정보시스템 학위와 경력 2년이면 최대 100학점 인정",
     mcfinance: "금융 전공 학사, 그리고 Corporate Finance, Investments, Derivative Securities(또는 동등 과목) 이수",
     mccs: "컴퓨터 관련 학사 WAM 75, 수학 또는 통계 25학점. 정원은 연구 지도교수 여부에 따라 달라요",

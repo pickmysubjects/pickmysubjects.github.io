@@ -16,6 +16,8 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering MC-ENG Master of Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
         - admission: MC-DINFENG
           note: "Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering MC-ENG Master of Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: 206EC
+          note: "Admission into or selection of one of the following: MC-ENVENG Master of Environmental Engineering MC-ENG Master of Engineering 206EC Master of Environmental Engineering MC-ENSYSEN Master of Environmental Systems Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
     - all:
         - MAST10005
         - MAST10007

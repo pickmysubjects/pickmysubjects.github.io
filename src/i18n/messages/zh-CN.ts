@@ -176,7 +176,7 @@ export const zhCN: Messages = {
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   termFull: '{year} {period}',
   countsAs: { change: "修改", handbookIs: "Handbook：{cat}", tapToChange: "点一下就能改", title: "算作", handbook: "按 Handbook", help: "只在学院批准后使用，并保留书面批准。", changed: "你改了 {n} 门课的算法。", undo: "全部撤销", changedShort: "你改的", cardLabel: "算作{category}（你改的）" },
-  category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', music: '音乐', 'fine-arts': '艺术', agriculture: '农业', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修', course: '课程内' },
+  category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', music: '音乐', 'fine-arts': '艺术', agriculture: '农业', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修', course: '课程内', 'course-extra': '课程外选修' },
   plan: {
     saveImage: "存为图片",
     pastTag: "已修",
@@ -366,6 +366,7 @@ export const zhCN: Messages = {
     mcdinfeng: "WAM 65，修过至少 25 学分任意大学数学，以及 25 学分物理、地理、化学、生物或计算机；墨大 Digital Infrastructure 或 Spatial Engineering Systems 专业，或测绘、计算机、城市规划、地理方向的工程学位且 WAM 65：最多减免 100 学分",
     mcbiomeng: "任意本科 WAM 65，修过相当于 Calculus 2、Linear Algebra 的数学，以及 25 学分生物或化学，或修过 Engineering Mathematics；墨大 Biomedical Engineering Systems 专业或生物医学工程学位且 WAM 65：最多减免 100 学分",
     mcensysen: "四年制工程本科 WAM 65，或环境科学、自然地理等相关本科 WAM 65 加两年相关工作经验；申请时需交简历",
+    engmgmt: "四年制工程学士且 WAM 65，或相关专业学士且 WAM 65 并有毕业后两年相关工作经验；申请需交简历",
     mcis: "任何本科 WAM 65；有一年相关工作最多减免 50 学分，信息系统本科加两年工作最多减免 100 学分",
     mcfinance: "主修金融的本科，并修过 Corporate Finance、Investments 和 Derivative Securities（或同等课程）",
     mccs: "计算机相关本科 WAM 75，并修过 25 学分数学或统计；名额取决于有没有研究导师",

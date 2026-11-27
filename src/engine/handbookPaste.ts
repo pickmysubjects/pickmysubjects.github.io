@@ -821,7 +821,9 @@ export function structuredFromText(sentence: string): ReqExpr | null {
     if (inner && 'subject' in inner) return { subject: inner.subject, concurrent: true }
     return null
   }
-  const graduate = [...new Set(text.match(/\b(?:MC|GD|D)-[A-Z]{2,}\b/g) ?? [])]
+  // Graduate course codes: MC-/GD-/D- ones, and old-style ones the Handbook writes before a master's
+  // or graduate diploma title ("761EM Master of Engineering Management"; 841AC is a bachelor's).
+  const graduate = [...new Set(text.match(/\b(?:MC|GD|D)-[A-Z]{2,}\b|\b\d{3}[A-Z]{2,3}(?= (?:Master|Graduate Diploma)\b)/g) ?? [])]
   if (graduate.length && !/\bB-[A-Z]{2,}\b/.test(text) && /\b(?:selection|admission)\b/i.test(text)) {
     const options: ReqExpr[] = graduate.map((c) => ({ admission: c, note: text }))
     return options.length === 1 ? (options[0] as ReqExpr) : { any: options }

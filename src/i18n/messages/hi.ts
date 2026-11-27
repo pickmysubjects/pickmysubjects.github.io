@@ -176,7 +176,7 @@ export const hi: Messages = {
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
   termFull: '{period} {year}',
   countsAs: { change: "बदलें", handbookIs: "Handbook: {cat}", tapToChange: "बदलने के लिए टैप करें", title: "किसमें गिना जाए", handbook: "Handbook के अनुसार", help: "इसे तभी इस्तेमाल करें जब फ़ैकल्टी ने मंज़ूरी दी हो; लिखित मंज़ूरी संभालकर रखें।", changed: "आपने इस प्लान में {n} सब्जेक्ट की गिनती बदली है।", undo: "सब पहले जैसा करें", changedShort: "आपने बदला", cardLabel: "{category} में गिना गया (आपने बदला)" },
-  category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', music: 'संगीत', 'fine-arts': 'ललित कला', agriculture: 'कृषि', 'oral-health': 'ओरल हेल्थ', breadth: 'Breadth', core: 'अनिवार्य', course: 'कोर्स का' },
+  category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', music: 'संगीत', 'fine-arts': 'ललित कला', agriculture: 'कृषि', 'oral-health': 'ओरल हेल्थ', breadth: 'Breadth', core: 'अनिवार्य', course: 'कोर्स का', 'course-extra': 'कोर्स से बाहर के ऐच्छिक' },
   plan: {
     saveImage: "इमेज के रूप में सेव करें",
     pastTag: "पूरा",
@@ -366,6 +366,7 @@ export const hi: Messages = {
     mcdinfeng: "WAM 65, किसी भी विश्वविद्यालय स्तर के गणित के 25 पॉइंट और भौतिकी, भूगोल, रसायन, जीव विज्ञान या कंप्यूटर साइंस के 25 पॉइंट; UniMelb का Digital Infrastructure या Spatial Engineering Systems मेजर, या जियोमैटिक्स, कंप्यूटर साइंस, शहरी नियोजन या भूगोल में इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
     mcbiomeng: "किसी भी बैचलर डिग्री में WAM 65, Calculus 2 और Linear Algebra जैसा गणित, और जीव विज्ञान या रसायन के 25 पॉइंट, या Engineering Mathematics; UniMelb का Biomedical Engineering Systems मेजर या बायोमेडिकल इंजीनियरिंग डिग्री और WAM 65: 100 पॉइंट तक क्रेडिट",
     mcensysen: "चार साल की इंजीनियरिंग डिग्री में WAM 65, या पर्यावरण विज्ञान या भौतिक भूगोल जैसी संबंधित डिग्री में WAM 65 और दो साल का संबंधित अनुभव; आवेदन के साथ CV देना होगा",
+    engmgmt: "चार साल की बैचलर ऑफ इंजीनियरिंग WAM 65 के साथ, या संबंधित बैचलर्स WAM 65 और ग्रेजुएशन के बाद दो साल का संबंधित अनुभव; चयन में CV देना होता है",
     mcis: "किसी भी स्नातक डिग्री में WAM 65; एक साल के संबंधित काम से 50 पॉइंट तक, सूचना प्रणाली डिग्री और दो साल के काम से 100 पॉइंट तक क्रेडिट",
     mcfinance: "फ़ाइनेंस मेजर वाली स्नातक डिग्री, साथ में Corporate Finance, Investments और Derivative Securities (या समकक्ष)",
     mccs: "कंप्यूटिंग स्नातक WAM 75 और 25 पॉइंट गणित या सांख्यिकी; सीटें रिसर्च सुपरवाइज़र पर निर्भर",

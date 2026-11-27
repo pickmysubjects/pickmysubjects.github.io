@@ -1,0 +1,13 @@
+id: 761em-change-management
+course: 761EM
+year: 2027
+kind: specialisation
+title: Change Management
+points: 37.5
+# At least two of the core subjects, and a third from them or the Project Management core.
+# ISYS90040 is also listed but isn't offered in 2027.
+requirements:
+  - choose: { points: 25, from: [ENGM90015, CVEN90062, ENGR90026, MCEN90059] }
+  - choose: { points: 12.5, from: [ENGM90015, CVEN90062, ENGR90026, MCEN90059, ENGM90007, CVEN90045, ENGM90006, CVEN90063, CVEN30008] }
+handbook: https://handbook.unimelb.edu.au/2027/components/761em-spec-1
+verified_on: 2026-11-27 # structure; source: 2027 Handbook

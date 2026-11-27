@@ -23,6 +23,8 @@ prerequisites:
       note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
     - admission: MC-MGMTEIN
       note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
+    - admission: 175AA
+      note: "Admission into or selection of one of the following: MC-MGMT Master of Management MC-MGMTHRE Master of Management (Human Resources) MC-MGMTFIN Master of Management (Finance) MC-MGMTACT Master of Management (Accounting) MC-MGMTAFN Master of Management (Accounting and Finance) MC-MGMTMKT Master of Management (Marketing) 175AA Master of Arts and Cultural Management MC-IB Master of International Business MC-MGMTEIN Master of Management (Entrepreneurship and Innovation)"
 corequisites: none
 non_allowed: []
 skills:

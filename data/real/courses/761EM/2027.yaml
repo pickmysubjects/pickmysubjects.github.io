@@ -1,0 +1,35 @@
+# Master of Engineering Management, 2027 Handbook. Facts re-expressed in our own words.
+# 100 points (one year full-time), with Melbourne Business School. An old-style course code, so it
+# is flagged `graduate` to count as a coursework master's (graduateCourses.ts).
+code: 761EM
+title: Master of Engineering Management
+year: 2027
+total_points: 100
+standard_load: 50
+graduate: true
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: engmgmt
+handbook: https://handbook.unimelb.edu.au/2027/courses/761em/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and specialisation pages
+rules:
+  - id: total
+    kind: points
+    min: 100
+    description: 100 points in total
+  - id: capstones
+    kind: compulsory
+    subjects: [ENGM90016, MGMT90146]
+    description: The engineering capstone and the management capstone (25 points)
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 37.5, from: [MGMT90026, MGMT90140, ACCT90004, MGMT90141, FNCE90060, ECON90015, MGMT90032, MGMT90015, ENGM90021] }
+    description: Three electives (37.5 points)
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: Change Management or Project Management

@@ -10,6 +10,8 @@ prerequisites:
       note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Structural specialisation (formal) in the MC-ENG Master of Engineering 746ST Master of Engineering Structures"
     - admission: MC-ENG
       note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Structural specialisation (formal) in the MC-ENG Master of Engineering 746ST Master of Engineering Structures"
+    - admission: 746ST
+      note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Structural specialisation (formal) in the MC-ENG Master of Engineering 746ST Master of Engineering Structures"
 corequisites: none
 non_allowed: []
 skills:

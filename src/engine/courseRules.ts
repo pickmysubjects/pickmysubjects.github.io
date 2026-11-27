@@ -918,7 +918,7 @@ function checkDiploma(plan: Plan, data: Dataset, diploma: Diploma, stream: Compo
   const clash = diplomaClash(data, diploma, plan)
   if (clash) statuses.push({ ...base('eligible'), status: 'fail', detail: clash, detailKey: 'diplomaClash', params: { reason: clash } })
   const allCodes = [...new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])]
-  const course: Course = { code: diploma.code, title: diploma.title, year: diploma.year, totalPoints: diploma.totalPoints, standardLoad: 50, categories: [], areaCategories: undefined, closed: [], listed: false, listedOnly: false, alsoFrom: undefined, extraSubjects: [], assumedDone: [], basedOn: undefined, entryNote: diploma.entryNote, rules: diploma.rules, handbook: diploma.handbook, verifiedOn: diploma.verifiedOn }
+  const course: Course = { code: diploma.code, title: diploma.title, year: diploma.year, totalPoints: diploma.totalPoints, standardLoad: 50, categories: [], areaCategories: undefined, closed: [], listed: false, listedOnly: false, alsoFrom: undefined, extraSubjects: [], assumedDone: [], basedOn: undefined, entryNote: diploma.entryNote, rules: diploma.rules, handbook: diploma.handbook, verifiedOn: diploma.verifiedOn, graduate: false }
   if (diploma.streams.length) {
     if (!stream) statuses.push({ ...base('stream'), status: 'unknown', detail: 'no stream chosen', detailKey: 'noStream', params: {} })
     else {

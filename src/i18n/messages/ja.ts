@@ -176,7 +176,7 @@ export const ja: Messages = {
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   termFull: '{year}年 {period}',
   countsAs: { change: "変更", handbookIs: "Handbook：{cat}", tapToChange: "タップで変更", title: "どの枠で数えるか", handbook: "Handbook どおり", help: "学部の承認がある時だけ使い、書面の承認を保管してください。", changed: "{n} 科目の数え方を変更しました。", undo: "すべて元に戻す", changedShort: "自分で変更", cardLabel: "{category}として数える（自分で変更）" },
-  category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修', course: '課程の科目' },
+  category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修', course: '課程の科目', 'course-extra': 'コース外の選択科目' },
   plan: {
     saveImage: "画像で保存",
     pastTag: "履修済み",
@@ -366,6 +366,7 @@ export const ja: Messages = {
     mcdinfeng: "WAM 65、大学レベルの数学25単位と、物理・地理・化学・生物・情報のいずれか25単位。メルボルン大学の Digital Infrastructure または Spatial Engineering Systems 専攻、または測量・情報・都市計画・地理系の工学学位で WAM 65：最大100単位の単位認定",
     mcbiomeng: "任意の学士で WAM 65、Calculus 2・Linear Algebra 相当の数学と、生物または化学25単位、または Engineering Mathematics。メルボルン大学の Biomedical Engineering Systems 専攻、または医用工学の学位で WAM 65：最大100単位の単位認定",
     mcensysen: "4年制の工学学士で WAM 65、または環境科学・自然地理などの関連学士で WAM 65 と2年の実務経験。出願時に履歴書が必要",
+    engmgmt: "4年制の工学学士で WAM 65、または関連分野の学士で WAM 65 かつ卒業後2年の関連職務経験。選考に履歴書が必要",
     mcis: "分野を問わない学士で WAM 65。関連職務1年で最大50単位、情報システムの学位と2年の職務経験で最大100単位の単位認定",
     mcfinance: "金融専攻の学士で、Corporate Finance・Investments・Derivative Securities（または同等科目）を履修済み",
     mccs: "コンピュータ系の学士で WAM 75、数学か統計25単位。定員は研究指導教員の空きによります",

@@ -181,7 +181,7 @@ export const en = {
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
   countsAs: { change: "Change", handbookIs: "Handbook: {cat}", tapToChange: "Tap to change", title: "Counts as", handbook: "As in the Handbook", help: "Use this only if your faculty approved it; keep their written approval.", changed: "You changed how subjects count in this plan ({n}).", undo: "Undo all", changedShort: "changed by you", cardLabel: "Counts as {category} (changed by you)" },
-  category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core', course: 'course' },
+  category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core', course: 'course', 'course-extra': 'outside electives' },
   plan: {
     saveImage: "Save as image",
     pastTag: "Done",
@@ -372,6 +372,7 @@ export const en = {
     mcdinfeng: "WAM 65, 25 points of any tertiary maths and 25 points of physics, geography, chemistry, biology or computer science; a UniMelb Digital Infrastructure or Spatial Engineering Systems major, or an engineering degree in geomatics, computer science, urban planning or geography, with WAM 65: up to 100 points of credit",
     mcbiomeng: "WAM 65 in any bachelor's degree, maths like Calculus 2 and Linear Algebra, and 25 points of biology or chemistry, or Engineering Mathematics; a UniMelb Biomedical Engineering Systems major or a biomedical engineering degree with WAM 65: up to 100 points of credit",
     mcensysen: "WAM 65 in a four-year engineering degree, or WAM 65 in a related degree such as environmental science or physical geography plus two years of relevant work; a CV is part of the application",
+    engmgmt: "A four-year Bachelor of Engineering with WAM 65, or a related bachelor's with WAM 65 and two years of relevant work since graduating; a CV is part of selection",
     mcis: "WAM 65 in any bachelor's; up to 50 points of credit with a year of related work, up to 100 with an Information Systems degree and two years' work",
     mcfinance: "A bachelor's with a finance major, plus Corporate Finance, Investments and Derivative Securities (or equivalents)",
     mccs: "A computing bachelor's with WAM 75 and 25 points of maths or statistics; places depend on a research supervisor",

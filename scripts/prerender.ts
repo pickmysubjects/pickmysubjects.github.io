@@ -13,6 +13,7 @@
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
 import './releaseGlobals'
+import { registerGraduateCourses } from '../src/engine/graduateCourses'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { degreeCourses, latestCourse } from '../src/engine/courseRules'
@@ -78,6 +79,7 @@ import { hi } from '../src/i18n/messages/hi'
 const OG_LOCALE: Record<LocaleCode, string> = { en: 'en_AU', 'zh-CN': 'zh_CN', 'zh-TW': 'zh_TW', ja: 'ja_JP', ko: 'ko_KR', vi: 'vi_VN', id: 'id_ID', ms: 'ms_MY', hi: 'hi_IN' }
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const data = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'real.json'), 'utf8')) as Dataset
+registerGraduateCourses(data.courses)
 // Each degree's first year before a major, worked out by `npm run data` (the new-students guide).
 const FIRST_YEARS = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'first-year.json'), 'utf8')) as Record<string, [FirstYearSlot[], FirstYearSlot[]]>
 const DIST = join(ROOT, 'dist')

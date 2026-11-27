@@ -14,6 +14,8 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property 702PA Graduate Diploma in Property Valuation MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
         - admission: MC-DINFENG
           note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property 702PA Graduate Diploma in Property Valuation MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: 702PA
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property 702PA Graduate Diploma in Property Valuation MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
     - permission: coordinator
       note: Approval from the subject coordinator.
 corequisites: none

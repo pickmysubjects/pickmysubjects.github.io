@@ -12,6 +12,8 @@ prerequisites:
           note: "Admission into one of the following: MC-ENG Master of Engineering 746ST Master of Engineering Structures MC-CIVENG Master of Civil Engineering"
         - admission: MC-CIVENG
           note: "Admission into one of the following: MC-ENG Master of Engineering 746ST Master of Engineering Structures MC-CIVENG Master of Civil Engineering"
+        - admission: 746ST
+          note: "Admission into one of the following: MC-ENG Master of Engineering 746ST Master of Engineering Structures MC-CIVENG Master of Civil Engineering"
     - CVEN90049
 corequisites: none
 non_allowed: []

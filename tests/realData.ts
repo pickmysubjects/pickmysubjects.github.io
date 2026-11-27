@@ -1,3 +1,4 @@
+import { registerGraduateCourses } from '../src/engine/graduateCourses'
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { buildDataset, ROOT } from '../scripts/dataset'
@@ -54,6 +55,7 @@ export function realData(): Dataset {
   if (real) return real
   if (realJsonIsFresh()) {
     real = JSON.parse(readFileSync(REAL_JSON, 'utf8')) as Dataset
+    registerGraduateCourses(real.courses)
     return real
   }
   process.stderr.write('realData(): src/generated/real.json is missing or older than data/real, building the real dataset instead (slow). Run `npm run data` to speed tests up.\n')

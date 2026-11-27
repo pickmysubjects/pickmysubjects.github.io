@@ -1,6 +1,7 @@
 import { computed, shallowReactive, watch, type Ref } from 'vue'
 import { defaultCourse, forCourse, type Dataset } from '@/engine'
 import { detailArea, withDetail, type SubjectDetail } from '@/engine/split'
+import { registerGraduateCourses } from '@/engine/graduateCourses'
 import { activePlan, books } from './planStore'
 import { masterSubjects, onSide, pickableCourses, useStudyLevel, type StudyLevel } from './useStudyLevel'
 
@@ -20,11 +21,13 @@ export async function loadDataset(): Promise<void> {
   const res = await fetch(coreUrl)
   if (!res.ok) throw new Error(`Couldn't load the subject data (${res.status})`)
   real = (await res.json()) as Dataset
+  registerGraduateCourses(real.courses)
 }
 
 /** For tests: use data that's already in memory instead of fetching it. */
 export function provideDataset(data: Dataset): void {
   real = data
+  registerGraduateCourses(data.courses)
 }
 
 function loaded(): Dataset {

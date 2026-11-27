@@ -176,7 +176,7 @@ export const id: Messages = {
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
   countsAs: { change: "Ubah", handbookIs: "Handbook: {cat}", tapToChange: "Ketuk untuk mengubah", title: "Dihitung sebagai", handbook: "Sesuai Handbook", help: "Pakai hanya jika fakultas menyetujuinya; simpan persetujuan tertulisnya.", changed: "Kamu mengubah cara {n} mata kuliah dihitung di rencana ini.", undo: "Batalkan semua", changedShort: "diubah olehmu", cardLabel: "Dihitung sebagai {category} (diubah olehmu)" },
-  category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', music: 'musik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesehatan gigi dan mulut', breadth: 'breadth', core: 'inti', course: 'dalam program' },
+  category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', music: 'musik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesehatan gigi dan mulut', breadth: 'breadth', core: 'inti', course: 'dalam program', 'course-extra': 'pilihan di luar program' },
   plan: {
     saveImage: "Simpan sebagai gambar",
     pastTag: "Sudah diambil",
@@ -366,6 +366,7 @@ export const id: Messages = {
     mcdinfeng: "WAM 65, 25 poin matematika tingkat universitas dan 25 poin fisika, geografi, kimia, biologi atau ilmu komputer; jurusan Digital Infrastructure atau Spatial Engineering Systems UniMelb, atau gelar teknik di bidang geomatika, ilmu komputer, perencanaan kota atau geografi dengan WAM 65: kredit hingga 100 poin",
     mcbiomeng: "WAM 65 di gelar sarjana apa pun, matematika setara Calculus 2 dan Linear Algebra, serta 25 poin biologi atau kimia, atau Engineering Mathematics; jurusan Biomedical Engineering Systems UniMelb atau gelar teknik biomedis dengan WAM 65: kredit hingga 100 poin",
     mcensysen: "WAM 65 di gelar teknik empat tahun, atau WAM 65 di bidang terkait seperti ilmu lingkungan atau geografi fisik plus dua tahun pengalaman kerja terkait; perlu menyerahkan CV",
+    engmgmt: "Sarjana Teknik empat tahun dengan WAM 65, atau sarjana bidang terkait dengan WAM 65 dan dua tahun pengalaman relevan setelah lulus; perlu CV",
     mcis: "WAM 65 dari gelar sarjana apa pun; kredit hingga 50 poin dengan setahun kerja terkait, hingga 100 dengan gelar Sistem Informasi dan dua tahun kerja",
     mcfinance: "Sarjana dengan jurusan keuangan, plus Corporate Finance, Investments, dan Derivative Securities (atau setara)",
     mccs: "Sarjana bidang komputasi WAM 75 dan 25 poin matematika atau statistika; kuota bergantung pada pembimbing riset",

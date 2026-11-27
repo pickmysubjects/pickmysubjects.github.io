@@ -3,6 +3,7 @@ import type { StudentComment } from './comments'
 import { LANGUAGES, type StudentFacts } from './studentFacts'
 import { ATTEND_CLASSES } from './handbookFacts'
 import { z } from './zod'
+import { registerGraduateCourse } from './graduateCourses'
 
 /**
  * Data-file schemas. YAML files use snake_case keys; everything the engine and
@@ -627,6 +628,8 @@ export const courseFileSchema = z
     // Only the subjects its rules and components name count (a coursework master's): they get the
     // category `course`, every other subject none, so plans never fill up with unrelated ones.
     listed_only: z.boolean().default(false),
+    // A coursework master's whose code isn't an MC- one (761EM): see graduateCourses.ts.
+    graduate: z.boolean().default(false),
     // A listed-only course that also takes another course's subjects of some levels (MC-SOFTENG
     // Group A: any level-2 or level-3 Bachelor of Science science subject): those are `course-extra`.
     also_from: z.object({ course: z.string().min(1), category: z.string().min(1), levels: z.array(z.number().int().min(1).max(3)).min(1) }).strict().optional(),
@@ -641,7 +644,7 @@ export const courseFileSchema = z
     // so they are kept once, under that course.
     based_on: z.string().min(1).optional(),
     // Who can enrol, when that limits the course (an i18n key under entry.*): shown under it.
-    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc', 'mcsofteng', 'mceleceng', 'mcmtrneng', 'mcmecheng', 'mcindeng', 'mcarcheng', 'mcciveng', 'mcenveng', 'mcchemeng', 'mcdinfeng', 'mcbiomeng', 'mcensysen', 'mcis', 'mcfinance', 'mccs', 'mcmgmtfin200', 'mcmgmtfin150']).optional(),
+    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc', 'mcsofteng', 'mceleceng', 'mcmtrneng', 'mcmecheng', 'mcindeng', 'mcarcheng', 'mcciveng', 'mcenveng', 'mcchemeng', 'mcdinfeng', 'mcbiomeng', 'mcensysen', 'engmgmt', 'mcis', 'mcfinance', 'mccs', 'mcmgmtfin200', 'mcmgmtfin150']).optional(),
     // The periods a new student can start the course in, when it doesn't take every intake.
     entry_periods: z.array(z.enum(PERIODS)).min(1).optional(),
     rules: z.array(courseRule),
@@ -649,7 +652,9 @@ export const courseFileSchema = z
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
   })
   .strict()
-  .transform((c) => ({
+  .transform((c) => {
+    if (c.graduate) registerGraduateCourse(c.code)
+    return {
     code: c.code,
     title: c.title,
     year: c.year,
@@ -669,7 +674,9 @@ export const courseFileSchema = z
     rules: c.rules.map(camelRule),
     handbook: c.handbook,
     verifiedOn: c.verified_on,
-  }))
+    graduate: c.graduate,
+    }
+  })
 
 function camelRule(r: z.output<typeof courseRule>): CourseRule {
   switch (r.kind) {

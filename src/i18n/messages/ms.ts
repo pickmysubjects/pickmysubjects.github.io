@@ -176,7 +176,7 @@ export const ms: Messages = {
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim sejuk', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
   countsAs: { change: "Tukar", handbookIs: "Handbook: {cat}", tapToChange: "Ketik untuk tukar", title: "Dikira sebagai", handbook: "Ikut Handbook", help: "Guna hanya jika fakulti meluluskannya; simpan kelulusan bertulis.", changed: "Anda menukar cara {n} subjek dikira dalam pelan ini.", undo: "Batalkan semua", changedShort: "ditukar oleh anda", cardLabel: "Dikira sebagai {category} (ditukar oleh anda)" },
-  category: { science: 'sains', commerce: 'perdagangan', arts: 'sastera', design: 'reka bentuk', music: 'muzik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesihatan oral', breadth: 'breadth', core: 'teras', course: 'dalam kursus' },
+  category: { science: 'sains', commerce: 'perdagangan', arts: 'sastera', design: 'reka bentuk', music: 'muzik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesihatan oral', breadth: 'breadth', core: 'teras', course: 'dalam kursus', 'course-extra': 'elektif luar kursus' },
   plan: {
     saveImage: "Simpan sebagai imej",
     pastTag: "Sudah diambil",
@@ -366,6 +366,7 @@ export const ms: Messages = {
     mcdinfeng: "WAM 65, 25 mata matematik peringkat tertiari dan 25 mata fizik, geografi, kimia, biologi atau sains komputer; major Digital Infrastructure atau Spatial Engineering Systems UniMelb, atau ijazah kejuruteraan dalam geomatik, sains komputer, perancangan bandar atau geografi dengan WAM 65: kredit hingga 100 mata",
     mcbiomeng: "WAM 65 dalam mana-mana ijazah sarjana muda, matematik setara Calculus 2 dan Linear Algebra, serta 25 mata biologi atau kimia, atau Engineering Mathematics; major Biomedical Engineering Systems UniMelb atau ijazah kejuruteraan bioperubatan dengan WAM 65: kredit hingga 100 mata",
     mcensysen: "WAM 65 dalam ijazah kejuruteraan empat tahun, atau WAM 65 dalam ijazah berkaitan seperti sains alam sekitar atau geografi fizikal serta dua tahun pengalaman berkaitan; CV diperlukan",
+    engmgmt: "Sarjana Muda Kejuruteraan empat tahun dengan WAM 65, atau ijazah berkaitan dengan WAM 65 dan dua tahun pengalaman berkaitan selepas tamat; CV diperlukan",
     mcis: "WAM 65 dalam mana-mana ijazah sarjana muda; kredit hingga 50 mata dengan setahun kerja berkaitan, hingga 100 dengan ijazah Sistem Maklumat dan dua tahun kerja",
     mcfinance: "Ijazah sarjana muda dengan major kewangan, serta Corporate Finance, Investments dan Derivative Securities (atau setara)",
     mccs: "Ijazah sarjana muda pengkomputeran WAM 75 dan 25 mata matematik atau statistik; tempat bergantung pada penyelia penyelidikan",

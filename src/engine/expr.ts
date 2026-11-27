@@ -1,4 +1,5 @@
 import type { AdvisoryKind, ReqExpr, ReqField, Subject } from './schema'
+import { isGraduateCode } from './graduateCourses'
 
 /** Three-valued result: uncurated or free-text requirements yield `unknown`, never `ok`. */
 export type Tri = 'ok' | 'fail' | 'unknown'
@@ -108,9 +109,9 @@ export function admits(admitted: string, code: string, note?: string): boolean {
   return named.length === 0 || named.includes(program)
 }
 
-/** A coursework master's (Handbook codes MC-…), as opposed to a bachelor's or diploma. */
+/** A coursework master's (MC-… codes, or one flagged `graduate`), as opposed to a bachelor's or diploma. */
 export function isGraduateCourse(code: string): boolean {
-  return code.startsWith('MC-')
+  return isGraduateCode(code)
 }
 
 /** Course codes in a free-text admission condition ("Admission into … B-SCIEXT …"), else none. */
