@@ -1,0 +1,36 @@
+code: MCEN90032
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/mcen90032
+reviews: 8
+from: 2022
+to: 2023
+checked: 2026-11-27
+points:
+  - en: "Almost every reviewer was very negative about the teaching. Several found the lectures confusing and hard to follow from the first weeks."
+    zh: "几乎所有评论者都对教学非常不满。多位评论者说从头几周起就听不懂讲座，内容很混乱。"
+    zh-TW: "幾乎所有評論者都對教學非常不滿。多位評論者說從頭幾週起就聽不懂講課，內容很混亂。"
+    ja: "ほぼ全員が授業に非常に否定的。最初の数週から講義が分かりにくく混乱したという人が複数いる。"
+    ko: "거의 모든 리뷰어가 수업에 매우 부정적이다. 여러 명이 첫 몇 주부터 강의가 혼란스럽고 따라가기 어려웠다고 했다."
+    vi: "Gần như mọi người đều rất tiêu cực về việc giảng dạy. Nhiều người thấy bài giảng khó hiểu, rối ngay từ những tuần đầu."
+    ms: "Hampir semua pengulas sangat negatif tentang pengajaran. Beberapa dapati kuliah mengelirukan dan sukar diikuti sejak minggu awal."
+    id: "Hampir semua pengulas sangat negatif soal pengajarannya. Beberapa merasa kuliah membingungkan dan sulit diikuti sejak minggu awal."
+    hi: "लगभग हर रिव्यूअर पढ़ाई को लेकर बहुत नकारात्मक था। कई को शुरुआती हफ़्तों से ही लेक्चर उलझे हुए और समझने में मुश्किल लगे।"
+  - en: "Several said they **learnt the content from YouTube instead**, and one shared a video series on Kalman filters for this."
+    zh: "多位评论者说**内容基本是靠YouTube自学的**，还有人专门分享了讲卡尔曼滤波的视频合集。"
+    zh-TW: "多位評論者說**內容基本上是靠 YouTube 自學的**，還有人特地分享了講卡爾曼濾波的影片合集。"
+    ja: "**内容はYouTubeで独学した**という人が複数おり、カルマンフィルタの動画シリーズを紹介した人もいる。"
+    ko: "여러 명이 **내용을 유튜브로 대신 공부했다**고 했고, 칼만 필터 영상 시리즈를 공유한 사람도 있다."
+    vi: "Nhiều người nói **phải tự học qua YouTube**, một người còn chia sẻ loạt video về bộ lọc Kalman."
+    ms: "Beberapa kata mereka **belajar kandungan dari YouTube**, dan seorang berkongsi siri video tentang penapis Kalman."
+    id: "Beberapa bilang **belajar materinya dari YouTube**, dan satu orang membagikan seri video tentang filter Kalman."
+    hi: "कई ने कहा कि उन्होंने **कंटेंट YouTube से सीखा**, और एक ने Kalman फ़िल्टर पर एक वीडियो सीरीज़ भी शेयर की।"
+  - en: "One reviewer said the lecture recordings were hard to hear, and found the lecturer unwelcoming when they asked for help with an assignment."
+    zh: "有人说讲座录音很难听清，去问作业问题时讲师态度也不太友好。"
+    zh-TW: "有人說講課錄音很難聽清楚，去問作業問題時講師態度也不太友善。"
+    ja: "講義録音が聞き取りにくく、課題について質問しに行ったら講師の対応が冷たかったという声がある。"
+    ko: "한 명은 강의 녹화가 잘 안 들렸고, 과제 질문을 하러 갔을 때 강사가 반기지 않았다고 했다."
+    vi: "Một người nói bản ghi bài giảng khó nghe, và giảng viên không mấy thân thiện khi được hỏi về bài tập."
+    ms: "Seorang kata rakaman kuliah sukar didengar, dan pensyarah kurang mesra apabila ditanya tentang tugasan."
+    id: "Satu pengulas bilang rekaman kuliah sulit didengar, dan dosennya kurang ramah saat ditanya soal tugas."
+    hi: "एक ने कहा कि लेक्चर रिकॉर्डिंग ठीक से सुनाई नहीं देती थी, और असाइनमेंट पर मदद माँगने पर लेक्चरर का रवैया रूखा था।"
+difficulty: hard

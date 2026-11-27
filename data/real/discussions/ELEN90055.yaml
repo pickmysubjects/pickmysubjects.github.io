@@ -1,0 +1,44 @@
+code: ELEN90055
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/elen90055
+reviews: 5
+from: 2014
+to: 2021
+checked: 2026-11-27
+points:
+  - en: "An entry-level control systems subject. Several reviewers said it was taught well, with hands-on labs, including one with Lego robots."
+    zh: "控制系统入门课。多位评论者说教得好，有动手实验，其中一次还用乐高机器人。"
+    zh-TW: "控制系統入門課。多位評論者說教得好，有動手實驗，其中一次還用樂高機器人。"
+    ja: "制御システムの入門科目。教え方が良く、レゴロボットを使うものを含む実習があると複数が評価している。"
+    ko: "제어 시스템 입문 과목이다. 여러 명이 잘 가르치고, 레고 로봇을 쓰는 실습 등 직접 해보는 수업이 있다고 했다."
+    vi: "Môn nhập môn hệ thống điều khiển. Nhiều người nói dạy tốt, có lab thực hành, trong đó có cả robot Lego."
+    ms: "Subjek pengenalan sistem kawalan. Beberapa pengulas kata ia diajar dengan baik, dengan makmal amali termasuk robot Lego."
+    id: "Mata kuliah pengantar sistem kendali. Beberapa pengulas bilang pengajarannya bagus, dengan lab praktik termasuk robot Lego."
+    hi: "कंट्रोल सिस्टम्स का शुरुआती विषय। कई रिव्यूअर्स ने कहा कि पढ़ाई अच्छी है और हैंड्स-ऑन लैब्स हैं, जिनमें Lego रोबोट भी शामिल हैं।"
+  - en: "It helps to know frequency domain, RLC circuits and MATLAB, though one reviewer said you can catch up in lectures. Several said **it rewards steady effort**."
+    zh: "最好先懂频域、RLC电路和MATLAB，不过有人说可以在讲座里补上。多位评论者说**肯花功夫就能学好**。"
+    zh-TW: "最好先懂頻域、RLC 電路和 MATLAB，不過有人說可以在講課中補上。多位評論者說**肯下功夫就能學好**。"
+    ja: "周波数領域、RLC回路、MATLABの知識があると楽だが、講義で追いつけるという声もある。**地道に努力すれば報われる**と複数が言う。"
+    ko: "주파수 영역, RLC 회로, MATLAB을 알면 좋지만 강의에서 따라잡을 수 있다는 의견도 있다. 여러 명이 **꾸준히 노력하면 잘할 수 있다**고 했다."
+    vi: "Nên biết miền tần số, mạch RLC và MATLAB, dù một người nói có thể theo kịp trên lớp. Nhiều người nói **chịu bỏ công là học tốt**."
+    ms: "Membantu jika tahu domain frekuensi, litar RLC dan MATLAB, walaupun seorang kata boleh kejar dalam kuliah. Beberapa kata **usaha berterusan akan berbaloi**."
+    id: "Sebaiknya paham domain frekuensi, rangkaian RLC, dan MATLAB, meski satu pengulas bilang bisa dikejar di kuliah. Beberapa bilang **usaha konsisten akan terbayar**."
+    hi: "फ़्रीक्वेंसी डोमेन, RLC सर्किट और MATLAB आना मददगार है, हालाँकि एक के अनुसार लेक्चर में सीख सकते हैं। कई ने कहा कि **लगातार मेहनत का फल मिलता है**।"
+  - en: "The final exam tests understanding, so memorising past papers won't help, and one reviewer called it difficult. Another found the project instructions unclear."
+    zh: "期末考的是理解，背往年题没用，有人说考试很难。还有人觉得项目要求写得不清楚。"
+    zh-TW: "期末考的是理解，背考古題沒用，有人說考試很難。也有人覺得專題要求寫得不清楚。"
+    ja: "期末試験は理解を問うので過去問の暗記は役に立たず、難しかったという声もある。プロジェクトの指示が不明確だったという人もいる。"
+    ko: "기말시험은 이해도를 묻기 때문에 기출 암기는 소용없고, 어려웠다는 평도 있다. 프로젝트 지침이 불분명했다는 의견도 있다."
+    vi: "Bài thi cuối kỳ kiểm tra hiểu biết nên học thuộc đề cũ không giúp được, một người thấy đề khó. Người khác thấy yêu cầu project không rõ ràng."
+    ms: "Peperiksaan akhir menguji kefahaman, jadi menghafal kertas lepas tidak membantu, dan seorang kata ia sukar. Seorang lagi rasa arahan projek kurang jelas."
+    id: "Ujian akhir menguji pemahaman, jadi menghafal soal lama tidak membantu, dan satu pengulas bilang sulit. Yang lain merasa instruksi proyek kurang jelas."
+    hi: "फ़ाइनल परीक्षा समझ जाँचती है, पुराने पेपर रटना काम नहीं आता, और एक ने इसे कठिन बताया। दूसरे को प्रोजेक्ट के निर्देश अस्पष्ट लगे।"
+  - en: "All reviews are from 2021 or earlier, so the subject may have changed since."
+    zh: "所有评论都在2021年或更早，课程之后可能已有变化。"
+    zh-TW: "所有評論都在 2021 年或更早，課程之後可能已有變化。"
+    ja: "レビューはすべて2021年以前のもので、その後内容が変わっている可能性がある。"
+    ko: "모든 후기가 2021년 이전 것이라 이후 바뀌었을 수 있다."
+    vi: "Tất cả đánh giá đều từ năm 2021 trở về trước, nên môn học có thể đã thay đổi."
+    ms: "Semua ulasan dari 2021 atau lebih awal, jadi subjek ini mungkin sudah berubah."
+    id: "Semua ulasan dari 2021 atau sebelumnya, jadi mata kuliah ini mungkin sudah berubah."
+    hi: "सारे रिव्यू 2021 या उससे पहले के हैं, इसलिए विषय अब बदल चुका हो सकता है।"

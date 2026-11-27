@@ -1,0 +1,36 @@
+code: ELEN90066
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/elen90066
+reviews: 3
+from: 2022
+to: 2023
+checked: 2026-11-27
+points:
+  - en: "An introduction to embedded design. Two reviewers found the project interesting, though one said it was painful at times."
+    zh: "嵌入式设计入门课。两位评论者觉得项目有意思，不过其中一位说有时也挺折磨人。"
+    zh-TW: "嵌入式設計入門課。兩位評論者覺得專題有趣，不過其中一位說有時也蠻折磨人。"
+    ja: "組込み設計の入門。2人がプロジェクトは面白いと言うが、時に苦しかったという声もある。"
+    ko: "임베디드 설계 입문 과목이다. 두 명이 프로젝트가 흥미롭다고 했지만, 한 명은 가끔 고통스러웠다고 했다."
+    vi: "Môn nhập môn thiết kế nhúng. Hai người thấy project thú vị, dù một người nói đôi khi khá vất vả."
+    ms: "Pengenalan kepada reka bentuk terbenam. Dua pengulas dapati projeknya menarik, walaupun seorang kata kadangkala memeritkan."
+    id: "Pengantar desain embedded. Dua pengulas merasa proyeknya menarik, meski satu bilang kadang menyiksa."
+    hi: "एम्बेडेड डिज़ाइन का परिचय। दो रिव्यूअर्स को प्रोजेक्ट दिलचस्प लगा, हालाँकि एक ने कहा कि कभी-कभी यह थकाऊ था।"
+  - en: "Views on difficulty split: two found it **not too demanding, with a fair exam** on the basics, but one felt the assessments were much harder than the lectures and textbook."
+    zh: "难度看法不一：两位觉得**要求不算高，考试公平**、主要考基础；但另一位觉得作业和考试比讲座和课本难很多。"
+    zh-TW: "難度看法不一：兩位覺得**要求不算高，考試公平**、主要考基礎；但另一位覺得作業和考試比講課和課本難很多。"
+    ja: "難易度の評価は分かれる。2人は**負担はそれほどなく、試験も公平**で基礎中心と言うが、1人は課題や試験が講義・教科書よりずっと難しいと感じた。"
+    ko: "난이도 평은 갈린다. 두 명은 **부담이 크지 않고 시험도 공정**하며 기초 위주라고 했지만, 한 명은 평가가 강의와 교재보다 훨씬 어렵다고 느꼈다."
+    vi: "Ý kiến về độ khó chia rẽ: hai người thấy **không quá nặng, đề thi công bằng** và chủ yếu kiến thức cơ bản, nhưng một người thấy bài đánh giá khó hơn nhiều so với bài giảng và giáo trình."
+    ms: "Pandangan tentang kesukaran berbeza: dua dapati ia **tidak terlalu berat, peperiksaan adil** pada asas, tetapi seorang rasa penilaian jauh lebih sukar daripada kuliah dan buku teks."
+    id: "Pendapat soal tingkat kesulitan terbelah: dua merasa **tidak terlalu berat, ujiannya adil** soal dasar, tapi satu merasa tugas dan ujian jauh lebih sulit dari kuliah dan buku teks."
+    hi: "कठिनाई पर राय बँटी है: दो को यह **ज़्यादा भारी नहीं और परीक्षा निष्पक्ष** लगी जो बुनियादी बातें जाँचती है, पर एक को असेसमेंट लेक्चर और किताब से बहुत कठिन लगे।"
+  - en: "Opinions on the lecturer were also opposite: one praised them, another found the lectures boring. One said the first half of the content barely shows up in the final exam."
+    zh: "对讲师的评价也正好相反：有人称赞，有人觉得讲座很无聊。还有人说前半学期的内容期末几乎不考。"
+    zh-TW: "對講師的評價也正好相反：有人稱讚，有人覺得講課很無聊。也有人說前半學期的內容期末幾乎不考。"
+    ja: "講師の評価も正反対で、絶賛する人もいれば講義が退屈だったという人もいる。前半の内容は期末試験にほとんど出ないという声もある。"
+    ko: "강사 평도 정반대다. 칭찬하는 사람도, 강의가 지루했다는 사람도 있다. 전반부 내용은 기말시험에 거의 안 나온다는 의견도 있다."
+    vi: "Ý kiến về giảng viên cũng trái ngược: một người khen, người khác thấy bài giảng nhàm chán. Một người nói nửa đầu nội dung gần như không có trong đề cuối kỳ."
+    ms: "Pendapat tentang pensyarah juga bertentangan: seorang memuji, seorang lagi rasa kuliah membosankan. Seorang kata separuh pertama kandungan hampir tiada dalam peperiksaan akhir."
+    id: "Pendapat soal dosen juga bertolak belakang: satu memuji, yang lain merasa kuliahnya membosankan. Satu bilang paruh pertama materi hampir tidak keluar di ujian akhir."
+    hi: "लेक्चरर पर राय भी उलटी थी: एक ने तारीफ़ की, दूसरे को लेक्चर उबाऊ लगे। एक के अनुसार पहले आधे हिस्से का कंटेंट फ़ाइनल में मुश्किल से आता है।"
+difficulty: mixed
