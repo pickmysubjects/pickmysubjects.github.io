@@ -630,6 +630,8 @@ export const courseFileSchema = z
     // A listed-only course that also takes another course's subjects of some levels (MC-SOFTENG
     // Group A: any level-2 or level-3 Bachelor of Science science subject): those are `course-extra`.
     also_from: z.object({ course: z.string().min(1), category: z.string().min(1), levels: z.array(z.number().int().min(1).max(3)).min(1) }).strict().optional(),
+    // Or a list of named subjects that count as `course-extra` (MC-IS general electives, capped).
+    extra_subjects: z.array(subjectCode).default([]),
     // Subjects an entry program's credit stands in for (MC-IT 150/100-point: the Foundation
     // subjects): they meet prerequisites as if passed, but add no points.
     assumed_done: z.array(subjectCode).default([]),
@@ -639,7 +641,7 @@ export const courseFileSchema = z
     // so they are kept once, under that course.
     based_on: z.string().min(1).optional(),
     // Who can enrol, when that limits the course (an i18n key under entry.*): shown under it.
-    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc', 'mcsofteng']).optional(),
+    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth', 'mcit200', 'mcit150', 'mcit100', 'mcdatasc', 'mcsofteng', 'mcis']).optional(),
     // The periods a new student can start the course in, when it doesn't take every intake.
     entry_periods: z.array(z.enum(PERIODS)).min(1).optional(),
     rules: z.array(courseRule),
@@ -657,6 +659,7 @@ export const courseFileSchema = z
     areaCategories: c.area_categories,
     listedOnly: c.listed_only,
     alsoFrom: c.also_from,
+    extraSubjects: c.extra_subjects,
     assumedDone: c.assumed_done,
     closed: c.closed,
     listed: c.listed,

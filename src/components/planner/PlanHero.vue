@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { defineAsyncComponent } from 'vue'
 import { ArrowRight, Pencil } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
@@ -21,6 +22,7 @@ defineProps<{
 const emit = defineEmits<{ edit: []; next: []; tryMajor: [] }>()
 const { t } = useI18n()
 const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
+const { level: side } = useStudyLevel()
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
           <span class="phero-setup-text">{{ setup }}</span>
           <span class="phero-edit"><Pencil :size="14" aria-hidden="true" />{{ t('wizard.edit') }}</span>
         </button>
-        <button v-if="tryMajor" class="phero-try" type="button" @click="emit('tryMajor')">{{ t('plans.tryAsNew') }}</button>
+        <button v-if="tryMajor" class="phero-try" type="button" @click="emit('tryMajor')">{{ t(sideKey('plans.tryAsNew', side)) }}</button>
       </div>
       <dl v-if="facts" class="phero-facts">
         <div class="fact">

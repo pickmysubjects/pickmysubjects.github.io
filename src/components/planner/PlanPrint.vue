@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { computed } from 'vue'
 import type { Period, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
@@ -55,6 +56,7 @@ function role(code: string): 'required' | 'option' | null {
 const parts = computed(() => props.summary.split(' · '))
 const headline = computed(() => parts.value.at(-1) ?? props.summary)
 const subline = computed(() => parts.value.slice(0, -1))
+const { level: side } = useStudyLevel()
 </script>
 
 <template>
@@ -95,7 +97,7 @@ const subline = computed(() => parts.value.slice(0, -1))
               <span v-if="x.state === 'failed'" class="tag tag-failed">{{ t('plan.pastNotPassed') }}{{ x.mark !== undefined ? ` ${x.mark}` : '' }}</span>
               <span v-else-if="x.state === 'done'" class="tag tag-done">{{ x.mark !== undefined ? x.mark : t('plan.pastTag') }}</span>
               <span v-else-if="role(x.code)" class="tag" :class="`tag-${role(x.code)}`">
-                {{ role(x.code) === 'required' ? t('plan.tagRequired') : t('plan.tagOption') }}
+                {{ role(x.code) === 'required' ? t('plan.tagRequired') : t(sideKey('plan.tagOption', side)) }}
               </span>
             </li>
             <li v-if="term.items.length === 0" class="empty">—</li>

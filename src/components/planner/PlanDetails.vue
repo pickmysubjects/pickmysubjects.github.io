@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { computed, useTemplateRef } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
@@ -164,6 +165,7 @@ function showSubject(code: string): void {
   emit('select', code)
   scrollToBoard()
 }
+const { level: side } = useStudyLevel()
 </script>
 
 <template>
@@ -238,7 +240,7 @@ function showSubject(code: string): void {
           <summary>{{ t('plan.howBuilt') }}</summary>
           <PlanHowBuilt :notes="notes" :rules="degreeRules" :unplaced="[]" @open="emit('open', $event)" />
         </details>
-        <span class="board-help">{{ t('checks.boardHelp') }} <InfoTip :text="`${t('plan.hint')} ${t('plan.tagLegend')}`" /></span>
+        <span class="board-help">{{ t('checks.boardHelp') }} <InfoTip :text="`${t('plan.hint')} ${t(sideKey('plan.tagLegend', side))}`" /></span>
         <!-- Where the rules come from, last in the foot like the other notes about the plan. -->
         <p v-if="course" class="source">
           <span>{{ verified ? t('rules.sourceChecked', { date: verified }) : t('rules.source') }}</span>

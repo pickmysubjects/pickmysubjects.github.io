@@ -265,7 +265,8 @@ const adviceFor = (code: string) => advice.value.find((a) => a.course === code)
 
     <div v-else-if="masterCourse" class="q">
       <h2 class="q-title">{{ t('wizard.qSpecMaster') }}</h2>
-      <div class="spec-chips" role="group" :aria-label="t('wizard.qSpecMaster')">
+      <p v-if="!specs.length" class="scope-note">{{ t('wizard.noSpecsMaster') }}</p>
+      <div v-else class="spec-chips" role="group" :aria-label="t('wizard.qSpecMaster')">
         <button
           v-for="sp in specs"
           :key="sp.id"
@@ -369,7 +370,7 @@ const adviceFor = (code: string) => advice.value.find((a) => a.course === code)
       <button v-if="step < 2" class="button button-accent" type="button" :disabled="step === 0 && !draft.course" @click="step++">
         {{ t('wizard.next') }} <ArrowRight :size="16" aria-hidden="true" />
       </button>
-      <button v-else class="button button-accent" type="button" :disabled="masterCourse && !draft.specialisation" @click="finish">
+      <button v-else class="button button-accent" type="button" :disabled="masterCourse && specs.length > 0 && !draft.specialisation" @click="finish">
         {{ t('wizard.build') }}
       </button>
     </footer>

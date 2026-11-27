@@ -43,4 +43,10 @@ describe('entry advice for coursework masters', () => {
     expect(se(entryAdvice(data, { where: 'other', area: 'computing', wam65: true, fourYear: true }))?.reason).toBe('seCredit')
     expect(se(entryAdvice(data, { where: 'other', area: 'computing', wam65: true }))).toBeUndefined()
   })
+
+  it('MC-IS: a credit line for WAM 65+ and related work', () => {
+    const is = (a: ReturnType<typeof entryAdvice>) => a.find((x) => x.course === 'MC-IS')
+    expect(is(entryAdvice(data, { where: 'other', area: 'other', wam65: true, work: true }))?.reason).toBe('isCredit')
+    expect(is(entryAdvice(data, { where: 'other', area: 'other', wam65: true }))).toBeUndefined()
+  })
 })

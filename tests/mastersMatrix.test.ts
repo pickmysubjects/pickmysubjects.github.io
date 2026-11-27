@@ -11,10 +11,12 @@ describe("master's plans across every specialisation, start and load", async () 
   const masters = data.courses.filter((c) => c.code.startsWith('MC-'))
   const profile = { results: [], skills: {}, interests: [], goal: 'balanced' } as never
   for (const course of masters) {
-    for (const spec of data.components.filter((c) => c.course === course.code)) {
+    // A course with no specialisations (MC-IS) is planned without one.
+    const specs = data.components.filter((c) => c.course === course.code)
+    for (const spec of specs.length ? specs : [{ id: undefined as unknown as string }]) {
       for (const startPeriod of ['semester-1', 'semester-2'] as const) {
         for (const load of [50, 25]) {
-          it(`${spec.id} from ${startPeriod}, ${load} a semester`, () => {
+          it(`${spec.id ?? course.code} from ${startPeriod}, ${load} a semester`, () => {
             const r = generatePlan({ data, profile, course: course.code, courseYear: 2027, specialisation: spec.id, startYear: 2027, startPeriod, load })
             const codes = r.plan.terms.flatMap((t) => t.subjects)
             expect(codes.filter((c) => data.subjects[c]?.categories[course.code] === undefined), 'outside the course').toEqual([])

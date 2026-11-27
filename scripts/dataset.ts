@@ -144,6 +144,11 @@ export function buildDataset(name: Dataset['name']): BuildResult {
       const s = subjects[code]
       if (s && !c.closed.includes(code)) s.categories[c.code] = 'course'
     }
+    // Named subjects that count apart (capped by a rule of its own).
+    for (const code of c.extraSubjects) {
+      const s = subjects[code]
+      if (s && s.categories[c.code] === undefined && !c.closed.includes(code)) s.categories[c.code] = 'course-extra'
+    }
     // Another course's subjects it also takes, at these levels (capped by a rule of its own).
     const extra = c.alsoFrom
     if (extra) {

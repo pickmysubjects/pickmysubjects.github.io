@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { computed, inject, nextTick, useTemplateRef, watch } from 'vue'
 import { ArrowRightLeft, BookOpen, CalendarRange, Info, Route, X } from 'lucide-vue-next'
 import type { Issue, Subject } from '@/engine'
@@ -109,7 +110,8 @@ const problem = computed(() => {
   const short = t.value(key)
   return short === key ? t.value(top.severity === 'error' ? 'plan.problem' : 'plan.check') : short
 })
-const roleText = computed(() => (props.role === 'required' ? t.value('plan.tagRequired') : props.role === 'option' ? t.value('plan.tagOption') : ''))
+const { level: side } = useStudyLevel()
+const roleText = computed(() => (props.role === 'required' ? t.value('plan.tagRequired') : props.role === 'option' ? t.value(sideKey('plan.tagOption', side.value)) : ''))
 // The full facts in the tooltip; the card itself keeps two lines and at most one status line.
 const tooltip = computed(() => [`${props.code} ${local.value || props.subject?.title || ''}`, local.value ? props.subject?.title : '', [roleText.value, category.value].filter(Boolean).join(' · '), linkLabel.value, props.onlyIn, factsFrom.value?.older ? t.value('dataYear.tip', { year: factsFrom.value.year }) : '', issueText.value].filter(Boolean).join('\n'))
 const rowClasses = computed(() => ({

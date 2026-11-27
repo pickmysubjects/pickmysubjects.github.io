@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sideKey, useStudyLevel } from '@/composables/useStudyLevel'
 import { computed, nextTick, onBeforeUnmount, onMounted, provide, shallowRef, useTemplateRef, watch } from 'vue'
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-vue-next'
 import { carriedInto, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
@@ -432,6 +433,7 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', onKey)
   document.removeEventListener('pointerdown', onPointer)
 })
+const { level: side } = useStudyLevel()
 </script>
 
 <template>
@@ -444,7 +446,7 @@ onBeforeUnmount(() => {
         </template>
         <!-- The cards' left edges: 必修 and 专业选修. -->
         <span class="legend-edge legend-required">{{ t('plan.tagRequired') }}</span>
-        <span class="legend-edge legend-option">{{ t('plan.tagOption') }}</span>
+        <span class="legend-edge legend-option">{{ t(sideKey('plan.tagOption', side)) }}</span>
       </p>
       <slot name="note" />
     </div>

@@ -116,6 +116,9 @@ export function entryAdvice(data: Dataset, b: Background, rec?: UniMelbRecord): 
   if (has('MC-DATASC')) out.push(dataStream(data, b, rec))
   const se = has('MC-SOFTENG') ? softengCredit(b, rec) : null
   if (se) out.push(se)
+  // MC-IS: up to 50 points of credit for any bachelor's with WAM 65 and a year of related work
+  // (Handbook "Advanced standing"; the 100-point case needs an IS degree, not asked here).
+  if (has('MC-IS') && b.where === 'other' && b.wam65 && b.work) out.push({ course: 'MC-IS', reason: 'isCredit', info: true })
   return out
 }
 

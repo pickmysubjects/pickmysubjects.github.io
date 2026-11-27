@@ -276,7 +276,8 @@ const majorTitle = computed(() => {
   const second = plan.plan.value.major2 ? data.value.components.find((c) => c.id === plan.plan.value.major2)?.title : undefined
   const spec = data.value.components.find((c) => c.id === plan.setup.value.specialisation)?.title
   const minor = (plan.setup.value.minors ?? []).map((id) => data.value.components.find((c) => c.id === id)?.title).filter(Boolean).join(' + ')
-  const main = [major, second, spec].filter(Boolean).join(' + ')
+  // A master's has no major: its specialisation (or nothing, for a course without any).
+  const main = isMaster.value ? (spec ?? '') : [major, second, spec].filter(Boolean).join(' + ')
   const key = informalPicks(data.value, plan.setup.value.minors) ? 'plans.informalLine' : 'plans.minorLine'
   const diploma = diplomaTitle(data.value, plan.setup.value)
   return [main, minor ? t.value(key, { title: minor }) : '', diploma ? t.value('plans.diplomaLine', { title: diploma }) : ''].filter(Boolean).join(' · ')
@@ -287,12 +288,16 @@ const summary = computed(() => {
   const start = { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }
   const first = plan.terms.value[0]
   const later = first && (first.year !== start.year || first.period !== start.period) && termKey(first.year, first.period) > termKey(start.year, start.period)
-  return t.value(later ? 'wizard.summaryLater' : 'wizard.summary', {
+  // No major or specialisation to name (a master's without any): its part of the line goes, with
+  // the separator before it, whatever the language puts there.
+  const MARK = '\u0000'
+  const line = t.value(later ? 'wizard.summaryLater' : 'wizard.summary', {
     course: plan.course.value?.title ?? plan.setup.value.course,
     start: termLabel(t.value, start),
     term: termLabel(t.value, later ? first : start),
-    major: majorTitle.value,
+    major: majorTitle.value || MARK,
   })
+  return line.replace(/\s*[·,，、]?\s*\u0000/, '')
 })
 
 // "Add to plan" on a subject's page before there was a plan: /plan?add=CODE. The subject waits
@@ -645,7 +650,7 @@ const { level, isMaster } = useStudyLevel()
       :setup="!showWizard && !viewingShared ? summary : undefined"
       :facts="!showWizard && !viewingShared ? heroFacts : undefined"
       :next="!showWizard && !viewingShared && onBoard ? nextStep : undefined"
-      :try-major="canTryMajor"
+:try-major="canTryMajor && (!isMaster || data.components.some((c) => c.course === plan.setup.value.course))"
       @edit="editing = true"
       @next="enrol.copyEnrol()"
       @try-major="tryMajor"

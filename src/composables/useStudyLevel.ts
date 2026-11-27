@@ -79,6 +79,9 @@ const MASTER_LABELS: Record<string, string> = {
   'guide.cat.basics.title': 'guide.catMaster.basicsTitle',
   'menu.d.new-students': 'guide.catMaster.newStudentsDesc',
   'menu.d.basics': 'guide.catMaster.basicsDesc',
+  'plans.tryAsNew': 'plans.tryAsNewMaster',
+  'plan.tagOption': 'plan.tagOptionMaster',
+  'plan.tagLegend': 'plan.tagLegendMaster',
 }
 
 /** The i18n key to show for a menu or page name on this side. */
