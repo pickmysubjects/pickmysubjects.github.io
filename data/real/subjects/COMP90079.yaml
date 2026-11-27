@@ -1,0 +1,21 @@
+code: COMP90079
+title: Computer Science Research Project Part 2
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - admission: MC-CS
+      note: Admission into the MC-CS Master of Computer Science
+    - points:
+        min: 100
+corequisites: COMP90078
+non_allowed: []
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90079
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

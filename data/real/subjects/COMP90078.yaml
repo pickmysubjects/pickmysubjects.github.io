@@ -1,0 +1,34 @@
+code: COMP90078
+title: Computer Science Research Project Part 1
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - admission: MC-CS
+      note: Admission into the MC-CS Master of Computer Science
+    - manual: Completion of a minimum of 100 credit points of study Computer Science Research Project Parts 1 and 2 are prerequisites to Computer Science Research Project Parts 3 and 4.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - ethics
+assessment:
+  - kind: report
+    weight: 30
+    hurdle: true
+  - kind: presentation
+    weight: 5
+  - kind: assignment
+    weight: 65
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90078
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
