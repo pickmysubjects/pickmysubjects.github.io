@@ -1,0 +1,55 @@
+# Master of Mechatronics Engineering, 2027 Handbook. Facts re-expressed in our own words.
+# Three years, 300 points, no specialisations. Engineering Practice hurdle: not a subject.
+code: MC-MTRNENG
+title: Master of Mechatronics Engineering
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcmtrneng
+# Entry needs maths equivalent to Calculus 2 and Linear Algebra and physics equivalent to Physics 1
+# and 2 (Handbook entry requirements), so their prerequisites count as met.
+assumed_done: [MAST10006, MAST10007, PHYC10003, PHYC10004]
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-mtrneng/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [ENGR20004, ELEN20005, MAST20029, COMP20005, MCEN30021, MCEN30020, ENGR30004, COMP90041]
+    # Recommended order; a student with credit may skip or move them, so never flagged late.
+    year: 1
+    description: Year 1 compulsory subjects (100 points)
+  - id: year2
+    kind: compulsory
+    subjects: [MCEN90038, ELEN90055, MCEN90032, COMP90049, MCEN90061, ELEN90066, ELEN30014, ENGR90051]
+    year: 2
+    description: Year 2 compulsory subjects (100 points)
+  - id: capstone
+    kind: compulsory
+    subjects: [ENGR90037, ENGR90038]
+    year: 3
+    description: Year 3 capstone project (25 points)
+  # 75 points of electives: at least 37.5 from Group A1, at least 50 from Groups A1 and A2, at
+  # most 25 from Group B. With 300 in total, the last 25 may come from any group.
+  - id: group-a1
+    kind: requirement
+    paths:
+      - - choose: { points: 37.5, from: [MCEN90028, MCEN90041, ELEN90064, MCEN90045, ENGR90043, MCEN90017, ELEN90090] }
+    description: At least 37.5 points of Group A1 electives
+  - id: group-a
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [MCEN90028, MCEN90041, ELEN90064, MCEN90045, ENGR90043, MCEN90017, ELEN90090, ELEN90095, MCEN90048] }
+    description: Another 12.5 points of Group A1 or A2 electives
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [MCEN90028, MCEN90041, ELEN90064, MCEN90045, ENGR90043, MCEN90017, ELEN90090, ELEN90095, MCEN90048, MCEN90050, BMEN90022, COMP90015, COMP90018, ELEN30011, ELEN90056, MCEN90054, MCEN90055, MCEN90056, MCEN90057, MCEN90058, MCEN90053, MCEN90059, MCEN90060, MCEN90046, ELEN90094, ELEN90088, ENGR90033, ENGR90026, ENGR90041, ENGR90042, ENGR90034] }
+    description: 25 more points of electives (Group A1, A2 or B)

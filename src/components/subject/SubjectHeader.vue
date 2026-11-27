@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useStudyLevel } from '@/composables/useStudyLevel'
-import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { onSide, useStudyLevel, type StudyLevel } from '@/composables/useStudyLevel'
+import { MASTER_PLANNING } from '@/release'
+import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { ArrowLeft, BookOpen, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
 import { isDone, isFail, isQuotaSubject, passedCodes, knownNotRunning, listPlace, periodsFor, prereqStatus, prerequisiteRoute, referencedSubjects, simplifyFor, standingOf, RANK_SLUGS, type Period, type Subject } from '@/engine'
 import { link } from '@/composables/useView'
@@ -32,7 +33,7 @@ import type { YearDiff } from '@/engine/yearDiff'
 const props = defineProps<{ subject: Subject; year: number; rateHidden: boolean }>()
 const emit = defineEmits<{ rate: [] }>()
 
-const { data, course: listCourse } = useDataset()
+const { data, course: listCourse, masterUses } = useDataset()
 const plan = usePlan()
 const { profile } = useProfile()
 const { rated } = useRated()
@@ -137,7 +138,27 @@ const termChoices = computed(() =>
   ),
 )
 // The master's side adds to plans once master's planning opens (1.2.0).
-const canAdd = computed(() => planningOpen.value && (!gone.value || termChoices.value.some((x) => x.offered)))
+// A subject that only belongs on the other side (a level-9 subject on the bachelor's side, or a
+// bachelor's subject no master's lists): planned there, never into this side's plan.
+const otherSide = computed<StudyLevel | null>(() => {
+  const s = props.subject
+  if (onSide(s, level.value, plan.setup.value.course, masterUses.value)) return null
+  const other: StudyLevel = level.value === 'master' ? 'bachelor' : 'master'
+  return onSide(s, other, undefined, masterUses.value) ? other : null
+})
+const canAdd = computed(() => planningOpen.value && !otherSide.value && (!gone.value || termChoices.value.some((x) => x.offered)))
+// Switching only helps where planning is open (the master's planner ships with 1.2.0).
+const canSwitch = computed(() => !!otherSide.value && (otherSide.value === 'bachelor' || MASTER_PLANNING))
+// Opened from search or a link on the wrong side: go to the subject's own side, once per subject,
+// so a student who then switches back on purpose stays there.
+let sidedFor = ''
+function sideForSubject(): void {
+  if (sidedFor === props.subject.code) return
+  sidedFor = props.subject.code
+  if (otherSide.value) level.value = otherSide.value
+}
+onMounted(sideForSubject)
+watch(() => props.subject.code, sideForSubject)
 const chosenTerm = shallowRef('')
 const target = computed(() => {
   const all = termChoices.value
@@ -189,7 +210,7 @@ onBeforeUnmount(() => {
   io?.disconnect()
   clearTimeout(copiedTimer)
 })
-const { planningOpen } = useStudyLevel()
+const { planningOpen, level } = useStudyLevel()
 </script>
 
 <template>
@@ -217,6 +238,9 @@ const { planningOpen } = useStudyLevel()
         <a v-else-if="!plan.setupChosen.value && canAdd" class="button button-accent" :href="link(`plan?add=${subject.code}`)">
           <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
         </a>
+        <button v-else-if="canSwitch && !plannedAt" class="button button-accent" type="button" @click="level = otherSide!">
+          {{ t(`subject.planOnSide.${otherSide}`) }}
+        </button>
         <span v-else-if="plannedAt" class="add">
           <span class="state state-good" role="status"><Check :size="18" aria-hidden="true" /> {{ t('subject.inPlanAt', { term: termLabel(t, plannedAt) }) }}</span>
           <a class="button button-quiet" :href="link('plan')">{{ t('subject.openPlanner') }}</a>

@@ -30,7 +30,7 @@ function choose(l: StudyLevel): void {
       :aria-pressed="level === l"
       @click="choose(l)"
     >
-      {{ t(`level.${l}`) }}
+      {{ t(`level.${l}`) }}<span v-if="l === 'master'" class="beta">Beta</span>
     </button>
   </div>
 </template>
@@ -73,6 +73,24 @@ function choose(l: StudyLevel): void {
   background: var(--accent-fill);
 }
 
+/* The master's side is new: a small tag, same in every language. */
+.beta {
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  vertical-align: 1px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.seg.on .beta {
+  color: inherit;
+  background: color-mix(in srgb, currentColor 22%, transparent);
+}
+
 .seg:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -87,6 +105,12 @@ function choose(l: StudyLevel): void {
   .seg {
     padding: 0 7px;
     font-size: 0.6875rem;
+  }
+
+  .beta {
+    margin-left: 3px;
+    padding: 0 4px;
+    font-size: 0.5625rem;
   }
 }
 

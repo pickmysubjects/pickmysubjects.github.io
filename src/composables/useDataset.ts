@@ -67,7 +67,7 @@ export function useDataset() {
   // Saved plans and profiles are kept per data set; this is the one name they live under.
   // The whole data set, for looking at another plan's course (comparing plans).
   const all = real
-  return { name, course, data, all, subjectList, topics }
+  return { name, course, data, all, subjectList, topics, masterUses }
 }
 
 // Loaded areas, and the requests in flight (one per area).
