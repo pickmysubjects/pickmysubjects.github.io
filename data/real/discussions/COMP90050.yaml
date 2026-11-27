@@ -1,0 +1,36 @@
+code: COMP90050
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/comp90050
+reviews: 4
+from: 2014
+to: 2024
+checked: 2026-11-27
+points:
+  - en: "All four reviews are negative. Reviewers felt the content is mostly theory and outdated, with no workshops."
+    zh: "四条评论都是负面的。评论者认为内容以理论为主且陈旧，没有研讨课。"
+    zh-TW: "四則評論都是負面的。評論者認為內容以理論為主又過時，沒有 workshop。"
+    ja: "レビュー4件はすべて否定的。内容はほぼ理論中心で古く、ワークショップもないと感じられている。"
+    ko: "후기 4개가 모두 부정적이다. 내용이 대부분 이론이고 오래됐으며 워크숍이 없다는 평이다."
+    vi: "Cả bốn đánh giá đều tiêu cực. Người đánh giá thấy nội dung chủ yếu là lý thuyết, lỗi thời và không có workshop."
+    ms: "Keempat-empat ulasan negatif. Pengulas rasa kandungannya kebanyakan teori dan ketinggalan zaman, tanpa bengkel."
+    id: "Keempat ulasan negatif. Pengulas merasa materinya kebanyakan teori dan ketinggalan zaman, tanpa workshop."
+    hi: "चारों रिव्यू नकारात्मक हैं। रिव्यूअर्स को कंटेंट ज़्यादातर थ्योरी और पुराना लगा, और कोई वर्कशॉप नहीं है।"
+  - en: "Recent reviewers (2024) found the lectures hard to follow, mostly read from the textbook, and said the recording audio was poor. Reading the slides yourself was seen as more useful."
+    zh: "2024年的评论者觉得讲座难懂，基本照着教材念，录播音质也差。他们觉得自己看课件更有用。"
+    zh-TW: "2024 年的評論者覺得講課難懂，大多照課本念，錄影音質也差。他們覺得自己看投影片比較有用。"
+    ja: "2024年のレビューでは、講義は分かりにくく教科書を読み上げるだけで、録画の音声も悪かったとのこと。スライドを自分で読むほうが役立つという。"
+    ko: "2024년 후기에 따르면 강의는 이해하기 어렵고 대부분 교재를 읽는 식이며, 녹화 음질도 나빴다. 슬라이드를 직접 읽는 게 낫다는 평이다."
+    vi: "Các đánh giá năm 2024 thấy bài giảng khó hiểu, chủ yếu đọc từ giáo trình, và âm thanh bản ghi kém. Tự đọc slide được cho là hữu ích hơn."
+    ms: "Pengulas terkini (2024) dapati kuliah sukar difahami, kebanyakannya dibaca dari buku teks, dan audio rakaman teruk. Membaca slaid sendiri dianggap lebih berguna."
+    id: "Pengulas terbaru (2024) merasa kuliahnya sulit dipahami, kebanyakan dibacakan dari buku teks, dan audio rekamannya buruk. Membaca slide sendiri dianggap lebih berguna."
+    hi: "2024 के रिव्यूअर्स को लेक्चर समझना मुश्किल लगा, ज़्यादातर किताब से पढ़कर सुनाए गए, और रिकॉर्डिंग की आवाज़ खराब थी। स्लाइड खुद पढ़ना ज़्यादा उपयोगी माना गया।"
+  - en: "**The assignment is an essay on a research topic, not a hands-on database project**, which reviewers saw as a poor fit. The final exam was described as difficult, with complaints about low marks."
+    zh: "**作业是写一篇研究主题的论文，而不是动手的数据库项目**，评论者觉得不对题。期末考试被认为难，也有人抱怨分数偏低。"
+    zh-TW: "**作業是寫研究主題的報告，不是實作的資料庫專題**，評論者覺得不對題。期末考被認為很難，也有人抱怨分數偏低。"
+    ja: "**課題は研究テーマについてのエッセイで、実践的なデータベースのプロジェクトではない**ため、科目に合っていないと見られている。期末試験は難しく、点数が低いという不満もある。"
+    ko: "**과제는 실습형 데이터베이스 프로젝트가 아니라 연구 주제에 대한 에세이**라서 과목과 맞지 않는다는 평이다. 기말시험은 어렵고 점수가 낮다는 불만도 있다."
+    vi: "**Bài tập là viết luận về một chủ đề nghiên cứu, không phải project cơ sở dữ liệu thực hành**, nên bị cho là không phù hợp. Bài thi cuối được nói là khó, kèm phàn nàn điểm thấp."
+    ms: "**Tugasan ialah esei tentang topik penyelidikan, bukan projek pangkalan data secara praktikal**, yang dianggap kurang sesuai. Peperiksaan akhir dikatakan sukar, dengan rungutan markah rendah."
+    id: "**Tugasnya berupa esai topik riset, bukan proyek basis data praktis**, yang dianggap kurang cocok. Ujian akhir disebut sulit, dengan keluhan soal nilai rendah."
+    hi: "**असाइनमेंट किसी रिसर्च विषय पर निबंध है, कोई प्रैक्टिकल डेटाबेस प्रोजेक्ट नहीं**, जिसे रिव्यूअर्स ने विषय से मेल न खाता माना। फ़ाइनल परीक्षा कठिन बताई गई, और कम अंकों की शिकायतें भी हैं।"
+difficulty: hard

@@ -1,0 +1,45 @@
+code: COMP90015
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/comp90015
+reviews: 6
+from: 2015
+to: 2022
+checked: 2026-11-27
+points:
+  - en: "Covers distributed systems concepts such as threads and RMI in Java. Reviewers found the topics useful and the projects interesting, good enough to show on GitHub."
+    zh: "讲分布式系统概念，如Java中的线程和RMI。评论认为内容实用、项目有意思，适合放到GitHub上展示。"
+    zh-TW: "講分散式系統概念，例如 Java 的執行緒和 RMI。評論認為內容實用、專題有趣，適合放上 GitHub。"
+    ja: "Javaでのスレッドや RMI など分散システムの概念を扱う。内容は実用的で、プロジェクトも面白くGitHubに載せられるという評価。"
+    ko: "Java의 스레드, RMI 같은 분산 시스템 개념을 다룬다. 내용이 실용적이고 프로젝트도 흥미로워 GitHub에 올릴 만하다는 평이다."
+    vi: "Học các khái niệm hệ phân tán như thread và RMI trong Java. Người đánh giá thấy nội dung hữu ích và project thú vị, đủ để đưa lên GitHub."
+    ms: "Meliputi konsep sistem teragih seperti thread dan RMI dalam Java. Pengulas dapati topiknya berguna dan projeknya menarik, sesuai untuk GitHub."
+    id: "Membahas konsep sistem terdistribusi seperti thread dan RMI di Java. Pengulas merasa materinya berguna dan proyeknya menarik, layak dipajang di GitHub."
+    hi: "Java में थ्रेड्स और RMI जैसे डिस्ट्रिब्यूटेड सिस्टम के कॉन्सेप्ट पढ़ाता है। रिव्यूअर्स को विषय उपयोगी और प्रोजेक्ट दिलचस्प लगे, GitHub पर दिखाने लायक।"
+  - en: "**You need solid Java for the projects.** It's easy if you're comfortable with Java, but a steep climb if not. One reviewer felt the required GUIs distracted from the main topic."
+    zh: "**项目需要扎实的Java基础。**熟悉Java的话很轻松，否则上手较陡。有人觉得要求做的图形界面分散了对主题的注意力。"
+    zh-TW: "**專題需要扎實的 Java 基礎。**熟悉 Java 就很輕鬆，不然上手很陡。有人覺得要求做的 GUI 讓人分心。"
+    ja: "**プロジェクトにはしっかりしたJava力が必要。**Javaに慣れていれば楽だが、そうでなければきつい。必須のGUI作りが本題の妨げになったという声も。"
+    ko: "**프로젝트에 탄탄한 Java 실력이 필요하다.** Java에 익숙하면 쉽지만 아니면 진입 장벽이 높다. 필수 GUI 작업이 본 주제를 방해했다는 의견도 있다."
+    vi: "**Cần Java vững để làm project.** Quen Java thì dễ, không thì khá vất vả lúc đầu. Một người thấy phần GUI bắt buộc làm phân tán khỏi nội dung chính."
+    ms: "**Anda perlukan Java yang kukuh untuk projek.** Mudah jika sudah biasa dengan Java, tetapi sukar jika tidak. Seorang rasa GUI yang diwajibkan mengganggu fokus utama."
+    id: "**Butuh Java yang kuat untuk proyeknya.** Gampang kalau sudah nyaman dengan Java, tapi berat kalau belum. Satu pengulas merasa GUI yang diwajibkan mengalihkan dari topik utama."
+    hi: "**प्रोजेक्ट्स के लिए अच्छी Java आनी चाहिए।** Java में सहज हैं तो आसान है, वरना शुरुआत मुश्किल है। एक रिव्यूअर को ज़रूरी GUI काम मुख्य विषय से भटकाने वाला लगा।"
+  - en: "Several reviewers found the lectures hard to follow and said it was better to read the textbook and slides yourself. Tutorials were described as very useful."
+    zh: "好几位评论者觉得讲座难以跟上，认为自己读教材和课件更好。辅导课被认为很有用。"
+    zh-TW: "好幾位評論者覺得講課很難跟，認為自己讀課本和投影片比較好。輔導課被認為很有用。"
+    ja: "講義が分かりにくく、教科書やスライドを自分で読むほうがいいという声が複数ある。チュートリアルはとても役立つという評価。"
+    ko: "여러 명이 강의를 따라가기 어려워 교재와 슬라이드를 직접 읽는 게 낫다고 했다. 튜토리얼은 매우 유용하다는 평이다."
+    vi: "Nhiều người thấy bài giảng khó theo và cho rằng tự đọc giáo trình, slide tốt hơn. Tutorial được đánh giá là rất hữu ích."
+    ms: "Beberapa pengulas dapati kuliah sukar diikuti dan lebih baik membaca buku teks serta slaid sendiri. Tutorial dikatakan sangat berguna."
+    id: "Beberapa pengulas merasa kuliahnya sulit diikuti dan lebih baik membaca buku teks dan slide sendiri. Tutorial disebut sangat berguna."
+    hi: "कई रिव्यूअर्स को लेक्चर समझना मुश्किल लगा और उन्होंने कहा कि किताब और स्लाइड खुद पढ़ना बेहतर है। ट्यूटोरियल बहुत उपयोगी बताए गए।"
+  - en: "Views on marks differ: one reviewer said a high mark was easy to get, while another noted a lot of theory to memorise for the final exam."
+    zh: "对分数看法不一：有人说很容易拿高分，也有人提到期末要背很多理论。"
+    zh-TW: "對分數看法不一：有人說很容易拿高分，也有人提到期末要背很多理論。"
+    ja: "成績については意見が分かれる。高得点が取りやすいという人もいれば、期末試験のために覚える理論が多いという人もいる。"
+    ko: "성적에 대한 의견은 갈린다. 높은 점수를 받기 쉽다는 사람도 있고, 기말시험에 외울 이론이 많다는 사람도 있다."
+    vi: "Ý kiến về điểm khác nhau: một người nói dễ đạt điểm cao, người khác lưu ý có nhiều lý thuyết phải học thuộc cho bài thi cuối."
+    ms: "Pandangan tentang markah berbeza: seorang kata mudah dapat markah tinggi, seorang lagi kata banyak teori perlu dihafal untuk peperiksaan akhir."
+    id: "Pendapat soal nilai berbeda: ada yang bilang nilai tinggi mudah didapat, ada juga yang menyebut banyak teori yang harus dihafal untuk ujian akhir."
+    hi: "अंकों पर राय अलग है: एक के अनुसार ऊँचे अंक लाना आसान है, जबकि दूसरे ने बताया कि फ़ाइनल के लिए बहुत थ्योरी याद करनी पड़ती है।"
+difficulty: mixed

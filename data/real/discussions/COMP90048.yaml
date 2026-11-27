@@ -1,0 +1,45 @@
+code: COMP90048
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/comp90048
+reviews: 5
+from: 2016
+to: 2021
+checked: 2026-11-27
+points:
+  - en: "Teaches declarative programming in Haskell and Prolog. Reviewers found it fun and said it changes how you think about programming, though it may suit research more than industry."
+    zh: "用Haskell和Prolog讲声明式编程。评论认为有趣，能改变你对编程的思考方式，不过可能更适合做研究而非业界。"
+    zh-TW: "用 Haskell 和 Prolog 教宣告式程式設計。評論覺得有趣，會改變你思考程式的方式，但可能比較適合走研究而非業界。"
+    ja: "HaskellとPrologで宣言型プログラミングを学ぶ。面白く、プログラミングの考え方が変わるという評価だが、産業界より研究向きかもしれない。"
+    ko: "Haskell과 Prolog로 선언형 프로그래밍을 배운다. 재미있고 프로그래밍을 보는 관점이 바뀐다는 평이지만, 업계보다는 연구에 더 맞을 수 있다."
+    vi: "Học lập trình khai báo với Haskell và Prolog. Người đánh giá thấy vui và thay đổi cách nghĩ về lập trình, dù có thể hợp với nghiên cứu hơn là đi làm."
+    ms: "Mengajar pengaturcaraan deklaratif dengan Haskell dan Prolog. Pengulas dapati ia seronok dan mengubah cara berfikir tentang pengaturcaraan, walaupun mungkin lebih sesuai untuk penyelidikan berbanding industri."
+    id: "Mengajarkan pemrograman deklaratif dengan Haskell dan Prolog. Pengulas merasa seru dan mengubah cara berpikir soal pemrograman, meski mungkin lebih cocok untuk riset daripada industri."
+    hi: "Haskell और Prolog में डिक्लेरेटिव प्रोग्रामिंग सिखाता है। रिव्यूअर्स को यह मज़ेदार लगा और प्रोग्रामिंग के बारे में सोच बदलने वाला, हालाँकि यह इंडस्ट्री से ज़्यादा रिसर्च के लिए ठीक हो सकता है।"
+  - en: "It's fast-paced and quite different from everyday languages, so extra reading helps. One reviewer did not rate the teaching."
+    zh: "节奏快，和平常用的语言差别很大，多看课外资料有帮助。有一位评论者对教学评价不高。"
+    zh-TW: "節奏快，和平常用的語言差很多，多看課外資料有幫助。有一位評論者對教學評價不高。"
+    ja: "進度が速く、普段使う言語とかなり違うので、追加の参考書が役立つ。教え方を評価しなかった人もいる。"
+    ko: "진도가 빠르고 평소 쓰는 언어와 많이 달라서 추가 자료가 도움이 된다. 수업에 대해 낮게 평가한 사람도 있다."
+    vi: "Nhịp độ nhanh và khác hẳn các ngôn ngữ thường dùng, nên đọc thêm tài liệu sẽ giúp ích. Một người không đánh giá cao cách dạy."
+    ms: "Rentaknya laju dan sangat berbeza daripada bahasa harian, jadi bacaan tambahan membantu. Seorang pengulas tidak menilai tinggi pengajarannya."
+    id: "Temponya cepat dan sangat berbeda dari bahasa sehari-hari, jadi bacaan tambahan membantu. Satu pengulas tidak menilai tinggi pengajarannya."
+    hi: "रफ़्तार तेज़ है और यह रोज़ की भाषाओं से काफ़ी अलग है, इसलिए अतिरिक्त पढ़ाई मदद करती है। एक रिव्यूअर ने पढ़ाने को अच्छा नहीं माना।"
+  - en: "**Projects are original and need creativity, so start early.** Exams were said to be close to the tutorial questions, and the subject tests coding more than concepts."
+    zh: "**项目是原创题，需要创造力，务必早点开始。**有人说考试和辅导课题目很像，这门课考代码多于考概念。"
+    zh-TW: "**專題是原創題，需要創意，一定要早點開始。**有人說考試和輔導課題目很像，這門課考程式多過考概念。"
+    ja: "**プロジェクトは独自の課題で創意工夫が必要なので、早めに着手を。**試験はチュートリアルの問題に近く、概念よりコードが問われるという声。"
+    ko: "**프로젝트는 독창적인 과제라 창의력이 필요하니 일찍 시작하자.** 시험은 튜토리얼 문제와 비슷하고, 개념보다 코딩을 주로 평가한다는 평이다."
+    vi: "**Project là đề mới, cần sáng tạo, nên bắt đầu sớm.** Bài thi được cho là giống câu hỏi tutorial, và môn kiểm tra code nhiều hơn khái niệm."
+    ms: "**Projeknya asli dan perlukan kreativiti, jadi mula awal.** Peperiksaan dikatakan hampir sama dengan soalan tutorial, dan subjek ini lebih menguji kod daripada konsep."
+    id: "**Proyeknya orisinal dan butuh kreativitas, jadi mulai lebih awal.** Ujian disebut mirip soal tutorial, dan mata kuliah ini lebih menguji kode daripada konsep."
+    hi: "**प्रोजेक्ट मौलिक हैं और रचनात्मकता माँगते हैं, इसलिए जल्दी शुरू करें।** परीक्षा ट्यूटोरियल के सवालों जैसी बताई गई, और विषय कॉन्सेप्ट से ज़्यादा कोडिंग परखता है।"
+  - en: "All reviews are from 2021 or earlier, so the subject may have changed since."
+    zh: "所有评论都在2021年或更早，课程之后可能已有变化。"
+    zh-TW: "所有評論都在 2021 年或更早，課程之後可能已有變化。"
+    ja: "レビューはすべて2021年以前のもので、その後内容が変わっている可能性がある。"
+    ko: "모든 후기가 2021년 이전 것이라 이후 바뀌었을 수 있다."
+    vi: "Tất cả đánh giá đều từ năm 2021 trở về trước, nên môn học có thể đã thay đổi."
+    ms: "Semua ulasan dari 2021 atau lebih awal, jadi subjek ini mungkin sudah berubah."
+    id: "Semua ulasan dari 2021 atau sebelumnya, jadi mata kuliah ini mungkin sudah berubah."
+    hi: "सारे रिव्यू 2021 या उससे पहले के हैं, इसलिए विषय अब बदल चुका हो सकता है।"
+difficulty: hard
