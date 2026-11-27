@@ -1,0 +1,72 @@
+# Master of Science (Bioinformatics), 200-point entry program, 2027 Handbook. The Handbook runs
+# MC-SCIBIF as two entry programs (200 and 150 points); each is kept as its own course here, the
+# way MC-IT is. Facts re-expressed in our own words.
+# Year 1 core depends on the student's background stream (biology/biomedicine, maths/statistics or
+# computer science); year 2 core, the professional skills subject and a 50-point research project
+# (one of streams A to E) are the same for everyone.
+code: MC-SCIBIF-200
+title: Master of Science (Bioinformatics) (200-point program)
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+# Entry needs Calculus 1 (or equivalent) already done.
+assumed_done: [MAST10005]
+entry_note: mcscibif200
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-scibif/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    category: course
+    min: 200
+    description: 200 points in total
+  - id: core-all
+    kind: compulsory
+    # Every stream takes BINF90002 and BINF90018 in year 1.
+    subjects: [BINF90002, BINF90018]
+    year: 1
+    description: BINF90002 Elements of Bioinformatics and BINF90018, taken by every stream
+  - id: core-stream
+    kind: requirement
+    # One path per background stream; biology and computer science pick MAST90044 + BINF90017
+    # or MAST20006 + MAST20005 for their statistics pair.
+    paths:
+      - - all: [COMP90059, COMP90038, MAST90044, BINF90017]
+      - - all: [COMP90059, COMP90038, MAST20006, MAST20005]
+      - - all: [COMP90059, COMP90038, CEDB20003, GENE20001]
+      - - all: [CEDB20003, GENE20001, MAST90044, BINF90017]
+      - - all: [CEDB20003, GENE20001, MAST20006, MAST20005]
+    description: The rest of Year 1 core for one stream (biology/biomedicine, maths/statistics or computer science)
+  - id: elective
+    kind: requirement
+    # Another 12.5-point subject may be approved by the course coordinator; an undergraduate
+    # elective must be taken in the first 100 points.
+    paths:
+      - - choose: { points: 12.5, from: [BTCH90009, BTCH90005, MAST90125, INFO90002, COMP90048, ISYS90069, POPH90014, FOOD90008, COMP90007, COMP90049, HLTH90021, COMP90089, COMP90041, POPH90144, COMP90051, MAST90139, MULT90004, POPH90112, COMP90090, GEOM90007, BINF90017] }
+    description: One 12.5-point general elective
+  - id: core-year2
+    kind: compulsory
+    subjects: [BINF90001, BINF90004, COMP90014, COMP90016]
+    year: 2
+    description: Year 2 core (50 points)
+  - id: professional-skills
+    kind: compulsory
+    # Not to be started before the research project has begun.
+    subjects: [SCIE90013]
+    year: 2
+    description: SCIE90013 professional skills subject
+  - id: research-project
+    kind: requirement
+    # 50 points in consecutive semesters, normally from the second semester. At least 37.5 points
+    # of core (including BINF90002, and COMP90059 where the stream needs it) come first.
+    paths:
+      - - all: [BINF90008, BINF90009, BINF90010]
+      - - all: [BINF90008, BINF90009, BINF90011, BINF90012]
+      - - all: [BINF90013, BINF90014]
+      - - all: [BINF90008, BINF90016, BINF90015]
+      - - all: [BINF90013, BINF90009, BINF90015]
+    description: A 50-point research project (stream A, B, C, D or E)

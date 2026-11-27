@@ -1,0 +1,47 @@
+code: MULT90004
+title: Environmental Sustainability
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - teamwork
+  - presentation
+topics:
+  - environment
+  - ecology
+  - society
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mult90004
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

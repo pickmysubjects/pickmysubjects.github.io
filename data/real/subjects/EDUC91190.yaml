@@ -1,0 +1,36 @@
+code: EDUC91190
+title: "Foundations: Science Teaching"
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - EDUC90473
+  - EDUC91117
+skills:
+  - writing
+  - presentation
+  - exams
+topics:
+  - science-communication
+  - society
+assessment:
+  - kind: report
+    weight: 40
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/educ91190
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

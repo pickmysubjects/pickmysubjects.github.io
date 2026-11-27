@@ -1,0 +1,41 @@
+code: BTCH90005
+title: Advanced Molecular Biology Techniques
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - presentation
+  - exams
+topics:
+  - biology
+  - chemistry
+assessment:
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: week
+      from: 3
+      to: 9
+      text: From Week 3 to Week 9
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: end
+      text: End of semester
+  - kind: exam
+    weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 1.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/btch90005
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

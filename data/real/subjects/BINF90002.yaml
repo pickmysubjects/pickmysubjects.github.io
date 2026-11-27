@@ -1,0 +1,46 @@
+code: BINF90002
+title: Elements of Bioinformatics
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - writing
+  - exams
+topics:
+  - biology
+  - health
+assessment:
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/binf90002
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

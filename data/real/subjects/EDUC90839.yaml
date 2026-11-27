@@ -1,0 +1,71 @@
+code: EDUC90839
+title: Science in Schools
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - admission: MC-BMEDSC
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIBOT
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIZOO
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-URBHORT
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCICHE
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIEAR
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIVIS
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIEPI
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIGEO
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIPHY
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCICMP
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIGEN
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIBIF
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+    - admission: MC-SCIBHS
+      note: "Professional Skills Subject for the following courses. Admission into one of the following: MC-BMEDSC Master of Biomedical Science MC-SCIBOT Master of Science (Botany) MC-SCIZOO Master of Science (Zoology) MC-URBHORT Master of Urban Horticulture MC-SCICHE Master of Science (Chemistry) MC-SCIEAR Master of Science (Earth Sciences) MC-SCIVIS Master of Science (Vision Science) MC-SCIEPI Master of Science (Epidemiology) MC-SCIGEO Master of Science (Geography) MC-SCIPHY Master of Science (Physics) MC-SCICMP Master of Science (Computer Science) MC-SCIGEN Master of Science (Genetics) MC-SCIBIF Master of Science (Bioinformatics) MC-BMEDSC Master of Biomedical Science MC-SCIBHS Master of Science (Biomedical and Health Sciences) All applicants must have a valid Working with Children Check prior to the commencement of the subject: Link"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - science-communication
+  - society
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: early
+      text: Early in the teaching period
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
+  - kind: report
+    weight: 50
+    timing:
+      kind: end
+      text: End of the teaching period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/educ90839
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

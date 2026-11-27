@@ -1,0 +1,50 @@
+code: BMSC90016
+title: Contemporary Cell and Gene Therapies
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - presentation
+  - exams
+topics:
+  - biology
+  - health
+  - ethics
+assessment:
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 1
+      to: 8
+      text: From Week 1 to Week 8
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
+  - kind: project
+    weight: 40
+    group: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmsc90016
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

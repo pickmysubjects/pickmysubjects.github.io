@@ -1,0 +1,46 @@
+code: SCIE90038
+title: Intelligence Analysis and Security
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - exams
+topics:
+  - security
+  - probability
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: early
+      text: First half of teaching period
+  - kind: report
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid teaching period
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: end
+      text: End of teaching period
+  - kind: quiz
+    weight: 20
+  - kind: exam
+    weight: 20
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie90038
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

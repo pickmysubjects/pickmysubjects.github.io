@@ -1,0 +1,37 @@
+code: POPH90095
+title: Economic Evaluation in Practice
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: POPH90093
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - writing
+  - exams
+topics:
+  - health
+  - economics
+  - modelling
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/poph90095
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

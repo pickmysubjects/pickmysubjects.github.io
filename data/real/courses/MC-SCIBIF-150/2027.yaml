@@ -1,0 +1,55 @@
+# Master of Science (Bioinformatics), 150-point entry program (bioinformatics cognate pathway),
+# 2027 Handbook. Kept as its own course, the way MC-IT's entry programs are. Facts re-expressed in
+# our own words.
+code: MC-SCIBIF-150
+title: Master of Science (Bioinformatics) (150-point program)
+year: 2027
+total_points: 150
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+# Entry needs Calculus 1 (or equivalent) already done. The Handbook doesn't list what the 50 points
+# of credit replace; this program's own subjects need BINF90002 and COMP90059 (BINF90013/14) and a
+# statistics subject such as MAST90044 (BINF90001), which the 200-point year 1 teaches, so a
+# bioinformatics-background student is taken to have them.
+assumed_done: [MAST10005, BINF90002, COMP90059, MAST90044]
+entry_note: mcscibif150
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-scibif/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course and component pages
+rules:
+  - id: total
+    kind: points
+    category: course
+    min: 150
+    description: 150 points in total
+  - id: core-year1
+    kind: compulsory
+    subjects: [BINF90001, COMP90016, COMP90038, COMP90014]
+    year: 1
+    description: Year 1 core (50 points)
+  - id: professional-skills
+    kind: compulsory
+    # Taken in Year 1 Semester 2.
+    subjects: [SCIE90013]
+    year: 1
+    description: SCIE90013 professional skills subject
+  - id: core-year2
+    kind: compulsory
+    subjects: [BINF90004]
+    year: 2
+    description: BINF90004, the Year 2 core subject
+  - id: electives
+    kind: requirement
+    # One in Year 1 and one in Year 2. Another 12.5-point subject may be approved by the course
+    # coordinator; an undergraduate elective must be taken in the first 50 points.
+    paths:
+      - - choose: { points: 25, from: [BTCH90009, BTCH90005, MAST90125, INFO90002, COMP90048, ISYS90069, POPH90014, FOOD90008, COMP90007, COMP90049, HLTH90021, COMP90089, COMP90041, POPH90144, COMP90051, MAST90139, MULT90004, POPH90112, COMP90090, GEOM90007, BINF90017, BINF90018] }
+    description: Two 12.5-point general electives
+  - id: research-project
+    kind: compulsory
+    # Stream C: Part 1 in Year 1 Semester 2, Part 2 in Year 2 Semester 1. Part-time students (or
+    # anyone taking longer than 18 months) may use stream A or B instead.
+    subjects: [BINF90013, BINF90014]
+    description: Stream C research project (50 points)

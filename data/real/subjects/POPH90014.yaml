@@ -1,0 +1,50 @@
+code: POPH90014
+title: Epidemiology 1
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - POPH90142
+  - POPH90143
+skills:
+  - statistics
+  - data
+  - exams
+topics:
+  - health
+  - statistics
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/poph90014
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

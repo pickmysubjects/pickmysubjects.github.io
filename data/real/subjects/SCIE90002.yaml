@@ -1,0 +1,41 @@
+code: SCIE90002
+title: Analytical Techniques for Biotechnology
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  manual: Second year level biochemistry or organic chemistry.
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - writing
+  - exams
+topics:
+  - biology
+assessment:
+  - kind: assignment
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: report
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie90002
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

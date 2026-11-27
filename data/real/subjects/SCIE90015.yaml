@@ -1,0 +1,45 @@
+code: SCIE90015
+title: Industry Project in Biotechnology
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: SKIL90004
+non_allowed:
+  - SCIE90035
+skills:
+  - business
+  - teamwork
+  - presentation
+topics:
+  - biology
+  - business
+assessment:
+  - kind: project
+    weight: 10
+    group: true
+  - kind: project
+    weight: 10
+    group: true
+  - kind: project
+    weight: 10
+  - kind: project
+    weight: 5
+    group: true
+  - kind: report
+    weight: 25
+    group: true
+  - kind: report
+    weight: 25
+  - kind: presentation
+    weight: 15
+    group: true
+weekly_contact_hours: 1.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie90015
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

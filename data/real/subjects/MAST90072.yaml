@@ -1,0 +1,42 @@
+code: MAST90072
+title: Data and Decision Making
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MAST90007
+  - POPH90013
+  - MAST10010
+  - MAST10024
+  - MAST20005
+  - MAST20031
+  - MAST90044
+  - ECON10005
+  - MAST10011
+skills:
+  - statistics
+  - data
+  - exams
+topics:
+  - statistics
+  - biology
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: project
+    weight: 30
+  - kind: exam
+    weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast90072
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

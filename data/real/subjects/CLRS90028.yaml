@@ -1,0 +1,47 @@
+code: CLRS90028
+title: Advanced Clinical Trial Design
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - statistics
+  - data
+topics:
+  - health
+  - statistics
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: report
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: report
+    weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/clrs90028
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,65 @@
+code: SCIE90039
+title: Advanced Science Internship
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  permission: application
+  note: "Students must have a bachelor-level degree to enrol in this subject. Approval from the subject coordinator is required to enrol in this subject, following a review of the student's internship application form. To be approved, students should demonstrate that a minimum of 70% of the placement activities are aligned with their course and the intended learning objectives of this subject, and that a maximum of 15% of the placement activities are administrative in nature. The placements must be new opportunity in a new organisation that the student has sourced specifically for this subject. Entering an entirely new work environment is an important requirement of this subject. If you have questions on how and where to find an internship you should contact the Careers and Industry team in the Faculty of Science at hyperlink: https://forms.your.unimelb.edu.au/4747166?SID=a3xOY000000018z More information can be found at: https: https://science.unimelb.edu.au/students/enrich-your-studies/internship-subjects"
+corequisites: none
+non_allowed:
+  - AGRI90076
+  - SCIE90017
+  - SCIE90027
+  - GEOG90022
+  - FOOD90036
+  - FOOD90037
+  - FOOD90038
+  - AGRI90078
+  - AGRI90083
+  - AGRI90084
+  - SCIE90040
+skills:
+  - writing
+  - presentation
+topics:
+  - science-communication
+  - society
+assessment:
+  - kind: quiz
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 9
+      text: From Week 3 to Week 9
+  - kind: report
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 20
+    hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+  - kind: presentation
+    weight: 40
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie90039
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,46 @@
+code: COMP90063
+title: Computer Science Research Project Pt1
+level: 9
+points: 50
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - all:
+        - COMP90049
+        - COMP90015
+    - any:
+        - COMP90048
+        - COMP30020
+corequisites: COMP90044
+non_allowed:
+  - COMP90060
+  - COMP90061
+  - COMP90062
+  - COMP60001
+  - COMP60002
+  - COMP60003
+  - COMP60004
+skills:
+  - programming
+  - algorithms
+  - writing
+  - presentation
+topics:
+  - programming
+  - algorithms
+  - theory
+assessment:
+  - kind: assignment
+    weight: 90
+  - kind: presentation
+    weight: 10
+breadth_for: []
+recommended:
+  - COMP30026
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90063
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

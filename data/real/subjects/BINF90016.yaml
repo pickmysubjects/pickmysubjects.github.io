@@ -1,0 +1,24 @@
+code: BINF90016
+title: Bioinformatics Research Project Pt 2
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: BINF90008
+non_allowed: []
+skills:
+  - programming
+  - data
+  - writing
+  - presentation
+topics:
+  - biology
+  - programming
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/binf90016
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,30 @@
+code: COMP90067
+title: Computer Science Research Project Pt2
+level: 9
+points: 50
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - COMP90060
+    - COMP90061
+    - COMP90062
+    - COMP90063
+corequisites: none
+non_allowed:
+  - COMP90064
+  - COMP90065
+  - COMP90066
+skills:
+  - programming
+  - algorithms
+  - writing
+topics:
+  - programming
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90067
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

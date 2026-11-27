@@ -1,0 +1,37 @@
+code: BMSC90017
+title: Current Technologies in Metabolism
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - data
+  - exams
+topics:
+  - biology
+  - health
+  - chemistry
+assessment:
+  - kind: report
+    weight: 60
+    timing:
+      kind: week
+      from: 4
+      to: 11
+      text: From Week 4 to Week 11
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmsc90017
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,52 @@
+code: POPH90144
+title: Regression Methods in Health Research
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  all:
+    - POPH90013
+    - POPH90014
+corequisites: none
+non_allowed: []
+skills:
+  - statistics
+  - data
+  - presentation
+topics:
+  - statistics
+  - health
+assessment:
+  - kind: presentation
+    weight: 14
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 5
+      text: Week 3 and 5
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: test
+    weight: 40
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: participation
+    weight: 6
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/poph90144
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

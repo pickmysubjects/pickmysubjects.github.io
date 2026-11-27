@@ -1,0 +1,43 @@
+# Master of Biotechnology, 2027 Handbook. Facts re-expressed in our own words.
+# 200 points: 100 points of compulsory subjects, a 25-point industry project, and 75 points of
+# electives (at least 25 technical/practical science). Entry needs a bachelor's degree in a
+# relevant life-science or chemistry field with WAM 65. No subject prerequisites are named.
+code: MC-SCIBIT
+title: Master of Biotechnology
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcscibit
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-scibit/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+# Other level-9 subjects not on the elective list need the coordinator's approval (not modelled).
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: compulsory
+    kind: compulsory
+    # SKIL90004 must be taken in the student's first Semester 2; it is a prerequisite for SCIE90015.
+    subjects: [SCIE90011, SKIL90004, MAST90072, MKTG90022, LAWS90003, SCIE90034, BTCH90010, BTCH90005]
+    description: Compulsory subjects (100 points)
+  - id: industry-project
+    kind: compulsory
+    subjects: [SCIE90015]
+    description: Industry Project in Biotechnology (25 points)
+  - id: technical
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [BIOL90001, BTCH90009, SCIE90002, SCIE90028, SCIE90029, BIOL90041, SCIE90037, ENST90047, SCIE90039] }
+    description: At least 25 points of technical/practical science electives
+  # The remaining 50 come from the wider list (business, technical/practical science and
+  # professional skills), which also contains the technical subjects that list shares.
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 50, from: [BMEN90011, ACCT90041, FOOD90008, CHEN90031, BUSA90403, FNCE90060, POPH90093, LING90002, AGRI90091, BIOL90001, SCIE90002, BTCH90009, BIOL90041, CLRS90028, COMP90016, BMSC90016, BMSC90017, COMP90059, MULT90063, MGMT90018, MGMT90140, SCIE90005, MKTG90037, POPH90095, BMEN90027, MULT90004, MGMT90037, SCIE90038, SCIE90037, HPSC90013, SCIE90039] }
+    description: 50 more points of business, science or professional skills electives

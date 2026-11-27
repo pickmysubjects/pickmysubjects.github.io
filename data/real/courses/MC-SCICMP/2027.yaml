@@ -1,0 +1,63 @@
+# Master of Science (Computer Science), 2027 Handbook. Facts re-expressed in our own words.
+# 200 points: 50 points of core, 50 or 62.5 of discipline electives, 12.5 or 25 of professional
+# skills, and a 75-point research project over three consecutive semesters. Entry needs a computer
+# science major (H3 in the best 50 third-year points) plus 25 points of university maths or
+# statistics, and depends on a supervisor being available. No UniMelb equivalents are named, so
+# nothing is assumed done.
+code: MC-SCICMP
+title: Master of Science (Computer Science)
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcscicmp
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-scicmp/course-structure
+verified_on: 2026-11-27 # structure read from the 2027 Handbook course page
+# With the coordinator's permission, up to 50 points may come from one of: Mathematics and
+# Statistics, Geomatics, or Electrical and Electronic Engineering. Not modelled.
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: core
+    kind: compulsory
+    # Anyone who already passed one of these (or an equivalent) in their undergraduate degree is
+    # exempt and takes the same points from the discipline electives instead. Exemptions are not
+    # modelled. Research Methods normally comes before the project starts.
+    subjects: [COMP90049, COMP90048, COMP90015, COMP90044]
+    year: 1
+    description: Discipline core subjects (50 points)
+  # Electives (50 or 62.5) plus professional skills (12.5 or 25) always make 75 points:
+  # 50 of electives, 12.5 of professional skills, and 12.5 more from either list.
+  # MAST90045, SCIE90017 and PHYC90045 are on the professional skills list but not in the
+  # 2027 Handbook, so they are left out.
+  # The coordinator may also approve other non-project postgraduate subjects (not modelled).
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 50, from: [COMP90014, COMP90016, COMP90017, COMP90018, COMP90020, COMP90024, COMP90025, COMP90042, COMP90043, COMP90046, COMP90050, COMP90051, COMP90053, COMP90057, COMP90054, COMP90045, COMP90056, COMP90086, COMP90087] }
+    description: At least 50 points of discipline electives
+  - id: professional-skills
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [MAST90044, MAST90007, SCIE90013, EDUC90839, SCIE90012] }
+    description: At least 12.5 points of professional skills
+  - id: electives-or-skills
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [COMP90014, COMP90016, COMP90017, COMP90018, COMP90020, COMP90024, COMP90025, COMP90042, COMP90043, COMP90046, COMP90050, COMP90051, COMP90053, COMP90057, COMP90054, COMP90045, COMP90056, COMP90086, COMP90087, MAST90044, MAST90007, SCIE90013, EDUC90839, SCIE90012] }
+    description: 12.5 more points of discipline electives or professional skills
+  - id: research-project
+    kind: requirement
+    # 75 points over three consecutive semesters, normally starting in the second semester.
+    # Each part (Pt1 COMP90060-63, Pt2 COMP90064-67, Pt3 COMP90068-71) comes in 12.5, 25, 37.5
+    # and 50-point versions, and each needs the part before it passed. The split is agreed
+    # with the supervisor; we plan the even one, 25 points a semester. (The Handbook text also
+    # mentions a Part 4, but only Parts 1 to 3 are listed.)
+    paths:
+      - - all: [COMP90061, COMP90065, COMP90069]
+    description: Computer Science research project (75 points)

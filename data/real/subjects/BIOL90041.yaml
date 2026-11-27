@@ -1,0 +1,42 @@
+code: BIOL90041
+title: Data Science for Biologists
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - programming
+  - data
+  - statistics
+topics:
+  - biology
+  - programming
+  - statistics
+assessment:
+  - kind: quiz
+    weight: 20
+  - kind: assignment
+    weight: 35
+    timing:
+      kind: week
+      from: 4
+      to: 7
+      text: From Week 4 to Week 7
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: report
+    weight: 30
+weekly_contact_hours: 18
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/biol90041
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

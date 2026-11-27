@@ -1,0 +1,46 @@
+code: BINF90008
+title: Bioinformatics Research Project Pt 1
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - admission: MC-SCIBIF
+      note: "Admission into one of the following: 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics), 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+    - all:
+        - BINF90002
+        - COMP90059
+    - permission: application
+      note: "Subject Coordinator Approval Further information on the application process and how to find a supervisor can be found here: Link"
+corequisites: none
+non_allowed: []
+skills:
+  - programming
+  - data
+  - writing
+  - presentation
+topics:
+  - biology
+  - programming
+assessment:
+  - kind: report
+    weight: 15
+    hurdle: true
+  - kind: presentation
+    weight: 5
+    hurdle: true
+  - kind: report
+    weight: 60
+    hurdle: true
+  - kind: presentation
+    weight: 20
+    hurdle: true
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/binf90008
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

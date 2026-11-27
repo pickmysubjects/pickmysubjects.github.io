@@ -1,0 +1,47 @@
+code: AGRI90091
+title: Advanced Plant Breeding and Improvement
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - exams
+topics:
+  - agriculture
+  - biology
+assessment:
+  - kind: test
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: presentation
+    weight: 15
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: project
+    weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4.5
+breadth_for: []
+recommended:
+  - BTCH20002
+handbook: https://handbook.unimelb.edu.au/2027/subjects/agri90091
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

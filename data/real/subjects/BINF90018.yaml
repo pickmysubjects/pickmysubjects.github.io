@@ -1,0 +1,87 @@
+code: BINF90018
+title: Skills for Data-intensive Research
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  any:
+    - any:
+        - COMP10001
+        - COMP10002
+        - COMP20005
+        - COMP90041
+        - COMP90059
+    - any:
+        - admission: MC-DATASC
+          note: "Admission into or selection of one of the following: MC-DATASC Master of Data Science MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-BIOMENG Master of Biomedical Engineering MC-SOFTENG Master of Software Engineering Biomedical specialisation (formal) in the MC-ENG Master of Engineering Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics) 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-DATASC Master of Data Science MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-BIOMENG Master of Biomedical Engineering MC-SOFTENG Master of Software Engineering Biomedical specialisation (formal) in the MC-ENG Master of Engineering Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics) 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+        - admission: MC-SCICMP
+          note: "Admission into or selection of one of the following: MC-DATASC Master of Data Science MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-BIOMENG Master of Biomedical Engineering MC-SOFTENG Master of Software Engineering Biomedical specialisation (formal) in the MC-ENG Master of Engineering Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics) 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+        - admission: MC-BIOMENG
+          note: "Admission into or selection of one of the following: MC-DATASC Master of Data Science MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-BIOMENG Master of Biomedical Engineering MC-SOFTENG Master of Software Engineering Biomedical specialisation (formal) in the MC-ENG Master of Engineering Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics) 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+        - admission: MC-SOFTENG
+          note: "Admission into or selection of one of the following: MC-DATASC Master of Data Science MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-BIOMENG Master of Biomedical Engineering MC-SOFTENG Master of Software Engineering Biomedical specialisation (formal) in the MC-ENG Master of Engineering Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics) 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-DATASC Master of Data Science MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-BIOMENG Master of Biomedical Engineering MC-SOFTENG Master of Software Engineering Biomedical specialisation (formal) in the MC-ENG Master of Engineering Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics) 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+        - admission: MC-SCIBIF
+          note: "Admission into or selection of one of the following: MC-DATASC Master of Data Science MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science) MC-BIOMENG Master of Biomedical Engineering MC-SOFTENG Master of Software Engineering Biomedical specialisation (formal) in the MC-ENG Master of Engineering Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Software specialisation (formal) in the MC-ENG Master of Engineering Software with Business specialisation (formal) in the MC-ENG Master of Engineering 150pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics) 200pt Program course entry point in the MC-SCIBIF Master of Science (Bioinformatics)"
+corequisites: none
+non_allowed: []
+skills:
+  - programming
+  - data
+  - systems
+  - teamwork
+topics:
+  - programming
+  - systems
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 20
+    group: true
+    hurdle: true
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: project
+    weight: 20
+    group: true
+    hurdle: true
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/binf90018
+source_year: 2027
+verified_on: 2026-11-27
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
