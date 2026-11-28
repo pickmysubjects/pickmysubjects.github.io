@@ -1,0 +1,51 @@
+code: ABPL90368
+title: "Architecture and Media: Digital Heritage"
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - manual: Admission into a course at the Melbourne School of Design
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - fieldwork
+topics:
+  - architecture
+  - ai
+  - media
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 1
+      to: 5
+      text: From Week 1 to Week 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90368
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,46 @@
+code: ABPL90135
+title: Urban Planning Research Design
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  manual: Admission into a course at the Melbourne School of Design.
+corequisites: none
+non_allowed: []
+skills:
+  - statistics
+  - writing
+  - exams
+topics:
+  - urban-planning
+  - statistics
+assessment:
+  - kind: presentation
+    weight: 20
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90135
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

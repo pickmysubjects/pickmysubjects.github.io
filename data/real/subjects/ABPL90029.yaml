@@ -1,0 +1,49 @@
+code: ABPL90029
+title: Construction Studies
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-PROPUP
+          note: "Admission into or selection of one of the following: MC-PROPUP Master of Property/Master of Urban Planning 702PA Graduate Diploma in Property Valuation 300pt Program course entry point in the MC-PROP Master of Property"
+        - admission: 702PA
+          note: "Admission into or selection of one of the following: MC-PROPUP Master of Property/Master of Urban Planning 702PA Graduate Diploma in Property Valuation 300pt Program course entry point in the MC-PROP Master of Property"
+        - admission: MC-PROP
+          note: "Admission into or selection of one of the following: MC-PROPUP Master of Property/Master of Urban Planning 702PA Graduate Diploma in Property Valuation 300pt Program course entry point in the MC-PROP Master of Property"
+    - permission: coordinator
+      note: Approval from the course coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+topics:
+  - construction
+  - property
+assessment:
+  - kind: quiz
+    weight: 50
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90029
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

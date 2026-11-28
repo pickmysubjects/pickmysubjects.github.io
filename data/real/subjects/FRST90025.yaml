@@ -1,0 +1,32 @@
+code: FRST90025
+title: Wildfire Fundamentals
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - data
+topics:
+  - environment
+  - ecology
+assessment:
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: week
+      from: 1
+      to: 5
+      text: From Week 1 to Week 5
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/frst90025
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

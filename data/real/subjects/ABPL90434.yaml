@@ -1,0 +1,54 @@
+code: ABPL90434
+title: Construction Management Internship
+level: 9
+points: 25
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - all:
+        - admission: MC-CM
+          note: "Admission into or selection of one of the following: MC-CM Master of Construction Management"
+        - points:
+            min: 100
+        - manual: A weighted average mark of 75%
+        - permission: coordinator
+          note: having the agreement approved by the subject coordinator and signed by the host organisation.
+    - all:
+        - any:
+            - admission: MC-ARCHCM
+              note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property Admission into or selection of one of the following: 300pt Program course entry point in the MC-CM Master of Construction Management having the agreement approved by the subject coordinator and signed by the host organisation."
+            - admission: MC-CMPROP
+              note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property Admission into or selection of one of the following: 300pt Program course entry point in the MC-CM Master of Construction Management having the agreement approved by the subject coordinator and signed by the host organisation."
+            - admission: MC-CM
+              note: "Admission into one of the following: Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property Admission into or selection of one of the following: 300pt Program course entry point in the MC-CM Master of Construction Management having the agreement approved by the subject coordinator and signed by the host organisation."
+        - points:
+            min: 200
+        - manual: A weighted average mark of 75%
+        - permission: coordinator
+          note: having the agreement approved by the subject coordinator and signed by the host organisation.
+    - permission: coordinator
+      note: Approval from the Course Coordinator (subject might be be taken in the final year of study ) having the agreement approved by the subject coordinator and signed by the host organisation.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - business
+topics:
+  - construction
+  - management
+assessment:
+  - kind: report
+    weight: 20
+    hurdle: true
+  - kind: report
+    weight: 20
+    hurdle: true
+  - kind: presentation
+    weight: 60
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90434
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

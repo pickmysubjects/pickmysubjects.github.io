@@ -1,0 +1,54 @@
+code: ABPL90322
+title: Human Environments Relations
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-LARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-CM
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-PROP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-URPL
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-ARCHCM
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-ARCLARC
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-ARCPROP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-ARCHUP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - admission: MC-UPUD
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - data
+topics:
+  - architecture
+  - psychology
+assessment:
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: report
+    weight: 20
+  - kind: project
+    weight: 60
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90322
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

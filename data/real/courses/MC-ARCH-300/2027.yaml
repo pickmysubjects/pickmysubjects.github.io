@@ -1,0 +1,44 @@
+# Master of Architecture, 300-point entry program, 2027 Handbook. Facts re-expressed in our own
+# words. Two entry programs (300/200 points); each kept as its own course, as for MC-MGMT.
+# Entry: any bachelor's degree with a WAM of 65, one undergraduate design studio subject and one
+# art/architecture/built environment/design history subject, plus a design folio. No UniMelb
+# subject is named, so nothing is assumed done.
+code: MC-ARCH-300
+title: Master of Architecture (300-point program)
+year: 2027
+total_points: 300
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcarch300
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-arch-entry-2
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry program pages
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1-core
+    kind: compulsory
+    subjects: [ABPL90284, ABPL90285, ABPL90286, ABPL90287, ABPL90288, ABPL90289]
+    # Listed as first-year core; Studio A runs in Semester 1 only, so a mid-year starter can't fit
+    # them all in the first year: recommended order, never flagged late.
+    description: The first-year core subjects (100 points)
+  # The Handbook notes that, with coordinator approval, ABPL90143 Studio D or ABPL90115 Studio E may
+  # be swapped for ABPL90430 Design with Country: Resilience Studio. Neither code is in the 2027 core
+  # list below, so the swap isn't modelled.
+  - id: core
+    kind: compulsory
+    subjects: [ABPL90117, ABPL90140, ABPL90118, ABPL90424, ABPL90437, ABPL90438, ABPL90439, ABPL90169]
+    description: The second/third-year core subjects, incl. the ABPL90169 Design Thesis capstone (150 points)
+  # ABPL90377 Design for Ageing is listed but marked "No longer available", so left out.
+  - id: arch-electives
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ABPL90325, ABPL90017, ABPL90458, ABPL90457, ABPL90456, ABPL90450, ABPL90020, ABPL90075, ABPL90086, ABPL90089, ABPL90123, ABPL90149, ABPL90153, ABPL90282, ABPL90304, ABPL90321, ABPL90355, ABPL90361, ABPL90367, ABPL90368, ABPL90369, ABPL90370, EVSC90022, EVSC90023, ABPL90222, ABPL90378, ABPL90310, ABPL90316, ABPL90146, ABPL90385, ABPL90241, ABPL90268, ABPL90386, ABPL90394, ABPL90371, FRST90025, ABPL90322, ABPL90152, ABPL90147, ABPL90403, ABPL90404, ABPL90405, ABPL90412, ABPL90418, ABPL90419, ABPL90420, ABPL90421, ABPL90422, ABPL90085, ABPL90432, ABPL90433, ABPL90449, ABPL90452] }
+    description: 25 points of architecture electives
+  # Multidisciplinary electives (25 points): any masters-level subject with prerequisites met
+  # (MSD graduate subjects freely; others with faculty and course coordinator approval). No fixed
+  # list, so they are covered by the points total only.

@@ -1,0 +1,49 @@
+code: ABPL90032
+title: Building Services and Operations
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-CM
+      note: "Admission into or selection of one of the following: MC-CONMG2Y Master of Construction Management GC-ENVDES Graduate Certificate in Environmental Design 200pt Program course entry point in the MC-CM Master of Construction Management"
+    - all:
+        - ABPL90086
+        - any:
+            - ABPL90292
+            - ABPL90324
+    - permission: coordinator
+      note: Approval from the Course Coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - teamwork
+topics:
+  - construction
+  - engineering
+  - environment
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: assignment
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90032
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

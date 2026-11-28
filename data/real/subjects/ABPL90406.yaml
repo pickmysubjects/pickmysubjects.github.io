@@ -1,0 +1,35 @@
+code: ABPL90406
+title: Financial Engineering in Property
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - maths
+  - business
+  - teamwork
+topics:
+  - property
+  - finance
+assessment:
+  - kind: quiz
+    weight: 30
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 5
+      text: Week 3 and Week 5
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 40
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90406
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

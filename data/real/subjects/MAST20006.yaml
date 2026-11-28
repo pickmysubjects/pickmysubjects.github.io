@@ -29,8 +29,6 @@ prerequisites:
 corequisites: none
 non_allowed:
   - MAST20004
-  - MAST30015
-  - ELEN30002
 categories:
   B-SCI: science
 breadth_for:

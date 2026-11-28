@@ -24,9 +24,7 @@ prerequisites:
         - MAST10021
         - MAST10019
 corequisites: none
-non_allowed:
-  - MAST30029
-  - MAST30023
+non_allowed: []
 categories:
   B-SCI: science
 breadth_for:

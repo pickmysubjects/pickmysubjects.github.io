@@ -1,0 +1,37 @@
+# Master of Urban Design, 2027 Handbook. Facts re-expressed in our own words.
+# 200 points: 125 points of core, a 25-point capstone and 50 points of electives. No entry programs.
+# Entry: a bachelor's in urban design, landscape architecture or architecture with a WAM of 65,
+# plus a design folio. No UniMelb subject is named, so nothing is assumed done.
+code: MC-URBDES
+title: Master of Urban Design
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+entry_note: mcurbdes
+handbook: https://handbook.unimelb.edu.au/2027/courses/mc-urbdes/course-structure
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: core
+    kind: compulsory
+    subjects: [ABPL90061, ABPL90273, ABPL90017, ABPL90130, ABPL90246, ABPL90131, ABPL90389]
+    description: The core subjects (125 points)
+  - id: capstone
+    kind: compulsory
+    subjects: [ABPL90376]
+    description: The capstone subject (25 points)
+  # The Handbook groups the electives under four headings (Urban Design Theory, Urban Design
+  # Practice, Urban Planning Issues, Research Methods) with no minimum per heading, so one pool.
+  # ABPL90377 Design for Ageing is listed but marked "No longer available", so left out.
+  - id: electives
+    kind: requirement
+    paths:
+      - - choose: { points: 50, from: [ABPL90266, ABPL90279, ABPL90425, ABPL90086, ABPL90123, ABPL90132, ABPL90149, ABPL90167, ABPL90263, ABPL90283, ABPL90304, ABPL90307, ABPL90319, ABPL90320, ABPL90321, ABPL90380, ABPL90404, EVSC90015, MULT90005, ABPL90316, ABPL90386, ABPL90446, ABPL90457, ABPL90458, ABPL90022, ABPL90040, ABPL90090, ABPL90056, ABPL90064, ABPL90077, ABPL90134, ABPL90281, ABPL90315, ABPL90341, ABPL90405, EVSC90022, MULT90004, PLAN90002, PLAN90003, ABPL90454, ABPL90066, ABPL90135, ABPL90322, ABPL90417] }
+    description: 50 points of electives

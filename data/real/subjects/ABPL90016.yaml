@@ -1,0 +1,48 @@
+code: ABPL90016
+title: Asset Management
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - ABPL90011
+    - ABPL40008
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+  - teamwork
+topics:
+  - property
+  - management
+  - finance
+assessment:
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: assignment
+    weight: 55
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+recommended:
+  - ABPL90027
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90016
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

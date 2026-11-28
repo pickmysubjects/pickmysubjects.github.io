@@ -1,0 +1,55 @@
+code: ABPL90030
+title: Project Evaluation
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-CM
+      note: Admission into the 200pt Program course entry point in the MC-CM Master of Construction Management
+    - all:
+        - ABPL90313
+        - points:
+            min: 37.5
+            from:
+              - ABPL90086
+              - ABPL90292
+              - ABPL90312
+              - ABPL90324
+              - ABPL90335
+              - ABPL90435
+    - permission: coordinator
+      note: Approval from the Course Coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - teamwork
+  - exams
+topics:
+  - finance
+  - construction
+assessment:
+  - kind: assignment
+    weight: 50
+    group: true
+    timing:
+      kind: weeks
+      weeks:
+        - 7
+        - 12
+      text: Week 7 and 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90030
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

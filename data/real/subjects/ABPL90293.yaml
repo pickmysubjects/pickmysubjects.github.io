@@ -1,0 +1,56 @@
+code: ABPL90293
+title: Steel and Composite Construction Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property 300pt Program course entry point in the MC-CM Master of Construction Management"
+            - admission: MC-CMPROP
+              note: "Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property 300pt Program course entry point in the MC-CM Master of Construction Management"
+            - admission: MC-CM
+              note: "Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property 300pt Program course entry point in the MC-CM Master of Construction Management"
+        - all:
+            - ABPL90292
+            - ABPL90324
+    - permission: coordinator
+      note: Approval from the Course Coordinator
+corequisites: none
+non_allowed:
+  - ABPL30046
+skills:
+  - exams
+  - writing
+topics:
+  - construction
+  - engineering
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90293
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

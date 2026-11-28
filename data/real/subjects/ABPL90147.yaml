@@ -1,0 +1,42 @@
+code: ABPL90147
+title: Design Futures
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - design
+  - architecture
+assessment:
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 60
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90147
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

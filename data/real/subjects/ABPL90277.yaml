@@ -1,0 +1,43 @@
+code: ABPL90277
+title: Humanitarian Construction
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites:
+  any:
+    - all:
+        - manual: Admission into a course at the Melbourne School of Design (including double Masters)
+        - manual: Completion of a minimum of 50 credit points of study at graduate level
+    - permission: coordinator
+      note: Approval from the subject coordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - writing
+topics:
+  - construction
+  - society
+assessment:
+  - kind: presentation
+    weight: 60
+    group: true
+    hurdle: true
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: assignment
+    weight: 40
+    hurdle: true
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
+weekly_contact_hours: 8
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90277
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

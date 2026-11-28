@@ -1,0 +1,44 @@
+code: ABPL90017
+title: Urban Design Theory
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - manual: Admission into a course at Melbourne School of Design
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed:
+  - ABPL40010
+skills:
+  - writing
+  - design
+topics:
+  - urban-planning
+  - design
+  - architecture
+assessment:
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: report
+    weight: 30
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90017
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

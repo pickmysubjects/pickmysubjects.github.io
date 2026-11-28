@@ -1,0 +1,71 @@
+code: ABPL90432
+title: Building Information Modelling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - any:
+            - admission: MC-CM
+              note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 200pt Program course entry point in the MC-ARCH Master of Architecture 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-ARCH
+              note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 200pt Program course entry point in the MC-ARCH Master of Architecture 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 200pt Program course entry point in the MC-ARCH Master of Architecture 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-CMPROP
+              note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 200pt Program course entry point in the MC-ARCH Master of Architecture 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - manual: 400-point program course entry for Double Master’s degrees associated with the Master of Construction Management (MC-ARCHCM, MC-CMPROP ) for students with an undergraduate major or degree in Construction.
+    - all:
+        - admission: MC-CM
+          note: Admission into the 300pt Program course entry point in the MC-CM Master of Construction Management
+        - all:
+            - ABPL90292
+            - ABPL90313
+    - all:
+        - admission: MC-ARCH
+          note: Admission into the 300pt Program course entry point in the MC-ARCH Master of Architecture
+        - all:
+            - ABPL90286
+            - ABPL90287
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed:
+  - CONS30001
+skills:
+  - design
+  - systems
+  - teamwork
+topics:
+  - construction
+  - architecture
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: presentation
+    weight: 40
+    group: true
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 30
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90432
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

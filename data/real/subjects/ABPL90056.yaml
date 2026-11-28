@@ -1,0 +1,36 @@
+code: ABPL90056
+title: Urban Transport Politics
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - teamwork
+topics:
+  - urban-planning
+  - politics
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: assignment
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: assignment
+    weight: 50
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90056
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

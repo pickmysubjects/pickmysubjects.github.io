@@ -1,0 +1,17 @@
+id: mc-cm-300-project-management
+course: MC-CM-300
+year: 2027
+kind: specialisation
+title: Project Management
+points: 200
+# 100 points of specialisation core, 25 points of capstone (both subjects), and 75 points of
+# electives: at least 25 from the specialisation elective list, up to 50 of multidisciplinary
+# electives (Melbourne School of Design graduate subjects, or another graduate subject with
+# approval). That open pool can't be listed; the page lets it include more specialisation
+# electives, so all 75 are drawn from that list here. The 300-point page says 'a minimum of 50' multidisciplinary points; read as the same 75-point elective block.
+requirements:
+  - all: [ABPL90295, ABPL90334, LAWS70469, ABPL90032, ABPL90358, ABPL90323, ABPL90208, ABPL90035]
+  - all: [ABPL90030, ABPL90028]
+  - choose: { points: 75, from: [ABPL90207, ABPL90268, ABPL90309, ABPL90325, ABPL90327, ABPL90330, ABPL90331, ABPL90332, ABPL90359, ABPL90129, ABPL90010, CONS90001, ABPL90405, ABPL90413, ABPL90414, ABPL90085, ABPL90277, ABPL90311, ABPL90432, ABPL90433, ABPL90434, ABPL90370, ABPL90442, ABPL90443] }
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-cm-infspc-3-300
+verified_on: 2026-11-28 # structure; source: 2027 Handbook

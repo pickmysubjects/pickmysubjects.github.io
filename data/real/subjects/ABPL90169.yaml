@@ -1,0 +1,47 @@
+code: ABPL90169
+title: Design Thesis
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - ABPL90439
+    - ABPL90438
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - design
+assessment:
+  - kind: presentation
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: presentation
+    weight: 70
+    hurdle: true
+    timing:
+      kind: teaching
+      text: During the teaching period
+weekly_contact_hours: 6.5
+breadth_for: []
+recommended:
+  - ABPL90140
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90169
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

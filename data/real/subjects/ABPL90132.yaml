@@ -1,0 +1,40 @@
+code: ABPL90132
+title: Urban Coding and Design
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - fieldwork
+  - teamwork
+topics:
+  - urban-planning
+  - design
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 60
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90132
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

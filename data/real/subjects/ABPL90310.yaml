@@ -1,0 +1,67 @@
+code: ABPL90310
+title: Construction Industry and Environment
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ARCH
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-LARCH
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CM
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-PROP
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+    - permission: coordinator
+      note: Approval from the subject coordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - data
+topics:
+  - construction
+  - environment
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: report
+    weight: 40
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: presentation
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90310
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

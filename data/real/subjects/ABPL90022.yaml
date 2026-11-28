@@ -1,0 +1,66 @@
+code: ABPL90022
+title: Urban Disaster Resilience
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ENV
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: 244CW
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-URPL
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-PROP
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-URBDES
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-ARCHUP
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-ARCHUD
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-PROPUP
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-LARCHUP
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-ARCH
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-LARCH
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+        - admission: MC-CM
+          note: "Admission into or selection of one of the following: MC-ENV Master of Environment 244CW Master of Public Health MC-URPL Master of Urban Planning MC-PROP Master of Property MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management"
+    - permission: coordinator
+      note: Written approval from the subject coordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+  - presentation
+topics:
+  - urban-planning
+  - environment
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: report
+    weight: 50
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90022
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

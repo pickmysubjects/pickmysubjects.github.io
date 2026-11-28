@@ -1,0 +1,62 @@
+code: ABPL90295
+title: Construction Regulations and Control
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-CM
+          note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+    - points:
+        min: 25
+        from:
+          - ABPL90086
+          - ABPL90293
+          - ABPL90312
+          - ABPL90313
+          - ABPL90335
+          - ABPL90435
+          - ABPL90292
+          - ABPL90324
+    - permission: coordinator
+      note: Approval from the Course coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - exams
+  - teamwork
+  - writing
+topics:
+  - construction
+  - law
+assessment:
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 40
+    group: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90295
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,38 @@
+code: ABPL90319
+title: GIS In Planning, Design & Development
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  manual: Admission into a course at the Melbourne School of Design.
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - systems
+  - writing
+topics:
+  - geography
+  - urban-planning
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: report
+    weight: 70
+    hurdle: true
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90319
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

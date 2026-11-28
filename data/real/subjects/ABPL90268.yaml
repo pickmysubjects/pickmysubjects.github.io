@@ -1,0 +1,52 @@
+code: ABPL90268
+title: Facade Design and Construction
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - all:
+        - manual: Admission into a course at the Melbourne School of Design (including double Masters)
+        - points:
+            min: 50
+    - permission: coordinator
+      note: Approval from the subject coordinator.
+    - admission: MC-ENV
+      note: Admission into the Master of Environment (MC-ENV) and completion of 50 points study in Master of Environment .
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - writing
+  - exams
+topics:
+  - construction
+  - architecture
+  - engineering
+assessment:
+  - kind: report
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 40
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90268
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

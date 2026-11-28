@@ -1,0 +1,38 @@
+code: ABPL90314
+title: Property Agency and Marketing (PG)
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - manual: Admission into a course at the Melbourne School of Design
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed:
+  - ABPL30013
+skills:
+  - business
+  - exams
+  - writing
+topics:
+  - property
+  - law
+assessment:
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 50
+    timing:
+      kind: late
+      text: Second half of the teaching period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90314
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

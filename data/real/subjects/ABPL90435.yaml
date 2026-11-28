@@ -1,0 +1,47 @@
+code: ABPL90435
+title: Concrete Construction Systems
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - ABPL90292
+        - ABPL90324
+    - permission: coordinator
+      note: Approval from the Master of Construction course coordinator
+corequisites: none
+non_allowed:
+  - ABPL20053
+skills:
+  - writing
+topics:
+  - construction
+  - engineering
+assessment:
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90435
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

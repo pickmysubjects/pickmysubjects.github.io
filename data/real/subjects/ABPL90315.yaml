@@ -1,0 +1,48 @@
+code: ABPL90315
+title: Participatory Planning
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - fieldwork
+topics:
+  - urban-planning
+  - politics
+assessment:
+  - kind: report
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: presentation
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: report
+    weight: 40
+weekly_contact_hours: 3
+breadth_for: []
+recommended:
+  - ABPL90009
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90315
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

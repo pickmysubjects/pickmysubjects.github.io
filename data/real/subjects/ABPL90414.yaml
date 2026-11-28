@@ -1,0 +1,69 @@
+code: ABPL90414
+title: Lean Construction
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-CM
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+    - all:
+        - any:
+            - admission: MC-CM
+              note: "Admission into one of the following: 300pt Program course entry point in the MC-CM Master of Construction Management 400pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 400pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-ARCHCM
+              note: "Admission into one of the following: 300pt Program course entry point in the MC-CM Master of Construction Management 400pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 400pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-CMPROP
+              note: "Admission into one of the following: 300pt Program course entry point in the MC-CM Master of Construction Management 400pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 400pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - ABPL90313
+    - permission: coordinator
+      note: Approval from the Course Coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - exams
+topics:
+  - construction
+  - management
+assessment:
+  - kind: report
+    weight: 15
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: quiz
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: presentation
+    weight: 35
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90414
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

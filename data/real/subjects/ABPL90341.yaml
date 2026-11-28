@@ -1,0 +1,38 @@
+code: ABPL90341
+title: Urban Environmental Policy and Planning
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - urban-planning
+  - environment
+assessment:
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: week
+      from: 9
+      to: 10
+      text: From Week 9 to Week 10
+  - kind: report
+    weight: 50
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90341
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

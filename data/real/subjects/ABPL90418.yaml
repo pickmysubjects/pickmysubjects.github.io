@@ -1,0 +1,42 @@
+code: ABPL90418
+title: Asian Built Environments Design Legacies
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - architecture
+  - history
+assessment:
+  - kind: presentation
+    weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 10
+      text: From Week 3 to Week 10
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
+  - kind: assignment
+    weight: 50
+breadth_for: []
+recommended:
+  - ABPL90117
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90418
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

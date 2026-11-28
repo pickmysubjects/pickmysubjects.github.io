@@ -1,0 +1,35 @@
+code: ABPL90040
+title: International Property Development B
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed:
+  - ABPL90038
+  - ABPL90318
+skills:
+  - teamwork
+  - fieldwork
+  - presentation
+topics:
+  - property
+  - construction
+  - urban-planning
+assessment:
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: report
+    weight: 60
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90040
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

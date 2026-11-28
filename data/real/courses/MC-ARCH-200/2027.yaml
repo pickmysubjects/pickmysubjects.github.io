@@ -1,0 +1,38 @@
+# Master of Architecture, 200-point entry program (100 points of credit), 2027 Handbook. Facts
+# re-expressed in our own words.
+# Credit of up to 100 points goes to a bachelor's with a major in architecture or architectural
+# studies and a WAM of 65; UniMelb Bachelor of Design Architecture-major graduates with a WAM of 65
+# are guaranteed a place in this program.
+code: MC-ARCH-200
+title: Master of Architecture (200-point program)
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+# Our reading: the 100 points of credit stand in for the 300-point program's first-year core.
+assumed_done: [ABPL90284, ABPL90285, ABPL90286, ABPL90287, ABPL90288, ABPL90289]
+entry_note: mcarch200
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-arch-entry-1
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry program pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: core
+    kind: compulsory
+    subjects: [ABPL90117, ABPL90140, ABPL90118, ABPL90424, ABPL90437, ABPL90438, ABPL90439, ABPL90169]
+    description: The core subjects, incl. the ABPL90169 Design Thesis capstone (150 points)
+  # Same list as the 300-point program minus ABPL90325, which only that program lists.
+  # ABPL90377 Design for Ageing is listed but marked "No longer available", so left out.
+  - id: arch-electives
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [ABPL90017, ABPL90458, ABPL90457, ABPL90456, ABPL90450, ABPL90020, ABPL90075, ABPL90086, ABPL90089, ABPL90123, ABPL90149, ABPL90153, ABPL90282, ABPL90304, ABPL90321, ABPL90355, ABPL90361, ABPL90367, ABPL90368, ABPL90369, ABPL90370, EVSC90022, EVSC90023, ABPL90222, ABPL90378, ABPL90310, ABPL90316, ABPL90146, ABPL90385, ABPL90241, ABPL90268, ABPL90386, ABPL90394, ABPL90371, FRST90025, ABPL90322, ABPL90152, ABPL90147, ABPL90403, ABPL90404, ABPL90405, ABPL90412, ABPL90418, ABPL90419, ABPL90420, ABPL90421, ABPL90422, ABPL90085, ABPL90432, ABPL90433, ABPL90449, ABPL90452] }
+    description: 25 points of architecture electives
+  # Multidisciplinary electives (25 points): any masters-level subject with prerequisites met
+  # (MSD graduate subjects freely; others with faculty and course coordinator approval). No fixed
+  # list, so they are covered by the points total only.

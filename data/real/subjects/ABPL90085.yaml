@@ -1,0 +1,51 @@
+code: ABPL90085
+title: Construction History
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  manual: Admission into a course at the Melbourne School of Design.
+corequisites: none
+non_allowed:
+  - ABPL30027
+skills:
+  - writing
+  - presentation
+topics:
+  - construction
+  - history
+  - architecture
+assessment:
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90085
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

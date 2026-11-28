@@ -1,0 +1,39 @@
+code: ABPL90364
+title: Industry Based Research - Property
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - admission: MC-PROP
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+        - admission: MC-PROPUP
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+        - admission: MC-ARCPROP
+          note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+    - ABPL90363
+corequisites: none
+non_allowed:
+  - ABPL90362
+skills:
+  - writing
+  - presentation
+  - business
+topics:
+  - property
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 80
+weekly_contact_hours: 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90364
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

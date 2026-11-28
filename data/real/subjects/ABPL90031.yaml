@@ -1,0 +1,54 @@
+code: ABPL90031
+title: Corporate Real Estate Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - ABPL90026
+        - all:
+            - ABPL40009
+            - ABPL90275
+    - all:
+        - admission: MC-PROP
+          note: Admission into the 200pt Program course entry point in the MC-PROP Master of Property
+        - ABPL90026
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - teamwork
+  - writing
+topics:
+  - property
+  - management
+  - business
+assessment:
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: project
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: exam
+    weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90031
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,54 @@
+code: ABPL90207
+title: Corporate Construction Management
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-CM
+          note: "Admission into one of the following: Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into one of the following: Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into one of the following: Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+    - all:
+        - ABPL90313
+        - ABPL90335
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - construction
+  - management
+  - business
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 12
+      text: From Week 3 to Week 12
+  - kind: report
+    weight: 50
+    group: true
+    timing:
+      kind: week
+      from: 5
+      to: 8
+      text: From Week 5 to Week 8
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90207
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

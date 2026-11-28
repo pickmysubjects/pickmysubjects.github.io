@@ -1,0 +1,47 @@
+code: EVSC90015
+title: Environmental Impact Assessment
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  permission: coordinator
+  note: Admission to a postgraduate coursework program or fourth year or honours in environmental studies, environmental science, resource management, geography, environmental engineering, planning, development studies or by permission of the subject coordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - teamwork
+topics:
+  - environment
+  - law
+assessment:
+  - kind: report
+    weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: quiz
+    weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: presentation
+    weight: 5
+    group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: report
+    weight: 45
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/evsc90015
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

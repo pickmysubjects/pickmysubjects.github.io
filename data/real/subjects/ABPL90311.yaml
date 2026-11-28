@@ -1,0 +1,52 @@
+code: ABPL90311
+title: Studies in Building Cultures and Markets
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  any:
+    - manual: Admission into a Masters Course (including double masters) in the Melbourne School of Design plus completion of 50 points of study in one of these courses
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - presentation
+  - writing
+topics:
+  - construction
+  - society
+assessment:
+  - kind: assignment
+    weight: 0
+    hurdle: true
+    timing:
+      kind: early
+      text: Early in the teaching period
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: report
+    weight: 50
+    group: true
+    hurdle: true
+    timing:
+      kind: end
+      text: End of the teaching period
+  - kind: report
+    weight: 40
+    hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
+weekly_contact_hours: 0.5
+breadth_for: []
+recommended:
+  - ABPL90277
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90311
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

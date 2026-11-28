@@ -1,0 +1,55 @@
+code: ABPL90309
+title: Supply Chains in Construction
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-CM
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+    - ABPL90313
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+  - writing
+topics:
+  - supply-chain
+  - construction
+assessment:
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 55
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
+  - kind: presentation
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90309
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

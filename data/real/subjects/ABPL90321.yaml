@@ -1,0 +1,67 @@
+code: ABPL90321
+title: "Building the Brief: People Process Place"
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-LARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-CM
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-PROP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-URPL
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-URBDES
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCLARC
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCPROP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHUP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHUD
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-UPUD
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHCM
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHUCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-CM Master of Construction Management MC-PROP Master of Property MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+  - design
+topics:
+  - architecture
+  - health
+assessment:
+  - kind: project
+    weight: 20
+    timing:
+      kind: late
+      text: Late in the teaching period
+  - kind: project
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 60
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90321
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

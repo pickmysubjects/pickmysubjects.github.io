@@ -1,0 +1,37 @@
+code: ABPL90320
+title: Building Resilient Settlements
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - presentation
+  - writing
+topics:
+  - urban-planning
+  - environment
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: report
+    weight: 25
+    group: true
+  - kind: presentation
+    weight: 5
+    group: true
+  - kind: report
+    weight: 60
+    timing:
+      kind: end
+      text: End of the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90320
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

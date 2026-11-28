@@ -499,7 +499,9 @@ function isTableNoise(line: string): boolean {
 
 function parseNonAllowed(lines: string[]): string[] {
   if (lines.length === 1 && /^none\.?$/i.test(lines[0] ?? '')) return []
-  return unique(lines.flatMap((l) => l.match(CODE) ?? []))
+  // "ABPL90293 Steel and Composite Construction Systems if taken prior to 2023": only the old
+  // version clashes, which no one planning now can take, so it isn't a clash for them.
+  return unique(lines.filter((l) => !/\bprior to \d{4}\b/i.test(l)).flatMap((l) => l.match(CODE) ?? []))
 }
 
 /** Reads teaching periods from availability text such as "Semester 1 - On Campus". */

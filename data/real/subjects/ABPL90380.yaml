@@ -1,0 +1,70 @@
+code: ABPL90380
+title: Designing for Heat in the Public Domain
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ARCH
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-LARCH
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-URBDES
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-URPL
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-ARCHCM
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-ARCHUCH
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-ARCHUD
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-ARCHUP
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-ARCLARC
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-ARCPROP
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-LARCHUD
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-LARCHUP
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-PROPUP
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+        - admission: MC-UPUD
+          note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-URBDES Master of Urban Design MC-URPL Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCPROP Master of Architecture/Master of Property MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-PROPUP Master of Property/Master of Urban Planning MC-UPUD Master of Urban Planning/Master of Urban Design"
+    - all:
+        - any:
+            - admission: MC-ARCH
+              note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture"
+            - admission: MC-LARCH
+              note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture"
+        - points:
+            min: 100
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - data
+  - writing
+topics:
+  - urban-planning
+  - environment
+  - design
+assessment:
+  - kind: report
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 70
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90380
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

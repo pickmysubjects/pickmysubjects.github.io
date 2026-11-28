@@ -1,0 +1,34 @@
+code: ABPL90458
+title: "Hong Kong Studio: Design"
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - ABPL90457
+skills:
+  - fieldwork
+  - design
+  - teamwork
+topics:
+  - urban-planning
+  - design
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 30
+    hurdle: true
+  - kind: assignment
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90458
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

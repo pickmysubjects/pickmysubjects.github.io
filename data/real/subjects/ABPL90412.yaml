@@ -1,0 +1,60 @@
+code: ABPL90412
+title: "R_Lab: Made by Robots"
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-LARCH Master of Landscape Architecture"
+    - admission: MC-ARCLARC
+      note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-LARCH Master of Landscape Architecture"
+    - admission: MC-ARCHUP
+      note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-LARCH Master of Landscape Architecture"
+    - admission: MC-ARCHUD
+      note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-LARCH Master of Landscape Architecture"
+    - admission: MC-LARCH
+      note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-LARCH Master of Landscape Architecture"
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - construction
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
+  - kind: presentation
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90412
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

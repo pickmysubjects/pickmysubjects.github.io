@@ -1,0 +1,41 @@
+code: ABPL90307
+title: MSD Vocational Placement
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: "This subject is available to students who have 100 credit points or less outstanding within any of the following Melbourne School of Design coursework degrees and associated double degrees: • Master of Architecture • Master of Construction Management • Master of Landscape Architecture • Master of Property • Master of Urban Design • Master of Urban Planning • Master of Construction Management/Master of Property Students can enrol in this subject prior to the last self-enrol date, provided they meet the prerequisites. The Faculty's Internships Team will contact enrolled students prior to commencement to ensure that they have completed all of the necessary steps to formalise their placement, which can be found in the link below. https://edsc.unimelb.edu.au/subject-information/internships-vocational-placements"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - teamwork
+topics:
+  - architecture
+  - management
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: assignment
+    weight: 50
+  - kind: participation
+    weight: 0
+    hurdle: true
+    timing:
+      kind: teaching
+      text: During the teaching period
+weekly_contact_hours: 7.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90307
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

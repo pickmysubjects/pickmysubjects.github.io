@@ -1,0 +1,54 @@
+code: ABPL90419
+title: Contemporary Architectural Archives
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - admission: MC-UCH
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-UCH Master of Urban and Cultural Heritage Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+    - admission: MC-ARCHUCH
+      note: "Admission into one of the following: Admission into or selection of one of the following: MC-UCH Master of Urban and Cultural Heritage Admission into or selection of one of the following: MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage"
+corequisites: unknown
+non_allowed: []
+skills:
+  - teamwork
+  - writing
+  - data
+topics:
+  - architecture
+  - history
+assessment:
+  - kind: presentation
+    weight: 5
+    group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
+  - kind: report
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: presentation
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: report
+    weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90419
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

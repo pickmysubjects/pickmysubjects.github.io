@@ -1,0 +1,62 @@
+code: ABPL90430
+title: "Design with Country: Resilience Studio"
+level: 9
+points: 25
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - architecture
+  - indigenous-studies
+  - environment
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 4
+      text: From Week 2 to Week 4
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
+  - kind: assignment
+    weight: 25
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+  - kind: quiz
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90430
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

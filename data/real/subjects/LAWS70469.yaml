@@ -1,0 +1,64 @@
+code: LAWS70469
+title: Construction Law
+level: 7
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-CM
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-CONMG2Y Master of Construction Management Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: MC-ENGYSYS Master of Energy Systems Admission into or selection of one of the following: MC-ENV Master of Environment Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ENGYSYS
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-CONMG2Y Master of Construction Management Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: MC-ENGYSYS Master of Energy Systems Admission into or selection of one of the following: MC-ENV Master of Environment Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ENV
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-CONMG2Y Master of Construction Management Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: MC-ENGYSYS Master of Energy Systems Admission into or selection of one of the following: MC-ENV Master of Environment Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-CONMG2Y Master of Construction Management Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: MC-ENGYSYS Master of Energy Systems Admission into or selection of one of the following: MC-ENV Master of Environment Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into or selection of one of the following: Admission into or selection of one of the following: MC-CONMG2Y Master of Construction Management Admission into or selection of one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management Admission into or selection of one of the following: MC-ENGYSYS Master of Energy Systems Admission into or selection of one of the following: MC-ENV Master of Environment Admission into or selection of one of the following: MC-ARCHCM Master of Architecture/Master of Construction Management Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property"
+    - all:
+        - any:
+            - BLAW10001
+            - ABPL90290
+            - ABPL90335
+        - points:
+            min: 37.5
+            from:
+              - ABPL90293
+              - ABPL90086
+              - ABPL90312
+              - ABPL90313
+              - ABPL90324
+              - ABPL90292
+              - ABPL90435
+    - permission: coordinator
+      note: Written permission from the Subject Coordinator.
+corequisites: none
+non_allowed:
+  - LAWS70314
+  - BLAW40001
+skills:
+  - exams
+  - writing
+topics:
+  - law
+  - construction
+assessment:
+  - kind: quiz
+    weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the semester
+  - kind: exam
+    weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/laws70469
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,42 @@
+code: ABPL90362
+title: Research Thesis - Property
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: ABPL90363
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - property
+assessment:
+  - kind: presentation
+    weight: 10
+    hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: presentation
+    weight: 80
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90362
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

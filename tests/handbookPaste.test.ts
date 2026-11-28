@@ -119,6 +119,11 @@ describe('parseHandbookPaste', () => {
     expect(r.nonAllowed).toEqual(['AAAA30013'])
   })
 
+  it('leaves out a non-allowed subject that only clashes when taken before some year', () => {
+    const r = parseHandbookPaste('Principles of Things (AAAA30011)\nUndergraduate level 3Points: 12.5\nNon-allowed subjects\nAAAA30012 Old Things if taken prior to 2023\nAAAA30013 Other Things')
+    expect(r.nonAllowed).toEqual(['AAAA30013'])
+  })
+
   it('reads "N credit points from" tables', () => {
     const r = parseHandbookPaste('Prerequisites\n25 credit points from\nAAAA20001\tX\nAAAA20002\tY\nAAAA20003\tZ')
     expect(r.prerequisites).toEqual({ points: { min: 25, from: ['AAAA20001', 'AAAA20002', 'AAAA20003'] } })

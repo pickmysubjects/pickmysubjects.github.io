@@ -1,0 +1,42 @@
+code: ABPL90446
+title: Edible Urban Futures
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+topics:
+  - urban-planning
+  - agriculture
+  - design
+assessment:
+  - kind: presentation
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
+  - kind: assignment
+    weight: 20
+    hurdle: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: project
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of the teaching period
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90446
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

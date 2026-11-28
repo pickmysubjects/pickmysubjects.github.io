@@ -1,0 +1,42 @@
+code: ABPL90417
+title: Environment Behaviour Methods for Design
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - admission: MC-LARCH
+      note: "Admission into one of the following: MC-LARCH Master of Landscape Architecture MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design"
+    - admission: MC-URPL
+      note: "Admission into one of the following: MC-LARCH Master of Landscape Architecture MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design"
+    - admission: MC-URBDES
+      note: "Admission into one of the following: MC-LARCH Master of Landscape Architecture MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design"
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - data
+  - writing
+topics:
+  - urban-planning
+  - psychology
+  - design
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 70
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90417
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

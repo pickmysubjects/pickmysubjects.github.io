@@ -1,0 +1,41 @@
+code: ABPL90394
+title: ZEMCH Sustainable Design Workshop
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - teamwork
+  - presentation
+topics:
+  - architecture
+  - environment
+assessment:
+  - kind: presentation
+    weight: 5
+    group: true
+  - kind: presentation
+    weight: 5
+    group: true
+  - kind: presentation
+    weight: 5
+    group: true
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 18
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90394
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

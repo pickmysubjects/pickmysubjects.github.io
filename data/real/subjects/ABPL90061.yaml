@@ -1,0 +1,41 @@
+code: ABPL90061
+title: Urban Design Studio A
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-URBDES
+      note: "Admission into one of the following: MC-URBDES Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUD Master of Architecture/Master of Urban Design"
+    - admission: MC-UPUD
+      note: "Admission into one of the following: MC-URBDES Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUD Master of Architecture/Master of Urban Design"
+    - admission: MC-ARCHUD
+      note: "Admission into one of the following: MC-URBDES Master of Urban Design MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUD Master of Architecture/Master of Urban Design"
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - urban-planning
+  - design
+assessment:
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: presentation
+    weight: 70
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90061
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

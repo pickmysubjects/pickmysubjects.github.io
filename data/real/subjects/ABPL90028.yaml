@@ -1,0 +1,69 @@
+code: ABPL90028
+title: Project Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - all:
+        - any:
+            - admission: MC-CM
+              note: "Admission into or selection of one of the following: MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+            - admission: MC-CMPROP
+              note: "Admission into or selection of one of the following: MC-CM Master of Construction Management 300pt Program course entry point in the MC-ARCHCM Master of Architecture/Master of Construction Management 300pt Program course entry point in the MC-CMPROP Master of Construction Management/Master of Property"
+        - points:
+            min: 187.5
+    - all:
+        - any:
+            - admission: MC-CMPROP
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management"
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCHCM Master of Architecture/Master of Construction Management"
+        - points:
+            min: 287.5
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - teamwork
+  - exams
+topics:
+  - management
+  - construction
+assessment:
+  - kind: assignment
+    weight: 15
+    group: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90028
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

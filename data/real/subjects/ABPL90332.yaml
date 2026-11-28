@@ -1,0 +1,43 @@
+code: ABPL90332
+title: Labour in Construction
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - admission: MC-CM
+      note: "Admission into one of the following: 200pt Program course entry point in the MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management"
+    - all:
+        - admission: MC-CM
+          note: "Admission into one of the following: 300pt Program course entry point in the MC-CM Master of Construction Management MC-CONMG3Y Master of Construction Management"
+        - ABPL90313
+        - any:
+            - ABPL90292
+            - ABPL90324
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - exams
+topics:
+  - human-resources
+  - construction
+  - management
+assessment:
+  - kind: report
+    weight: 50
+    timing:
+      kind: teaching
+      text: During the teaching period
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90332
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

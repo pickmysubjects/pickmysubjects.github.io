@@ -1,0 +1,33 @@
+code: ABPL90457
+title: "Hong Kong Studio: Strategy"
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - summer
+prerequisites: none
+corequisites: none
+non_allowed:
+  - ABPL90458
+skills:
+  - fieldwork
+  - design
+  - teamwork
+topics:
+  - urban-planning
+  - design
+assessment:
+  - kind: assignment
+    weight: 40
+    group: true
+  - kind: assignment
+    weight: 60
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90457
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

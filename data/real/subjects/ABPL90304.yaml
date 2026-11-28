@@ -1,0 +1,60 @@
+code: ABPL90304
+title: Flexible Urban Modelling
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - admission: MC-URPL
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-URBDES
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-ARCH
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-LARCH
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-PROPUP
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-CM
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-UPUD
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-ARCHUP
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+    - admission: MC-LARCHUD
+      note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-PROPUP Master of Property/Master of Urban Planning MC-CM Master of Construction Management MC-UPUD Master of Urban Planning/Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design"
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - data
+  - presentation
+topics:
+  - urban-planning
+  - design
+  - geography
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: project
+    weight: 30
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: project
+    weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90304
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -13,6 +13,9 @@ prerequisites:
           note: "Admission into one of the following: MC-ARCH3Y Master of Architecture, 300pt Program course entry point in the MC-ARCH Master of Architecture"
         - ABPL90289
     - any:
+        # The Handbook's list starts with MC-ARCH2Y, the 200-point entry into MC-ARCH.
+        - admission: MC-ARCH
+          note: Admission into the 200pt Program course entry point in the MC-ARCH Master of Architecture
         - admission: MC-ARCHENG
           note: "Admission into or selection of one of the following: MC-ARCH2Y Master of Architecture MC-ARCHENG Master of Architectural Engineering MC-LARCH Master of Landscape Architecture MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCHUCH Master of Architecture/Master of Urban Cultural Heritage MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-ARCPROP Master of Architecture/Master of Property"
         - admission: MC-LARCH

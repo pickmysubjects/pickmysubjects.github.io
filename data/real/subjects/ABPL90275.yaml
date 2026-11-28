@@ -1,0 +1,50 @@
+code: ABPL90275
+title: Property Resources and Management
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-PROP
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-PROP Master of Property 400pt Program course entry point in the MC-PROPUP Master of Property/Master of Urban Planning 400pt Program Course entry in the MC-ARCPROP (Master of Architecture / Master of Property - Architecture background) 400pt Program Course entry in the MC-CM PROP (Master of Construction Management / Master of Property - Construction background) This subject is not available to any students who are enrolled in the MC-PROP2Y-200 point /MC-PROP (200 point) or equivalent valuation studies."
+    - admission: MC-PROPUP
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-PROP Master of Property 400pt Program course entry point in the MC-PROPUP Master of Property/Master of Urban Planning 400pt Program Course entry in the MC-ARCPROP (Master of Architecture / Master of Property - Architecture background) 400pt Program Course entry in the MC-CM PROP (Master of Construction Management / Master of Property - Construction background) This subject is not available to any students who are enrolled in the MC-PROP2Y-200 point /MC-PROP (200 point) or equivalent valuation studies."
+    - admission: MC-ARCPROP
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-PROP Master of Property 400pt Program course entry point in the MC-PROPUP Master of Property/Master of Urban Planning 400pt Program Course entry in the MC-ARCPROP (Master of Architecture / Master of Property - Architecture background) 400pt Program Course entry in the MC-CM PROP (Master of Construction Management / Master of Property - Construction background) This subject is not available to any students who are enrolled in the MC-PROP2Y-200 point /MC-PROP (200 point) or equivalent valuation studies."
+    - admission: MC-CM
+      note: "Admission into one of the following: 300pt Program course entry point in the MC-PROP Master of Property 400pt Program course entry point in the MC-PROPUP Master of Property/Master of Urban Planning 400pt Program Course entry in the MC-ARCPROP (Master of Architecture / Master of Property - Architecture background) 400pt Program Course entry in the MC-CM PROP (Master of Construction Management / Master of Property - Construction background) This subject is not available to any students who are enrolled in the MC-PROP2Y-200 point /MC-PROP (200 point) or equivalent valuation studies."
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - maths
+  - exams
+topics:
+  - property
+  - finance
+  - management
+assessment:
+  - kind: exam
+    weight: 60
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: early
+      text: First half of the teaching period
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90275
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

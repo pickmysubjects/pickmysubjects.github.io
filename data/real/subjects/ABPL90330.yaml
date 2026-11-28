@@ -1,0 +1,62 @@
+code: ABPL90330
+title: Economics of Building
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ARCH
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+        - admission: MC-LARCH
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+        - admission: MC-CM
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+        - admission: MC-PROP
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+        - admission: MC-URPL
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+        - admission: 234AA
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+        - admission: 234AH
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+        - admission: 373AA
+          note: "Admission into one of the following: MC-ARCH Master of Architecture MC-ARCH2Y Master of Architecture MC-ARCH3Y Master of Architecture MC-LARCH Master of Landscape Architecture MC-LARCH2Y Master of Landscape Architecture MC-LARCH3Y Master of Landscape Architecture MC-CM Master of Construction Management MC-CONMG2Y Master of Construction Management MC-CONMG3Y Master of Construction Management MC-PROP Master of Property MC-PROP2Y Master of Property MC-PROP3Y Master of Property MC-URPL Master of Urban Planning 234AA Master of Design 234AH Master of Design (Heritage) 373AA Graduate Diploma in Planning and Design"
+    - permission: coordinator
+      note: Approval from the subject coordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - statistics
+  - writing
+topics:
+  - economics
+  - construction
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
+  - kind: report
+    weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90330
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

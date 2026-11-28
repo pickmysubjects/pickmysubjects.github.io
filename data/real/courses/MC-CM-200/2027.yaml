@@ -1,0 +1,28 @@
+# Master of Construction Management, 200-point entry program, 2027 Handbook. The Handbook runs
+# MC-CM as two entry programs (300/200 points); each is kept as its own course here, as for
+# MC-MGMT. Facts re-expressed in our own words.
+code: MC-CM-200
+title: Master of Construction Management (200-point program)
+year: 2027
+total_points: 200
+standard_load: 50
+# Not shown to students until the master's planner is ready (1.2.0).
+listed: false
+listed_only: true
+categories: [course]
+# Our reading: the up to 100 points of credit for a cognate bachelor's stands in for the 300-point
+# program's Year 1 core subjects (the 200-point program has no Year 1 core).
+assumed_done: [ABPL90292, ABPL90293, ABPL90086, ABPL90313, ABPL90312, ABPL90324, ABPL90335, ABPL90435]
+entry_note: mccm200
+handbook: https://handbook.unimelb.edu.au/2027/components/mc-cm-entry-1
+verified_on: 2026-11-28 # structure read from the 2027 Handbook course and entry program pages
+rules:
+  - id: total
+    kind: points
+    min: 200
+    description: 200 points in total
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    required: true
+    description: Complete one specialisation (Building, Cost Management or Project Management) of 200 points

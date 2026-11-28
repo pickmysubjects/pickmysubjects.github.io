@@ -1,0 +1,42 @@
+code: ABPL90066
+title: MSD Research Project Short (12.5 Points)
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - winter
+prerequisites:
+  any:
+    - any:
+        - admission: MC-UCH
+          note: "Admission into or selection of one of the following: MC-UCH Master of Urban and Cultural Heritage MC-DESURBD Master of Design (Urban Design)"
+        - admission: MC-DESURBD
+          note: "Admission into or selection of one of the following: MC-UCH Master of Urban and Cultural Heritage MC-DESURBD Master of Design (Urban Design)"
+    - ABPL90135
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - architecture
+  - urban-planning
+  - property
+assessment:
+  - kind: assignment
+    weight: 15
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 85
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90066
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

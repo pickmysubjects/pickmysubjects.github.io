@@ -1,0 +1,42 @@
+code: ABPL90386
+title: AA Visiting School Graduate
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - teamwork
+  - presentation
+topics:
+  - architecture
+  - design
+assessment:
+  - kind: participation
+    weight: 10
+    group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
+  - kind: presentation
+    weight: 60
+    group: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: project
+    weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90386
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

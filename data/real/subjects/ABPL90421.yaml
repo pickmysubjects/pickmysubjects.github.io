@@ -1,0 +1,37 @@
+code: ABPL90421
+title: Design - Philosophy - Architecture
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - philosophy
+  - architecture
+  - design
+assessment:
+  - kind: assignment
+    weight: 40
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
+  - kind: report
+    weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: report
+    weight: 40
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90421
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

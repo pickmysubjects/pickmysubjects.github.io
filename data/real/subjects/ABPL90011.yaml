@@ -1,0 +1,45 @@
+code: ABPL90011
+title: Advanced Property Analysis
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - admission: MC-PROP
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-PROP Master of Property MC-PROP2Y Master of Property 702PA Graduate Diploma in Property Valuation"
+        - admission: 702PA
+          note: "Admission into one of the following: 200pt Program course entry point in the MC-PROP Master of Property MC-PROP2Y Master of Property 702PA Graduate Diploma in Property Valuation"
+    - ABPL90274
+corequisites: none
+non_allowed:
+  - ABPL40016
+skills:
+  - business
+  - maths
+  - exams
+topics:
+  - property
+  - finance
+assessment:
+  - kind: assignment
+    weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 25
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90011
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

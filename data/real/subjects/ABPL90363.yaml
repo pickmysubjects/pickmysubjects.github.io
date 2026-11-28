@@ -1,0 +1,61 @@
+code: ABPL90363
+title: Property Research and Analysis
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - admission: MC-PROP
+              note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+            - admission: MC-PROPUP
+              note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+            - admission: MC-CMPROP
+              note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+            - admission: MC-ARCPROP
+              note: "Admission into or selection of one of the following: MC-PROP Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property"
+        - points:
+            min: 50
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - data
+topics:
+  - property
+assessment:
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 10
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
+  - kind: report
+    weight: 70
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90363
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

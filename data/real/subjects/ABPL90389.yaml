@@ -1,0 +1,38 @@
+code: ABPL90389
+title: Urban Design Studio C
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - ABPL90061
+    - ABPL90273
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - data
+  - presentation
+topics:
+  - urban-planning
+  - design
+assessment:
+  - kind: presentation
+    weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: presentation
+    weight: 70
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90389
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

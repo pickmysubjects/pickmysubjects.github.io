@@ -1,0 +1,44 @@
+code: ABPL90089
+title: Australian Architecture
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  manual: Admission into or selection of a course at the Melbourne School of Design.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+topics:
+  - architecture
+  - history
+  - indigenous-studies
+assessment:
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
+  - kind: report
+    weight: 60
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90089
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

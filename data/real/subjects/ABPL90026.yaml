@@ -1,0 +1,71 @@
+code: ABPL90026
+title: Property Development
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - admission: MC-PROP
+      note: Admission into the 200pt Program course entry point in the MC-PROP Master of Property
+    - all:
+        - any:
+            - admission: MC-CMPROP
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+            - admission: MC-ARCPROP
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+            - admission: MC-PROPUP
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+            - admission: MC-ARCHCM
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+            - admission: MC-ARCH
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+            - admission: MC-URPL
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+            - admission: MC-CM
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+            - admission: MC-LARCH
+              note: "Admission into or selection of one of the following: MC-CMPROP Master of Construction Management/Master of Property MC-ARCPROP Master of Architecture/Master of Property MC-PROPUP Master of Property/Master of Urban Planning MC-ARCHCM Master of Architecture/Master of Construction Management MC-ARCH Master of Architecture MC-URPL Master of Urban Planning MC-CM Master of Construction Management MC-LARCH Master of Landscape Architecture"
+        - points:
+            min: 50
+    - permission: coordinator
+      note: Approval from the subject coordinator.
+corequisites: none
+non_allowed:
+  - ABPL40009
+skills:
+  - business
+  - presentation
+  - teamwork
+topics:
+  - property
+  - finance
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+    timing:
+      kind: early
+      text: First half of the teaching period
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 50
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90026
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

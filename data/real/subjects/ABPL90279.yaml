@@ -1,0 +1,39 @@
+code: ABPL90279
+title: Cities Without Slums
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - teamwork
+topics:
+  - urban-planning
+  - society
+assessment:
+  - kind: report
+    weight: 10
+    hurdle: true
+  - kind: presentation
+    weight: 30
+    group: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: report
+    weight: 60
+    hurdle: true
+    timing:
+      kind: afterTeaching
+      weeks: 3
+      text: 3 Weeks after the end of teaching
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90279
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

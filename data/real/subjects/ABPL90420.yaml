@@ -1,0 +1,36 @@
+code: ABPL90420
+title: Interactive Architecture
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - programming
+  - teamwork
+topics:
+  - architecture
+  - systems
+assessment:
+  - kind: report
+    weight: 50
+    hurdle: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: report
+    weight: 50
+    hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90420
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

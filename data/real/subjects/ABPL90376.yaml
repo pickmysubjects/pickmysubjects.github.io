@@ -1,0 +1,42 @@
+code: ABPL90376
+title: Urban Design Thesis
+level: 9
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - admission: MC-URBDES
+      note: Admission into the MC-URBDES Master of Urban Design
+    - all:
+        - ABPL90017
+        - ABPL90061
+        - ABPL90273
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - urban-planning
+  - design
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 70
+    timing:
+      kind: end
+      text: End of semester
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90376
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

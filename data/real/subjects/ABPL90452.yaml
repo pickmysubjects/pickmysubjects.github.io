@@ -1,0 +1,54 @@
+code: ABPL90452
+title: AI in Architectural Design and Practice
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  any:
+    - admission: MC-ARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning"
+    - admission: MC-LARCH
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning"
+    - admission: MC-ARCLARC
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning"
+    - admission: MC-ARCHUP
+      note: "Admission into or selection of one of the following: MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCLARC Master of Architecture/Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - teamwork
+  - design
+topics:
+  - architecture
+  - ai
+  - ethics
+assessment:
+  - kind: report
+    weight: 30
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 60
+    group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
+  - kind: presentation
+    weight: 10
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90452
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

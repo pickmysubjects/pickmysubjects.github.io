@@ -1,0 +1,50 @@
+code: ABPL90323
+title: Construction Scheduling
+level: 9
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: ABPL90334
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - exams
+topics:
+  - construction
+  - management
+assessment:
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
+  - kind: assignment
+    weight: 25
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: exam
+    weight: 40
+    hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
+  - kind: participation
+    weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
+weekly_contact_hours: 4
+breadth_for: []
+recommended:
+  - ABPL90025
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90323
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

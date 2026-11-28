@@ -1,0 +1,71 @@
+code: ABPL90425
+title: Informal Settlement
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - any:
+        - admission: MC-URPL
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-URBDES
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCH
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-LARCH
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHUP
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHUD
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-PROPUP
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-LARCHUD
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-LARCHUP
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCPROP
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CM
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-ARCHCM
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+        - admission: MC-CMPROP
+          note: "Admission into or selection of one of the following: MC-URPL Master of Urban Planning MC-URBDES Master of Urban Design MC-ARCH Master of Architecture MC-LARCH Master of Landscape Architecture MC-ARCHUP Master of Architecture/Master of Urban Planning MC-ARCHUD Master of Architecture/Master of Urban Design MC-PROPUP Master of Property/Master of Urban Planning MC-LARCHUD Master of Landscape Architecture/Master of Urban Design MC-LARCHUP Master of Landscape Architecture/Master of Urban Planning MC-ARCPROP Master of Architecture/Master of Property MC-CM Master of Construction Management MC-ARCHCM Master of Architecture/Master of Construction Management MC-CMPROP Master of Construction Management/Master of Property"
+    - permission: coordinator
+      note: Approval from the subject coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - urban-planning
+  - architecture
+  - society
+assessment:
+  - kind: report
+    weight: 50
+    timing:
+      kind: weeks
+      weeks:
+        - 7
+        - 12
+      text: Week 7 and Week 12
+  - kind: assignment
+    weight: 20
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: end
+      text: End of semester
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90425
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

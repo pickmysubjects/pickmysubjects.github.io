@@ -1,0 +1,56 @@
+code: ABPL90241
+title: Representing Heritage
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  any:
+    - manual: Admission into a course at the Melbourne School of Design
+    - permission: coordinator
+      note: Approval of the subject coordinator
+corequisites: none
+non_allowed:
+  - ABPL50004
+skills:
+  - writing
+  - teamwork
+topics:
+  - architecture
+  - history
+  - design
+assessment:
+  - kind: assignment
+    weight: 30
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+  - kind: project
+    weight: 10
+    group: true
+    hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
+  - kind: project
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
+  - kind: project
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90241
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

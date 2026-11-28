@@ -1,0 +1,42 @@
+code: ABPL90371
+title: Design Activism
+level: 9
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - writing
+  - design
+topics:
+  - architecture
+  - politics
+assessment:
+  - kind: presentation
+    weight: 40
+    group: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: assignment
+    weight: 20
+    group: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
+  - kind: report
+    weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl90371
+source_year: 2027
+verified_on: 2026-11-28
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
